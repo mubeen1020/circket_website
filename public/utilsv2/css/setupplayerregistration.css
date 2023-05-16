@@ -1,0 +1,284 @@
+.register-setup .set-btn-submit{
+	text-align:right;
+	border-radius:20px;
+}
+.register-setup .side-menu-list ul li a {
+  color: #000;
+  border-bottom: 1px solid #ddd;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+.register-setup .side-menu-list ul li a:focus {
+	 background-color: #fd7e5d!important;
+  color: #fff!important;
+}
+
+.register-setup .side-menu-list ul li.active a {
+  background-color: #fd7e5d;
+  color: #fff;
+}
+.register-setup .side-menu-list ul li a.disabled {
+  pointer-events: none;
+  cursor: default;
+  position:relative;
+}
+.register-setup .side-menu-list ul li a.disabled:after{
+	content:"";
+	position:absolute;
+	left:0;
+	top:0;
+	background-color:#333;
+	opacity:0.1;
+	width:100%;
+	height:100%;
+}
+
+.register-setup .tab-content {
+  border: 1px solid #ddd;
+}
+
+.register-setup .tab-content .main-title {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+  padding: 10px 15px;
+}
+
+.register-setup .tab-content .common-box-body {
+  padding: 20px;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box {
+  /* Hide the browser's default radio button */
+  /* Create a custom radio button */
+  /* On mouse-over, add a grey background color */
+  /* When the radio button is checked, add a blue background */
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  /* Show the indicator (dot/circle) when checked */
+  /* Style the indicator (dot/circle) */
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .custom-radio {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .custom-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .custom-radio:hover input + .checkmark {
+  background-color: #ccc;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .custom-radio input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .custom-radio input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .custom-radio .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options label {
+  margin: 0 20px;
+  font-size: 16px;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .addsection-btn {
+  text-align: right;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .addsection-btn a {
+  color: #fff;
+  display: inline-block;
+  background-color: #fd7e5d;
+  padding: 5px 15px;
+  font-weight: 500;
+  border-radius: 100px;
+}
+.register-setup .tab-content .common-box-body .accounts-box .addsection-btn a:focus {
+	 background-color: #fd7e5d!important;
+	 color:#fff!important;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .addsection-btn a:hover {
+  text-decoration: none;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .addsection-btn a:active {
+  text-decoration: none;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 15px 15px 0 15px;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .form-control {
+  height: 38px;
+  line-height: 38px;
+  color: #333;
+  margin-bottom:0!important;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:500;
+  padding:0 15px;
+  box-shadow:none;
+  border-radius:3px;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .form-control::-webkit-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #666;
+  opacity: 0.8;
+  /* Firefox */
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .form-control:-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #666;
+  opacity: 0.8;
+  /* Firefox */
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .form-control::-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #666;
+  opacity: 0.8;
+  /* Firefox */
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #666;
+  opacity: 0.8;
+  font-weight:500;
+  /* Firefox */
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #333;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #333;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .delete-btn {
+  text-align: center;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .delete-btn a {
+  color: #f00;
+  font-weight: 600;
+  display: inline-block;
+  padding-top: 10px;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .paypal-section .paypal-form {
+  margin: 10px 0;
+}
+
+.register-setup .tab-content .common-box-body .accounts-box .accoutns-options-form .paypal-section .promocode-form {
+  margin: 10px 0;
+}
+.common-box-body .form-group{
+	position:relative;
+}
+.common-box-body .form-group .control-label {
+    color: #787878;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: capitalize;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    position: absolute;
+    top: 10px;
+    left: 28px;
+}
+.common-box-body .form-group.focused .control-label {
+    transition: all 0.25s ease;
+    font-size: 11px;
+    color: #000;
+    top: -9px;
+    left: 26px;
+    padding: 0 8px 0 3px;
+    padding: 0 8px 0 8px;
+    background-color: #fff;
+    z-index:9;
+}
+.common-box-body .form-group .control-label sup{
+	 color: #f00;
+    font-weight: normal;
+    font-size: 100%;
+    top: -0.2em;
+}
+.promoPercentageErr, .promoAmountErr, .accountPercentageErr{
+	color:#f00;
+	font-size:12px;
+}
+.accountsErrorMsg, .promoErrorMsg{
+	color:#f00;
+	padding-top:5px;
+}
+@media screen and (max-width: 768px) {
+  .register-setup .tab-content .common-box-body .accounts-box .accoutns-options label {
+    margin: 0 5px;
+    font-size: 14px;
+}
+.register-setup .tab-content .common-box-body {
+    padding: 5px;
+}
+.register-setup .tab-content .common-box-body .accounts-box .custom-radio {
+    padding-left: 30px;
+}
+}
+

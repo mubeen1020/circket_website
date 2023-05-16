@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800|Roboto:400,500,700,900");
+.mt-2 {
+  margin-top: 20px; }
+
+.mt-3 {
+  margin-top: 30px; }
+
+.white-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 3px;
+  margin: 20px 0;
+  font-family: "Roboto", sans-serif;
+  color: #222;
+  font-size: 13px; }
+  .white-box .title-main {
+    border-bottom: 4px solid #2aba99;
+    margin: 15px 0; }
+    .white-box .title-main .box-title {
+      font-weight: 600;
+      font-family: "Montserrat", sans-serif;
+      background-color: #2aba99;
+      padding: 10px 20px;
+      font-size: 18px;
+      position: relative;
+      display: inline-block;
+      margin: 0;
+      color: #fff; }
+      .white-box .title-main .box-title:before {
+        content: '';
+        position: absolute;
+        background-color: #e32f2e;
+        left: 0;
+        bottom: -1px;
+        height: 3px;
+        width: 80px;
+        display: none; }
+  .white-box form strong {
+    color: #057742; }
+  .white-box form b {
+    color: #057742; }
+  .white-box form h4 {
+    color: #000;
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+    line-height: 30px; }
+  .white-box form p {
+    color: #000;
+    font-weight: 500;
+    font-size: 13px; }
+  .white-box form .g-box {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 5px #cdcdcd; }
+    .white-box form .g-box h5 {
+      margin: 6px 0;
+      font-size: 13px; }
+    .white-box form .g-box .control-label {
+      padding-top: 3px; }
+  .white-box form .vertical-center td {
+    vertical-align: middle; }
+  .white-box form .form-control {
+    font-size: 13px;
+    color: #000;
+    font-weight: 500;
+    box-shadow: none; }
+    .white-box form .form-control::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #444;
+      opacity: 1;
+      /* Firefox */ }
+    .white-box form .form-control :-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: #444; }
+    .white-box form .form-control ::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: #444; }
+  .white-box form .form-group1 {
+    margin-bottom: 15px; }
+  .white-box form .table {
+    background-color: #f5f5f5;
+    border-radius: 3px;
+    box-shadow: 0px 0px 5px #cdcdcd; }
+    .white-box form .table:hover {
+      background-color: #fff; }
+  .white-box form .form-group label {
+    text-align: left;
+    color: #000;
+    font-size: 13px; }
+    .white-box form .form-group label span {
+      color: #f00; }
+  .white-box form .form-group:last-child {
+    margin-bottom: 0; }
+  .white-box form .form-group .radiobox {
+    margin-bottom: 5px; }
+    .white-box form .form-group .radiobox input {
+      position: relative;
+      top: 1px; }
+    .white-box form .form-group .radiobox label {
+      font-size: 13px;
+      padding-left: 6px; }
+  .white-box .table > thead > tr > th, .white-box .table > tbody > tr > th, .white-box .table > tfoot > tr > th, .white-box .table > thead > tr > td, .white-box .table > tbody > tr > td, .white-box .table > tfoot > tr > td {
+    border-top: none; }
+  .white-box .table th {
+    border-bottom: 1px solid #ccc; }
+  .white-box .btn-custom {
+    background-color: #e32f2e;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 8px 25px;
+    font-size: 16px; }
+
