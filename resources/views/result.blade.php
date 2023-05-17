@@ -201,18 +201,61 @@ text-align:center !important;
                <div class="col-xs-9 col-sm-4 p-sm-0 mobile-b">
                    <div class="schedule-logo text-center h-90">
                    <ul class="list-inline">
-	 <li class="lose"><span>{{ $total_runs[$data->id][0] }}/{{ $total_wicket_fixture[$data->id][0] }}</span> <br> 
-		                           <p>{{ $total_run_fixture[$data->id][0] }}/{{$data['numberofover']}}</p>
-		                           </li>
+				   <li class="lose">
+                                        <span>
+                                            @if (isset($total_runs[$data->id][0]))
+                                                {{ $total_runs[$data->id][0] }}
+                                            @else
+                                                N/A
+                                            @endif
+                                            / 
+                                            @if (isset($total_wicket_fixture[$data->id][0]))
+                                                {{ $total_wicket_fixture[$data->id][0] }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </span>
+                                        <br>
+                                        <p>
+                                            @if (isset($total_run_fixture[$data->id][0]))
+                                                {{ $total_run_fixture[$data->id][0] }}
+                                            @else
+                                                N/A
+                                            @endif
+                                            /{{ $data['numberofover'] }}
+                                        </p>
+                                    </li>
+				   
+	
 		                           <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1067&amp;clubId=2565">
 		                           <img src="https://cricclubs.com/documentsRep/teamLogos/f5e11e68-50cb-4926-8cd8-711f991d9ea2.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
 		                           <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1046&amp;clubId=2565">
 		                           <img src="https://cricclubs.com/documentsRep/teamLogos/c13fab4c-3cbb-4805-9c9f-bcba623a5a39.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
-		                          <li class="win">
-		                          		<span>{{ $total_runs[$data->id][1] }}/{{ $total_wicket_fixture[$data->id][1] }}</span> <br> 
-		                          			<p>{{ $total_run_fixture[$data->id][0] }}/{{$data['numberofover']}}
-											</p>
-				                           </li>
+		                        
+										   <li class="lose">
+                                        <span>
+                                            @if (isset($total_runs[$data->id][1]))
+                                                {{ $total_runs[$data->id][1] }}
+                                            @else
+                                                N/A
+                                            @endif
+                                            / 
+                                            @if (isset($total_wicket_fixture[$data->id][1]))
+                                                {{ $total_wicket_fixture[$data->id][1] }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </span>
+                                        <br>
+                                        <p>
+                                            @if (isset($total_run_fixture[$data->id][1]))
+                                                {{ $total_run_fixture[$data->id][1] }}
+                                            @else
+                                                N/A
+                                            @endif
+                                            /{{ $data['numberofover'] }}
+                                        </p>
+                                    </li>
 	                      	 </ul>	
                          </div>
                </div>

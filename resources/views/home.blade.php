@@ -25,10 +25,9 @@
 													<h3>{{$image->title}}</h3>
 												</div>
 												<div class="carousel-content-panel content-sp" style="width: 100%">
-													<p>{{$image->description}}<a
-															href="EOSCLCricketLeague/viewNews.do%3FnewsId=17&amp;clubId=2565.html"
-															class="btn btn-ban pull-right">Read more <i
-															class="fa fa-arrow-circle-o-right"></i></a><br>
+													<p>{{$image->description}}
+														
+															<br>
 														<br>
 														<br>
 													</p>
@@ -37,7 +36,8 @@
 											</div>
 										</div>
 									</div>
-                                @elseif($image->type == 0)
+                                @endif
+								@if($image->type == 0)
 									<div class="item ">
 										<a
 												href="EOSCLCricketLeague/viewNews.do%3FnewsId=8&amp;clubId=2565.html"><img
@@ -50,10 +50,9 @@
 													<h3>{{$image->title}}</h3>
 												</div>
 												<div class="carousel-content-panel content-sp" style="width: 100%">
-												<p>{{$image->description}}<a
-															href="EOSCLCricketLeague/viewNews.do%3FnewsId=8&amp;clubId=2565.html"
-															class="btn btn-ban pull-right">Read more <i
-															class="fa fa-arrow-circle-o-right"></i></a><br>
+												<p>{{$image->description}}
+												
+															<br>
 														<br>
 														<br>
 													</p>
@@ -204,7 +203,7 @@ $(document).ready(function() {
 					          	                    </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="/MississaugaCricketLeague/viewPointsTable.do?league=92&amp;clubId=2565">More Details</a>
+                                                	<a href="#">More Details</a>
                                                 </div>
                                             </div>
                                             </div>
@@ -236,7 +235,7 @@ $(document).ready(function() {
                                                      </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="/MississaugaCricketLeague/battingRecords.do?league=92&amp;clubId=2565">Complete List</a>
+                                                	<a href="#">Complete List</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,7 +259,7 @@ $(document).ready(function() {
                                                      </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">Complete List</a>
+                                                	<a href="#">Complete List</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -284,7 +283,7 @@ $(document).ready(function() {
                                                         <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
 														<img src="https://cricclubs.com/documentsRep/profilePics/2c42f3e9-437d-4233-b69b-e4832bbdf2e3.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
 														</td>
-                                                        <td><a href="viewPlayer.do?playerId=571631&amp;clubId=2565"> Vijay Subramanya (SCC)</a></td></tr></tbody></table></th> 
+                                                        <td><a href="#"> Vijay Subramanya (SCC)</a></td></tr></tbody></table></th> 
                                                        <!--  <th>12</th>-->
                                                         <th class="ls">2000</th>
                                                      </tr> 
@@ -292,7 +291,7 @@ $(document).ready(function() {
                                                         <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
 														<img src="https://cricclubs.com/documentsRep/profilePics/daa17ece-3476-47d3-9fd9-d653ffdd357b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
 														</td>
-                                                        <td><a href="viewPlayer.do?playerId=1125372&amp;clubId=2565"> Yasir Abbasi (RC9)</a></td></tr></tbody></table></th> 
+                                                        <td><a href="#"> Yasir Abbasi (RC9)</a></td></tr></tbody></table></th> 
                                                        <!--  <th>9</th>-->
                                                         <th class="ls">1903</th>
                                                      </tr> 
@@ -300,7 +299,7 @@ $(document).ready(function() {
                                                         <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
 														<img src="https://cricclubs.com/documentsRep/profilePics/052853ab-cd4d-435a-aca7-7abd382346dd.png" class="img-responsive img-circle" style="width: 30px; height: 30px;">
 														</td>
-                                                        <td><a href="viewPlayer.do?playerId=1695379&amp;clubId=2565"> Varun Sehdev (RPT)</a></td></tr></tbody></table></th> 
+                                                        <td><a href="#"> Varun Sehdev (RPT)</a></td></tr></tbody></table></th> 
                                                        <!--  <th>7</th>-->
                                                         <th class="ls">1879</th>
                                                      </tr> 
@@ -308,7 +307,7 @@ $(document).ready(function() {
                                                         <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
 														<img src="https://cricclubs.com/documentsRep/profilePics/1a0f1178-665f-4e84-994b-ef4717ab51dc.jpeg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
 														</td>
-                                                        <td><a href="viewPlayer.do?playerId=2687684&amp;clubId=2565"> Manik Sharma (LCC)</a></td></tr></tbody></table></th> 
+                                                        <td><a href="#"> Manik Sharma (LCC)</a></td></tr></tbody></table></th> 
                                                        <!--  <th>10</th>-->
                                                         <th class="ls">1671</th>
                                                      </tr> 
@@ -323,7 +322,7 @@ $(document).ready(function() {
                                                      </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="/MississaugaCricketLeague/playerRankings.do?league=92&amp;clubId=2565">Complete List</a>
+                                                	<a href="#">Complete List</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -337,15 +336,15 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item">
                                                         <h4>Runs</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/battingRecords.do?league=92&amp;clubId=2565">12,070</a></h2>
+                                                        <h2><a style="color: white;" href="#">12,070</a></h2>
                                                     </div>
                                                     <div class="item">
                                                         <h4>Balls</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">17,338</a></h2>
+                                                        <h2><a style="color: white;" href="#">17,338</a></h2>
                                                     </div>
                                                     <div class="item active">
                                                         <h4>Wickets</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">628</a></h2>
+                                                        <h2><a style="color: white;" href="#">628</a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -364,15 +363,15 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item">
                                                         <h4>100's</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/battingRecords.do?league=92&amp;clubId=2565">8</a></h2>
+                                                        <h2><a style="color: white;" href="#">8</a></h2>
                                                     </div>
                                                     <div class="item active left">
                                                         <h4>50's</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/battingRecords.do?league=92&amp;clubId=2565">40</a></h2>
+                                                        <h2><a style="color: white;" href="#">40</a></h2>
                                                     </div>
                                                     <div class="item next left">
                                                         <h4>25's</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/battingRecords.do?league=92&amp;clubId=2565">114</a></h2>
+                                                        <h2><a style="color: white;" href="#">114</a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -391,15 +390,15 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item active left">
                                                         <h4>5 Wickets</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">10</a></h2>
+                                                        <h2><a style="color: white;" href="#">10</a></h2>
                                                     </div>
                                                     <div class="item next left">
                                                         <h4>4 Wickets</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">20</a></h2>
+                                                        <h2><a style="color: white;" href="#">20</a></h2>
                                                     </div>
                                                     <div class="item">
                                                         <h4>Hat-trick</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">0</a></h2>
+                                                        <h2><a style="color: white;" href="#">0</a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -418,7 +417,7 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item active">
                                                         <h4>players</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/playerRankings.do?league=92&amp;clubId=2565">265</a></h2>
+                                                        <h2><a style="color: white;" href="#">265</a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -437,11 +436,11 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item active">
                                                         <h4>Fours</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/battingRecords.do?league=92&amp;clubId=2565">982</a></h2>
+                                                        <h2><a style="color: white;" href="#">982</a></h2>
                                                     </div>
                                                     <div class="item">
                                                         <h4>Sixers</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/battingRecords.do?league=92&amp;clubId=2565">209</a></h2>
+                                                        <h2><a style="color: white;" href="#">209</a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -459,15 +458,15 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item">
                                                         <h4>Catches</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/fieldingRecords.do?league=92&amp;clubId=2565">314</a></h2>
+                                                        <h2><a style="color: white;" href="#">314</a></h2>
                                                     </div>
                                                     <div class="item active">
                                                         <h4>Runouts</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/fieldingRecords.do?league=92&amp;clubId=2565">30</a></h2>
+                                                        <h2><a style="color: white;" href="#">30</a></h2>
                                                     </div>
                                                     <div class="item">
                                                         <h4>Ducks</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/battingRecords.do?league=92&amp;clubId=2565">96</a></h2>
+                                                        <h2><a style="color: white;" href="#">96</a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -486,15 +485,15 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item">
                                                         <h4>maidens</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">210</a></h2>
+                                                        <h2><a style="color: white;" href="#">210</a></h2>
                                                     </div>
                                                     <div class="item active">
                                                         <h4>wides</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">1,377</a></h2>
+                                                        <h2><a style="color: white;" href="#">1,377</a></h2>
                                                     </div>
                                                     <div class="item">
                                                         <h4>no-balls</h4>
-                                                        <h2><a style="color: white;" href="/MississaugaCricketLeague/bowlingRecords.do?league=92&amp;clubId=2565">94</a></h2>
+                                                        <h2><a style="color: white;" href="#">94</a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -513,7 +512,7 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item active" style="height: 86px;  display: flex; align-items: center;">
                                                         
-                                                        <h4><a style="color: white;" href="/MississaugaCricketLeague/viewLeague.do?league=92&amp;clubId=2565">view More <i class="fa fa-arrow-circle-o-right"></i></a></h4>
+                                                        <h4><a style="color: white;" href="#">view More <i class="fa fa-arrow-circle-o-right"></i></a></h4>
                                                     </div>
                                                 </div>
                                                 
@@ -522,7 +521,7 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                                 </div>
-                            <div class="weekly-leader-board" style="margin:-15px;">
+                            <!-- <div class="weekly-leader-board" style="margin:-15px;">
                                         <div class="weekly-content">
                                                 <div class="border-heading">
                                                     <h5>Weekly Leader Board </h5>
@@ -531,7 +530,7 @@ $(document).ready(function() {
                                             	There are no matches played in the last week.
                                             	</div>
                                        
-                                        </div>
+                                        </div> -->
                          
                             </div>
 									<!-- <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-1" style="background-color: rgb(245, 245, 245); border-color: rgb(193, 193, 193);"><span class="resp-arrow"></span>2022 MCLT20</h2><div class="about-player-all resp-tab-content hor_1" id="93" aria-labelledby="hor_1_tab_item-1" style="border-color: rgb(193, 193, 193);">
@@ -646,7 +645,7 @@ color:#333;
 										
 										<center><br><br>There are no Live matches available now <br><br><br></center><div class="complete text-center">
 											<a
-												href="EOSCLCricketLeague/listMatches.do%3FclubId=2565.html">Complete
+												href="#">Complete
 												list</a>
 												</div>
 										</div>
@@ -710,7 +709,7 @@ margin-right: 10px;
 
 										<div class="complete text-center">
 											<a
-												href="EOSCLCricketLeague/listMatches.do%3FclubId=2565.html">Complete
+												href="#">Complete
 												list</a>
 										</div>
 
@@ -763,7 +762,7 @@ margin-right: 10px;
 
 										<div class="complete text-center">
 											<a
-												href="EOSCLCricketLeague/fixtures.do%3FclubId=2565.html">Complete
+												href="#">Complete
 												list</a>
 										</div>
 
@@ -790,7 +789,7 @@ margin-right: 10px;
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="view text-right">
-									<a href="EOSCLCricketLeague/albums.do%3FclubId=2565.html">View
+									<a href="#">View
 										ALL <i class="fa fa-arrow-circle-o-right"></i>
 									</a>
 								</div>
@@ -805,7 +804,7 @@ margin-right: 10px;
 						
 								<div class="gallery-image-all">
 									<a title="EOSCL AWARDS 2018"
-										href="EOSCLCricketLeague/viewAlbum.do%3FalbumId=1&amp;clubId=2565.html">
+										href="#">
 										<div class="gallery-image">
 								
 											<img
@@ -881,7 +880,7 @@ margin-right: 10px;
 <div id="content" style="display: none; visible: false;">
 
 	<a id="example7"
-		href="https://cricclubs.com/documentsRep/startup/2565-startup.JPG"
+		href="#"
 		title="Welcome to EOSCL"></a>
 	<div id="inline1" style="width: 500px; height: 300px; overflow: auto;">
 		Welcome to EOSCL</div>
@@ -1050,11 +1049,11 @@ function get_point_table(tornament_season_id,type) {
 			</tbody>
 			</table>
 			</th>
-			<th><a href="/MississaugaCricketLeague/listMatches.do?teamId=825&amp;league=92&amp;clubId=2565">${item.total_matches}</a></th>
+			<th><a href="#">${item.total_matches}</a></th>
 			<th>${item.wins}</th> 
 			<th>${item.losses}</th>
 			<th>${item.draws}</th>
-			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="/MississaugaCricketLeague/listMatches.do?teamId=825&amp;league=92&amp;clubId=2565"><span title="">60</span></a></th> 
+			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
 			<th class="hidden-phone">1.4241</th>
 			</tr>
 			`

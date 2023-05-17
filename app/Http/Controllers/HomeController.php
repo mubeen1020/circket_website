@@ -394,7 +394,7 @@ class HomeController extends Controller
             ->pluck('year');
     
         $match_results = Fixture::query()->orderBy('id')->get();
-        $data = Fixture::query();
+        $data = Fixture::where('running_inning', '=', 3);
         $term = $request;
         if (!empty($term->created_at)) {
           $data->whereRaw("DATE(match_startdate) >= Date('$term->created_at')");
@@ -453,7 +453,7 @@ class HomeController extends Controller
              }   
         } 
        
-       
+    
         return view('result', compact('results', 'teams', 'match_results', 'years', 'tournament','total_run_fixture','total_runs', 'total_wicket_fixture'));
     }
     
@@ -862,14 +862,35 @@ public function batting_states()
         'name',
         'id'
       );
+      $team_battingdata = FixtureScore::query()
+      ->select('playerid')
+      ->select('fixtures.team_id_a')
+      ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+      ->get();
+
+      $match_count_player = collect();
+      $player_runs = collect();
+      
+      foreach ($team_battingdata as $teamPlayer) {
+        $match_count = FixtureScore::query()
+            ->selectRaw("COUNT(playerId)")
+            ->selectRaw("fixture_id")
+            ->groupby('fixture_id')
+            ->pluck('COUNT(playerId)', 'fixture_id')
+            ->first();
     
+        $match_count_player[$teamPlayer->id] = $match_count;
+      
+        $player_runs[$teamPlayer->id] = FixtureScore::where('fixture_id', $teamPlayer->id)
+        ->where('playerId', $teamPlayer->player_id)
+        ->sum('runs');
+      
+      }
+    
+// dd($team_battingdata);
 
     return view('batting_states',compact('tournament','match_results','teams','ground'));
 }
 
-public function test(){
-
-  return view('test');
-}
     
  }

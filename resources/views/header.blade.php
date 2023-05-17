@@ -530,7 +530,7 @@ navbarSlider.addEventListener("mouseout", function() {
                                     <li><a href="search_player">Player
                                            </a></li>
                                     <li><a
-                                            href="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/playerMatchesCount.do?clubId=2565">Player
+                                            href="#">Player
                                             Matches Count</a></li>
                                 </ul>
                             </li>
@@ -538,107 +538,107 @@ navbarSlider.addEventListener("mouseout", function() {
                                 <ul class="sub-menu">
                                     <li><a href="{{ route('result')}}">Results</a>
                                     </li>
-                                    <li><a href="MississaugaCricketLeague/fixtures.do%3FclubId=2565.html">Schedule</a>
+                                    <li><a href="#">Schedule</a>
                                     </li>
                                     <li><a
-                                            href="MississaugaCricketLeague/fixturesCalendar.do%3FclubId=2565.html">Calendar</a>
+                                            href="#">Calendar</a>
                                     </li>
 
                                 </ul>
                             </li>
-                            <li><a href="index.html#">Clubs</a> 
+                            <li><a href="#">Clubs</a> 
                                 <ul class="sub-menu">
-                                    <li><a href="MississaugaCricketLeague/viewInternalClubs.do%3FclubId=2565.html">View
+                                    <li><a href="#">View
                                             Clubs</a></li>
-                                    <li><a href="MississaugaCricketLeague/searchTeams.do%3FclubId=2565.html">Search
+                                    <li><a href="#">Search
                                             Teams</a></li>
-                                    <li><a href="MississaugaCricketLeague/viewTeams.do%3FclubId=2565.html">View
+                                    <li><a href="#">View
                                             Teams</a></li>
                                 </ul>
                             </li>
                             <li><a href="{{ route('batting_states')}}">Statistics</a>
                                 <ul class="sub-menu">
-                                    <li><a href="MississaugaCricketLeague/viewPointsTable.do%3FclubId=2565.html">Points
+                                    <li><a href="#">Points
                                             Table</a></li>
                                     <li><a href="{{ route('batting_states')}}">Batting
                                             Records</a></li>
-                                    <li><a href="MississaugaCricketLeague/bowlingRecords.do%3FclubId=2565.html">Bowling
+                                    <li><a href="#">Bowling
                                             Records</a></li>
-                                    <li><a href="MississaugaCricketLeague/fieldingRecords.do%3FclubId=2565.html">Fielding
+                                    <li><a href="#">Fielding
                                             Records</a></li>
-                                    <li><a href="MississaugaCricketLeague/playerRankings.do%3FclubId=2565.html">Player
+                                    <li><a href="#">Player
                                             Rankings</a></li>
                                 </ul>
                             </li>
-                            <li><a href="index.html#">Series</a>
+                            <li><a href="#">Series</a>
                                 <ul class="sub-menu">
                                     <li><a
-                                            href="MississaugaCricketLeague/viewLeague.do%3Fleague=116&amp;clubId=2565.html">2022
+                                            href="#">2022
                                             - Boom Boom T10</a></li>
                                     <li><a
-                                            href="MississaugaCricketLeague/viewLeague.do%3Fleague=114&amp;clubId=2565.html">2022
+                                            href="#">2022
                                             MCLT12 Winter League</a></li>
                                     <li><a
-                                            href="MississaugaCricketLeague/viewLeague.do%3Fleague=108&amp;clubId=2565.html">MCL
+                                            href="#">MCL
                                             vs Singapore</a></li>
                                     <li><a
-                                            href="MississaugaCricketLeague/viewLeague.do%3Fleague=100&amp;clubId=2565.html">2022
+                                            href="#">2022
                                             MCLT25</a></li>
                                     <li><a
-                                            href="MississaugaCricketLeague/viewLeague.do%3Fleague=93&amp;clubId=2565.html">2022
+                                            href="#">2022
                                             MCLT20</a></li>
-                                    <li><a href="MississaugaCricketLeague/viewAllLeagues.do%3FclubId=2565.html"><span>View
+                                    <li><a href="#"><span>View
                                                 all</span></a></li>
                                 </ul>
                             </li>
 
                             <li><a href="index.html#">League </a>
                                 <ul class="sub-menu">
-                                    <li><a href="MississaugaCricketLeague/viewClub.do%3FclubId=2565.html">League
+                                    <li><a href="#">League
                                             Info</a></li>
-                                    <li><a href="MississaugaCricketLeague/viewGrounds.do%3FclubId=2565.html">Grounds</a>
+                                    <li><a href="#">Grounds</a>
                                     </li>
 
-                                    <li><a href="MississaugaCricketLeague/documents.do%3FclubId=2565.html">Documents</a>
+                                    <li><a href="#">Documents</a>
                                     </li>
                                     <li><a
-                                            href="MississaugaCricketLeague/umpires.do%3FclubId=2565.html">Umpires/Coaches/Scorers</a>
+                                            href="#">Umpires/Coaches/Scorers</a>
                                     </li>
-                                    <li><a href="MississaugaCricketLeague/viewDlsCalculator.do%3FclubId=2565.html">DLS
+                                    <li><a href="#">DLS
                                             Calculator</a></li>
-                                    <li><a href="MississaugaCricketLeague/albums.do%3FclubId=2565.html">Photo
+                                    <li><a href="#">Photo
                                             Gallery</a></li>
-                                    <li><a href="MississaugaCricketLeague/news.do%3FclubId=2565.html">News</a></li>
-                                    <li><a href="MississaugaCricketLeague/articles.do%3FclubId=2565.html">Articles</a>
+                                    <li><a href="#">News</a></li>
+                                    <li><a href="#">Articles</a>
                                     </li>
 
-                                    <li><a href="https://forms.gle/A8pc2AgkcaE5s7kT7" target="blank">2023 Summer Club
+                                    <li><a href="#" target="blank">2023 Summer Club
                                             Registration Form</a></li>
                                     <li><a
-                                            href="MississaugaCricketLeague/customPage.do%3FpageId=3&amp;clubId=2565.html">CONTACT
+                                            href="#">CONTACT
                                             US</a></li>
-                                    <li><a href="https://forms.gle/5DeHaxH16p16YYDW9" target="blank">MCL Tapeball League
+                                    <li><a href="#" target="blank">MCL Tapeball League
                                             22-23</a></li>
-                                    <li><a href="MississaugaCricketLeague/contactUs.do%3FclubId=2565.html">Contact</a>
+                                    <li><a href="#">Contact</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="index.html#">More<i class="fa fa-caret-down"></i></a>
+                            <li><a href="#">More<i class="fa fa-caret-down"></i></a>
                                 <ul class="sub-menu main-menu-custom">
                                     <li><a href="index.html#">For Children & Youth</a>
                                         <ul class="sub-menu sub-menu-sub">
                                             <li><a
-                                                    href="MississaugaCricketLeague/customPage.do%3FpageId=4&amp;clubId=2565.html">Programs</a>
+                                                    href="#">Programs</a>
                                             </li>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="topl"><a href="MississaugaCricketLeague/login.do%3FclubId=2565.html"><i
+                            <li class="topl"><a href="#"><i
                                         class="fa fa-user"></i> Log in</a></li>
-                            <li class="sponser"><a href="https://cricclubs.com/" target="_new"><img
+                            <!-- <li class="sponser"><a href="https://cricclubs.com/" target="_new"><img
                                         src="utilsv2/app/assets/images/pbcc-logo.png" class="img-responsive"
-                                        style="max-width:145px; top:3px; border-radius:3px;" /></a></li>
+                                        style="max-width:145px; top:3px; border-radius:3px;" /></a></li> -->
                         </ul>
                     </div>
                 </nav>

@@ -49,7 +49,8 @@ class ApiController extends Controller
     {
         $match_results = Fixture::query();
         $match_results->orWhere('running_inning', '=', 1);
-        $match_results->orWhere('running_inning', '=', 2);  // for inning 1 or 2 
+        $match_results->orWhere('running_inning', '=', 2); 
+     
         $data = $match_results->pluck('id')->all();
         
         $today = Carbon::now()->toDateString(); 
@@ -114,16 +115,41 @@ class ApiController extends Controller
             ->selectRaw("lossing_team_id")
             ->groupby('lossing_team_id')
             ->get()->pluck('COUNT(id)', 'lossing_team_id');
-    
+            
+        $match_count_tie_team = Fixture::where('tournament_id', $id)
+            ->where('is_tie_match', 1)
+            ->selectRaw('team_id_a, team_id_b, COUNT(is_tie_match) as tie')
+            ->groupBy('team_id_a', 'team_id_b')
+            ->pluck('tie', 'team_id_a', 'team_id_b');
+        
+        $bonusPointsSum_team_A = Fixture::where('tournament_id', $id)
+            ->selectRaw('SUM(teamAbonusPoints) as totalBonusPoints')
+            ->selectRaw('team_id_a')
+            ->groupBy('team_id_a')
+            ->pluck('totalBonusPoints', 'team_id_a');    
+        
+        $bonusPointsSum_team_B = Fixture::where('tournament_id', $id)
+            ->selectRaw('SUM(teamBbonusPoints) as totalBonusPoints')
+            ->selectRaw('team_id_b')
+            ->groupBy('team_id_b')
+            ->pluck('totalBonusPoints', 'team_id_b');
+        
+   
         $result = array();
         foreach ($get_point_table_data as $team_id => $team_name) {
             $team_wins = isset($match_count_winning_team[$team_id]) ? $match_count_winning_team[$team_id] : 0;
             $team_losses = isset($match_count_loss_team[$team_id]) ? $match_count_loss_team[$team_id] : 0;
             $team_total_matches = isset($match_count_team_a[$team_id]) ? $match_count_team_a[$team_id] : 0;
+        
             if (isset($match_count_team_b[$team_id])) {
                 $team_total_matches += $match_count_team_b[$team_id];
             }
+        
             $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
+            $bonus_points_A = isset($bonusPointsSum_team_A[$team_id]) ? $bonusPointsSum_team_A[$team_id] : 0;
+            $bonus_points_B = isset($bonusPointsSum_team_B[$team_id]) ? $bonusPointsSum_team_B[$team_id] : 0;
+            $team_tie = isset($match_count_tie_team[$team_id]) ? $match_count_tie_team[$team_id] : 0;
+            $total_bonus_points = $bonus_points_A + $bonus_points_B;
             $result[] = [
                 'tournament_id' => $id,
                 'team_id' => $team_id,
@@ -131,13 +157,14 @@ class ApiController extends Controller
                 'total_matches' => $team_total_matches,
                 'wins' => $team_wins,
                 'losses' => $team_losses,
-                'draws' => $team_total_matches - $team_wins - $team_losses,
-                'players_count' => $team_players_count
+                'draws' => $team_tie,
+                'players_count' => $team_players_count,
+                'teambonusPoints' => $total_bonus_points,
             ];
         }
-    
-    
+        
         return response()->json($result);
+      
     }
 
 
