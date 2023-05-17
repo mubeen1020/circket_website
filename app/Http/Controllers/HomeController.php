@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+use Illuminate\Support\Facades\Response;
+
+
 use App\Item;
 
 use App\Models\Player;
@@ -316,6 +320,189 @@ class HomeController extends Controller
 
 
         return view('score_card',compact('player_runs', 'teams_one','teams_two','player_balls','match_results','teams','player','tournament','ground','match_data'));
+
+    }
+
+
+
+    public function downloadCSV(int $id)
+    {
+
+      $data = [];
+
+        $ground = Ground::query();
+        $ground = $ground->orderBy('id')->get();
+        $ground = Ground::query()->get()->pluck(
+          'name',
+          'id'
+        );
+        $match_results = Fixture::query();
+        $match_results->where('id','=',$id);
+        $match_results = $match_results->orderBy('id')->get();
+        $result = [];
+        $match_data = $match_results->find($id); 
+        $tournamentId = $match_results->first()->tournament_id;
+        $tournament = Tournament::query()->where('id','=',$tournamentId)->get()->pluck(
+            'name'
+          );
+        $teams = Team::query()->get()->pluck(
+          'name',
+          'id'
+        );
+        $player = Player::query()->get()->pluck(
+            'fullname',
+            'id'
+          );
+          $teams_one = Team::query()->get()->where('id', '=', $match_results[0]->first_inning_team_id)->pluck(
+            'name',
+            'id'
+          )->first();
+          $teams_two = Team::query()->get()->where('id', '=', $match_results[0]->second_inning_team_id)->pluck(
+            'name',
+            'id'
+          )->first(); 
+        
+
+        $player_runs =FixtureScore::Where('fixture_id','=',$id)
+                ->selectRaw("sum(runs) as total_runs")
+                ->selectRaw("count(isfour) as total_fours")
+                ->selectRaw("count(issix) as total_six")
+                ->selectRaw("playerId")
+                ->selectRaw("inningnumber")
+                ->groupBy('playerId')
+                ->groupBy('inningnumber')
+                ->get();
+
+        $variable1 = 'R';
+        $variable2 = 'Wicket';       
+        $player_balls = FixtureScore::where('fixture_id','=',$id)
+               ->where(function($query) use ($variable1,$variable2){
+                    $query->where('balltype','=',$variable1)
+                   ->orWhere('balltype','=',$variable2);
+               })->selectRaw("count(id) as balls")
+                ->selectRaw("playerId")->groupBy('playerId')
+                ->get()->pluck('balls','playerId');;
+
+
+
+
+                $TournamentName =    array( $tournament[0]. " : ". $match_results[0]->match_result_description . "  (" .$match_data->match_startdate->format('d-m-Y') . ")");
+                array_push($data , $TournamentName);  
+                $empyt = [] ;
+
+///////////////////////////////////  Team One Bating
+             $BattingteamOneName =    array(" " , " " ,  $teams_one." Batting");
+             array_push($data , $BattingteamOneName);  
+             $empyt = [] ;
+             array_push($data , $empyt);  
+             $TeamsBattingHead =    array("BatsMan"  ,  'How Out' ,  'Fielder'	,  'Bowler' ,"Runs"  , "Balls" ,"Fours"  , "Sixex" );
+            
+
+             array_push($data , $TeamsBattingHead);  
+             array_push($data , $empyt);  
+              
+            foreach ($player_runs as $item) 
+                {
+                  if ($item->inningnumber==1)
+                  {
+                  $player_detail1 = array( $player[$item->playerId]  , "L Tucker" ,"C Young" , "G Dockrell" , $item->total_runs  , $player_balls[$item->playerId]  , $item->total_fours  , $item->total_six);
+                  array_push($data , $player_detail1);   
+                  }
+                 
+                }
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+
+                ///////////////////////////////////  Team two Bowling
+
+
+                array_push($data , $empyt);  
+                $BowlingteamTwoName =    array(" " , " " ,  $teams_two." Bowling");
+                array_push($data , $BowlingteamTwoName); 
+                array_push($data , $empyt); 
+                $TeamsBowlingHead =    array("Bowler"  ,  'Overs' ,  'Madiens'	,  'Runs' , "Wickets"  ,  'Wides' , 	'No Balls' , 	'Hattricks' ,	'Dot Balls');
+                array_push($data , $TeamsBowlingHead); 
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+
+                ///////////////////////////////////  Team one Fall of wickets
+
+                array_push($data , $empyt);  
+                $teamOneNFallOfWickets =    array($teams_one." Fall Of Wickets");
+                array_push($data , $teamOneNFallOfWickets);
+                array_push($data , $empyt); 
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+
+                 ///////////////////////////////////  Team two Batting
+
+
+
+                array_push($data , $empyt); 
+                array_push($data , $empyt); 
+                
+                $BattingteamTwoName =    array(" " , " " ,  $teams_two." Batting");
+                array_push($data , $BattingteamTwoName);  
+                $empyt = [] ;
+                array_push($data , $empyt); 
+
+                foreach ($player_runs as $item) 
+                {
+                  if ($item->inningnumber==2)
+                  {
+                  $player_detail2 = array( $player[$item->playerId] , "L Tucker" ,"C Young" , "G Dockrell"  ,$item->total_runs  , $player_balls[$item->playerId]  , $item->total_fours  , $item->total_six);
+                  array_push($data , $player_detail2);   
+                  }
+                  
+                }
+                //////////////////////////////////////////////////////////////////////////////////////////
+
+                ///////////////////////////////////  Team one Bowling
+
+                array_push($data , $empyt);  
+                $BowlingteamOneName =    array(" " , " " ,  $teams_one." Bowling");
+                array_push($data , $BowlingteamOneName); 
+                array_push($data , $empyt); 
+                // $TeamsBowlingHead =    array("Bowler"  ,  'Overs' ,  'Madiens'	,  'Runs' , "Wickets"  ,  'Wides' , 	'No Balls' , 	'Hattricks' ,	'Dot Balls');
+                array_push($data , $TeamsBowlingHead); 
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+
+                ///////////////////////////////////  Team two Fall of wickets
+                array_push($data , $empyt);  
+                $teamTwoNFallOfWickets =    array($teams_two." Fall Of Wickets");
+                array_push($data , $teamTwoNFallOfWickets);
+                array_push($data , $empyt); 
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+
+                 
+
+
+                $file = fopen('php://temp', 'w');
+
+        // Write data to the file
+        foreach ($data as $row) {
+            fputcsv($file, $row);
+        }
+
+        // Set the file headers
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="scoreCard.csv"',
+        ];
+
+        // Create the response and return it
+        return Response::stream(function () use ($file) {
+            rewind($file);
+            echo stream_get_contents($file);
+            fclose($file);
+        }, 200, $headers);
+
+
+
+                dd( $data) ;
+        // return view('score_card',compact('player_runs', 'teams_one','teams_two','player_balls','match_results','teams','player','tournament','ground','match_data'));
 
     }
 
