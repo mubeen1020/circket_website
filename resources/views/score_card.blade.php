@@ -781,7 +781,7 @@
       														</div>
       														<img alt="Print" title="Print" style="cursor:pointer;" src="/utilsv2/images/print.png" onclick="printScorecard();" width="32" height="32">&nbsp;
 												   			<img alt="Download as PDF" title="Download as PDF" style="cursor:pointer;" src="/utilsv2/images/pdf.png" onclick="pdfScorecard();" width="32" height="32">&nbsp;
-												    		<a href="/MississaugaCricketLeague/viewScorecardExcel.do?matchId=3323&amp;clubId=2565"><img alt="Download as Excel" title="Download as Excel" class="excelBtn" style="cursor:pointer;" src="/utilsv2/images/excel.png" width="32" height="32"></a>
+												    		<a href="{{ route('downloadCSV', $match_results[0]->id) }}"><img alt="Download as Excel" title="Download as Excel" class="excelBtn" style="cursor:pointer;" src="/utilsv2/images/excel.png" width="32" height="32"></a>
 												    	</div><br>
 							                        </div>
 							                        <font size="1"></font><table class="table"> 
