@@ -21,6 +21,7 @@ use App\Models\TournamentGroup;
 use App\Models\TournamentPlayer;
 use App\Models\GalleryImages;
 use App\Models\Season;
+use App\Models\Sponsor;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -112,9 +113,13 @@ class HomeController extends Controller
           ->where('isActive','=',1)
           ->get();
 
+          $sponsor_gallery =Sponsor::query()
+          ->where('isActive','=',1)
+          ->get();
+
         //  dd($image_slider);
 
-        return view('home',compact('tournament','tournament_season' ,'match_results','teams','upcoming_match','ground','image_gallery','image_slider'));
+        return view('home',compact('tournament','tournament_season' ,'match_results','teams','upcoming_match','ground','image_gallery','image_slider' , 'sponsor_gallery'));
     }
 
 
@@ -234,7 +239,11 @@ class HomeController extends Controller
   ->where('isActive','=',1)
   ->get();
 
-  return view('ballbyballscorecard',compact('team_one_run_rate','team_two_run_rate','teams_one','match_total_overs' ,'match_data', 'teams_two','match_detail','match_results','teams','player','total_run','total_wickets','total_overs','tournament','teams_two_player','teams_one_player' , 'image_gallery')); 
+  $sponsor_gallery =Sponsor::query()
+  ->where('isActive','=',1)
+  ->get();
+
+  return view('ballbyballscorecard',compact('team_one_run_rate','team_two_run_rate','teams_one','match_total_overs' ,'match_data', 'teams_two','match_detail','match_results','teams','player','total_run','total_wickets','total_overs','tournament','teams_two_player','teams_one_player' , 'image_gallery' , 'sponsor_gallery')); 
 }
 
     
@@ -267,9 +276,14 @@ class HomeController extends Controller
         $image_gallery =GalleryImages::query()
         ->where('isActive','=',1)
         ->get();
+
+        $sponsor_gallery =Sponsor::query()
+        ->where('isActive','=',1)
+        ->get();
+      
       
 
-        return view('score_overbyover', compact('scores','match_results','teams','player','teams_one','teams_two' , 'image_gallery'));
+        return view('score_overbyover', compact('scores','match_results','teams','player','teams_one','teams_two' , 'image_gallery' , 'sponsor_gallery'));
 
     }
 
@@ -333,8 +347,12 @@ class HomeController extends Controller
                 ->where('isActive','=',1)
                 ->get();
 
+                $sponsor_gallery =Sponsor::query()
+                ->where('isActive','=',1)
+                ->get();
 
-        return view('score_card',compact('player_runs', 'teams_one','teams_two','player_balls','match_results','teams','player','tournament','ground','match_data' , 'image_gallery'));
+
+        return view('score_card',compact('player_runs', 'teams_one','teams_two','player_balls','match_results','teams','player','tournament','ground','match_data' , 'image_gallery' , 'sponsor_gallery'));
 
     }
 
@@ -531,7 +549,12 @@ class HomeController extends Controller
         $image_gallery =GalleryImages::query()
         ->where('isActive','=',1)
         ->get();
-        return view('search_player',compact('result','match_results','teams' , 'image_gallery'));
+
+        $sponsor_gallery =Sponsor::query()
+        ->where('isActive','=',1)
+        ->get();
+
+        return view('search_player',compact('result','match_results','teams' , 'image_gallery' , 'sponsor_gallery'));
 
     }
 
@@ -564,8 +587,11 @@ class HomeController extends Controller
         ->where('isActive','=',1)
         ->get();
 
+        $sponsor_gallery =Sponsor::query()
+        ->where('isActive','=',1)
+        ->get();
         
-        return view('search_player',compact('result','match_results' , 'image_gallery'));
+        return view('search_player',compact('result','match_results' , 'image_gallery' , 'sponsor_gallery'));
     }
     
     public function result()
@@ -589,7 +615,11 @@ class HomeController extends Controller
       ->where('isActive','=',1)
       ->get();
 
-        return view('result',compact('results','match_results','teams','tournament','teams' , "image_gallery"));
+      $sponsor_gallery =Sponsor::query()
+      ->where('isActive','=',1)
+      ->get();
+
+        return view('result',compact('results','match_results','teams','tournament','teams' , "image_gallery" , 'sponsor_gallery'));
     }
 
     public function result_form_submit(Request $request)
@@ -671,7 +701,13 @@ class HomeController extends Controller
         ->where('isActive','=',1)
         ->get();
 
-        return view('result', compact('results', 'teams', 'match_results', 'years', 'tournament','total_run_fixture','total_runs', 'total_wicket_fixture' , 'image_gallery'));
+
+        $sponsor_gallery =Sponsor::query()
+        ->where('isActive','=',1)
+        ->get();
+  
+
+        return view('result', compact('results', 'teams', 'match_results', 'years', 'tournament','total_run_fixture','total_runs', 'total_wicket_fixture' , 'image_gallery' , 'sponsor_gallery'));
     }
     
   
@@ -714,7 +750,11 @@ class HomeController extends Controller
         ->where('isActive','=',1)
         ->get();
 
-        return view('team_view', compact('team_id_data','tournament_ids','team_resultData','teamData', 'playerCount','match_results', 'teams', 'player', 'ground', 'tournamentData', 'tournament','teamPlayerCount','teamPlayers' , "image_gallery"));
+        $sponsor_gallery =Sponsor::query()
+        ->where('isActive','=',1)
+        ->get();
+
+        return view('team_view', compact('team_id_data','tournament_ids','team_resultData','teamData', 'playerCount','match_results', 'teams', 'player', 'ground', 'tournamentData', 'tournament','teamPlayerCount','teamPlayers' , "image_gallery" , 'sponsor_gallery'));
     }
 
     public function team_result(int $team_id,int $tournament_id){
@@ -793,8 +833,12 @@ class HomeController extends Controller
         $image_gallery =GalleryImages::query()
         ->where('isActive','=',1)
         ->get();
+
+        $sponsor_gallery =Sponsor::query()
+        ->where('isActive','=',1)
+        ->get();
               
-      return view('team_result', compact('tournamentData', 'tournament_ids','player','teamCaptain','teamPlayerCount','teamPlayers','team_resultData','team_resultData1','teamData','match_results', 'teams', 'tournament','total_run_fixture','total_runs', 'total_wicket_fixture','team_id_data' , 'image_gallery'));
+      return view('team_result', compact('tournamentData', 'tournament_ids','player','teamCaptain','teamPlayerCount','teamPlayers','team_resultData','team_resultData1','teamData','match_results', 'teams', 'tournament','total_run_fixture','total_runs', 'total_wicket_fixture','team_id_data' , 'image_gallery' , 'sponsor_gallery'));
   }
 
 
@@ -853,7 +897,11 @@ class HomeController extends Controller
   ->where('isActive','=',1)
   ->get();
 
-    return view('team_schedule', compact( 'teamData', 'tournament_ids','match_results', 'teams', 'player', 'ground', 'tournamentData', 'tournament','teamPlayerCount','team_resultData', 'teamPlayers', 'team_id_data', 'team_scheduleData' , "image_gallery"));
+  $sponsor_gallery =Sponsor::query()
+  ->where('isActive','=',1)
+  ->get();
+
+    return view('team_schedule', compact( 'teamData', 'tournament_ids','match_results', 'teams', 'player', 'ground', 'tournamentData', 'tournament','teamPlayerCount','team_resultData', 'teamPlayers', 'team_id_data', 'team_scheduleData' , "image_gallery" , 'sponsor_gallery'));
 }
 
 public function team_batting(int $team_id,int $tournament_id){
@@ -963,8 +1011,12 @@ $image_gallery =GalleryImages::query()
   ->where('isActive','=',1)
   ->get();
 
+  $sponsor_gallery =Sponsor::query()
+  ->where('isActive','=',1)
+  ->get();
 
-  return view('team_batting', compact('teamData', 'tournament_ids','match_results', 'teams', 'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount','team_resultData', 'teamPlayers', 'team_id_data', 'team_battingdata', 'match_count_player', 'player_runs', 'balls_faced','fours','sixes' , "image_gallery"));
+
+  return view('team_batting', compact('teamData', 'tournament_ids','match_results', 'teams', 'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount','team_resultData', 'teamPlayers', 'team_id_data', 'team_battingdata', 'match_count_player', 'player_runs', 'balls_faced','fours','sixes' , "image_gallery" , 'sponsor_gallery'));
 
 }
 
@@ -1022,7 +1074,11 @@ public function team_bowling(int $team_id,int $tournament_id){
   ->where('isActive','=',1)
   ->get();
 
-  return view('team_bowling', compact('tournamentData', 'tournament_ids','player','teamPlayerCount','team_resultData','teamPlayers','teamData','match_results', 'teams','tournament','team_id_data','team_bowlingdata' , 'image_gallery'));
+  $sponsor_gallery =Sponsor::query()
+  ->where('isActive','=',1)
+  ->get();
+
+  return view('team_bowling', compact('tournamentData', 'tournament_ids','player','teamPlayerCount','team_resultData','teamPlayers','teamData','match_results', 'teams','tournament','team_id_data','team_bowlingdata' , 'image_gallery' , 'sponsor_gallery'));
 }
     
 public function team_fielding(int $team_id,int $tournament_id){
@@ -1070,7 +1126,11 @@ public function team_fielding(int $team_id,int $tournament_id){
   ->where('isActive','=',1)
   ->get();
 
-  return view('team_fielding', compact('tournamentData', 'player','teamPlayers','teamData','match_results', 'teams','tournament','team_id_data','team_bowlingdata','teamPlayerCount','team_resultData','tournament_ids' , 'image_gallery'));
+  $sponsor_gallery =Sponsor::query()
+  ->where('isActive','=',1)
+  ->get();
+
+  return view('team_fielding', compact('tournamentData', 'player','teamPlayers','teamData','match_results', 'teams','tournament','team_id_data','team_bowlingdata','teamPlayerCount','team_resultData','tournament_ids' , 'image_gallery'  ,'sponsor_gallery'));
 }
 
 
@@ -1122,7 +1182,11 @@ public function batting_states()
       ->where('isActive','=',1)
       ->get();
 
-    return view('batting_states',compact('tournament','match_results','teams','ground' , 'image_gallery'));
+      $sponsor_gallery =Sponsor::query()
+  ->where('isActive','=',1)
+  ->get();
+
+    return view('batting_states',compact('tournament','match_results','teams','ground' , 'image_gallery' , "sponsor_gallery"));
 }
 
     

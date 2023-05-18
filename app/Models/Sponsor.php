@@ -37,6 +37,7 @@ class Sponsor extends Model
 	protected $fillable = [
 		'name',
 		'email',
+		'image',
 		'website',
 		'createdby',
 		'domain_id',

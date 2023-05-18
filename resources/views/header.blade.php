@@ -283,7 +283,7 @@
 
                         <div class="col-sm-4    hidden-phone slider " style="overflow-x: hidden;  padding-top: 20px;">
                             <div class="slick-carousel-header" id="navbarSlider" style="display:flex;">
-                                @foreach($image_gallery as $image)
+                                @foreach($sponsor_gallery as $image)
                                 <div class="gallery-image-all">
                                     <div class="gallery-image">
                                         <img src="data:image/png;base64,{{ $image->image }}" alt="{{ $image->title }}" class="img-responsive center-block" style="width: 100px; height: 100px;" />
