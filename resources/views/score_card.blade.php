@@ -73,7 +73,7 @@
                                                                    
                                                                         	<img src="https://cricclubs.com/documentsRep/profilePics/b8e79395-ac46-4e68-b8a5-5ae31d78ee59.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	
                                                                         
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1207430&amp;clubId=2565"><b>{{$player[$item->playerId]}}</b> </a>
+                                                                        	<a href=""><b>{{$player[$item->playerId]}}</b> </a>
                                                                         	<a style="display:none" id="btm_video_1207430" href="javascript:openVideoHTMLvs('1207430','bt', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	<div class="scorecard-out-text show-phone" style="margin-left:34px;">c <a href="viewPlayer.do?playerId=1277414&amp;clubId=2565">Sandy D</a> b <a href="viewPlayer.do?playerId=2993131&amp;clubId=2565">Shubh A P</a><a style="display:none" id="bthowOutPH_video_1207430" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	</div>
@@ -118,7 +118,7 @@
                                                                 <table class="table">
                                                                     <tbody><tr> 
                                                                         <th colspan="7">Did not bat: &nbsp;&nbsp;
-                                                                        <i class="fa fa-user"></i> <a href="/MississaugaCricketLeague/viewPlayer.do?playerId=900891&amp;clubId=2565"><b>Saad Haroon</b></a>*, <i class="fa fa-user"></i> <a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2167309&amp;clubId=2565"><b>Khawar Azad</b></a>, <i class="fa fa-user"></i> <a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2770791&amp;clubId=2565"><b>Aziz Hassan</b></a></th>
+                                                                        <i class="fa fa-user"></i> <a href=""><b>Saad Haroon</b></a>*, <i class="fa fa-user"></i> <a href=""><b>Khawar Azad</b></a>, <i class="fa fa-user"></i> <a href=""><b>Aziz Hassan</b></a></th>
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
@@ -154,7 +154,7 @@
 															      	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
                                                                     </th>
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3054417&amp;clubId=2565"><b>Rohit Miglani</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Rohit Miglani</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">3.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -171,7 +171,7 @@
 															      	<img src="https://cricclubs.com/documentsRep/profilePics/7216d4b9-4a00-4ee3-bd5c-99eebb0c7936.jpeg" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
                                                                     </th>
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2993131&amp;clubId=2565"><b>Shubh A Patel</b></a><a style="display:none" id="bwl_video_2993131" href="javascript:openVideoHTMLvs('2993131','bwl', 'Shubh A Patel');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Shubh A Patel</b></a><a style="display:none" id="bwl_video_2993131" href="javascript:openVideoHTMLvs('2993131','bwl', 'Shubh A Patel');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">2.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -189,7 +189,7 @@
 															      	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
                                                                     </th>
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3088351&amp;clubId=2565"><b>Rohit Arora</b></a><a style="display:none" id="bwl_video_3088351" href="javascript:openVideoHTMLvs('3088351','bwl', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Rohit Arora</b></a><a style="display:none" id="bwl_video_3088351" href="javascript:openVideoHTMLvs('3088351','bwl', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">3.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -206,7 +206,7 @@
 															      	<img src="https://cricclubs.com/documentsRep/profilePics/a052f5b9-f07c-4597-9fa8-ccf72ba021c3.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
                                                                     </th>
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2155902&amp;clubId=2565"><b>Jival Sachdeva</b></a><a style="display:none" id="bwl_video_2155902" href="javascript:openVideoHTMLvs('2155902','bwl', 'Jival Sachdeva');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Jival Sachdeva</b></a><a style="display:none" id="bwl_video_2155902" href="javascript:openVideoHTMLvs('2155902','bwl', 'Jival Sachdeva');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">2.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -224,7 +224,7 @@
 															      	<img src="https://cricclubs.com/documentsRep/profilePics/e3eded48-ec87-4508-a149-0a192784861d.jpg" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
                                                                     </th>
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1287040&amp;clubId=2565"><b>Prashant Sachdeva</b></a>*<a style="display:none" id="bwl_video_1287040" href="javascript:openVideoHTMLvs('1287040','bwl', 'Prashant Sachdeva');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Prashant Sachdeva</b></a>*<a style="display:none" id="bwl_video_1287040" href="javascript:openVideoHTMLvs('1287040','bwl', 'Prashant Sachdeva');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">1.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -241,7 +241,7 @@
 															      	<img src="https://cricclubs.com/documentsRep/profilePics/66f17808-5d5e-48f7-83e9-ffc27ddc140a.jpeg" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
                                                                     </th>
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2617639&amp;clubId=2565"><b>Junesh Thapasi Muthu</b></a><a style="display:none" id="bwl_video_2617639" href="javascript:openVideoHTMLvs('2617639','bwl', 'Junesh Thapasi Muthu');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Junesh Thapasi Muthu</b></a><a style="display:none" id="bwl_video_2617639" href="javascript:openVideoHTMLvs('2617639','bwl', 'Junesh Thapasi Muthu');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">1.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -272,7 +272,7 @@
 		                                                            <div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1207430&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/b8e79395-ac46-4e68-b8a5-5ae31d78ee59.png" class="img-responsive center-block">	 
 		                                                                            	
 		                                                                            	
@@ -291,7 +291,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2237865&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
 		                                                                            	
 		                                                                            	
@@ -310,7 +310,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1290963&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
 		                                                                            	
 		                                                                            	
@@ -329,7 +329,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3103735&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
 		                                                                            	
 		                                                                            	
@@ -348,7 +348,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=941674&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/e8b0d6d5-494d-4615-8832-66d07113eab5.png" class="img-responsive center-block">	 
 		                                                                            	
 		                                                                            	
@@ -367,7 +367,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1036746&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/14461a6d-3328-446b-9e27-82e35cf05d6f.jpeg" class="img-responsive center-block">	 
 		                                                                            	
 		                                                                            	
@@ -419,7 +419,7 @@
                                                                     <th><!-- <i class="fa fa-user"></i> -->
                                                                         <img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
                                                                         
-                                                                          <a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3088351&amp;clubId=2565"><b> {{$player[$item->playerId]}}</b> </a>
+                                                                          <a href=""><b> {{$player[$item->playerId]}}</b> </a>
                                                                         	<a style="display:none" id="btm_video_3088351" href="javascript:openVideoHTMLvs('3088351','bt', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         <div class="scorecard-out-text show-phone" style="margin-left:34px">b <a href="viewPlayer.do?playerId=2674040&amp;clubId=2565">Irfan S</a><a style="display:none" id="bthowOutPH_video_3088351" href="javascript:openVideoHTMLvs('3088351','out', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	</div>
@@ -459,7 +459,7 @@
                                                                     <table class="table"> 
                                                                     <tbody><tr> 
                                                                         <th colspan="7">Did not bat: &nbsp;&nbsp;
-                                                                        <i class="fa fa-user"></i><a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3207242&amp;clubId=2565"><b>Niral Kumar</b></a>, <i class="fa fa-user"></i><a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3207293&amp;clubId=2565"><b>Bikram Sandhu</b></a></th>
+                                                                        <i class="fa fa-user"></i><a href=""><b>Niral Kumar</b></a>, <i class="fa fa-user"></i><a href=""><b>Bikram Sandhu</b></a></th>
                                                                     </tr>
                                                                     
                                                                 </tbody></table>
@@ -495,7 +495,7 @@
 																		<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
 																	</th> 
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2674040&amp;clubId=2565"><b>Irfan Sadaat</b></a><a style="display:none" id="bwl_video_2674040" href="javascript:openVideoHTMLvs('2674040','bwl', 'Irfan Sadaat');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Irfan Sadaat</b></a><a style="display:none" id="bwl_video_2674040" href="javascript:openVideoHTMLvs('2674040','bwl', 'Irfan Sadaat');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">2.4</th>
                                                                           <th style="text-align: right;">0</th>
@@ -513,7 +513,7 @@
 																		<img src="https://cricclubs.com/documentsRep/profilePics/ded9fcde-c763-4134-ac0b-e76970da84a4.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
 																	</th> 
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1207349&amp;clubId=2565"><b>Imran Samdani</b></a><a style="display:none" id="bwl_video_1207349" href="javascript:openVideoHTMLvs('1207349','bwl', 'Imran Samdani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Imran Samdani</b></a><a style="display:none" id="bwl_video_1207349" href="javascript:openVideoHTMLvs('1207349','bwl', 'Imran Samdani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">2.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -530,7 +530,7 @@
 																		<img src="https://cricclubs.com/documentsRep/profilePics/e8b0d6d5-494d-4615-8832-66d07113eab5.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
 																	</th> 
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=941674&amp;clubId=2565"><b>Manik Sharma</b></a><a style="display:none" id="bwl_video_941674" href="javascript:openVideoHTMLvs('941674','bwl', 'Manik Sharma');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Manik Sharma</b></a><a style="display:none" id="bwl_video_941674" href="javascript:openVideoHTMLvs('941674','bwl', 'Manik Sharma');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">1.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -547,7 +547,7 @@
 																		<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
 																	</th> 
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2237865&amp;clubId=2565"><b>Abdullah Abbas</b></a><a style="display:none" id="bwl_video_2237865" href="javascript:openVideoHTMLvs('2237865','bwl', 'Abdullah Abbas');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Abdullah Abbas</b></a><a style="display:none" id="bwl_video_2237865" href="javascript:openVideoHTMLvs('2237865','bwl', 'Abdullah Abbas');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">2.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -564,7 +564,7 @@
 																		<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
 																	</th> 
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3103735&amp;clubId=2565"><b>Saood Pirzada</b></a><a style="display:none" id="bwl_video_3103735" href="javascript:openVideoHTMLvs('3103735','bwl', 'Saood Pirzada');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Saood Pirzada</b></a><a style="display:none" id="bwl_video_3103735" href="javascript:openVideoHTMLvs('3103735','bwl', 'Saood Pirzada');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">2.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -581,7 +581,7 @@
 																		<img src="https://cricclubs.com/documentsRep/profilePics/14461a6d-3328-446b-9e27-82e35cf05d6f.jpeg" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
 																	</th> 
                                                                         <th>
-                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1036746&amp;clubId=2565"><b>Muhammad Salman Arshad</b></a><a style="display:none" id="bwl_video_1036746" href="javascript:openVideoHTMLvs('1036746','bwl', 'Muhammad Salman Arshad');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>Muhammad Salman Arshad</b></a><a style="display:none" id="bwl_video_1036746" href="javascript:openVideoHTMLvs('1036746','bwl', 'Muhammad Salman Arshad');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">1.0</th>
                                                                           <th style="text-align: right;">0</th>
@@ -611,7 +611,7 @@
 		                                                            <div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3088351&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">
 		                                                                            	</a>
 		                                                                            	</div>
@@ -629,7 +629,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3054417&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">
 		                                                                            	</a>
 		                                                                            	</div>
@@ -647,7 +647,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2617639&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/66f17808-5d5e-48f7-83e9-ffc27ddc140a.jpeg" class="img-responsive center-block">
 		                                                                            	</a>
 		                                                                            	</div>
@@ -665,7 +665,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2993131&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/7216d4b9-4a00-4ee3-bd5c-99eebb0c7936.jpeg" class="img-responsive center-block">
 		                                                                            	</a>
 		                                                                            	</div>
@@ -683,7 +683,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2155902&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/a052f5b9-f07c-4597-9fa8-ccf72ba021c3.png" class="img-responsive center-block">
 		                                                                            	</a>
 		                                                                            	</div>
@@ -701,7 +701,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1277414&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/4b652093-bde7-4ffe-b316-1a9d22dcb530.png" class="img-responsive center-block">
 		                                                                            	</a>
 		                                                                            	</div>
@@ -719,7 +719,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1287040&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/e3eded48-ec87-4508-a149-0a192784861d.jpg" class="img-responsive center-block">
 		                                                                            	</a>
 		                                                                            	</div>
@@ -737,7 +737,7 @@
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
-		                                                                        	<a href="/MississaugaCricketLeague/viewPlayer.do?playerId=1277889&amp;clubId=2565">
+		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/04a9757e-fe42-4d15-a2d1-b4a4cc879802.png" class="img-responsive center-block">
 		                                                                            	</a>
 		                                                                            	</div>
@@ -777,7 +777,7 @@
 								                        </div>
 							                            <div class="exportOptions-panel" style="float:right">
 							                            <div style="text-align: right;padding-left: 10px;">
-      															<a href="javascript:window.open('/MississaugaCricketLeague/paperScoreCard.do?matchId=3323&amp;clubId=2565');" class="btn btn-default dropdown-toggle">Paper Score Card</a>
+      															<a href="javascript:window.open('');" class="btn btn-default dropdown-toggle">Paper Score Card</a>
       														</div>
       														<img alt="Print" title="Print" style="cursor:pointer;" src="/utilsv2/images/print.png" onclick="printScorecard();" width="32" height="32">&nbsp;
 												   			<img alt="Download as PDF" title="Download as PDF" style="cursor:pointer;" src="/utilsv2/images/pdf.png" onclick="pdfScorecard();" width="32" height="32">&nbsp;
@@ -818,10 +818,10 @@
 							                            </tr>
 							                            <tr> 
 							                                <th>Player of the Match:</th> 
-							                                <th><a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2674040&amp;clubId=2565">Irfan Sadaat</a></th>
+							                                <th><a href="">Irfan Sadaat</a></th>
 							                            </tr>
 							                            <tr>															
-														<th style="padding: 0px 0px"><table><tbody><tr><th><strong>Umpires: </strong> </th></tr></tbody></table></th><th style="padding: 0px 5px"><table><tbody><tr><th style="padding: 0px 5px">1. <a style="color: inherit;" href="/MississaugaCricketLeague/viewUmpire.do?umpireUId=1005249&amp;clubId=2565">Saurabh Naik</a></th></tr><tr><th style="padding: 0px 5px">2. <a style="color: inherit;" href="/MississaugaCricketLeague/viewUmpire.do?umpireUId=1723176&amp;clubId=2565">Syed Muhammad Talha Anwar</a></th></tr></tbody></table></th>  
+														<th style="padding: 0px 0px"><table><tbody><tr><th><strong>Umpires: </strong> </th></tr></tbody></table></th><th style="padding: 0px 5px"><table><tbody><tr><th style="padding: 0px 5px">1. <a style="color: inherit;" href="">Saurabh Naik</a></th></tr><tr><th style="padding: 0px 5px">2. <a style="color: inherit;" href="">Syed Muhammad Talha Anwar</a></th></tr></tbody></table></th>  
 														</tr>
 														<tr>
 															<th><strong>Location: </strong> </th><th> {{$ground[$match_data->ground_id]}}</th>

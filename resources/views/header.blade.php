@@ -3,17 +3,17 @@
 
 <head>
     <meta name="google-signin-client_id"
-        content="37993414980-3v8609c875ro3cu4g49guio8sq6din03.apps.googleusercontent.com">
+        content="">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta property="fb:app_id" content="745734118815722" />
-    <meta property='og:image'
-        content='http://cricclubs.com/documentsRep/logos/e0190050-f4f7-4083-b1ca-8771d60a6698.jpg' />
+    <meta property="" content="" />
+    <meta property=''
+        content='' />
     <title>EOSCL(Event Ontario Softball Circket)</title>
-    <meta name='description' content='Mississauga Cricket League,Mississauga' />
-    <meta name='keywords' content='Mississauga Cricket League,' />
-    <meta property='og:title' content='Mississauga Cricket League' />
-    <meta property='og:description' content='Mississauga Cricket League,Mississauga' />
+    <meta name='description' content='' />
+    <meta name='keywords' content=',' />
+    <meta property='og:title' content='' />
+    <meta property='og:description' content='' />
     <meta property='og:type' content='website' />
     <!-- CSS -->
     <link href="/utilsv2/app/assets/css/main.css" rel="stylesheet">
@@ -188,24 +188,7 @@
 
 
     </style>
-    <!-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>  
-  
-  <script>
-  
-    var OneSignal = window.OneSignal || [];
-    OneSignal.push(["init", {
-      appId: "6921d65b-404d-49cc-87c8-97c3f609d215",
-      autoRegister: false,
-      notifyButton: {
-        enable: true /* Set to false to hide */
-      }
-    }]);
-    
-  </script> -->
-
-    <!-- FAVICONS -->
-    <link rel="shortcut icon" href="utilsv2/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="{!! asset('utilsv2/favicon.ico') !!}" type="image/x-icon">
+   
     <script type="text/javascript" src="{!! asset('utilsv2/js/jquery-1.9.1.min.js') !!}" language="javascript"></script>
 
     <script type="text/javascript" src="{!! asset('utilsv2/js/compressed-premium.js') !!}" language="javascript">
@@ -244,14 +227,14 @@
                                 <table>
                                     <tr>
                                         <td style='width:100px;height:100px;'><a
-                                                href="MississaugaCricketLeague.html"><img
+                                                href=""><img
                                                     src="{{ asset('utilsv2/img/others/eoscl-logo.png') }}" border="0"
                                                     style='width:100px;height:100px;'
                                                     class="img-responsive center-block img-circle" /></a>
 
                                         </td>
                                         <td style="padding-left:8px;">
-                                            <a href="MississaugaCricketLeague.html"
+                                            <a href=""
                                                 style="text-decoration: none; display: inline-block;">
                                                 <font class="logo-name" size="5" style="color: white; font-size: 2rem;">
                                                     Event Ontario Softball Circket</font>
@@ -494,7 +477,7 @@ function scrollToCurrentSlide() {
 }
 
 // Automatically move to the next slide every 3 seconds (3000 milliseconds)
-var intervalId = setInterval(nextSlide, 5000);
+var intervalId = setInterval(nextSlide, 2000);
 
 // Stop the automatic sliding when the mouse is over the navbar slider
 navbarSlider.addEventListener("mouseover", function() {
@@ -503,7 +486,7 @@ navbarSlider.addEventListener("mouseover", function() {
 
 // Resume the automatic sliding when the mouse leaves the navbar slider
 navbarSlider.addEventListener("mouseout", function() {
-    intervalId = setInterval(nextSlide, 5000);
+    intervalId = setInterval(nextSlide, 2000);
 });
 
         </script>

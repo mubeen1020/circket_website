@@ -23,7 +23,7 @@
 									<div class="col-sm-10">
 										<div class="team-text-in text-left">
 											<h4 style="margin-top: 0px;">{{$teamData[0]->name}}
-												(<a href="/MississaugaCricketLeague/viewLeague.do?league=114&amp;clubId=2565">{{$tournament[$tournamentData]}}</a>)
+												(<a href="">{{$tournament[$tournamentData]}}</a>)
 												</h4>
 											<!--  <p><span>Team Code </span>      :   <span style="text-transform: uppercase">kbu</span></p>-->
 
@@ -46,7 +46,7 @@
 												{{$teamPlayerCount}}
 											</p>
 											<p>
-												<span>Home Ground</span> : <b><a href="/MississaugaCricketLeague/viewGround.do?groundId=43&amp;clubId=2565">Wet n Wild</a></b>
+												<span>Home Ground</span> : <b><a href="">Wet n Wild</a></b>
 											</p>
 											</div>
 									</div>
@@ -113,7 +113,7 @@ $(document).ready(function() {
 	      buttons: {
 	        "Delete": function() {
 	        	var matchId = $("#deleteId").val();
-	        	var ajaxUrl = '/MississaugaCricketLeague/deleteMatch.do?clubId=2565&matchId=' + matchId;
+	        	var ajaxUrl = '' + matchId;
 	        	$.ajax({url:ajaxUrl,
 	        		success:function(result){
 	        			$("#deleteRow"+matchId).remove();
@@ -145,7 +145,7 @@ $(document).ready(function() {
 	      buttons: {
 	        "Lock": function() {
 	        	var matchId = $("#lockId").val();
-	        	var ajaxUrl = '/MississaugaCricketLeague/lockMatch.do?clubId=2565&matchId=' + matchId;
+	        	var ajaxUrl = '' + matchId;
 	        	$.ajax({url:ajaxUrl,success:function(result){
 	        			if(result == 'success'){
 	        				 $("#lockLink"+matchId).attr('href', "javascript:unLockMatch("+matchId+",\""+ $("#lockMessage").html() + "\");");
@@ -174,7 +174,7 @@ $(document).ready(function() {
 	      buttons: {
 	        "UnLock": function() {
 	        	var matchId = $("#unLockId").val();
-	        	var ajaxUrl = '/MississaugaCricketLeague/unLockMatch.do?clubId=2565&matchId=' + matchId;
+	        	var ajaxUrl = '' + matchId;
 	        	$.ajax({url:ajaxUrl,success:function(result){
 
 	        		if(result == 'success'){
@@ -315,10 +315,10 @@ margin-top: 15px;}
                             <div class="col-xs-8 col-sm-3 p-sm-0 mobile-b">
                               <div class="schedule-logo text-center h-90">
                                   <ul class="list-inline" style="color: #fff;">
-                                  <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=827&amp;clubId=2565">
+                                  <li><a href="">
                                   <img src="https://cricclubs.com/documentsRep/teamLogos/61443e16-7f18-452a-a807-040ce00e712d.jpg" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
                                         v 
-                                  <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=828&amp;clubId=2565">
+                                  <li><a href="">
                                   <img src="https://cricclubs.com/documentsRep/teamLogos/6f5eb596-2586-4481-b2aa-9f1534df25da.jpg" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
                                     </ul>
                                 </div>
@@ -326,9 +326,9 @@ margin-top: 15px;}
                             <div class="col-xs-12 col-sm-5">
                               <div class="schedule-text">
                                <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]}}</p>
-                                  <h3><a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=827&amp;clubId=2565">{{$teams[$data->team_id_a]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=828&amp;clubId=2565">{{$teams[$data->team_id_b]}}</a> </h3>
+                                  <h3><a style="color: inherit;" href="">{{$teams[$data->team_id_a]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="">{{$teams[$data->team_id_b]}}</a> </h3>
 
-                                    <h4>L @  <a style="color: inherit;" href="/MississaugaCricketLeague/viewGround.do?groundId=9&amp;clubId=2565" target="_new">Danville South</a>
+                                    <h4>L @  <a style="color: inherit;" href="" target="_new">Danville South</a>
                     
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Umpires: , ,, </h4>
                   

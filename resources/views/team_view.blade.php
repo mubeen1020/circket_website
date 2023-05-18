@@ -23,7 +23,7 @@
 									<div class="col-sm-10">
 										<div class="team-text-in text-left">
 											<h4 style="margin-top: 0px;">{{$teamData[0]->name}}
-												(<a href="/MississaugaCricketLeague/viewLeague.do?league=114&amp;clubId=2565">{{$tournament[$tournamentData]}}</a>)
+												(<a href="">{{$tournament[$tournamentData]}}</a>)
 												</h4>
 											<!--  <p><span>Team Code </span>      :   <span style="text-transform: uppercase">kbu</span></p>-->
 
@@ -46,7 +46,7 @@
 												{{$teamPlayerCount}}
 											</p>
 											<p>
-												<span>Home Ground</span> : <b><a href="/MississaugaCricketLeague/viewGround.do?groundId=43&amp;clubId=2565">Wet n Wild</a></b>
+												<span>Home Ground</span> : <b><a href="">Wet n Wild</a></b>
 											</p>
 											</div>
 									</div>
@@ -123,7 +123,7 @@
                                                 <div class="team-player-text text-center">
                                                 	<h4>{{ $player[$teamPlayer['player_id']] }}<img alt="Not Verified" title="Not Verified" src="https://cdn-icons-png.flaticon.com/512/7595/7595571.png" style="width: 30px;height: 30px;margin: 0px;"> </h4>
                                                    <h5></h5>
-                                             <a href="/MississaugaCricketLeague/viewPlayer.do?playerId=3071613&amp;clubId=2565" class="btn btn-team">View Profile <i class="fa fa-chevron-circle-right"></i></a>
+                                             <a href="" class="btn btn-team">View Profile <i class="fa fa-chevron-circle-right"></i></a>
 														</div>
 													</div>
 										</div>
