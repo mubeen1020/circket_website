@@ -17,26 +17,19 @@
     <meta property='og:type' content='website' />
     <!-- CSS -->
     <link href="/utilsv2/app/assets/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-        href="{!! asset('utilsv2/styles/jquery-ui-1.10.3.custom.css') !!}" media="all" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/styles/jquery-ui-1.10.3.custom.css') !!}" media="all" />
     <!-- NOTE :  Above Commented 13 CSS is compressed and minified into given below CSS -->
-    <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/css/compressed-premium.css') !!}"
-        media="all">
+    <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/css/compressed-premium.css') !!}" media="all">
     <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/peter_river.css') !!}" media="all">
-    <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/app/assets/css/sca.css') !!}"
-        media="all">
-    <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/css/customcc-v1.css') !!}"
-        media="all">
-    <link rel="stylesheet" type="text/css" media="screen"
-        href="{!! asset('utilsv2/css/setupplayerregistration.css') !!}" media="all">
+    <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/app/assets/css/sca.css') !!}" media="all">
+    <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/css/customcc-v1.css') !!}" media="all">
+    <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/css/setupplayerregistration.css') !!}" media="all">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" media="all" > -->
     <link rel="stylesheet" href="utilsv2/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- Add the slick-theme.css if you want default styling -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css" />
     <link rel="manifest" href="https://cricclubs.com/manifest.json">
@@ -46,147 +39,146 @@
     <link href="https://mottie.github.io/tablesorter/css/theme.default.css" rel="stylesheet">
 
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"/>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 
-    
+
 
     <style>
-    #mobile-header {
-        display: flex;
-        align-items: center;
-    }
-    .add-phone {
-        display: none;
-    }
+        #mobile-header {
+            display: flex;
+            align-items: center;
+        }
 
-    .match-content .carouseller .carousel-items {
-        display: -webkit-inline-box !important;
-    }
-
-    @media only screen and (min-width:248px) and (max-width:767px) {
-        .header-top-all {
-            display: flex !important;
-            justify-content: flex-start !important;
+        .add-phone {
+            display: none;
         }
 
         .match-content .carouseller .carousel-items {
             display: -webkit-inline-box !important;
         }
 
-        .add-phone {
-            display: block !important;
-            padding: 0px;
-            padding-bottom: 1rem;
-        }
+        @media only screen and (min-width:248px) and (max-width:767px) {
+            .header-top-all {
+                display: flex !important;
+                justify-content: flex-start !important;
+            }
 
-        #mobile-header {
-            display: inherit !important;
-            align-items: center;
-            width: 100% !important
-        }
+            .match-content .carouseller .carousel-items {
+                display: -webkit-inline-box !important;
+            }
 
-        .header-top-all .logo-name {
-            width: 100% !important;
-            display: inline-block;
+            .add-phone {
+                display: block !important;
+                padding: 0px;
+                padding-bottom: 1rem;
+            }
+
+            #mobile-header {
+                display: inherit !important;
+                align-items: center;
+                width: 100% !important
+            }
+
+            .header-top-all .logo-name {
+                width: 100% !important;
+                display: inline-block;
+            }
+
+            .web {
+                display: none !important;
+            }
+
+            .mobile {
+                display: block !important;
+            }
         }
 
         .web {
-            display: none !important;
+            display: block;
         }
 
         .mobile {
-            display: block !important;
+            display: none;
         }
-    }
 
-    .web {
-        display: block;
-    }
+        header .topl a:hover,
+        a:focus {
+            color: #337ab7 !important;
+        }
 
-    .mobile {
-        display: none;
-    }
+        #cookiefy_close {
+            border: green solid 2px;
+            top: 30% !important;
+            right: 2%;
 
-    header .topl a:hover,
-    a:focus {
-        color: #337ab7 !important;
-    }
+        }
 
-    #cookiefy_close {
-        border: green solid 2px;
-        top: 30% !important;
-        right: 2%;
+        #cookiefy_bar {
+            border: green solid 2px;
+            padding: 20px 0px !important;
+        }
 
-    }
+        .regspop:link {
+            color: blue !important;
+            border: none !important;
+        }
 
-    #cookiefy_bar {
-        border: green solid 2px;
-        padding: 20px 0px !important;
-    }
+        .sccimage {
+            width: 85px;
+            height: 85px;
+            display: inline !important;
+        }
 
-    .regspop:link {
-        color: blue !important;
-        border: none !important;
-    }
-
-    .sccimage {
-        width: 85px;
-        height: 85px;
-        display: inline !important;
-    }
-
-    .ui-dialog-titlebar-close:before {
-        content: "x";
-        align-content: center;
-    }
+        .ui-dialog-titlebar-close:before {
+            content: "x";
+            align-content: center;
+        }
 
 
-    .ui-dialog {
-        top: 50%;
-        left: 50%;
-        margin-left: -320px;
-        margin-top: -40px;
-    }
+        .ui-dialog {
+            top: 50%;
+            left: 50%;
+            margin-left: -320px;
+            margin-top: -40px;
+        }
 
-    .ui-dialog-titlebar-close {
-        padding: 0px 15px 28px 7px !important;
-        margin-top: -12px !important;
-    }
+        .ui-dialog-titlebar-close {
+            padding: 0px 15px 28px 7px !important;
+            margin-top: -12px !important;
+        }
 
-    table.btn-earth {
-        padding: 0px !important;
-    }
+        table.btn-earth {
+            padding: 0px !important;
+        }
 
-    .myTitleClass .ui-dialog-titlebar {
-        background: #fff;
-        color: #7b6b6b;
-    }
+        .myTitleClass .ui-dialog-titlebar {
+            background: #fff;
+            color: #7b6b6b;
+        }
 
-	.card {
-  grid-template-columns: 1fr 2fr;
-  background-color: #707372;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  height: 94px;
-  padding: 5px;
-  width: 176px;
-  text-align:center;
-  display: flex;
-    justify-content: center;
-    align-items: center;
-  /* margin-bottom:20px */
-}
+        .card {
+            grid-template-columns: 1fr 2fr;
+            background-color: #707372;
+            border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+            height: 94px;
+            padding: 5px;
+            width: 176px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* margin-bottom:20px */
+        }
 
 
 
-.btn:hover {
-  background-color: #3e8e41;
-}
-
-
+        .btn:hover {
+            background-color: #3e8e41;
+        }
     </style>
    
     <script type="text/javascript" src="{!! asset('utilsv2/js/jquery-1.9.1.min.js') !!}" language="javascript"></script>
@@ -199,18 +191,17 @@
     <script src="https://cdn.jsdelivr.net/jquery.cookiefy/1.0/jquery.cookiefy.min.js"></script>
     <script type="text/javascript" src="{!! asset('utilsv2/sortable.js') !!}"></script>
     <script type="text/javascript" src="{!! asset('utilsv2/app/assets/js/jquery.slimscroll.min.js') !!}"></script>
-<style>
-    #navbarSlider {
-    display: flex;
-    scroll-behavior: smooth;
-    white-space: nowrap;
-    margin-bottom: 15px;
-}
+    <style>
+        #navbarSlider {
+            display: flex;
+            scroll-behavior: smooth;
+            white-space: nowrap;
+            margin-bottom: 15px;
+        }
 
-.navbar-slide {
-    flex: 0 0 auto;
-}
-
+        .navbar-slide {
+            flex: 0 0 auto;
+        }
     </style>
 </head>
 
@@ -241,108 +232,57 @@
                                             </a>
                                         </td>
                                     </tr>
-									<tr>
-										<td>
-	
-										</td>
-                                   </tr>	
+                                    <tr>
+                                        <td>
+
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
 
-						<div style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-					
+                        <div style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
 
-						</div>
-<div id="navbarSlider" style="overflow-x: hidden;">
-@foreach($match_results as $match_result)           
-    <div class="navbar-slide" style="margin-left:15px;margin-right:15px;">
-        <div class="spon-image hvr-grow">
-            <a href='#' style='text-decoration: none;' target='_blank'>
-                <table class='thinBorder'>
-                    <tr>
-                        <td class='thinBorder' title='' style='padding:0px;height:90px;'>
-                            <div class="card">
-                                <div class="card-content">
-                                    <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span
-                                            style="color:white;font-weight:bold">{{$teams[$match_result->team_id_a]}} - vs - {{$teams[$match_result->team_id_b]}}</span></h6>
-                                    <p style="color:white">{{$match_result->match_result_description}}</p>
 
-                                </div>
+                        </div>
+                        <div id="navbarSlider" class="col-sm-3   hidden-phone slider " style="overflow-x: hidden;">
+                            @foreach($match_results as $match_result)
+                            <div class="navbar-slide" style="margin-left:15px;margin-right:15px;">
+                                <!-- <div class="spon-image hvr-grow"> -->
+                                <a href='#' style='text-decoration: none;' target='_blank'>
+                                    <table class='thinBorder'>
+                                        <tr>
+                                            <td class='thinBorder' title='' style='padding:0px;height:90px;'>
+                                                <div class="card">
+                                                    <div class="card-content">
+                                                        <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$teams[$match_result->team_id_a]}} - vs - {{$teams[$match_result->team_id_b]}}</span></h6>
+                                                        <p style="color:white">{{$match_result->match_result_description}}</p>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </a>
+                                <!-- </div> -->
                             </div>
-                        </td>
-                    </tr>
-                </table>
-            </a>
-        </div>
-    </div>
-    @endforeach
-</div>
+                            @endforeach
+                        </div>
 
 
 
-<div class="col-sm-8 hidden-phone slider "   style="overflow-x: hidden;">
-                            <div class="slick-carousel-header" id="navbarSlider"  style="display:flex;">
-
-                                <div style="margin-left:15px;margin-right:15px;/* display:flex; */" class="navbar-slide">
-                                    <div class="spon-image hvr-grow">
-                                        <a href='#' style='text-decoration: none;' target='_blank'>
-                                            <table class='thinBorder'>
-                                                <tr>
-                                                    <td class='thinBorder' title='Yashi Sports'
-                                                        style='padding:0px;height:90px;'><img style='border-style:none;'
-                                                            src='https://i.pinimg.com/236x/d3/46/22/d346225f6ec523b78adea8d19dc6530b.jpg' />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </a>
+                        <div class="col-sm-4    hidden-phone slider " style="overflow-x: hidden;  padding-top: 20px;">
+                            <div class="slick-carousel-header" id="navbarSlider" style="display:flex;">
+                                @foreach($sponsor_gallery as $image)
+                                <div class="gallery-image-all">
+                                    <div class="gallery-image">
+                                        <img src="data:image/png;base64,{{ $image->image }}" alt="{{ $image->title }}" class="img-responsive center-block" style="width: 100px; height: 100px;" />
+                                    </div>
+                                    <div class="gallery-text">
                                     </div>
                                 </div>
-                                <div style="margin-left:15px;margin-right:15px;/* display:flex; */" class="navbar-slide">
-                                    <div class="spon-image hvr-grow">
-                                        <a href='#' style='text-decoration: none;' target='_blank'>
-                                            <table class='thinBorder'>
-                                                <tr>
-                                                    <td class='thinBorder' title='SBS Expedite Services Ltd.'
-                                                        style='padding:0px;height:90px;'><img style='border-style:none;'
-                                                            src='https://i.pinimg.com/236x/25/ba/8f/25ba8f754498178d1421d334d1ac6642.jpg' />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div style="margin-left:15px;margin-right:15px;/* display:flex; */" class="navbar-slide">
-                                    <div class="spon-image hvr-grow">
-                                        <a href='#' style='text-decoration: none;' target='_blank'>
-                                            <table class='thinBorder'>
-                                                <tr>
-                                                    <td class='thinBorder' title='Fusion Launge'
-                                                        style='padding:0px;height:90px;'><img style='border-style:none;'
-                                                            src='https://i.pinimg.com/236x/c1/b8/48/c1b84805903406ee7c2fc0f4086ecf84.jpg' />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div style="margin-left:15px;margin-right:15px;/* display:flex; */" class="navbar-slide">
-                                    <div class="spon-image hvr-grow">
-                                        <a href='#' style='text-decoration: none;' target='_blank'>
-                                            <table class='thinBorder'>
-                                                <tr>
-                                                    <td class='thinBorder' title='R Gill Corporation'
-                                                        style='padding:0px;height:90px;'><img style='border-style:none;'
-                                                            src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </a>
-                                    </div>
-                                </div>
-                             
+                                @endforeach
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -353,7 +293,7 @@
         <div class="col-sm-12">
             <div class="col-sm-12 add-phone slider">
 
-                <div class="slick-carousel-header" >
+                <div class="slick-carousel-header">
 
                     <div style="margin-left:15px;margin-right:15px;display:flex;">
                         <div class="spon-image hvr-grow">
@@ -361,8 +301,7 @@
                                 <table class='thinBorder'>
                                     <tr>
                                         <td class='thinBorder' title='Yashi Sports' style='padding:0px;height:90px;'>
-                                            <img style='border-style:none;'
-                                            src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg'  />
+                                            <img style='border-style:none;' src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
                                         </td>
                                     </tr>
                                 </table>
@@ -374,9 +313,7 @@
                             <a href='https://www.sbsexpedited.com/' style='text-decoration: none;' target='_blank'>
                                 <table class='thinBorder'>
                                     <tr>
-                                        <td class='thinBorder' title='SBS Expedite Services Ltd.'
-                                            style='padding:0px;height:90px;'><img style='border-style:none;'
-                                            src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
+                                        <td class='thinBorder' title='SBS Expedite Services Ltd.' style='padding:0px;height:90px;'><img style='border-style:none;' src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
                                         </td>
                                     </tr>
                                 </table>
@@ -389,25 +326,24 @@
                                 <table class='thinBorder'>
                                     <tr>
                                         <td class='thinBorder' title='Fusion Launge' style='padding:0px;height:90px;'>
-                                            <img style='border-style:none;'
-                                            src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
+                                            <img style='border-style:none;' src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
                                         </td>
                                     </tr>
                                 </table>
                             </a>
                         </div>
                     </div>
-                  
+
                 </div>
 
             </div>
         </div>
 
-       
+
         <div class="col-sm-12">
             <div class="col-sm-12 add-phone slider">
 
-                <div class="slick-carousel-header" >
+                <div class="slick-carousel-header">
 
                     <div style="margin-left:15px;margin-right:15px;display:flex;">
                         <div class="spon-image hvr-grow">
@@ -415,30 +351,29 @@
                                 <table class='thinBorder'>
                                     <tr>
                                         <td class='thinBorder' title='Yashi Sports' style='padding:0px;height:90px;'>
-                                        <div id="navbarSlider" style="overflow-x: hidden;">
-@foreach($match_results as $match_result)           
-    <div class="navbar-slide" style="margin-left:15px;margin-right:15px;">
-        <div class="spon-image hvr-grow">
-            <a href='#' style='text-decoration: none;' target='_blank'>
-                <table class='thinBorder'>
-                    <tr>
-                        <td class='thinBorder' title='' style='padding:0px;height:90px;'>
-                            <div class="card">
-                                <div class="card-content">
-                                    <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span
-                                            style="color:white;font-weight:bold">{{$teams[$match_result->team_id_a]}} - vs - {{$teams[$match_result->team_id_b]}}</span></h6>
-                                    <p style="color:white">{{$match_result->match_result_description}}</p>
+                                            <div id="navbarSlider" style="overflow-x: hidden;">
+                                                @foreach($match_results as $match_result)
+                                                <div class="navbar-slide" style="margin-left:15px;margin-right:15px;">
+                                                    <div class="spon-image hvr-grow">
+                                                        <a href='#' style='text-decoration: none;' target='_blank'>
+                                                            <table class='thinBorder'>
+                                                                <tr>
+                                                                    <td class='thinBorder' title='' style='padding:0px;height:90px;'>
+                                                                        <div class="card">
+                                                                            <div class="card-content">
+                                                                                <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$teams[$match_result->team_id_a]}} - vs - {{$teams[$match_result->team_id_b]}}</span></h6>
+                                                                                <p style="color:white">{{$match_result->match_result_description}}</p>
 
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </a>
-        </div>
-    </div>
-    @endforeach
-</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>
@@ -449,7 +384,7 @@
 
             </div>
         </div>
-       
+
 
         <script>
       // Get the navbar slider element
@@ -489,16 +424,19 @@ navbarSlider.addEventListener("mouseout", function() {
     intervalId = setInterval(nextSlide, 2000);
 });
 
+            // Resume the automatic sliding when the mouse leaves the navbar slider
+            navbarSlider.addEventListener("mouseout", function() {
+                intervalId = setInterval(nextSlide, 5000);
+            });
         </script>
-       
+
 
 
         <div class="mainmenu">
             <div class="container">
                 <nav role="navigation" class="navbar top-navbar">
                     <div class="navbar-header">
-                        <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle"
-                            type="button">
+                        <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -508,7 +446,7 @@ navbarSlider.addEventListener("mouseout", function() {
                     <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="{{ route('home')}}">Home</a></li>
-                           <li><a href="{{ route('search_player')}}">Players</a>
+                            <li><a href="{{ route('search_player')}}">Players</a>
                                 <ul class="sub-menu">
                                     <li><a href="search_player">Player
                                            </a></li>
@@ -627,8 +565,8 @@ navbarSlider.addEventListener("mouseout", function() {
                 </nav>
             </div>
         </div>
-        
-        
+
+
     </header>
 
     <!-- Header end -->
@@ -640,88 +578,87 @@ navbarSlider.addEventListener("mouseout", function() {
     <script type="text/javascript" src="utilsv2/fancybox/jquery.fancybox.js%3Fv=2.1.5"></script>
 
     <script>
-    function toggleIcon(e) {
-        $(e.target)
-            .prev('.panel-heading')
-            .find(".more-less")
-            .toggleClass('glyphicon-plus glyphicon-minus');
-    }
-    $('.panel-group').on('hidden.bs.collapse', toggleIcon);
-    $('.panel-group').on('shown.bs.collapse', toggleIcon);
+        function toggleIcon(e) {
+            $(e.target)
+                .prev('.panel-heading')
+                .find(".more-less")
+                .toggleClass('glyphicon-plus glyphicon-minus');
+        }
+        $('.panel-group').on('hidden.bs.collapse', toggleIcon);
+        $('.panel-group').on('shown.bs.collapse', toggleIcon);
     </script>
 
     <link rel="stylesheet" type="text/css" href="utilsv2/fancybox/jquery.fancybox.css%3Fv=2.1.5.css" media="screen" />
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v15.0"
-        nonce="H6RqTpDi"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v15.0" nonce="H6RqTpDi"></script>
     <script>
-    $(document).ready(function() {
+        $(document).ready(function() {
 
 
 
 
-        function getCookie(name) {
-            name = name + "=";
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i];
-                while (cookie.charAt(0) == ' ') {
-                    cookie = cookie.substring(1);
+            function getCookie(name) {
+                name = name + "=";
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    while (cookie.charAt(0) == ' ') {
+                        cookie = cookie.substring(1);
+                    }
+                    if (cookie.indexOf(name) == 0) {
+                        return cookie.substring(name.length, cookie.length);
+                    }
                 }
-                if (cookie.indexOf(name) == 0) {
-                    return cookie.substring(name.length, cookie.length);
+                return "";
+            }
+
+            function setCookie(name, value, expirydays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (expirydays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = name + "=" + value + "; " + expires;
+            }
+
+            function deleteCookie(name) {
+                setCookie(name, "", -1);
+            }
+
+            //re arrange divs for mobile.
+            var screenWidth = $(window).width();
+            if (screenWidth < 767) {
+                var newsContent = $("#newsDiv").html();
+                var resultsContent = $("#resultsDiv").html();
+                $("#resultsDiv").html(newsContent);
+                $("#newsDiv").html(resultsContent);
+            }
+
+
+            $("#dialogOpenVideoLink").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 700,
+                height: 450,
+                close: function() {
+                    enable = 1;
+                    $("#playVideo")[0].src = "";
                 }
-            }
-            return "";
-        }
-
-        function setCookie(name, value, expirydays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (expirydays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = name + "=" + value + "; " + expires;
-        }
-
-        function deleteCookie(name) {
-            setCookie(name, "", -1);
-        }
-
-        //re arrange divs for mobile.
-        var screenWidth = $(window).width();
-        if (screenWidth < 767) {
-            var newsContent = $("#newsDiv").html();
-            var resultsContent = $("#resultsDiv").html();
-            $("#resultsDiv").html(newsContent);
-            $("#newsDiv").html(resultsContent);
-        }
+            });
 
 
-        $("#dialogOpenVideoLink").dialog({
-            autoOpen: false,
-            modal: true,
-            width: 700,
-            height: 450,
-            close: function() {
-                enable = 1;
-                $("#playVideo")[0].src = "";
-            }
         });
 
+        function openLiveVideoLink(livevideolink) {
+            enable = 0;
+            $(".dialogOpenVideoLink").dialog("option", "title", "Live Streaming...");
+            var videoid = livevideolink.split("/watch?v=");
+            $("#playVideo")[0].src = "//www.youtube.com/embed/" + videoid[1] + "?autoplay=1";
+            $("#dialogOpenVideoLink").dialog("open");
+        }
 
-    });
+        var data = [];
+        var league_id = 2565;
+        var getData = function(league_id) {
 
-    function openLiveVideoLink(livevideolink) {
-        enable = 0;
-        $(".dialogOpenVideoLink").dialog("option", "title", "Live Streaming...");
-        var videoid = livevideolink.split("/watch?v=");
-        $("#playVideo")[0].src = "//www.youtube.com/embed/" + videoid[1] + "?autoplay=1";
-        $("#dialogOpenVideoLink").dialog("open");
-    }
-
-    var data = [];
-    var league_id = 2565;
-    var getData = function(league_id) {
-
-    };
+        };
     </script>
 
     <!-- Javascript End -->
@@ -730,92 +667,92 @@ navbarSlider.addEventListener("mouseout", function() {
 
     <!-- Css Start -->
     <style>
-    .banner-content .carousel-indicators {
-        bottom: -50px;
-    }
-
-    .team-vs-team .col-sm-8 {
-        padding-left: 0;
-    }
-
-    .team-vs-team .col-sm-8 h4 {
-        margin-bottom: 0;
-        margin-top: 5px;
-    }
-
-    .list-slign {
-        display: flex;
-        align-items: center;
-    }
-
-    #teamtable>tr>td:nth-child(2) {
-        text-align: center;
-    }
-
-    .team-vs-team .col-sm-8 h5 {
-        margin-top: 3px;
-        margin-bottom: 5px;
-    }
-
-    .table>tbody>tr>th {
-        vertical-align: middle;
-    }
-
-    @media (max-width : 768px) {
-        .team-vs-team .col-sm-8 {
-            padding-left: 0px;
-        }
-
-        .carouseller .carousel-items .carousel-items {
-            display: flex !important;
-        }
-
         .banner-content .carousel-indicators {
-            bottom: -30px;
+            bottom: -50px;
         }
 
-        .banner-content .carousel-content-panel {
-            bottom: inherit !important;
-        }
-
-        .banner-content .carousel-content-panels {
-            bottom: inherit !important;
-        }
-
-        .banner-content .carousel-content-panels h3 {
-            font-size: 16px !important;
-            padding: 5px 15px !important;
-        }
-
-        .list-tab-mobile .nav-tabs>li {
-            width: 33.3% !important;
-        }
-
-        .list-score {
-            display: inline-flex !important;
-        }
-
-        .vsteam-text {
-            padding: 0px !important;
-        }
-
-        .team-vs-team .vsteam-image {
-            padding: 10px 0px !important;
+        .team-vs-team .col-sm-8 {
+            padding-left: 0;
         }
 
         .team-vs-team .col-sm-8 h4 {
-            margin-top: 5px !important;
+            margin-bottom: 0;
+            margin-top: 5px;
         }
-    }
 
-    .banner-content {
-        height: 460px;
-    }
+        .list-slign {
+            display: flex;
+            align-items: center;
+        }
 
-    .banner-content .carousel-inner .item a img {
-        height: 300px;
-        object-fit: contain;
-    }
+        #teamtable>tr>td:nth-child(2) {
+            text-align: center;
+        }
+
+        .team-vs-team .col-sm-8 h5 {
+            margin-top: 3px;
+            margin-bottom: 5px;
+        }
+
+        .table>tbody>tr>th {
+            vertical-align: middle;
+        }
+
+        @media (max-width : 768px) {
+            .team-vs-team .col-sm-8 {
+                padding-left: 0px;
+            }
+
+            .carouseller .carousel-items .carousel-items {
+                display: flex !important;
+            }
+
+            .banner-content .carousel-indicators {
+                bottom: -30px;
+            }
+
+            .banner-content .carousel-content-panel {
+                bottom: inherit !important;
+            }
+
+            .banner-content .carousel-content-panels {
+                bottom: inherit !important;
+            }
+
+            .banner-content .carousel-content-panels h3 {
+                font-size: 16px !important;
+                padding: 5px 15px !important;
+            }
+
+            .list-tab-mobile .nav-tabs>li {
+                width: 33.3% !important;
+            }
+
+            .list-score {
+                display: inline-flex !important;
+            }
+
+            .vsteam-text {
+                padding: 0px !important;
+            }
+
+            .team-vs-team .vsteam-image {
+                padding: 10px 0px !important;
+            }
+
+            .team-vs-team .col-sm-8 h4 {
+                margin-top: 5px !important;
+            }
+        }
+
+        .banner-content {
+            height: 460px;
+        }
+
+        .banner-content .carousel-inner .item a img {
+            height: 300px;
+            object-fit: contain;
+        }
     </style>
 
     <!-- Css End -->
