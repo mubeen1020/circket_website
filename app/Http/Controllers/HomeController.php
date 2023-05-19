@@ -55,6 +55,7 @@ class HomeController extends Controller
     {
         $tournament = Tournament::query()
         ->where('season_id','=',0)
+        ->where('is_web_display','=',1)
         ->selectRaw("name")
         ->selectRaw("id")
         ->get();
