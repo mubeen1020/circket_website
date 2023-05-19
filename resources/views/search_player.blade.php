@@ -242,18 +242,6 @@
                							<option value ="Mighty Hawks">Mighty Hawks</option>
                							<option value ="Milton MARVELS Cricket Club">Milton MARVELS Cricket Club</option>
                							<option value ="Milton Sunrisers">Milton Sunrisers</option>
-               							<option value ="Mississauga Cricket League">Mississauga Cricket League</option>
-               							<option value ="Mississauga Dolphins">Mississauga Dolphins</option>
-               							<option value ="Mississauga East Cricket Club">Mississauga East Cricket Club</option>
-               							<option value ="Mississauga Leopards cricket club">Mississauga Leopards cricket club</option>
-               							<option value ="Mississauga Myrmidons Cricket Club">Mississauga Myrmidons Cricket Club</option>
-               							<option value ="Mississauga Qalandars Cricket Club">Mississauga Qalandars Cricket Club</option>
-               							<option value ="Mississauga Shaheens">Mississauga Shaheens</option>
-               							<option value ="Mississauga South Cricket Club">Mississauga South Cricket Club</option>
-               							<option value ="Mississauga Stallions Cricket Club">Mississauga Stallions Cricket Club</option>
-               							<option value ="Mississauga Strike 11 Cricket Club">Mississauga Strike 11 Cricket Club</option>
-               							<option value ="Mississauga Thunder Cricket Club">Mississauga Thunder Cricket Club</option>
-               							<option value ="Mississauga West Cricket Club">Mississauga West Cricket Club</option>
                							<option value ="Nepalese Canadian CC">Nepalese Canadian CC</option>
                							<option value ="Niagara Cricket Club">Niagara Cricket Club</option>
                							<option value ="North Hawks">North Hawks</option>
@@ -317,7 +305,6 @@
                							<option value ="Tuk Tuk Cricket Club">Tuk Tuk Cricket Club</option>
                							<option value ="UK Chargers">UK Chargers</option>
                							<option value ="United Cricket Club">United Cricket Club</option>
-               							<option value ="United Mississauga Smashers Cricket Club">United Mississauga Smashers Cricket Club</option>
                							<option value ="Universal Cricket Club">Universal Cricket Club</option>
                							<option value ="UZ Markhor">UZ Markhor</option>
                							<option value ="WarHawks Cricket Club">WarHawks Cricket Club</option>
@@ -452,7 +439,7 @@
 
                         <tr role="row" class="even"> 
                             <th class="sorting_1">1</th> 
-                            <th style="text-align:left!important"><a href="/MississaugaCricketLeague/viewPlayer.do?playerId=2659121&amp;clubId=2565"> {{$player['fullname']}} </a> <img alt="Verified" title="Verified" src="/utilsv2/images/ok.png" style="width: 16px;height: 16px;margin: 0px;">
+                            <th style="text-align:left!important"><a href=""> {{$player['fullname']}} </a> <img alt="Verified" title="Verified" src="/utilsv2/images/ok.png" style="width: 16px;height: 16px;margin: 0px;">
                                 </th>
                                 <th style="text-align:left!important">All Rounder</th>
                                     <th><table>
@@ -512,7 +499,7 @@
 </script>
 
   
-			<div id="dialog-confirm-TnC" title="Mississauga Cricket League - Terms and Conditions" style="display: none;">
+			<div id="dialog-confirm-TnC" title="" style="display: none;">
 								  </div>
 							<div id="open-app-confirm" title="Install App?" style="display: none;">
 	Install Cricclubs App for better experince ? It will Redirect to <span id="shoqAppStoreName"> </span>

@@ -21,6 +21,8 @@ use App\Http\Controllers\ApiController;
 // });
 
 Route::get('/',[HomeController::class,'home'])->name('home');
+Route::get('batting_states',[HomeController::class,'batting_states'])->name('batting_states');
+Route::get('comingsoon', [HomeController::class, 'comingsoon'])->name('comingsoon');
 Route::get('search_player',[HomeController::class,'search_player'])->name('search_player');
 Route::post('searchplayer-form-submit',[HomeController::class,'searchplayer_form_submit']);
 Route::get('balltoballscorecard/{id}',[HomeController::class,'balltoballScorecard'])->name('balltoballScorecard');
@@ -40,5 +42,6 @@ Route::get('team_bowling/{team_id}_{tournament_id}',[HomeController::class,'team
 Route::get('team_fielding/{team_id}_{tournament_id}',[HomeController::class,'team_fielding'])->name('team_fielding');
 Route::get('get_top_scorers/{id}',[ApiController::class,'get_top_scorers'])->name('get_top_scorers');
 Route::get('get_top_bowler/{id}',[ApiController::class,'get_top_bowler'])->name('get_top_bowler');
-Route::get('batting_states',[HomeController::class,'batting_states'])->name('batting_states');
 Route::get('downloadCSV/{id}', [HomeController::class, 'downloadCSV'])->name('downloadCSV');
+
+

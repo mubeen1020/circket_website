@@ -801,7 +801,7 @@ body .ui-tooltip {
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
-	background: #ffffff url(https://www.mississaugacricketleague.ca/utilsv2/styles/images/jquery-ui/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+	background: #ffffff url() 50% 50% repeat-x;
 	color: #444444;
 }
 .ui-widget-content a {

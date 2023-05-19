@@ -11,59 +11,52 @@
 							<div id="carousel-banner" class="carousel slide" style="heigth:inherit"
 								data-ride="carousel">
 								<div class="carousel-inner">
-								@foreach($image_slider as $image)
-								@if($image->type == 1 && $image->is_main_slider == 1)
-									<div class="item active">
-
-										<iframe width="100%" height="347"
-											src="{{$image->video_path}}" frameborder="0"
-											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-											allowfullscreen> </iframe>
-										<div class="carousel-content ">
-											<div class="container">
-												<div class="carousel-content-panels">
-													<h3>{{$image->title}}</h3>
-												</div>
-												<div class="carousel-content-panel content-sp" style="width: 100%">
-													<p>{{$image->description}}
-														
-															<br>
-														<br>
-														<br>
-													</p>
-
-												</div>
-											</div>
-										</div>
-									</div>
-                                @endif
-								@if($image->type == 0)
-									<div class="item ">
-										<a
-												href="EOSCLCricketLeague/viewNews.do%3FnewsId=8&amp;clubId=2565.html"><img
-												src="data:image/png;base64,{{ $image->image }}" alt="{{ $image->title }}" width="100%"  
-												class="box">
-											</a>
-										<div class="carousel-content ">
-											<div class="container">
-												<div class="carousel-content-panels">
-													<h3>{{$image->title}}</h3>
-												</div>
-												<div class="carousel-content-panel content-sp" style="width: 100%">
-												<p>{{$image->description}}
-												
-															<br>
-														<br>
-														<br>
-													</p>
-
-												</div>
-											</div>
-										</div>
-
-									</div>
-							    @endif		
-                                @endforeach       
+								@foreach($image_slider as $index => $image)
+    @if($image->type == 2 )
+        <div class="item {{ $index === 0 ? 'active' : '' }}">
+            <iframe width="100%" height="347"
+                src="{{$image->video_path}}" frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen> </iframe>
+            <div class="carousel-content ">
+                <div class="container">
+                    <div class="carousel-content-panels">
+                        <h3>{{$image->title}}</h3>
+                    </div>
+                    <div class="carousel-content-panel content-sp" style="width: 100%">
+                        <p>{{$image->description}}
+                            <br>
+                            <br>
+                            <br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+		@elseif($image->type == 1)
+        <div class="item {{ $index === 0 ? 'active' : '' }}">
+            <a href="#">
+                <img src="data:image/png;base64,{{ $image->image }}" alt="{{ $image->title }}" width="100%" class="box">
+            </a>
+            <div class="carousel-content ">
+                <div class="container">
+                    <div class="carousel-content-panels">
+                        <h3>{{$image->title}}</h3>
+                    </div>
+                    <div class="carousel-content-panel content-sp" style="width: 100%">
+                        <p>{{$image->description}}
+                            <br>
+                            <br>
+                            <br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+@endforeach
+   
 									
 
 									</div>
@@ -113,6 +106,7 @@
         @endforeach
     </ul>
     <button type="button" class="slick-next slick-arrow bgdanger" aria-label="Next" role="button" style="display: block;" aria-disabled="false">Next</button>
+							
 </div>
 </br>
 
@@ -739,18 +733,18 @@ margin-right: 10px;
 													<div class="vsteam-text">
 														<h4>L:
 															<a
-															href="{{ url('team-view/' . $upcoming_match->team_id_a) }}">
+															href="{{ url('team-view/' . $upcoming_match->team_id_a.'_'.$upcoming_match->tournament_id) }}">
 																{{$teams[$upcoming_match->team_id_a]}}</a>
 															
 															- vs -
 															<a
-															href="{{ url('team-view/' . $upcoming_match->team_id_b) }}">
+															href="{{ url('team-view/' . $upcoming_match->team_id_b.'_'.$upcoming_match->tournament_id) }}">
 																{{$teams[$upcoming_match->team_id_b]}}</a>
 															</h4>
 														<h5>
 															
 															at <a
-																href="EOSCLCricketLeague/viewGround.do%3FgroundId=43&amp;clubId=2565.html"
+																href="#"
 																target="_new">{{$ground[$upcoming_match->ground_id]}}</a>
 															<span><i class="fa fa-clock-o"></i> {{$upcoming_match->match_startdate->format('d-m-Y')}}    {{$upcoming_match->match_starttime->format('H:i:s')}}</span>
 														</h5>
@@ -801,7 +795,7 @@ margin-right: 10px;
 							<div class="col-sm-6 sp">
 								
 							@foreach($image_gallery as $image)
-						
+						@if($image->type == 1)
 								<div class="gallery-image-all">
 									<a title="EOSCL AWARDS 2018"
 										href="#">
@@ -821,7 +815,7 @@ margin-right: 10px;
 											
 										</div>
 								</div>
-								
+								@endif
 								@endforeach
 								
 
@@ -1120,11 +1114,11 @@ function get_group_team(group_id,tournamnet_id,type) {
 			</tbody>
 			</table>
 			</th>
-			<th><a href="/MississaugaCricketLeague/listMatches.do?teamId=825&amp;league=92&amp;clubId=2565">${item.total_matches}</a></th>
+			<th><a ">${item.total_matches}</a></th>
 			<th>${item.wins}</th> 
 			<th>${item.losses}</th>
 			<th>${item.draws}</th>
-			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="/MississaugaCricketLeague/listMatches.do?teamId=825&amp;league=92&amp;clubId=2565"><span title="">60</span></a></th> 
+			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href=""><span title="">60</span></a></th> 
 			<th class="hidden-phone">1.4241</th>
 			</tr>
 			`
@@ -1133,25 +1127,36 @@ function get_group_team(group_id,tournamnet_id,type) {
     });
 }
 
-function get_top_scorers(tornament_season_id) {
+function get_top_scorers(tournament_season_id) {
     $.ajax({
-        url:"{{ url('/get_top_scorers/')}}/" + tornament_season_id,
+        url: "{{ url('/get_top_scorers/')}}/" + tournament_season_id,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
-			
-			const scores = document.getElementById('topbatsman');
+            const scores = document.getElementById('topbatsman');
+            scores.innerHTML = ''; // Clear the previous data before appending new data
             data.forEach(item => {
                 scores.innerHTML += `
-				<tr>
-				<th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
-                                                        <img src="https://cricclubs.com/documentsRep/profilePics/206f3b84-ba02-4cf4-a10e-a98d4975e46b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-                                                        </td>
-                                                        <td><a href="viewPlayer.do?playerId=1242838&amp;clubId=2565"> ${item.fullname}</a></td></tr></tbody></table></th> 
-                                                        <!-- th>12</th> -->
-                                                        <th class="ls"><a style="font-size: 17px;" class="linkStyle" href="/MississaugaCricketLeague/playerBattingRecords.do?playerId=1242838&amp;league=92&amp;clubId=2565">${item.total_runs}</a></th>
-				</tr>
-														`
+                    <tr>
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding-right:5px;min-width:35px">
+                                            <img src="https://cricclubs.com/documentsRep/profilePics/206f3b84-ba02-4cf4-a10e-a98d4975e46b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
+                                        </td>
+                                        <td>
+                                            <a href="viewPlayer.do?playerId=1242838&amp;clubId=2565">${item.fullname}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th> 
+                        <th class="ls">
+                            <a style="font-size: 17px;" class="linkStyle" href="">${item.total_runs}</a>
+                        </th>
+                    </tr>
+                `;
             });
         },
         error: function(error) {
@@ -1160,32 +1165,45 @@ function get_top_scorers(tornament_season_id) {
     });
 }
 
-function get_top_bowler(tornament_season_id) {
+
+function get_top_bowler(tournament_season_id) {
     $.ajax({
-        url: "{{ url('/get_top_bowler/')}}/" + tornament_season_id,
+        url: "{{ url('/get_top_bowler/')}}/" + tournament_season_id,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
             const scores = document.getElementById('topbowler');
+            scores.innerHTML = ''; // Clear the previous data before appending new data
             data.forEach(item => {
                 scores.innerHTML += `
-				<tr>
-				<th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
-                                                        <img src="https://cricclubs.com/documentsRep/profilePics/206f3b84-ba02-4cf4-a10e-a98d4975e46b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-                                                        </td>
-                                                        <td><a href="viewPlayer.do?playerId=1242838&amp;clubId=2565"> ${item.fullname}</a></td></tr></tbody></table></th> 
-                                                        <!-- th>12</th> -->
-                                                        <th class="ls"><a style="font-size: 17px;" class="linkStyle" href="/MississaugaCricketLeague/playerBattingRecords.do?playerId=1242838&amp;league=92&amp;clubId=2565">${item.total_wickets}</a></th>
-				</tr>
-														`
+                    <tr>
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding-right:5px;min-width:35px">
+                                            <img src="https://cricclubs.com/documentsRep/profilePics/206f3b84-ba02-4cf4-a10e-a98d4975e46b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
+                                        </td>
+                                        <td>
+                                            <a href="viewPlayer.do?playerId=1242838&amp;clubId=2565">${item.fullname}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th> 
+                        <th class="ls">
+                            <a style="font-size: 17px;" class="linkStyle" href="">${item.total_wickets}</a>
+                        </th>
+                    </tr>
+                `;
             });
-			
         },
         error: function(error) {
             console.log(error);
         }
     });
 }
+
 
 </script><style >
 				.footer-bottom{

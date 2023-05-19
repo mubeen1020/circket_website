@@ -23,7 +23,7 @@
 									<div class="col-sm-10">
 										<div class="team-text-in text-left">
 											<h4 style="margin-top: 0px;">{{$teamData[0]->name}}
-												(<a href="/MississaugaCricketLeague/viewLeague.do?league=114&amp;clubId=2565">{{$tournament[$tournamentData]}}</a>)
+												(<a href="">{{$tournament[$tournamentData]}}</a>)
 												</h4>
 											<!--  <p><span>Team Code </span>      :   <span style="text-transform: uppercase">kbu</span></p>-->
 
@@ -46,7 +46,7 @@
 												{{$teamPlayerCount}}
 											</p>
 											<p>
-												<span>Home Ground</span> : <b><a href="/MississaugaCricketLeague/viewGround.do?groundId=43&amp;clubId=2565">Wet n Wild</a></b>
+												<span>Home Ground</span> : <b><a href="">Wet n Wild</a></b>
 											</p>
 											</div>
 									</div>
@@ -162,7 +162,7 @@ $(document).ready(function() {
 	      buttons: {
 	        "Delete": function() {
 	        	var matchId = $("#deleteId").val();
-	        	var ajaxUrl = '/MississaugaCricketLeague/deleteMatch.do?clubId=2565&matchId=' + matchId;
+	        	var ajaxUrl = '' + matchId;
 	        	$.ajax({url:ajaxUrl,
 	        		success:function(result){
 	        			$("#deleteRow"+matchId).remove();
@@ -194,7 +194,7 @@ $(document).ready(function() {
 	      buttons: {
 	        "Lock": function() {
 	        	var matchId = $("#lockId").val();
-	        	var ajaxUrl = '/MississaugaCricketLeague/lockMatch.do?clubId=2565&matchId=' + matchId;
+	        	var ajaxUrl = '' + matchId;
 	        	$.ajax({url:ajaxUrl,success:function(result){
 	        			if(result == 'success'){
 	        				 $("#lockLink"+matchId).attr('href', "javascript:unLockMatch("+matchId+",\""+ $("#lockMessage").html() + "\");");
@@ -223,7 +223,7 @@ $(document).ready(function() {
 	      buttons: {
 	        "UnLock": function() {
 	        	var matchId = $("#unLockId").val();
-	        	var ajaxUrl = '/MississaugaCricketLeague/unLockMatch.do?clubId=2565&matchId=' + matchId;
+	        	var ajaxUrl = '' + matchId;
 	        	$.ajax({url:ajaxUrl,success:function(result){
 
 	        		if(result == 'success'){
@@ -319,9 +319,9 @@ function unLockMatch(matchId,name){
 					<p>0/0</p>
 		                           </li>
 				@endif
-				<li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=827&amp;clubId=2565">
+				<li><a href="">
 		                           <img src="https://cricclubs.com/documentsRep/teamLogos/61443e16-7f18-452a-a807-040ce00e712d.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
-		                           <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=828&amp;clubId=2565">
+		                           <li><a href="">
 		                           <img src="https://cricclubs.com/documentsRep/teamLogos/6f5eb596-2586-4481-b2aa-9f1534df25da.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>	
 				@if (isset($total_runs[$data->id][0])) 
 		                          <li class="lose">
