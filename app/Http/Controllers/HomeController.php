@@ -586,6 +586,19 @@ class HomeController extends Controller
         );
 
 
+      $teams_only = Team::query()->where('isclub','=',0)->get()->pluck(
+            'name',
+            'id'
+          );
+
+
+        $clubs = Team::query()->where('isclub','=',1)->get()->pluck(
+            'name',
+            'id'
+          );
+
+
+
 
         $player = Player::query();
 
@@ -595,26 +608,36 @@ class HomeController extends Controller
             $player->where('fullname','like','%'.$term['fullname'].'%');
         }
 
-if(!empty($term->teamName)){
-            $team_id = Team::query()->where('name','like','%'.$term['teamName'].'%')->get()->pluck(
-          'id'
-        );
 
-            // dd($team_id);
-            $player->where('radius','=',$team_id);
+        if(!empty($term->emailId)){
+            $player->where('email','like','%'.$term['emailId'].'%');
+        }
+
+        if(!empty($term->team_name)){
+          $teamPlayers = TeamPlayer::where('team_id', $term->team_name)->pluck('player_id')->toArray();
+           // dd($teamPlayers);
+            $player->whereIn('id',$teamPlayers);
+
+        }
+
+        if(!empty($term->club)){
+          $teamPlayers = TeamPlayer::where('team_id', $term->club)->pluck('player_id')->toArray();
+           // dd($teamPlayers);
+            $player->whereIn('id',$teamPlayers);
 
         }
 
 
         
-        if(!empty($term['sex'])){
-            $player->where('sex','=',$term['sex']);
-        }
-        if(!empty($term['radius'])){
-            $player->where('radius','=',$term['radius']);
+        if(!empty($term['gender'])){
+            $player->where('gender','=',$term['gender']);
         }
 
-        $result = $player->orderBy('id')->get();
+        // dd($player);
+        $result = $player->orderBy('players.id')
+            ->join('team_players as team_players', 'team_players.player_id', '=', 'players.id')
+            ->join('teams as teams', 'teams.id', '=', 'team_players.team_id')
+            ->get(['name as team_name', 'player_id', 'fullname']);
 
 
         // dd($result);
@@ -627,7 +650,7 @@ if(!empty($term->teamName)){
         ->where('isActive','=',1)
         ->get();
         
-        return view('search_player',compact('result','match_results' , 'image_gallery' , 'sponsor_gallery'));
+        return view('search_player',compact('result','match_results' , 'image_gallery' , 'sponsor_gallery','clubs', 'teams_only'));
     }
     
     public function result()

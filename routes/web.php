@@ -24,7 +24,11 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('batting_states',[HomeController::class,'batting_states'])->name('batting_states');
 Route::get('comingsoon', [HomeController::class, 'comingsoon'])->name('comingsoon');
 Route::get('search_player',[HomeController::class,'search_player'])->name('search_player');
+
 Route::post('searchplayer-form-submit',[HomeController::class,'searchplayer_form_submit']);
+Route::get('searchplayer-form-submit',[HomeController::class,'search_player']);
+
+
 Route::get('balltoballscorecard/{id}',[HomeController::class,'balltoballScorecard'])->name('balltoballScorecard');
 Route::get('fullScorecard/{id}', [HomeController::class, 'fullScorecard'])->name('fullScorecard');
 Route::get('fullScorecard_overbyover/{id}',[HomeController::class,'fullScorecard_overbyover'])->name('fullScorecard_overbyover');
