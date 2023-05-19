@@ -172,9 +172,9 @@
 
 <table>
     <thead>
-        <th>S.No</th>
-        <th>Player Name</th>
-        <th>Team</th>
+        <th>car</th>
+        <th>scire</th>
+        <th>scire</th>
     </thead>
     <tbody>
     @php
@@ -183,6 +183,27 @@
                          @foreach($result as $player)
 
       
+                         
+            </tbody>
+            </table>
+
+
+
+
+
+
+                <table class="table1 sortable1 table-striped1 dataTable1 no-footer1" id="playersData" > 
+                    <thead> 
+                        <tr role="row"><th >No </a></th>
+
+                        <th style="text-align: left !important; width: 470px;" class="sorting" tabindex="0" aria-controls="playersData" rowspan="1" colspan="1" aria-label="Player Name : activate to sort column ascending"><a href="#" class="sortheader" >Player Name <span class="sortarrow">&nbsp;</span></a></th>
+
+
+                        <th style="text-align: left !important; width: 356px;" class="spa sorting" tabindex="0" aria-controls="playersData" rowspan="1" colspan="1" aria-label="Team   : activate to sort column ascending"><a href="#" class="sortheader" >Team <span class="sortarrow">&nbsp;</span></a></th></tr> 
+                    </thead> 
+                    <tbody>  
+
+
                         <tr role="row" class="even"> 
                             <th class="sorting_1">1</th> 
                             <th style="text-align:left!important"><a href=""> {{$player['fullname']}} </a> 
@@ -198,20 +219,11 @@
                                     </tr>
                                 </tbody></table></th>
                         </tr>
-                         @endforeach
 
-@php
-}
-@endphp
-            </tbody>
-            </table>
+                    
 
-
-
-
-
-
-               </div>
+                            </tbody>
+                </table></div>
             </div>
             	         	</div>
 
