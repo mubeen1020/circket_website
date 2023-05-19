@@ -57,27 +57,11 @@
 									All Clubs<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu dropdown-height" role="menu" aria-labelledby="dropdownMenu2">
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;year=null&amp;clubId=2565">All</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=96&amp;year=null&amp;clubId=2565">Brampton Pacers</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=160&amp;year=null&amp;clubId=2565">Markhor Raiders</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=161&amp;year=null&amp;clubId=2565">Jarry Strikers</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=130&amp;year=null&amp;clubId=2565">Kitchener Bulls Cricket Club</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=162&amp;year=null&amp;clubId=2565">Melbourne Cricket Club</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=99&amp;year=null&amp;clubId=2565">Patiala Shahi Panthers</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=100&amp;year=null&amp;clubId=2565">Punjab United</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=164&amp;year=null&amp;clubId=2565">Sonu's Battalion cricket club</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=165&amp;year=null&amp;clubId=2565">Watan Warriors</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=102&amp;year=null&amp;clubId=2565">Jammu Kings XI</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=166&amp;year=null&amp;clubId=2565">6ixers CC</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=8&amp;year=null&amp;clubId=2565">Punjab Cricket Club</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=136&amp;year=null&amp;clubId=2565">Northern Stars United</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=106&amp;year=null&amp;clubId=2565">AZAAD Cricket Club</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=142&amp;year=null&amp;clubId=2565">Canada Blasters</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=84&amp;year=null&amp;clubId=2565">Yorkshire Cricket Club</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=148&amp;year=null&amp;clubId=2565">Gujarat Giants Cricket Club</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=94&amp;year=null&amp;clubId=2565">Islanders</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=127&amp;year=null&amp;clubId=2565">Dhurham Maple Leaf</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/listMatches.do?league=116&amp;teamId=null&amp;internalClubId=159&amp;year=null&amp;clubId=2565">Jammu Elite</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="">All</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="">Brampton Pacers</a></li>
+									
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="">Dhurham Maple Leaf</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="">Jammu Elite</a></li>
 									</ul>
 							</div>
                     </div>
@@ -227,9 +211,9 @@ text-align:center !important;
                                     </li>
 				   
 	
-		                           <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1067&amp;clubId=2565">
+		                           <li><a href="">
 		                           <img src="https://cricclubs.com/documentsRep/teamLogos/f5e11e68-50cb-4926-8cd8-711f991d9ea2.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
-		                           <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1046&amp;clubId=2565">
+		                           <li><a href="">
 		                           <img src="https://cricclubs.com/documentsRep/teamLogos/c13fab4c-3cbb-4805-9c9f-bcba623a5a39.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
 		                        
 										   <li class="lose">

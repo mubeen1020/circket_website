@@ -4,7 +4,7 @@
 <div class="sta-main" style="background: white !important; overflow:auto; padding-bottom:200px;overflow-x:hidden;overflow-y:hidden;">
 
 <div style="display: none;">
-<label id="lblhide">/MississaugaCricketLeague/allBattingRecords.do?league=All&amp;year=2023&amp;clubId=2565</label>
+<label id="lblhide"></label>
 
 </div>
 
@@ -36,9 +36,9 @@
 							<option>	2023</option>
 							
 							
-								<option value="/MississaugaCricketLeague/allBattingRecords.do?year=All&amp;allSeries=true&amp;league=All&amp;clubId=2565">All Years</option>
-								<option value="/MississaugaCricketLeague/allBattingRecords.do?year=2022&amp;allSeries=true&amp;league=All&amp;clubId=2565">2022</option>
-								<option value="/MississaugaCricketLeague/allBattingRecords.do?year=2021&amp;allSeries=true&amp;league=All&amp;clubId=2565">2021</option>
+								<option value="">All Years</option>
+								<option value="">2022</option>
+								<option value="">2021</option>
 								<option value="/MississaugaCricketLeague/allBattingRecords.do?year=2020&amp;allSeries=true&amp;league=All&amp;clubId=2565">2020</option>
 								<option value="/MississaugaCricketLeague/allBattingRecords.do?year=2019&amp;allSeries=true&amp;league=All&amp;clubId=2565">2019</option>
 								<option value="/MississaugaCricketLeague/allBattingRecords.do?year=2018&amp;allSeries=true&amp;league=All&amp;clubId=2565">2018</option>

@@ -2314,7 +2314,7 @@ $(document).ready(function(){
 	showScoreSelectedTab();
 	
 var uploadObj = $("#fileUpload").uploadFile({
-    url: "/MississaugaCricketLeague/matchDataUpload.do?matchId=3319&clubId=2565",
+    url: "",
     dragDrop:true,
     fileName: "matchData",
     allowedTypes:"pdf,csv,doc,docx,xls,xlsx,xlsm,txt,zip,rar,jpg,jpeg,gif,png",	
@@ -2325,7 +2325,7 @@ var uploadObj = $("#fileUpload").uploadFile({
     	var documentId = dataArray[1];
     	var documentName = dataArray[2];
        if(status == 'success'){
-    	   var docHTML = '<span id="document'+documentId+'"><a target="_new" href="/MississaugaCricketLeague/document.doc?clubId=2565&documentId='+documentId + '">'+documentName+'</a>'
+    	   var docHTML = '<span id="document'+documentId+'"><a target="_new" href="'+documentId + '">'+documentName+'</a>'
 			+ ' <a href="javascript:deleteDocument('+documentId+',\''+documentName+'\');"><img alt="Delete" title="Delete" width="16" height="16" src="/utilsv2/images/delete.png"></a></span><br/>';
 			
 			$("#documentsDiv").append(docHTML);					
@@ -2355,7 +2355,7 @@ $("#dialog-confirm3").dialog({
       buttons: {
         "Delete": function() {
         	var documentId = $("#deleteId-doc").val();
-        	var ajaxUrl = '/MississaugaCricketLeague/deleteMatchData.do?clubId=2565&documentId=' + documentId;
+        	var ajaxUrl = '' + documentId;
         	$.ajax({
         		url:ajaxUrl,
         		success:function(result){

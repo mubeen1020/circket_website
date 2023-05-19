@@ -1190,5 +1190,17 @@ public function batting_states()
     return view('batting_states',compact('tournament','match_results','teams','ground' , 'image_gallery' , "sponsor_gallery"));
 }
 
+public function comingsoon(){
+  $match_results = Fixture::query();
+        $match_results->where('running_inning','=',3);
+        $match_results = $match_results->orderBy('id')->get();
+  $teams = Team::pluck('name', 'id');
+  $sponsor_gallery =Sponsor::query()
+  ->where('isActive','=',1)
+  ->get();
+
+  return view('comingsoon',compact('match_results','teams','sponsor_gallery'));
+}
+
     
  }
