@@ -514,9 +514,24 @@ class HomeController extends Controller
             'name',
             'id'
           );
+
+
+        $teams_only = Team::query()->where('isclub','=',0)->get()->pluck(
+            'name',
+            'id'
+          );
+
+
+        $clubs = Team::query()->where('isclub','=',1)->get()->pluck(
+            'name',
+            'id'
+          );
+
+
+
         $match_results = $match_results->orderBy('id')->get();;
         $result = [];
-        return view('search_player',compact('result','match_results','teams'));
+        return view('search_player',compact('result','match_results','teams', 'clubs', 'teams_only'));
 
     }
 
@@ -528,12 +543,29 @@ class HomeController extends Controller
           'name',
           'id'
         );
+
+
+
         $player = Player::query();
 
         $term = $request;
+        // dd($term);
         if(!empty($term->fullname)){
-            $player->where('fullname','=',$term['fullname']);
+            $player->where('fullname','like','%'.$term['fullname'].'%');
         }
+
+if(!empty($term->teamName)){
+            $team_id = Team::query()->where('name','like','%'.$term['teamName'].'%')->get()->pluck(
+          'id'
+        );
+
+            // dd($team_id);
+            $player->where('radius','=',$team_id);
+
+        }
+
+
+        
         if(!empty($term['sex'])){
             $player->where('sex','=',$term['sex']);
         }
@@ -542,6 +574,7 @@ class HomeController extends Controller
         }
 
         $result = $player->orderBy('id')->get();
+
 
         // dd($result);
         return view('search_player',compact('result','match_results'));
