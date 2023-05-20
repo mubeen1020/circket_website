@@ -616,14 +616,14 @@ class HomeController extends Controller
         if(!empty($term->team_name)){
           $teamPlayers = TeamPlayer::where('team_id', $term->team_name)->pluck('player_id')->toArray();
            // dd($teamPlayers);
-            $player->whereIn('id',$teamPlayers);
+            $player->whereIn('players.id',$teamPlayers);
 
         }
 
         if(!empty($term->club)){
           $teamPlayers = TeamPlayer::where('team_id', $term->club)->pluck('player_id')->toArray();
            // dd($teamPlayers);
-            $player->whereIn('id',$teamPlayers);
+            $player->whereIn('players.id',$teamPlayers);
 
         }
 
