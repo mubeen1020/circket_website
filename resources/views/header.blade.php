@@ -218,14 +218,14 @@
                                 <table>
                                     <tr>
                                         <td style='width:100px;height:100px;'><a
-                                                href=""><img
+                                                href="{{ route('home')}}"><img
                                                     src="{{ asset('utilsv2/img/others/eoscl-logo.png') }}" border="0"
                                                     style='width:100px;height:100px;'
                                                     class="img-responsive center-block img-circle" /></a>
 
                                         </td>
                                         <td style="padding-left:8px;">
-                                            <a href=""
+                                            <a href="{{ route('home')}}"
                                                 style="text-decoration: none; display: inline-block;">
                                                 <font class="logo-name" size="5" style="color: white; font-size: 2rem;">
                                                     Event Ontario Softball Circket</font>

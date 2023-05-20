@@ -187,7 +187,7 @@ $(document).ready(function() {
                                                         <th>Lost</th>
                                                         <th>N/R</th>
                                                         <th>Pts</th> 
-                                                        <th class="hidden-phone">Net RR</th>
+                                                        <!-- <th class="hidden-phone">Net RR</th> -->
                                                         </tr> 
                                                     </thead> 
                                                     <tbody id="point_table"> 
@@ -1025,34 +1025,35 @@ function get_point_table(tornament_season_id,type) {
         type: 'GET',
         dataType: 'json',
         success: function(data) {
-			var match_count  = data[0]
-			var team_name  = data[1]
-			const point_table_data = document.getElementById('point_table');
-		point_table_data.innerHTML = '';
-		data.forEach(item => {
-		point_table_data.innerHTML +=`
-		<tr>	
-		<th>1</th> 
-			<th>
-			<table>
-			<tbody>
-				<tr>
-					<td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
-					<td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
-				</tr>
-			</tbody>
-			</table>
-			</th>
-			<th><a href="#">${item.total_matches}</a></th>
-			<th>${item.wins}</th> 
-			<th>${item.losses}</th>
-			<th>${item.draws}</th>
-			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
-			<th class="hidden-phone">1.4241</th>
-			</tr>
-			`
-			})
-		},
+    var match_count = data[0];
+    var team_name = data[1];
+    var point_table_data = document.getElementById('point_table');
+    point_table_data.innerHTML = '';
+    data.sort((a, b) => b.teambonusPoints - a.teambonusPoints);
+    data.forEach((item, index) => {
+        point_table_data.innerHTML += `
+        <tr>
+            <th>${index + 1}</th>
+            <th>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                            <td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th>
+            <th><a href="#">${item.total_matches}</a></th>
+            <th>${item.wins}</th>
+            <th>${item.losses}</th>
+            <th>${item.draws}</th>
+            <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th>
+        </tr>
+        `;
+    });
+},
+
 	});
 	
 	get_season_group(tornament_season_id, type);
@@ -1118,8 +1119,8 @@ function get_group_team(group_id,tournamnet_id,type) {
 			<th>${item.wins}</th> 
 			<th>${item.losses}</th>
 			<th>${item.draws}</th>
-			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href=""><span title="">60</span></a></th> 
-			<th class="hidden-phone">1.4241</th>
+			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
+			
 			</tr>
 			`
 			})
