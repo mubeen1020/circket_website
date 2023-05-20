@@ -958,6 +958,9 @@ margin-right: 10px;
             liveScoreDiv.innerHTML = '';
 			console.log("final ==> ", final)
 			final.forEach(function(item, index) {
+                console.log(final[index],"final[index][1].max_ball");
+                // console.log(final[index][1].max_ball/6);
+
                 liveScoreDiv.innerHTML += `
 				
                 <div class="team-vs-team">
@@ -982,25 +985,76 @@ margin-right: 10px;
                         <div class="col-sm-8 col-xs-8">
                             <div class="vsteam-text ">
 							
-                                <h4>
-								<p><span style="color:red;font-weight:bold;float:right;padding-right:10px">Live</span>${item[0].tournaments_name}&nbsp;at&nbsp;${item[0].ground_name}</P> <br/>
-								L:
-                                    <a
-									href="{{ url('team-view/${item[0].team_id_a}') }}">
-                                        ${item[0].team_a_name}</a>
+                            <h4>
+  <p>
+    <span style="color:red;font-weight:bold;float:right;padding-right:10px">Live</span>
+    ${item[0].tournaments_name} at ${item[0].ground_name}
+  </p>
+  <br/>
+  L:
+  <a href="{{ url('team-view/${item[0].team_id_a}_${item[0].tournamentID}') }}">
+    ${item[0].team_a_name}
+  </a>
+  - vs -
+  <a href="{{ url('team-view/${item[0].team_id_b}_${item[0].tournamentID}') }}">
+    ${item[0].team_b_name}
+  </a>
+</h4>
+<h5>
+  <a href="#" target="_new"></a>
+  <p>
+    ${
+      final[index][0].inningnumber === 1
+        ? ` <i class="fa-sharp fa-solid fa-circle-dot text-danger"></i>`
+        : `&nbsp;&nbsp;&nbsp;&nbsp;`
+    }
+    ${item[0].team_a_name}
+    <span style="float:right;font-weight:bold;padding-right:10px;font-size:15px">
+      ${final[index][0].inningnumber === 1 ? final[index][0].total_runs : 0}
+      /${final[index][0].inningnumber === 1 ? final[index][0].total_wickets : 0}
+      Overs
+      ${
+        final[index][0].inningnumber === 1
+          ? Math.floor(item[0].max_ball / 6) +
+            (item[0].max_ball % 6 !== 0 ? "." + (item[0].max_ball % 6) : "")
+          : 0
+      }
+      /${item[0].numberofover}
+    </span>
+  </p>
+  <br/>
+</h5>
 
-                                    - vs -
-                                    <a
-									href="{{ url('team-view/${item[0].team_id_b}') }}">
-                                        ${item[0].team_b_name}</a>
-                                </h4>
-                                <h5>
-                                    <a
-                                        href="EOSCLCricketLeague/viewGround.do%3FgroundId=43&amp;clubId=2565.html"
-                                        target="_new"></a>
-										<p>${ final[index][0].inningnumber  == 1 ? ` <i class="fa-sharp fa-solid fa-circle-dot text-danger"></i>`:`&nbsp;&nbsp;&nbsp;&nbsp;`}&nbsp;${item[0].team_a_name} <span style="float:right;font-weight:bold;padding-right:10px;font-size:15px"> ${final[index][0].inningnumber == 1 ? final[index][0].total_runs : 0}/${final[index][0].inningnumber == 1 ? final[index][0].total_wickets : 0} Overs ${final[index][0].inningnumber == 1 ? item[0].max_over : 0}.${(final[index][1] ? final[index][1].inningnumber: 0) == 2 ? item[0].max_ball : 0}/${item[0].numberofover}</span></p><br/>
+<h5>
                                         
-										<p>${(final[index][1] ? final[index][1].inningnumber :0 ) == 2 ? ` <i class="fa-sharp fa-solid fa-circle-dot text-danger"></i>`:`&nbsp;&nbsp;&nbsp;&nbsp;`}&nbsp;${item[0].team_b_name} <span style="float:right;font-weight:bold;padding-right:10px;font-size:15px"> ${(final[index][1] ? final[index][1].inningnumber: 0) == 2 ? final[index][1].total_runs : 0}/${(final[index][1] ? final[index][1].inningnumber: 0) == 2 ? final[index][1].total_wickets : 0} Overs ${(final[index][1] ? final[index][1].inningnumber: 0) == 2 ? item[0].max_over : 0}.${(final[index][1] ? final[index][1].inningnumber: 0) == 2 ? item[0].max_ball : 0}/${item[0].numberofover}</span></p>
+                                        <p>
+  ${
+    final[index][1] && final[index][1].inningnumber === 2
+      ? ` <i class="fa-sharp fa-solid fa-circle-dot text-danger"></i>`
+      : `&nbsp;&nbsp;&nbsp;&nbsp;`
+  }
+  ${item[0].team_b_name}
+  <span style="float:right;font-weight:bold;padding-right:10px;font-size:15px">
+    ${
+      final[index][1] && final[index][1].inningnumber === 2
+        ? final[index][1].total_runs
+        : 0
+    }
+    /${
+      final[index][1] && final[index][1].inningnumber === 2
+        ? final[index][1].total_wickets
+        : 0
+    } Overs ${
+      final[index][1] && final[index][1].inningnumber === 2
+        ? Math.floor(item[1].max_ball / 6) +
+          (item[1].max_ball % 6 === 0 ? "" : "." + (item[1].max_ball % 6))
+        : 0
+    }/${item[0].numberofover}
+  </span>
+</p>
+</h5>
+
+
                                 </h5>
                             </div>
                         </div>
@@ -1011,6 +1065,8 @@ margin-right: 10px;
 				
 				
                 `;
+
+
             });}
 
            

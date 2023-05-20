@@ -637,7 +637,7 @@ class HomeController extends Controller
         $result = $player->orderBy('players.id')
             ->join('team_players as team_players', 'team_players.player_id', '=', 'players.id')
             ->join('teams as teams', 'teams.id', '=', 'team_players.team_id')
-            ->get(['name as team_name', 'player_id', 'fullname']);
+            ->get(['name as team_name', 'player_id', 'fullname','players.contact','players.email']);
 
 
         // dd($result);

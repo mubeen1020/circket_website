@@ -276,7 +276,7 @@
                                 @foreach($sponsor_gallery as $image)
                                 <div class="gallery-image-all">
                                     <div class="gallery-image">
-                                        <img src="data:image/png;base64,{{ $image->image }}" alt="{{ $image->title }}" class="img-responsive center-block" style="width: 100px; height: 100px;" />
+                                        <img src="data:image/png;base64,{{ $image->image }}" alt="{{ $image->name }}" class="img-responsive center-block" style="width: 100px; height: 100px;" />
                                     </div>
                                     <div class="gallery-text">
                                     </div>
