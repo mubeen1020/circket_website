@@ -46,6 +46,7 @@
 
 
 
+
     <style>
         #mobile-header {
             display: flex;
@@ -166,7 +167,7 @@
             box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
             height: 94px;
             padding: 5px;
-            width: 176px;
+            width: 240px;
             text-align: center;
             display: flex;
             justify-content: center;
@@ -191,7 +192,9 @@
     <script src="https://cdn.jsdelivr.net/jquery.cookiefy/1.0/jquery.cookiefy.min.js"></script>
     <script type="text/javascript" src="{!! asset('utilsv2/sortable.js') !!}"></script>
     <script type="text/javascript" src="{!! asset('utilsv2/app/assets/js/jquery.slimscroll.min.js') !!}"></script>
-    <style>
+   
+   
+   <style>
         #navbarSlider {
             display: flex;
             scroll-behavior: smooth;
@@ -202,6 +205,23 @@
         .navbar-slide {
             flex: 0 0 auto;
         }
+
+        .dropdown-menu {
+            background-color: black;
+  position: relative;
+  z-index: 9999;
+  left: 0;
+  top: 100%;
+  }
+  
+
+  .dropdown-menu li a {
+    color: white;
+  }
+  .mainmenu a:hover {
+  background-color: black !important;
+}
+
     </style>
 </head>
 
@@ -362,14 +382,19 @@
                                                                         <div class="card">
                                                                             <div class="card-content">
                                                                                 <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$teams[$match_result->team_id_a]}} - vs - {{$teams[$match_result->team_id_b]}}</span></h6>
-                                                                                <p style="color:white">{{$match_result->match_result_description}}</p>
-
+                                                                                <p style="color:white;">{{$match_result->match_result_description}}</p>
+                                                                                
                                                                             </div>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                         </a>
+                                                        <a href="{{ url('fullScorecard/${item[0].fixture_id}') }}" style="float:right;font-size: 0.85rem;background: #2098d1;
+padding: 4px 9px;
+border-radius: 5px;
+color: #fff;
+margin-right: 1rem;" >Scorecard</a>
                                                     </div>
                                                 </div>
                                                 @endforeach
@@ -430,144 +455,112 @@ navbarSlider.addEventListener("mouseout", function() {
             });
         </script>
 
+<div class="mainmenu">
+  <div class="container">
+    <nav role="navigation" class="navbar top-navbar">
+      <div class="navbar-header">
+        <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="{{ route('home')}}">Home</a></li>
+          <li class="dropdown">
+            <a href="{{ route('search_player')}}" class="dropdown-toggle" data-toggle="dropdown">Players</a>
+            <ul class="dropdown-menu"  >
+              <li><a href="search_player">Player</a></li>
+              <li><a href="{{ route('comingsoon')}}">Player Matches Count</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="{{ route('result')}}" class="dropdown-toggle" data-toggle="dropdown">Matches</a>
+            <ul class="dropdown-menu"  >
+              <li><a href="{{ route('result')}}">Results</a></li>
+              <li><a href="{{ route('comingsoon')}}">Schedule</a></li>
+              <li><a href="{{ route('comingsoon')}}">Calendar</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a  class="dropdown-toggle" data-toggle="dropdown">Clubs</a>
+            <ul class="dropdown-menu"  >
+              <li><a href="{{ route('clubs')}}">View Clubs</a></li>
+              <li><a href="{{ route('comingsoon')}}">Search Teams</a></li>
+              <li><a href="{{ route('comingsoon')}}">View Teams</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="{{ route('batting_states')}}" class="dropdown-toggle" data-toggle="dropdown">Statistics</a>
+            <ul class="dropdown-menu"  >
+              <li><a href="{{ route('comingsoon')}}">Points Table</a></li>
+              <li><a href="{{ route('batting_states')}}">Batting Records</a></li>
+              <li><a href="{{ route('comingsoon')}}">Bowling Records</a></li>
+              <li><a href="{{ route('comingsoon')}}">Fielding Records</a></li>
+              <li><a href="{{ route('comingsoon')}}">Player Rankings</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">Series</a>
+            <ul class="dropdown-menu"  >
+              <li><a href="{{ route('comingsoon')}}">2022 - Boom Boom T10</a></li>
+              <li><a href="{{ route('comingsoon')}}">2022 MCLT12 Winter League</a></li>
+              <li><a href="{{ route('comingsoon')}}">MCL vs Singapore</a></li>
+              <li><a href="{{ route('comingsoon')}}">2022 MCLT25</a></li>
+              <li><a href="{{ route('comingsoon')}}">2022 MCLT20</a></li>
+              <li><a href="{{ route('comingsoon')}}"><span>View all</span></a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">League</a>
+            <ul class="dropdown-menu"  >
+              <li><a href="{{ route('comingsoon')}}">League Info</a></li>
+              <li><a href="{{ route('comingsoon')}}">Grounds</a></li>
+              <li><a href="{{ route('comingsoon')}}">Documents</a></li>
+              <li><a href="{{ route('comingsoon')}}">Umpires/Coaches/Scorers</a></li>
+              <li><a href="{{ route('comingsoon')}}">DLS Calculator</a></li>
+              <li><a href="{{ route('comingsoon')}}">Photo Gallery</a></li>
+              <li><a href="{{ route('comingsoon')}}">News</a></li>
+              <li><a href="{{ route('comingsoon')}}">Articles</a></li>
+              <li><a href="{{ route('comingsoon')}}" target="_blank">2023 Summer Club Registration Form</a></li>
+              <li><a href="{{ route('comingsoon')}}">CONTACT US</a></li>
+              <li><a href="{{ route('comingsoon')}}" target="_blank">MCL Tapeball League 22-23</a></li>
+              <li><a href="{{ route('comingsoon')}}">Contact</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">More<i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-menu main-menu-custom">
+              <li><a href="{{ route('comingsoon')}}">For Children & Youth</a>
+                <ul class="dropdown-menu"  >
+                  <li><a href="{{ route('comingsoon')}}">Programs</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="topl"><a href="{{ route('comingsoon')}}"><i class="fa fa-user"></i> Log in</a></li>
+          <!-- <li class="sponser"><a href="https://cricclubs.com/" target="_new"><img src="utilsv2/app/assets/images/pbcc-logo.png" class="img-responsive" style="max-width:145px; top:3px; border-radius:3px;" /></a></li> -->
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
 
+<script>
+  $(document).ready(function() {
+    $('.dropdown').hover(
+      function() {
+        $(this).addClass('open');
+      },
+      function() {
+        $(this).removeClass('open');
+      }
+    );
+  });
+</script>
 
-        <div class="mainmenu">
-            <div class="container">
-                <nav role="navigation" class="navbar top-navbar">
-                    <div class="navbar-header">
-                        <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            <li><a href="{{ route('home')}}">Home</a></li>
-                            <li><a href="{{ route('search_player')}}">Players</a>
-                                <ul class="sub-menu">
-                                    <li><a href="search_player">Player
-                                           </a></li>
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">Player
-                                            Matches Count</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{{ route('result')}}">Matches </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{ route('result')}}">Results</a>
-                                    </li>
-                                    <li><a href="{{ route('comingsoon')}}">Schedule</a>
-                                    </li>
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">Calendar</a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li><a href="{{ route('comingsoon')}}">Clubs</a> 
-                                <ul class="sub-menu">
-                                    <li><a href="{{ route('comingsoon')}}">View
-                                            Clubs</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">Search
-                                            Teams</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">View
-                                            Teams</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{{ route('batting_states')}}">Statistics</a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{ route('comingsoon')}}">Points
-                                            Table</a></li>
-                                    <li><a href="{{ route('batting_states')}}">Batting
-                                            Records</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">Bowling
-                                            Records</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">Fielding
-                                            Records</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">Player
-                                            Rankings</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{{ route('comingsoon')}}">Series</a>
-                                <ul class="sub-menu">
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">2022
-                                            - Boom Boom T10</a></li>
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">2022
-                                            MCLT12 Winter League</a></li>
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">MCL
-                                            vs Singapore</a></li>
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">2022
-                                            MCLT25</a></li>
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">2022
-                                            MCLT20</a></li>
-                                    <li><a href="{{ route('comingsoon')}}"><span>View
-                                                all</span></a></li>
-                                </ul>
-                            </li>
-
-                            <li><a href="index.html{{ route('comingsoon')}}">League </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{ route('comingsoon')}}">League
-                                            Info</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">Grounds</a>
-                                    </li>
-
-                                    <li><a href="{{ route('comingsoon')}}">Documents</a>
-                                    </li>
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">Umpires/Coaches/Scorers</a>
-                                    </li>
-                                    <li><a href="{{ route('comingsoon')}}">DLS
-                                            Calculator</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">Photo
-                                            Gallery</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">News</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">Articles</a>
-                                    </li>
-
-                                    <li><a href="{{ route('comingsoon')}}" target="blank">2023 Summer Club
-                                            Registration Form</a></li>
-                                    <li><a
-                                            href="{{ route('comingsoon')}}">CONTACT
-                                            US</a></li>
-                                    <li><a href="{{ route('comingsoon')}}" target="blank">MCL Tapeball League
-                                            22-23</a></li>
-                                    <li><a href="{{ route('comingsoon')}}">Contact</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="{{ route('comingsoon')}}">More<i class="fa fa-caret-down"></i></a>
-                                <ul class="sub-menu main-menu-custom">
-                                    <li><a href="index.html{{ route('comingsoon')}}">For Children & Youth</a>
-                                        <ul class="sub-menu sub-menu-sub">
-                                            <li><a
-                                                    href="{{ route('comingsoon')}}">Programs</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="topl"><a href="{{ route('comingsoon')}}"><i
-                                        class="fa fa-user"></i> Log in</a></li>
-                            <!-- <li class="sponser"><a href="https://cricclubs.com/" target="_new"><img
-                                        src="utilsv2/app/assets/images/pbcc-logo.png" class="img-responsive"
-                                        style="max-width:145px; top:3px; border-radius:3px;" /></a></li> -->
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-
-
-    </header>
 
     <!-- Header end -->
 

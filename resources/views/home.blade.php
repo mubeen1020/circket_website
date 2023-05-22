@@ -100,9 +100,18 @@
     <button type="button" class="slick-prev slick-arrow slick-disabled" aria-label="Previous" role="button" aria-disabled="true" style="display: block;">Previous</button>
     <ul class="resp-tabs-list hor_1 common__slider">
         @foreach($tournament_season as $tour_name)
-        <li onclick="get_point_table({{$tour_name['id']}}, '{{$tour_name['type']}}')" class="resp-tab-item active hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
-            {{$tour_name['name']}}
+        @if($tour_name['type'] === 'T')
+                
+                <li onclick="get_point_table({{$tour_name['tournament_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item active hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
+                    {{$tour_name['tournamentname']}}
+                </li>
+              
+        
+        @elseif($tour_name['type'] === 'S')
+        <li onclick="get_point_table({{$tour_name['season_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item active hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
+            {{$tour_name['season_name']}}
         </li>
+        @endif
         @endforeach
     </ul>
     <button type="button" class="slick-next slick-arrow bgdanger" aria-label="Next" role="button" style="display: block;" aria-disabled="false">Next</button>
@@ -151,8 +160,20 @@ $(document).ready(function() {
                       </style>
 
 
-<div class="row">
-                                	<div class="col-sm-12 sp">
+     <div class="row">
+     <div style="overflow-x: auto; overflow-y: hidden; text-align: -webkit-right;">
+                      
+									<ul class="nav nav-tabs group-names" style="width: max-content;" id="tournamentname">
+
+
+														</ul>
+                                                       
+										
+						        </div>
+                                    <br/>
+                            <div class="col-sm-12 sp">
+                              
+
                                     	<div class="panel with-nav-tabs panel-default">
                                             <div class="panel-heading">
 	                                    	<div class="about-player">
@@ -165,7 +186,7 @@ $(document).ready(function() {
 								<div class="col-sm-8">
 								<div style="overflow-x: auto; overflow-y: hidden; text-align: -webkit-right;">
 									<ul class="nav nav-tabs group-names" style="width: max-content;">
-												<li><a href="#" data-toggle="tab" style="padding: 10px 5px;"><small>Group :</small></a></li>
+                                    <li><a href="#" data-toggle="tab" style="padding: 10px 5px;"><small>Group :</small></a></li>
 												<li style="display:flex;flex-direction:row" id="groupname"><a href="#92tabGroup1" data-toggle="tab">All</a></li>
 														</ul>
 											</div>
@@ -583,6 +604,7 @@ color:#333;
     right: 5px !important;
 }
 
+
 </style>
 
 
@@ -962,12 +984,11 @@ margin-right: 10px;
                 // console.log(final[index][1].max_ball/6);
 
                 liveScoreDiv.innerHTML += `
-				
+                <a  href="{{ url('fullScorecard/${item[0].fixture_id}') }}" style="cursor:pointer" >
                 <div class="team-vs-team">
                     <div class="row list-slign">
                         <div class="col-sm-4 col-xs-4">
                             <div class="vsteam-image" >
-							<a  href="{{ url('fullScorecard/${item[0].fixture_id}') }}" >
                                 <ul class="list-inline" >
                                     <li><img
                                         src="https://cricclubs.com/documentsRep/teamLogos/95c38746-679e-45d2-804d-2971933b0169.jpg"
@@ -981,7 +1002,7 @@ margin-right: 10px;
 								</a>
                             </div>
                         </div>
-						<a  href="{{ url('fullScorecard/${item[0].fixture_id}') }}" >
+						
                         <div class="col-sm-8 col-xs-8">
                             <div class="vsteam-text ">
 							
@@ -990,6 +1011,7 @@ margin-right: 10px;
     <span style="color:red;font-weight:bold;float:right;padding-right:10px">Live</span>
     ${item[0].tournaments_name} at ${item[0].ground_name}
   </p>
+ 
   <br/>
   L:
   <a href="{{ url('team-view/${item[0].team_id_a}_${item[0].tournamentID}') }}">
@@ -1056,12 +1078,17 @@ margin-right: 10px;
 
 
                                 </h5>
+                           
                             </div>
                         </div>
-					</a>
+                       
                     </div>
+                  
+                   
+                 
 					
                 </div>
+            
 				
 				
                 `;
@@ -1075,72 +1102,90 @@ margin-right: 10px;
 }
 
 
-function get_point_table(tornament_season_id,type) {
+function get_point_table(tornament_season_id, type) {
     $.ajax({
-        url: "{{ url('/get_point_table/')}}/"+tornament_season_id+'/'+type,
+        url: "{{ url('/get_point_table/')}}/" + tornament_season_id + '/' + type,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
-    var match_count = data[0];
-    var team_name = data[1];
-    var point_table_data = document.getElementById('point_table');
-    point_table_data.innerHTML = '';
-    data.sort((a, b) => b.teambonusPoints - a.teambonusPoints);
-    data.forEach((item, index) => {
-        point_table_data.innerHTML += `
-        <tr>
-            <th>${index + 1}</th>
-            <th>
-                <table>
-                    <tbody>
+            var match_count = data[0];
+            var team_name = data[1];
+            var point_table_data = document.getElementById('point_table');
+            point_table_data.innerHTML = '';
+
+            if (data.length === 0) {
+                point_table_data.innerHTML = '<tr><td colspan="7">Empty list</td></tr>';
+            } else {
+                data.sort((a, b) => b.teambonusPoints - a.teambonusPoints);
+                data.forEach((item, index) => {
+                    point_table_data.innerHTML += `
                         <tr>
-                            <td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
-                            <td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
+                            <th>${index + 1}</th>
+                            <th>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                                            <td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </th>
+                            <th><a href="#">${item.total_matches}</a></th>
+                            <th>${item.wins}</th>
+                            <th>${item.losses}</th>
+                            <th>${item.draws}</th>
+                            <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th>
                         </tr>
-                    </tbody>
-                </table>
-            </th>
-            <th><a href="#">${item.total_matches}</a></th>
-            <th>${item.wins}</th>
-            <th>${item.losses}</th>
-            <th>${item.draws}</th>
-            <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th>
-        </tr>
-        `;
+                    `;
+                });
+            }
+        },
     });
-},
 
-	});
-	
-	get_season_group(tornament_season_id, type);
-	get_top_scorers(tornament_season_id);
-	get_top_bowler(tornament_season_id)
-
-
+    get_top_scorers(tornament_season_id);
+    get_top_bowler(tornament_season_id);
+    get_season_group(tornament_season_id);
+    get_season_tournament(tornament_season_id);
 }
 
 
-
-
-function get_season_group(tornament_season_id,type) {
+function get_season_tournament(season_id) {
     $.ajax({
-        url: "{{ url('/get_season_group/')}}/" + tornament_season_id+'/'+type ,
+        url: "{{ url('/tournament_name/')}}/" + season_id,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
-            const groups = document.getElementById('groupname');
-            groups.innerHTML = '';
-			if (data.length === 0) {
-				groups.innerHTML = `
-				<a href="#92tabGroup1" data-toggle="tab">All</a>
-				`;
-			} else {
-            data.forEach(item => {
-                groups.innerHTML += `
-				<a href="#92tabGroup1" data-toggle="tab" onclick="get_group_team(${item.group_id}, ${tornament_season_id},'${type}')" > ${item.groupname} </a>
-				`
-            });
-		}
+            const tournaments = document.getElementById('tournamentname');
+            tournaments.innerHTML = '';
+
+            if (data.length === 0) {
+                tournaments.innerHTML = `
+                 
+                `;
+            } else {
+                data.forEach((item, index) => {
+                    if (index === 0) {
+                        tournaments.innerHTML += `
+                            <li style="display: flex; flex-direction: row; list-style-type: none;">
+                                <a href="#92tabGroup1" data-toggle="tab" onclick="get_season_group(${item.tournamentID})" style="padding: 10px; background-color: #f1f1f1; border: 1px solid #ccc; border-bottom: none; cursor: pointer;" class="selected-tournament">
+                                    ${item.tournamentname}
+                                </a>
+                            </li>
+                        `;
+                        // Call the function for the first tournament
+                        get_season_group(item.tournamentID);
+                    } else {
+                        tournaments.innerHTML += `
+                            <li style="display: flex; flex-direction: row; list-style-type: none;">
+                                <a href="#92tabGroup1" data-toggle="tab" onclick="get_season_group(${item.tournamentID})" style="padding: 10px; background-color: #f1f1f1; border: 1px solid #ccc; border-bottom: none; cursor: pointer;">
+                                    ${item.tournamentname}
+                                </a>
+                            </li>
+                        `;
+                    }
+                });
+            }
         },
         error: function(error) {
             console.log(error);
@@ -1149,9 +1194,47 @@ function get_season_group(tornament_season_id,type) {
 }
 
 
-function get_group_team(group_id,tournamnet_id,type) {
+
+function get_season_group(tornament_season_id) {
     $.ajax({
-        url: "{{ url('/get_group_team/')}}/"  + group_id+'/'+tournamnet_id+'/'+type ,
+        url: "{{ url('/get_season_group/')}}/" + tornament_season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const groups = document.getElementById('groupname');
+            groups.innerHTML = '';
+
+            if (data.length === 0) {
+                groups.innerHTML = `
+                    <a href="#92tabGroup1" data-toggle="tab">All</a>
+                `;
+            } else {
+                data.forEach((item, index) => {
+                    if (index === 0) {
+                        groups.innerHTML += `
+                            <a href="#92tabGroup${index+1}" data-toggle="tab" class="selected" onclick="get_group_team(${item.group_id}, ${tornament_season_id})">${item.groupname}</a>
+                        `;
+                        // Call the function for the first group
+                        get_group_team(item.group_id, tornament_season_id);
+                    } else {
+                        groups.innerHTML += `
+                            <a href="#92tabGroup${index+1}" data-toggle="tab" onclick="get_group_team(${item.group_id}, ${tornament_season_id})">${item.groupname}</a>
+                        `;
+                    }
+                });
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+
+
+function get_group_team(group_id,tournamnet_id) {
+    $.ajax({
+        url: "{{ url('/get_group_team/')}}/"  + group_id+'/'+tournamnet_id,
         type: 'GET',
         dataType: 'json',
         success: function(data) {

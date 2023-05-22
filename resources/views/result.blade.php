@@ -20,7 +20,7 @@
                     
                     <div class="col-sm-3">
                     <div class="dropdown">
-                    <select name="year" required='required' id="year" class="form-control" >
+                    <select name="year"  id="year" class="form-control" >
                                  		<option value=""> Select Year(s)</option>
                                          @for ($year = date('Y'); $year >= 2015; $year--)
                                         <option value="{{ $year }}" >{{ $year }}</option>
@@ -53,16 +53,12 @@
                     </div>
                  	<div class="col-xs-6 col-sm-3" title="Change internal club">
                     <div class="dropdown">
-								<button class="btn btn-default btn-align dropdown-toggle selection-dropdown" type="button" id="dropdownMenu2" data-toggle="dropdown">
-									All Clubs<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu dropdown-height" role="menu" aria-labelledby="dropdownMenu2">
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="">All</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="">Brampton Pacers</a></li>
-									
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="">Dhurham Maple Leaf</a></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="">Jammu Elite</a></li>
-									</ul>
+                                    <select name="club" id="club" class="form-control">
+                                <option value="">Select Club</option>
+                                @foreach($clubs as $index => $club)
+                                    <option value ="{{$index}}">{{$club}}</option>
+                                    @endforeach
+                            </select>
 							</div>
                     </div>
                     <div class="col-xs-6 col-sm-3">

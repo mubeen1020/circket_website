@@ -38,8 +38,8 @@ Route::get('live_score',[ApiController::class,'live_score']);
 Route::get('team-view/{team_id}_{tournament_id}',[HomeController::class,'team_view'])->name('team_view');
 Route::get('team_result/{team_id}_{tournament_id}',[HomeController::class,'team_result'])->name('team_result');
 Route::get('get_point_table/{id}/{type}',[ApiController::class,'get_point_table'])->name('get_point_table');
-Route::get('get_season_group/{season_id}/{type}',[ApiController::class,'get_season_group'])->name('get_season_group');
-Route::get('get_group_team/{group_id}/{tournament_id}/{type}',[ApiController::class,'get_group_team'])->name('get_group_team');
+Route::get('get_season_group/{season_id}',[ApiController::class,'get_season_group'])->name('get_season_group');
+Route::get('get_group_team/{group_id}/{tournament_id}',[ApiController::class,'get_group_team'])->name('get_group_team');
 Route::get('team_schedule/{team_id}_{tournament_id}',[HomeController::class,'team_schedule'])->name('team_schedule');
 Route::get('team_batting/{team_id}_{tournament_id}',[HomeController::class,'team_batting'])->name('team_batting');
 Route::get('team_bowling/{team_id}_{tournament_id}',[HomeController::class,'team_bowling'])->name('team_bowling');
@@ -47,5 +47,5 @@ Route::get('team_fielding/{team_id}_{tournament_id}',[HomeController::class,'tea
 Route::get('get_top_scorers/{id}',[ApiController::class,'get_top_scorers'])->name('get_top_scorers');
 Route::get('get_top_bowler/{id}',[ApiController::class,'get_top_bowler'])->name('get_top_bowler');
 Route::get('downloadCSV/{id}', [HomeController::class, 'downloadCSV'])->name('downloadCSV');
-
-
+Route::get('tournament_name/{season_id}',[ApiController::class,'tournament_name'])->name('tournament_name');
+Route::get('clubs',[HomeController::class,'clubs'])->name('clubs');
