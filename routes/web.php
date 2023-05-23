@@ -51,3 +51,6 @@ Route::get('tournament_name/{season_id}',[ApiController::class,'tournament_name'
 Route::get('clubs',[HomeController::class,'clubs'])->name('clubs');
 Route::get('clubteamsearch',[HomeController::class,'clubteamsearch'])->name('clubteamsearch');
 Route::post('club-team-search-submit',[HomeController::class,'club_team_search_submit'])->name('club_team_search_submit');
+Route::get('schedulesearch',[HomeController::class,'schedulesearch'])->name('schedulesearch');
+Route::post('schedulesearch_form_submit',[HomeController::class,'schedulesearch_form_submit'])->name('schedulesearch_form_submit');
+Route::get('imagegallery',[HomeController::class,'imagegallery'])->name('imagegallery');

@@ -805,7 +805,7 @@ margin-right: 10px;
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="view text-right">
-									<a href="#">View
+									<a href="{{ url('imagegallery') }}">View
 										ALL <i class="fa fa-arrow-circle-o-right"></i>
 									</a>
 								</div>
@@ -820,7 +820,7 @@ margin-right: 10px;
 						@if($image->type == 1)
 								<div class="gallery-image-all">
 									<a title="EOSCL AWARDS 2018"
-										href="#">
+										href="{{ url('imagegallery') }}">
 										<div class="gallery-image">
 								
 											<img

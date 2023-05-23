@@ -1347,5 +1347,149 @@ $query = Team::query()->where('isclub', '=', 1)
 return view('clubteamsearch',compact('match_results','teams','sponsor_gallery','result',));
 }
 
+
+public function schedulesearch(){
+  $ground = Ground::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  DB::enableQueryLog();
+
+    $years = DB::table('fixtures')
+        ->select(DB::raw('YEAR(created_at) as year'))
+        ->groupBy(DB::raw('YEAR(created_at)'))
+        ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
+        ->pluck('year');
+
+    $match_results = Fixture::query()->orderBy('id')->get();
+    $data = Fixture::where('running_inning', '=', 0);
+    
+
+    $teams = Team::query()->get()->pluck(
+        'name',
+        'id'
+    );
+
+    $clubs = Team::query()->where('isclub','=',1)->get()->pluck(
+      'clubname',
+      'id'
+    );
+
+    $results = $data->get();
+    $tournament = Tournament::query()->pluck(
+            'name',
+            'id'
+        );
+    $image_gallery =GalleryImages::query()
+    ->where('isActive','=',1)
+    ->get();
+    $sponsor_gallery =Sponsor::query()
+    ->where('isActive','=',1)
+    ->get();
+  
+    $ground2= Ground::query()->get()->pluck(
+      'name',
+      'id'
+    );
+  
+return view('schedulesearch',compact('results','ground2','ground','clubs', 'teams', 'match_results', 'years', 'tournament', 'image_gallery' , 'sponsor_gallery'));
+}
+
+public function schedulesearch_form_submit(Request $request)
+{
+  $ground = Ground::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  DB::enableQueryLog();
+    if ($request->method() !== 'POST') {
+        abort(405, 'Method Not Allowed');
+    }
+    $years = DB::table('fixtures')
+        ->select(DB::raw('YEAR(created_at) as year'))
+        ->groupBy(DB::raw('YEAR(created_at)'))
+        ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
+        ->pluck('year');
+    $match_results = Fixture::query()->orderBy('id')->get();
+    $data = Fixture::query();
+    $term = $request;
+    if (!empty($term->created_at)) {
+      $data->whereRaw("DATE(match_startdate) >= Date('$term->created_at')");
+    }
+    if (!empty($term->end_at)) {
+      $data->whereRaw("DATE(match_enddate) <= Date('$term->end_at')");
+    }
+   
+    if (!empty($term['year'])) {
+        $year = $term['year'];
+        $data->whereRaw("YEAR(created_at) = $year");
+    }
+    if (!empty($term['teams'])) {
+        $team = $term['teams'];
+        $data->where('team_id_a', '=', $team)
+        ->oRWhere('team_id_b', '=', $team);
+    }
+    if(!empty($term->club)){
+      $club = $term->club;
+      $data->where('team_id_a', '=', $club)
+      ->oRWhere('team_id_b', '=', $club);
+    }
+
+    if (!empty($term['tournament'])) {
+      $tournaments = $term['tournament'];
+      $data->where('tournament_id', '=', $tournaments);
+  }
+
+    $teams = Team::query()->get()->pluck(
+        'name',
+        'id'
+    );
+
+    $clubs = Team::query()->where('isclub','=',1)->get()->pluck(
+      'clubname',
+      'id'
+    );
+  
+    
+    $results = $data->get();
+    $tournament = Tournament::query()->pluck(
+            'name',
+            'id'
+        );
+      
+    $image_gallery =GalleryImages::query()
+    ->where('isActive','=',1)
+    ->get();
+    $sponsor_gallery =Sponsor::query()
+    ->where('isActive','=',1)
+    ->get();
+    $ground2= Ground::query()->get()->pluck(
+      'name',
+      'id'
+    );
+    
+// dd($ground);
+    return view('schedulesearch', compact('results','ground2','clubs', 'teams', 'match_results', 'ground','years', 'tournament', 'image_gallery' , 'sponsor_gallery'));
+}
+
+public function imagegallery(){
+ 
+    $match_results = Fixture::query()->orderBy('id')->get();
+    $teams = Team::query()->get()->pluck(
+        'name',
+        'id'
+    );
+    $clubs = Team::query()->where('isclub','=',1)->get()->pluck(
+      'clubname',
+      'id'
+    );
+    $image_gallery =GalleryImages::query()
+    ->where('isActive','=',1)
+    ->get();
+    $sponsor_gallery =Sponsor::query()
+    ->where('isActive','=',1)
+    ->get();
+  return view('imagegallery', compact('teams', 'match_results', 'image_gallery' , 'sponsor_gallery'));
+}
     
  }
