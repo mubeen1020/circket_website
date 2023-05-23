@@ -49,3 +49,5 @@ Route::get('get_top_bowler/{id}',[ApiController::class,'get_top_bowler'])->name(
 Route::get('downloadCSV/{id}', [HomeController::class, 'downloadCSV'])->name('downloadCSV');
 Route::get('tournament_name/{season_id}',[ApiController::class,'tournament_name'])->name('tournament_name');
 Route::get('clubs',[HomeController::class,'clubs'])->name('clubs');
+Route::get('clubteamsearch',[HomeController::class,'clubteamsearch'])->name('clubteamsearch');
+Route::post('club-team-search-submit',[HomeController::class,'club_team_search_submit'])->name('club_team_search_submit');

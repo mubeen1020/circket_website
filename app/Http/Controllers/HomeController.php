@@ -1298,5 +1298,54 @@ public function clubs(){
   return view('clubs',compact('match_results','clubs','teams','sponsor_gallery'));
 }
 
+public function clubteamsearch(){
+  $match_results = Fixture::query();
+  $match_results = $match_results->orderBy('id')->get();
+$teams = Team::pluck('name', 'id');
+$sponsor_gallery =Sponsor::query()
+->where('isActive','=',1)
+->get();
+$tournament = Tournament::query()->get()->pluck(
+  'name',
+  'id'
+);
+$data = [];
+$result = $data;
+return view('clubteamsearch',compact('match_results','teams','sponsor_gallery','result','tournament'));
+}
+
+
+public function club_team_search_submit(Request $request){
+  $match_results = Fixture::query();
+  $match_results = $match_results->orderBy('id')->get();
+$teams = Team::pluck('name', 'id');
+$sponsor_gallery =Sponsor::query()
+->where('isActive','=',1)
+->get();
+if ($request->method() !== 'POST') {
+  abort(405, 'Method Not Allowed');
+}
+$term = $request->input('teamName');
+
+$query = Team::query()->where('isclub', '=', 1)
+    ->where('iscaptain', 1)
+    ->select('teams.id', 'teams.name', 'players.fullname', 'tournament_groups.tournament_id', 'tournaments.name as tournament')
+    ->join('team_players', 'team_players.team_id', '=', 'teams.id')
+    ->join('players', 'players.id', '=', 'team_players.player_id')
+    ->join('tournament_groups', 'tournament_groups.team_id', '=', 'teams.id')
+    ->join('tournaments', 'tournaments.id', '=', 'tournament_groups.tournament_id');
+
+    if (!empty($term)) {
+      $query->where('teams.name', 'like', '%' . $term . '%');
+  }
+  $result = $query->get();
+  
+
+
+
+
+return view('clubteamsearch',compact('match_results','teams','sponsor_gallery','result',));
+}
+
     
  }
