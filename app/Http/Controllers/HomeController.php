@@ -684,11 +684,11 @@ class HomeController extends Controller
       ->where('isActive','=',1)
       ->get();
 
-      $sponsor_gallery =Sponsor::query()
+      $sponsor_gallery1 =Sponsor::query()
       ->where('isActive','=',1)
       ->get();
 
-        return view('result',compact('results','clubs','match_results','teams','tournament','teams' , "image_gallery" , 'sponsor_gallery'));
+        return view('result',compact('results','clubs','match_results','teams','tournament','teams' , "image_gallery" , 'sponsor_gallery1'));
     }
 
     public function result_form_submit(Request $request)
