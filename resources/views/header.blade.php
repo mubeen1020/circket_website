@@ -193,7 +193,10 @@
     <script type="text/javascript" src="{!! asset('utilsv2/sortable.js') !!}"></script>
     <script type="text/javascript" src="{!! asset('utilsv2/app/assets/js/jquery.slimscroll.min.js') !!}"></script>
    
-   
+   <!-- Add these lines in the head section of your layout file -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettyPhoto/3.1.6/css/prettyPhoto.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettyPhoto/3.1.6/js/jquery.prettyPhoto.min.js"></script>
+
    <style>
         #navbarSlider {
             display: flex;
@@ -489,7 +492,7 @@ navbarSlider.addEventListener("mouseout", function() {
             <ul class="dropdown-menu"  >
               <li><a href="{{ route('clubs')}}">View Clubs</a></li>
               <li><a href="{{ route('clubteamsearch')}}">Search Teams</a></li>
-              <li><a href="{{ route('comingsoon')}}">View Teams</a></li>
+              <li><a href="{{ route('clubviewteams')}}">View Teams</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -505,7 +508,7 @@ navbarSlider.addEventListener("mouseout", function() {
           <li class="dropdown">
             <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">Series</a>
             <ul class="dropdown-menu"  >
-              <li><a href="{{ route('comingsoon')}}">2022 - Boom Boom T10</a></li>
+              <li><a href="{{ route('seasonresponsers')}}">2022 - Boom Boom T10</a></li>
               <li><a href="{{ route('comingsoon')}}">2022 MCLT12 Winter League</a></li>
               <li><a href="{{ route('comingsoon')}}">MCL vs Singapore</a></li>
               <li><a href="{{ route('comingsoon')}}">2022 MCLT25</a></li>
@@ -516,12 +519,12 @@ navbarSlider.addEventListener("mouseout", function() {
           <li class="dropdown">
             <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">League</a>
             <ul class="dropdown-menu"  >
-              <li><a href="{{ route('comingsoon')}}">League Info</a></li>
+              <li><a href="{{ route('leagueinfo')}}">League Info</a></li>
               <li><a href="{{ route('comingsoon')}}">Grounds</a></li>
               <li><a href="{{ route('comingsoon')}}">Documents</a></li>
               <li><a href="{{ route('comingsoon')}}">Umpires/Coaches/Scorers</a></li>
               <li><a href="{{ route('comingsoon')}}">DLS Calculator</a></li>
-              <li><a href="{{ route('comingsoon')}}">Photo Gallery</a></li>
+              <li><a href="{{ route('imagegallery')}}">Photo Gallery</a></li>
               <li><a href="{{ route('comingsoon')}}">News</a></li>
               <li><a href="{{ route('comingsoon')}}">Articles</a></li>
               <li><a href="{{ route('comingsoon')}}" target="_blank">2023 Summer Club Registration Form</a></li>
