@@ -1641,7 +1641,7 @@ public function clubviewteams_submit(Request $request)
       'id'
     );
     
-// dd($ground);
+
     return view('clubviewteams', compact('results','ground2', 'teams', 'match_results', 'ground','years', 'tournament', 'image_gallery' , 'sponsor_gallery'));
 }
  }
