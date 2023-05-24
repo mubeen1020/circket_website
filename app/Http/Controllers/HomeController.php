@@ -688,9 +688,6 @@ class HomeController extends Controller
 
     public function result_form_submit(Request $request)
     {
-
-     
-
       DB::enableQueryLog();
 
         if ($request->method() !== 'POST') {
@@ -714,7 +711,7 @@ class HomeController extends Controller
        
         if (!empty($term['year'])) {
             $year = $term['year'];
-            $data->whereRaw("YEAR(created_at) = $year");
+            $data->where("YEAR(created_at) = $year");
         }
         if (!empty($term['teams'])) {
             $team = $term['teams'];
@@ -724,7 +721,7 @@ class HomeController extends Controller
         if(!empty($term->club)){
           $club = $term->club;
           $data->where('team_id_a', '=', $club)
-          ->oRWhere('team_id_b', '=', $club);
+          ->Where('team_id_b', '=', $club);
         }
 
         if (!empty($term['tournament'])) {
@@ -1384,21 +1381,29 @@ public function schedulesearch_form_submit(Request $request)
         $year = $term['year'];
         $data->whereRaw("YEAR(created_at) = $year");
     }
+    if (!empty($term['tournament'])) {
+      $tournaments = $term['tournament'];
+      $data->where('tournament_id', '=', $tournaments);
+  }
+
     if (!empty($term['teams'])) {
         $team = $term['teams'];
         $data->where('team_id_a', '=', $team)
         ->oRWhere('team_id_b', '=', $team);
     }
+
     if(!empty($term->club)){
       $club = $term->club;
       $data->where('team_id_a', '=', $club)
       ->oRWhere('team_id_b', '=', $club);
     }
 
-    if (!empty($term['tournament'])) {
-      $tournaments = $term['tournament'];
-      $data->where('tournament_id', '=', $tournaments);
+    if (!empty($term['grounddata'])) {
+      $grounddata = $term['grounddata'];
+      $data->where('ground_id', '=', $grounddata);
   }
+
+    
 
     $teams = Team::query()->get()->pluck(
         'name',
@@ -1409,6 +1414,7 @@ public function schedulesearch_form_submit(Request $request)
       'clubname',
       'id'
     );
+    
   
     
     $results = $data->get();
@@ -1535,10 +1541,12 @@ public function clubviewteams(){
     return view('clubviewteams', compact('results','ground2','clubs', 'teams', 'match_results', 'ground','years', 'tournament', 'image_gallery' ));
 }
 
+
+
+
 public function  view_tournaments(int $tournament_id)
 {
 
-  // dd($tournament_id);
 
 $match_results = Fixture::query();
 $match_results = $match_results->orderBy('id')->get();
@@ -1551,26 +1559,28 @@ $sponsor_gallery =Sponsor::query()
 ->where('isActive','=',1)
 ->get();
 
-
+$tournament_name = Tournament::query()
+->where('season_id','=',0)
+->where('is_web_display','=',1)
+->get();
 
 $select_tournament_name = Tournament::query()
 ->where('id','=',$tournament_id)
 ->get();
 
-$season = Season::query()
-->where('id','=',$select_tournament_name[0]->id)
+$seasons = Season::query()
+->where('id','=',$select_tournament_name[0]->season_id)
 ->selectRaw("name as season_name")
 ->selectRaw("id as season_id")
 ->get();
 
 
-
-// dd($tournament);
-
-  return view('display_tournaments'  , compact( 'match_results', 'teams'   , 'select_tournament_name' , 'season'));
-
+  return view('display_tournaments'  , compact( 'match_results', 'teams'  , "tournament_name" , 'select_tournament_name' , 'seasons'));
   
 }
+
+
+
 
 
 public function  view_all_tournaments()
@@ -1587,14 +1597,15 @@ $sponsor_gallery =Sponsor::query()
 ->where('isActive','=',1)
 ->get();
 
+$tournament_name = Tournament::query()
+->where('season_id','=',0)
+->where('is_web_display','=',1)
+->get();
 
 
-{
 
   
-  return view('display_all_tournaments'  , compact( 'match_results', 'teams'  ));
-
-}
+  return view('display_all_tournaments'  , compact( 'match_results', 'teams'  , "tournament_name"));
 
 }
 
@@ -1614,6 +1625,11 @@ $sponsor_gallery =Sponsor::query()
 ->where('isActive','=',1)
 ->get();
 
+$tournament_name = Tournament::query()
+->where('season_id','=',0)
+->where('is_web_display','=',1)
+->get();
+
 
 $grounds =Ground::query()
 ->where('isActive','=',1)
@@ -1622,10 +1638,9 @@ $grounds =Ground::query()
 
 
 
-  return view('grounds_view'  , compact( 'match_results', 'teams' , "grounds"));  
+  return view('grounds_view'  , compact( 'match_results', 'teams'  , "tournament_name" , "grounds"));  
 
 
 }
-
 
 }

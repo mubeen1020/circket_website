@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-sm-2 col-xs-6" title="Change Ground">
                     <div class="dropdown">
-                                <select name="club" id="club" class="form-control">
+                                <select name="grounddata" id="grounddata" class="form-control">
                                 <option value="">All Grounds</option>
                                 @foreach($ground as $index => $ground_item)
                                     <option value ="{{$index}}">{{$ground_item}}</option>

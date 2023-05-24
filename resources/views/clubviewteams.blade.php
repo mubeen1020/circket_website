@@ -11,7 +11,7 @@
 					<div class="col-sm-6">
 						<div class="border-heading">
 							<h5>
-								<a href="/MississaugaCricketLeague/viewLeague.do?league=118&amp;clubId=2565"><font color="white">2023 MCL T25 (Super 8)</font></a>
+								<a href="/MississaugaCricketLeague/viewLeague.do?league=118&amp;clubId=2565"><font color="white">EVENT ONTARIO SOFTBALL CIRCKET CLUBS</font></a>
 							</h5>
 						</div>
 					</div>
@@ -73,12 +73,40 @@
 							<th nowrap="nowrap">Club Name</th>
 							<th class="header">Team Name (Players)</th>
 							<th class="header">Captain</th>
-												
+							<th class="header">Tournaments</th>			
 							<th class="header">Home Ground</th>
 							</tr>
 					</thead>
 					<tbody>
- 
+                    @php
+    if(count($results) > 0){
+@endphp
+
+                         @foreach($results as $key => $data)
+						
+                       	
+						<tr id="row1165">
+						<th>{{$key+1}}</th>
+							<th nowrap="nowrap"><a href="">{{$data->clubname}}</a></th>
+							<th nowrap="nowrap"><table><tbody><tr><td style="padding-right: 5px;"><img src="https://cricclubs.com/documentsRep/teamLogos/68b4bd29-e486-4066-a74f-c5173df3e8ec.jpg" class="left-block img-circle" style="width: 25px;height: 25px;"></td><td><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1165&amp;league=118&amp;clubId=2565">{{$data->name}}</a></td></tr></tbody></table></th>
+							<th><a href="">{{$data->fullname}}</a></th>
+							<th>
+							 <a href="">{{$data->tournamentname}}</a>
+                            </th>
+							<th>
+							 <a href="">Malton - Paul Coffey Arena (Turf &amp; Matting)</a>
+                            </th>
+							</tr>
+                           
+       							@endforeach
+        
+    
+
+								   
+ @php
+}
+@endphp
+
 						</tbody>
 				</table>
 				</div>
