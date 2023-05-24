@@ -99,21 +99,19 @@
 					<div id="slider-container">
     <button type="button" class="slick-prev slick-arrow slick-disabled" aria-label="Previous" role="button" aria-disabled="true" style="display: block;">Previous</button>
     <ul class="resp-tabs-list hor_1 common__slider">
-        @foreach($tournament_season as $tour_name)
+    @foreach($tournament_season as $index => $tour_name)
         @if($tour_name['type'] === 'T')
-                
-                <li onclick="get_point_table({{$tour_name['tournament_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item active hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
-                    {{$tour_name['tournamentname']}}
-                </li>
-              
-        
+            <li onclick="get_point_table({{$tour_name['tournament_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item {{ $index === 0 ? 'active' : '' }} hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
+                {{$tour_name['tournamentname']}}
+            </li>
         @elseif($tour_name['type'] === 'S')
-        <li onclick="get_point_table({{$tour_name['season_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item active hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
-            {{$tour_name['season_name']}}
-        </li>
+            <li onclick="get_point_table({{$tour_name['season_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item {{ $index === 0 ? 'active' : '' }} hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
+                {{$tour_name['season_name']}}
+            </li>
         @endif
-        @endforeach
-    </ul>
+    @endforeach
+</ul>
+
     <button type="button" class="slick-next slick-arrow bgdanger" aria-label="Next" role="button" style="display: block;" aria-disabled="false">Next</button>
 							
 </div>
@@ -343,6 +341,8 @@ $(document).ready(function() {
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <div class="runs-slide-details-all">
                                 	<div class="row">
                                 	<div class="col-sm-3 sp">
@@ -498,10 +498,7 @@ $(document).ready(function() {
                                     	<div class="no-balls">
                                             <div id="carousel-no-balls" class="carousel slide" data-ride="carousel">
                                                 <div class="carousel-inner">
-                                                    <div class="item">
-                                                        <h4>maidens</h4>
-                                                        <h2><a style="color: white;" href="#">210</a></h2>
-                                                    </div>
+                                                  
                                                     <div class="item active">
                                                         <h4>wides</h4>
                                                         <h2><a style="color: white;" href="#">1,377</a></h2>

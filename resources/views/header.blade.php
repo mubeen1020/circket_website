@@ -210,19 +210,20 @@
         }
 
         .dropdown-menu {
-            background-color: black;
+  background-color: #333;
   position: relative;
-  z-index: 9999;
-  left: 0;
-  top: 100%;
-  }
-  
+  z-index: 10000;
+}
 
   .dropdown-menu li a {
     color: white;
+    background-color: #333 !important;
   }
+  .mainmenu a {
+  background-color: #707372 !important;
+}
   .mainmenu a:hover {
-  background-color: black !important;
+  background-color: #333 !important;
 }
 
     </style>

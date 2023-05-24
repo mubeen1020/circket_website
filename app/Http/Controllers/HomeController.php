@@ -711,8 +711,13 @@ class HomeController extends Controller
        
         if (!empty($term['year'])) {
             $year = $term['year'];
-            $data->where("YEAR(created_at) = $year");
+            $data->whereRaw("YEAR(created_at) = $year");
         }
+        if (!empty($term['tournament'])) {
+          $tournaments = $term['tournament'];
+          $data->where('tournament_id', '=', $tournaments);
+      }
+
         if (!empty($term['teams'])) {
             $team = $term['teams'];
             $data->where('team_id_a', '=', $team)
@@ -724,10 +729,7 @@ class HomeController extends Controller
           ->Where('team_id_b', '=', $club);
         }
 
-        if (!empty($term['tournament'])) {
-          $tournaments = $term['tournament'];
-          $data->where('tournament_id', '=', $tournaments);
-      }
+      
     
         $teams = Team::query()->get()->pluck(
             'name',
@@ -1359,9 +1361,7 @@ public function schedulesearch_form_submit(Request $request)
     'id'
   );
   DB::enableQueryLog();
-    if ($request->method() !== 'POST') {
-        abort(405, 'Method Not Allowed');
-    }
+  
     $years = DB::table('fixtures')
         ->select(DB::raw('YEAR(created_at) as year'))
         ->groupBy(DB::raw('YEAR(created_at)'))
@@ -1596,7 +1596,7 @@ $results = $data->orderby('tournament_groups.team_id')
     );
     
 // dd($ground);
-    return view('clubviewteams', compact('results','ground2','clubs', 'match_results', 'ground','years', 'tournament', 'image_gallery' ));
+    return view('clubviewteams', compact('results','ground2', 'match_results', 'ground','years', 'tournament', 'image_gallery' ));
 }
 
 public function  view_tournaments(int $tournament_id)
