@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\Tournament;
 
 class header_slider
 {
@@ -24,8 +25,10 @@ class header_slider
 
 
          $teams = DB::table('teams')->pluck('name', 'id');
-         // dd($teams);
+         $tournament_name = Tournament::query()->where('season_id','=',0)->where('is_web_display','=',1)->get();
+         dd($tournament_name);
           view()->share('sponsor_gallery', $sponsor_gallery);
+          view()->share('tournament_name', $tournament_name);
           view()->share('teams', $teams);
 
         return $next($request);

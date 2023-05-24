@@ -62,10 +62,10 @@ class HomeController extends Controller
       ->get();
 
 
-      $tournament_name = Tournament::query()
-      ->where('season_id','=',0)
-      ->where('is_web_display','=',1)
-      ->get();
+      // $tournament_name = Tournament::query()
+      // ->where('season_id','=',0)
+      // ->where('is_web_display','=',1)
+      // ->get();
 
       $Season = Season::query()
       ->where('is_web_display','=',1)
@@ -131,7 +131,7 @@ class HomeController extends Controller
 
         //  dd($image_slider);
 
-        return view('home',compact('tournament','tournament_season' ,'match_results','teams','upcoming_match','ground','image_gallery','image_slider'  , 'tournament_name'));
+        return view('home',compact('tournament','tournament_season' ,'match_results','teams','upcoming_match','ground','image_gallery','image_slider'  ));
     }
 
 
@@ -1551,10 +1551,7 @@ $sponsor_gallery =Sponsor::query()
 ->where('isActive','=',1)
 ->get();
 
-$tournament_name = Tournament::query()
-->where('season_id','=',0)
-->where('is_web_display','=',1)
-->get();
+
 
 $select_tournament_name = Tournament::query()
 ->where('id','=',$tournament_id)
@@ -1570,7 +1567,7 @@ $season = Season::query()
 
 // dd($tournament);
 
-  return view('display_tournaments'  , compact( 'match_results', 'teams'  , "tournament_name" , 'select_tournament_name' , 'season'));
+  return view('display_tournaments'  , compact( 'match_results', 'teams'   , 'select_tournament_name' , 'season'));
 
   
 }
@@ -1590,15 +1587,12 @@ $sponsor_gallery =Sponsor::query()
 ->where('isActive','=',1)
 ->get();
 
-$tournament_name = Tournament::query()
-->where('season_id','=',0)
-->where('is_web_display','=',1)
-->get();
+
 
 {
 
   
-  return view('display_all_tournaments'  , compact( 'match_results', 'teams'  , "tournament_name"));
+  return view('display_all_tournaments'  , compact( 'match_results', 'teams'  ));
 
 }
 
@@ -1620,11 +1614,6 @@ $sponsor_gallery =Sponsor::query()
 ->where('isActive','=',1)
 ->get();
 
-$tournament_name = Tournament::query()
-->where('season_id','=',0)
-->where('is_web_display','=',1)
-->get();
-
 
 $grounds =Ground::query()
 ->where('isActive','=',1)
@@ -1633,7 +1622,7 @@ $grounds =Ground::query()
 
 
 
-  return view('grounds_view'  , compact( 'match_results', 'teams'  , "tournament_name" , "grounds"));  
+  return view('grounds_view'  , compact( 'match_results', 'teams' , "grounds"));  
 
 
 }
