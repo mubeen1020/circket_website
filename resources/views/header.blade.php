@@ -508,12 +508,14 @@ navbarSlider.addEventListener("mouseout", function() {
           <li class="dropdown">
             <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">Series</a>
             <ul class="dropdown-menu"  >
-            @foreach($header_tournament_name as $tname)
-
-                    <li><a href="{{ url('view_tournaments/' . $tname->id) }}">{{ $tname->name }}</a></li>
-
-                    @endforeach
-            <li><a href="{{ route('view_all_tournaments')}}"><span>View all</span></a></li>
+           @php $count = 0; @endphp
+@foreach($header_tournament_name as $tname)
+  @if($count < 4)
+    <li><a href="{{ url('view_tournaments/' . $tname->id) }}">{{ $tname->name }}</a></li>
+    @php $count++; @endphp
+  @endif
+@endforeach
+<li><a href="{{ route('view_all_tournaments')}}"><span>View all</span></a></li>
             
             
             
