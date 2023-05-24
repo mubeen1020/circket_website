@@ -1131,7 +1131,7 @@ public function team_bowling(int $team_id,int $tournament_id){
   ->get();
 
 
-  return view('team_bowling', compact('tournamentData', 'tournament_ids','player','teamPlayerCount','team_resultData','teamPlayers','teamData','match_results', 'teams','tournament','team_id_data','team_bowlingdata' , 'image_gallery' ));
+  return view('team_bowling', compact('tournamentData', 'tournament_ids','player','teamPlayerCount','team_resultData','teamPlayers','teamData','match_results','tournament','team_id_data','team_bowlingdata' , 'image_gallery' ));
 }
     
 public function team_fielding(int $team_id,int $tournament_id){
@@ -1180,7 +1180,7 @@ public function team_fielding(int $team_id,int $tournament_id){
   ->get();
 
 
-  return view('team_fielding', compact('tournamentData', 'player','teamPlayers','teamData','match_results', 'teams','tournament','team_id_data','team_bowlingdata','teamPlayerCount','team_resultData','tournament_ids' , 'image_gallery' ));
+  return view('team_fielding', compact('tournamentData', 'player','teamPlayers','teamData','match_results','tournament','team_id_data','team_bowlingdata','teamPlayerCount','team_resultData','tournament_ids' , 'image_gallery' ));
 }
 
 
@@ -1490,12 +1490,13 @@ public function leagueinfo(){
   ->get();
 
   
-return view('leagueinfo', compact('teams', 'match_results', 'image_gallery' ));
+return view('leagueinfo', compact( 'match_results', 'image_gallery' ));
 }
 
    
 
 public function clubviewteams(){
+  $tournament_name = Tournament::query()->where('season_id','=',0)->where('is_web_display','=',1)->get();
   $ground = Ground::query()->get()->pluck(
     'name',
     'id'
@@ -1538,11 +1539,65 @@ public function clubviewteams(){
     );
     
 // dd($ground);
-    return view('clubviewteams', compact('results','ground2','clubs', 'teams', 'match_results', 'ground','years', 'tournament', 'image_gallery' ));
+    return view('clubviewteams', compact('tournament_name','results', 'match_results','ground2','clubs', 'ground','years', 'tournament', 'image_gallery' ));
 }
 
 
+public function clubviewteams_submit(Request $request){
+  $ground = Ground::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  DB::enableQueryLog();
+   
+    $years = DB::table('tournaments')
+        ->select(DB::raw('YEAR(tournamentstartdate) as year'))
+        ->groupBy(DB::raw('YEAR(tournamentstartdate)'))
+        ->orderBy(DB::raw('YEAR(tournamentstartdate)'), 'desc')
+        ->pluck('year');
+    $match_results = Fixture::query()->get();
+   
+    $data = TournamentGroup::query()
+    ->selectRaw('players.fullname, teams.id, teams.clubname, teams.name, tournament_groups.tournament_id, tournaments.tournamentstartdate,tournaments.name as tournamentname')
+    ->where('teams.isclub', 1)
+    ->where('team_players.iscaptain', 1)
+    ->join('tournaments', 'tournaments.id', '=', 'tournament_groups.tournament_id')
+    ->join('teams', function ($join) {
+        $join->on('teams.id', '=', 'tournament_groups.team_id');
+    })->join('team_players', 'team_players.team_id', '=', 'teams.id')
+    ->join('players', 'players.id', '=', 'team_players.player_id');
+   
 
+$term = $request;
+if (!empty($term['year'])) {
+    $year = $term['year'];
+    $data->whereRaw("YEAR(tournaments.tournamentstartdate) = $year");
+}
+
+if (!empty($term['tournament'])) {
+    $tournaments = $term['tournament'];
+    $data->where('tournament_groups.tournament_id', '=', $tournaments);
+}
+
+$results = $data->orderby('tournament_groups.team_id')
+->get();
+    $tournament = Tournament::query()->pluck(
+            'name',
+            'id'
+        );
+      
+    $image_gallery =GalleryImages::query()
+    ->where('isActive','=',1)
+    ->get();
+
+    $ground2= Ground::query()->get()->pluck(
+      'name',
+      'id'
+    );
+    
+// dd($ground);
+    return view('clubviewteams', compact('results','ground2','clubs', 'match_results', 'ground','years', 'tournament', 'image_gallery' ));
+}
 
 public function  view_tournaments(int $tournament_id)
 {
@@ -1642,5 +1697,96 @@ $grounds =Ground::query()
 
 
 }
+
+public function articals(){
+
+$match_results = Fixture::query();
+$match_results = $match_results->orderBy('id')->get();
+$teams = Team::query()->get()->pluck(
+  'name',
+  'id'
+);
+
+$sponsor_gallery =Sponsor::query()
+->where('isActive','=',1)
+->get();
+
+$tournament_name = Tournament::query()
+->where('season_id','=',0)
+->where('is_web_display','=',1)
+->get();
+
+
+$grounds =Ground::query()
+->where('isActive','=',1)
+->get();
+
+
+
+
+  return view('articals'  , compact( 'match_results', 'teams'  , "tournament_name" , "grounds"));  
+}
+
+public function newsdata(){
+
+  $match_results = Fixture::query();
+  $match_results = $match_results->orderBy('id')->get();
+  $teams = Team::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  
+  $sponsor_gallery =Sponsor::query()
+  ->where('isActive','=',1)
+  ->get();
+  
+  $tournament_name = Tournament::query()
+  ->where('season_id','=',0)
+  ->where('is_web_display','=',1)
+  ->get();
+  
+  
+  $grounds =Ground::query()
+  ->where('isActive','=',1)
+  ->get();
+  
+  $image_slider =GalleryImages::query()
+  ->where('is_main_slider','=',1)
+  ->where('isActive','=',1)
+  ->get();
+  
+  
+    return view('newsdata'  , compact( 'image_slider','match_results', 'teams'  , "tournament_name" , "grounds"));  
+  }
+
+  public function contactus()
+  {
+    $match_results = Fixture::query();
+$match_results = $match_results->orderBy('id')->get();
+$teams = Team::query()->get()->pluck(
+  'name',
+  'id'
+);
+
+$sponsor_gallery =Sponsor::query()
+->where('isActive','=',1)
+->get();
+
+$tournament_name = Tournament::query()
+->where('season_id','=',0)
+->where('is_web_display','=',1)
+->get();
+
+
+$grounds =Ground::query()
+->where('isActive','=',1)
+->get();
+
+
+
+
+  return view('contactus'  , compact( 'match_results', 'teams'  , "tournament_name" , "grounds"));  
+  }
+
 
 }

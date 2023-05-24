@@ -65,3 +65,6 @@ Route::get('seasonresponsers',[HomeController::class,'seasonresponsers'])->name(
 Route::get('leagueinfo',[HomeController::class,'leagueinfo'])->name('leagueinfo');
 Route::get('clubviewteams',[HomeController::class,'clubviewteams'])->name('clubviewteams');
 Route::post('clubviewteams_submit',[HomeController::class,'clubviewteams_submit'])->name('clubviewteams_submit');
+Route::get('articals',[HomeController::class,'articals'])->name('articals');
+Route::get('newsdata',[HomeController::class,'newsdata'])->name('newsdata');
+Route::get('contactus',[HomeController::class,'contactus'])->name('contactus');

@@ -522,16 +522,16 @@ navbarSlider.addEventListener("mouseout", function() {
           <li class="dropdown">
             <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">League</a>
             <ul class="dropdown-menu"  >
-              <li><a href="{{ route('comingsoon')}}">League Info</a></li>
+              <li><a href="{{ route('leagueinfo')}}">League Info</a></li>
               <li><a href="{{ route('view_all_grounds')}}">Grounds</a></li>
               <li><a href="{{ route('comingsoon')}}">Documents</a></li>
               <li><a href="{{ route('comingsoon')}}">Umpires/Coaches/Scorers</a></li>
               <li><a href="{{ route('comingsoon')}}">DLS Calculator</a></li>
               <li><a href="{{ route('imagegallery')}}">Photo Gallery</a></li>
-              <li><a href="{{ route('comingsoon')}}">News</a></li>
-              <li><a href="{{ route('comingsoon')}}">Articles</a></li>
+              <li><a href="{{ route('newsdata')}}">News</a></li>
+              <li><a href="{{ route('articals')}}">Articles</a></li>
               <li><a href="{{ route('comingsoon')}}" target="_blank">2023 Summer Club Registration Form</a></li>
-              <li><a href="{{ route('comingsoon')}}">CONTACT US</a></li>
+              <li><a href="{{ route('contactus')}}">CONTACT US</a></li>
               <li><a href="{{ route('comingsoon')}}" target="_blank">MCL Tapeball League 22-23</a></li>
               <li><a href="{{ route('comingsoon')}}">Contact</a></li>
             </ul>
