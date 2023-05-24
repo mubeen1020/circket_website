@@ -24,6 +24,13 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('batting_states',[HomeController::class,'batting_states'])->name('batting_states');
 Route::get('comingsoon', [HomeController::class, 'comingsoon'])->name('comingsoon');
 Route::get('search_player',[HomeController::class,'search_player'])->name('search_player');
+Route::get('view_tournaments/{tournament_id}',[HomeController::class,'view_tournaments'])->name('view_tournaments');
+Route::get('view_all_tournaments',[HomeController::class,'view_all_tournaments'])->name('view_all_tournaments');
+Route::get('view_all_grounds',[HomeController::class,'view_all_grounds'])->name('view_all_grounds');
+
+
+
+
 
 Route::post('searchplayer-form-submit',[HomeController::class,'searchplayer_form_submit']);
 Route::get('searchplayer-form-submit',[HomeController::class,'search_player']);

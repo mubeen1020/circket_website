@@ -61,6 +61,12 @@ class HomeController extends Controller
       ->selectRaw("id as tournament_id")
       ->get();
 
+
+      $tournament_name = Tournament::query()
+      ->where('season_id','=',0)
+      ->where('is_web_display','=',1)
+      ->get();
+
       $Season = Season::query()
       ->where('is_web_display','=',1)
       ->selectRaw("name as season_name")
@@ -119,9 +125,13 @@ class HomeController extends Controller
           ->get();
 
 
+
+
+
+
         //  dd($image_slider);
 
-        return view('home',compact('tournament','tournament_season' ,'match_results','teams','upcoming_match','ground','image_gallery','image_slider' ));
+        return view('home',compact('tournament','tournament_season' ,'match_results','teams','upcoming_match','ground','image_gallery','image_slider' , 'sponsor_gallery' , 'tournament_name'));
     }
 
 
@@ -1525,67 +1535,108 @@ public function clubviewteams(){
     return view('clubviewteams', compact('results','ground2','clubs', 'teams', 'match_results', 'ground','years', 'tournament', 'image_gallery' ));
 }
 
-public function clubviewteams_submit(Request $request)
+public function  view_tournaments(int $tournament_id)
 {
-  $ground = Ground::query()->get()->pluck(
-    'name',
-    'id'
-  );
-  DB::enableQueryLog();
-    if ($request->method() !== 'POST') {
-        abort(405, 'Method Not Allowed');
-    }
-    $years = DB::table('fixtures')
-        ->select(DB::raw('YEAR(created_at) as year'))
-        ->groupBy(DB::raw('YEAR(created_at)'))
-        ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
-        ->pluck('year');
-    $match_results = Team::query()->get();
-    $data = Team::where('teams.isclub',1)
-    ->where('team_players.iscaptain',1)
-    ->select('players.fullname','teams.id','teams.clubname','teams.name','tournament_groups.tournament_id','teams.created_at')
-    ->join('team_players','team_players.team_id','=','teams.id')
-    ->join('players','players.id','=','team_players.player_id')
-    ->join('tournament_groups','tournament_groups.team_id','=','teams.id')
-    ->get();
-    $term = $request;
-   
-    if (!empty($term['year'])) {
-        $year = $term['year'];
-        $data->where("YEAR(created_at) = $year");
-    }
 
-    if (!empty($term['tournament'])) {
-      $tournaments = $term['tournament'];
-      $data->where('tournament_id', '=', $tournaments);
-  }
+  // dd($tournament_id);
 
-    $teams = Team::query()->get()->pluck(
-        'name',
-        'id'
-    );
+$match_results = Fixture::query();
+$match_results = $match_results->orderBy('id')->get();
+$teams = Team::query()->get()->pluck(
+  'name',
+  'id'
+);
+
+$sponsor_gallery =Sponsor::query()
+->where('isActive','=',1)
+->get();
+
+$tournament_name = Tournament::query()
+->where('season_id','=',0)
+->where('is_web_display','=',1)
+->get();
+
+$select_tournament_name = Tournament::query()
+->where('id','=',$tournament_id)
+->get();
+
+$season = Season::query()
+->where('id','=',$select_tournament_name[0]->id)
+->selectRaw("name as season_name")
+->selectRaw("id as season_id")
+->get();
+
+
+
+// dd($tournament);
+
+  return view('display_tournaments'  , compact( 'match_results', 'teams' , 'sponsor_gallery' , "tournament_name" , 'select_tournament_name' , 'season'));
 
   
-  
-    
-    $results = $data;
-    // dd($results);
-    $tournament = Tournament::query()->pluck(
-            'name',
-            'id'
-        );
-      
-    $image_gallery =GalleryImages::query()
-    ->where('isActive','=',1)
-    ->get();
-
-    
-    $ground2= Ground::query()->get()->pluck(
-      'name',
-      'id'
-    );
-    
-// dd($ground);
-    return view('clubviewteams', compact('results','ground2', 'teams', 'match_results', 'ground','years', 'tournament', 'image_gallery' ));
 }
- }
+
+
+public function  view_all_tournaments()
+{
+
+$match_results = Fixture::query();
+$match_results = $match_results->orderBy('id')->get();
+$teams = Team::query()->get()->pluck(
+  'name',
+  'id'
+);
+
+$sponsor_gallery =Sponsor::query()
+->where('isActive','=',1)
+->get();
+
+$tournament_name = Tournament::query()
+->where('season_id','=',0)
+->where('is_web_display','=',1)
+->get();
+
+{
+
+  
+  return view('display_all_tournaments'  , compact( 'match_results', 'teams' , 'sponsor_gallery' , "tournament_name"));
+
+}
+
+}
+
+
+public function  view_all_grounds()
+{
+
+
+$match_results = Fixture::query();
+$match_results = $match_results->orderBy('id')->get();
+$teams = Team::query()->get()->pluck(
+  'name',
+  'id'
+);
+
+$sponsor_gallery =Sponsor::query()
+->where('isActive','=',1)
+->get();
+
+$tournament_name = Tournament::query()
+->where('season_id','=',0)
+->where('is_web_display','=',1)
+->get();
+
+
+$grounds =Ground::query()
+->where('isActive','=',1)
+->get();
+
+
+
+
+  return view('grounds_view'  , compact( 'match_results', 'teams' , 'sponsor_gallery' , "tournament_name" , "grounds"));  
+
+
+}
+
+
+}
