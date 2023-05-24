@@ -278,7 +278,7 @@
                                             <td class='thinBorder' title='' style='padding:0px;height:90px;'>
                                                 <div class="card">
                                                     <div class="card-content">
-                                                        <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$teams[$match_result->team_id_a]}} - vs - {{$teams[$match_result->team_id_b]}}</span></h6>
+                                                        <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$header_teams[$match_result->team_id_a]}} - vs - {{$header_teams[$match_result->team_id_b]}}</span></h6>
                                                         <p style="color:white">{{$match_result->match_result_description}}</p>
 
                                                     </div>
@@ -296,7 +296,7 @@
 
                         <div class="col-sm-4    hidden-phone slider " style="overflow-x: hidden;  padding-top: 20px;">
                             <div class="slick-carousel-header" id="navbarSlider" style="display:flex;">
-                                @foreach($sponsor_gallery as $image)
+                                @foreach($header_sponsor_gallery as $image)
                                 <div class="gallery-image-all">
                                     <div class="gallery-image">
                                         <img src="data:image/png;base64,{{ $image->image }}" alt="{{ $image->name }}" class="img-responsive center-block" style="width: 100px; height: 100px;" />
@@ -384,7 +384,7 @@
                                                                     <td class='thinBorder' title='' style='padding:0px;height:90px;'>
                                                                         <div class="card">
                                                                             <div class="card-content">
-                                                                                <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$teams[$match_result->team_id_a]}} - vs - {{$teams[$match_result->team_id_b]}}</span></h6>
+                                                                                <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$header_teams[$match_result->team_id_a]}} - vs - {{$header_teams[$match_result->team_id_b]}}</span></h6>
                                                                                 <p style="color:white;">{{$match_result->match_result_description}}</p>
                                                                                 
                                                                             </div>
@@ -508,10 +508,12 @@ navbarSlider.addEventListener("mouseout", function() {
           <li class="dropdown">
             <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">Series</a>
             <ul class="dropdown-menu"  >
-            @foreach($tournament_name as $tname)
-
-<li><a href="{{ url('view_tournaments/' . $tname->id) }}">{{ $tname->name }}</a></li>
-
+           @php $count = 0; @endphp
+@foreach($header_tournament_name as $tname)
+  @if($count < 4)
+    <li><a href="{{ url('view_tournaments/' . $tname->id) }}">{{ $tname->name }}</a></li>
+    @php $count++; @endphp
+  @endif
 @endforeach
 <li><a href="{{ route('view_all_tournaments')}}"><span>View all</span></a></li>
             

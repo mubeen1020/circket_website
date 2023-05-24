@@ -26,10 +26,9 @@ class header_slider
 
          $teams = DB::table('teams')->pluck('name', 'id');
          $tournament_name = Tournament::query()->where('season_id','=',0)->where('is_web_display','=',1)->get();
-         // dd($tournament_name);
-          view()->share('sponsor_gallery', $sponsor_gallery);
-          view()->share('tournament_name', $tournament_name);
-          view()->share('teams', $teams);
+          view()->share('header_sponsor_gallery', $sponsor_gallery);
+          view()->share('header_tournament_name', $tournament_name);
+          view()->share('header_teams', $teams);
 
         return $next($request);
     }
