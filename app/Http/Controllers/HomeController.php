@@ -131,7 +131,7 @@ class HomeController extends Controller
 
         //  dd($image_slider);
 
-        return view('home',compact('tournament','tournament_season' ,'match_results','teams','upcoming_match','ground','image_gallery','image_slider' , 'sponsor_gallery' , 'tournament_name'));
+        return view('home',compact('tournament','tournament_season' ,'match_results','teams','upcoming_match','ground','image_gallery','image_slider'  , 'tournament_name'));
     }
 
 
@@ -1570,7 +1570,7 @@ $season = Season::query()
 
 // dd($tournament);
 
-  return view('display_tournaments'  , compact( 'match_results', 'teams' , 'sponsor_gallery' , "tournament_name" , 'select_tournament_name' , 'season'));
+  return view('display_tournaments'  , compact( 'match_results', 'teams'  , "tournament_name" , 'select_tournament_name' , 'season'));
 
   
 }
@@ -1598,7 +1598,7 @@ $tournament_name = Tournament::query()
 {
 
   
-  return view('display_all_tournaments'  , compact( 'match_results', 'teams' , 'sponsor_gallery' , "tournament_name"));
+  return view('display_all_tournaments'  , compact( 'match_results', 'teams'  , "tournament_name"));
 
 }
 
@@ -1633,7 +1633,7 @@ $grounds =Ground::query()
 
 
 
-  return view('grounds_view'  , compact( 'match_results', 'teams' , 'sponsor_gallery' , "tournament_name" , "grounds"));  
+  return view('grounds_view'  , compact( 'match_results', 'teams'  , "tournament_name" , "grounds"));  
 
 
 }
