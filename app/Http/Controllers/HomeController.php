@@ -693,9 +693,6 @@ class HomeController extends Controller
 
     public function result_form_submit(Request $request)
     {
-
-     
-
       DB::enableQueryLog();
 
         if ($request->method() !== 'POST') {
@@ -719,7 +716,7 @@ class HomeController extends Controller
        
         if (!empty($term['year'])) {
             $year = $term['year'];
-            $data->whereRaw("YEAR(created_at) = $year");
+            $data->where("YEAR(created_at) = $year");
         }
         if (!empty($term['teams'])) {
             $team = $term['teams'];
@@ -729,7 +726,7 @@ class HomeController extends Controller
         if(!empty($term->club)){
           $club = $term->club;
           $data->where('team_id_a', '=', $club)
-          ->oRWhere('team_id_b', '=', $club);
+          ->Where('team_id_b', '=', $club);
         }
 
         if (!empty($term['tournament'])) {
@@ -1424,21 +1421,29 @@ public function schedulesearch_form_submit(Request $request)
         $year = $term['year'];
         $data->whereRaw("YEAR(created_at) = $year");
     }
+    if (!empty($term['tournament'])) {
+      $tournaments = $term['tournament'];
+      $data->where('tournament_id', '=', $tournaments);
+  }
+
     if (!empty($term['teams'])) {
         $team = $term['teams'];
         $data->where('team_id_a', '=', $team)
         ->oRWhere('team_id_b', '=', $team);
     }
+
     if(!empty($term->club)){
       $club = $term->club;
       $data->where('team_id_a', '=', $club)
       ->oRWhere('team_id_b', '=', $club);
     }
 
-    if (!empty($term['tournament'])) {
-      $tournaments = $term['tournament'];
-      $data->where('tournament_id', '=', $tournaments);
+    if (!empty($term['grounddata'])) {
+      $grounddata = $term['grounddata'];
+      $data->where('ground_id', '=', $grounddata);
   }
+
+    
 
     $teams = Team::query()->get()->pluck(
         'name',
@@ -1449,6 +1454,7 @@ public function schedulesearch_form_submit(Request $request)
       'clubname',
       'id'
     );
+    
   
     
     $results = $data->get();
@@ -1590,40 +1596,38 @@ public function clubviewteams_submit(Request $request)
     if ($request->method() !== 'POST') {
         abort(405, 'Method Not Allowed');
     }
-    $years = DB::table('fixtures')
-        ->select(DB::raw('YEAR(created_at) as year'))
-        ->groupBy(DB::raw('YEAR(created_at)'))
-        ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
+    $years = DB::table('tournaments')
+        ->select(DB::raw('YEAR(tournamentstartdate) as year'))
+        ->groupBy(DB::raw('YEAR(tournamentstartdate)'))
+        ->orderBy(DB::raw('YEAR(tournamentstartdate)'), 'desc')
         ->pluck('year');
-    $match_results = Team::query()->get();
-    $data = Team::where('teams.isclub',1)
-    ->where('team_players.iscaptain',1)
-    ->select('players.fullname','teams.id','teams.clubname','teams.name','tournament_groups.tournament_id','teams.created_at')
-    ->join('team_players','team_players.team_id','=','teams.id')
-    ->join('players','players.id','=','team_players.player_id')
-    ->join('tournament_groups','tournament_groups.team_id','=','teams.id')
-    ->get();
-    $term = $request;
+    $match_results = Fixture::query()->get();
    
-    if (!empty($term['year'])) {
-        $year = $term['year'];
-        $data->where("YEAR(created_at) = $year");
-    }
+    $data = TournamentGroup::query()
+    ->selectRaw('players.fullname, teams.id, teams.clubname, teams.name, tournament_groups.tournament_id, tournaments.tournamentstartdate,tournaments.name as tournamentname')
+    ->where('teams.isclub', 1)
+    ->where('team_players.iscaptain', 1)
+    ->join('tournaments', 'tournaments.id', '=', 'tournament_groups.tournament_id')
+    ->join('teams', function ($join) {
+        $join->on('teams.id', '=', 'tournament_groups.team_id');
+    })->join('team_players', 'team_players.team_id', '=', 'teams.id')
+    ->join('players', 'players.id', '=', 'team_players.player_id');
+   
 
-    if (!empty($term['tournament'])) {
-      $tournaments = $term['tournament'];
-      $data->where('tournament_id', '=', $tournaments);
-  }
+$term = $request;
+if (!empty($term['year'])) {
+    $year = $term['year'];
+    $data->whereRaw("YEAR(tournaments.tournamentstartdate) = $year");
+}
 
-    $teams = Team::query()->get()->pluck(
-        'name',
-        'id'
-    );
+if (!empty($term['tournament'])) {
+    $tournaments = $term['tournament'];
+    $data->where('tournament_groups.tournament_id', '=', $tournaments);
+}
 
-  
-  
-    
-    $results = $data;
+$results = $data->orderby('tournament_groups.team_id')
+->get();
+
     // dd($results);
     $tournament = Tournament::query()->pluck(
             'name',
@@ -1641,7 +1645,11 @@ public function clubviewteams_submit(Request $request)
       'id'
     );
     
-
+    $teams = Team::query()->get()->pluck(
+      'name',
+      'id'
+  );
+// dd("asasas");
     return view('clubviewteams', compact('results','ground2', 'teams', 'match_results', 'ground','years', 'tournament', 'image_gallery' , 'sponsor_gallery'));
 }
  }
