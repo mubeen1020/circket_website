@@ -67,7 +67,7 @@
                     <div class="dropdown">
                     <select name="teams" id="teams" class="form-control">
                                 <option value="">Select team(s)</option>
-                                @foreach($teams as $team_id => $team_name)
+                                @foreach($header_teams as $team_id => $team_name)
                                     <option value="{{ $team_id }}">{{ $team_name }}</option>
                                 @endforeach
                             </select>
@@ -215,8 +215,8 @@ margin-top: 15px;}
                             <div class="col-xs-12 col-sm-5">
                               <div class="schedule-text">
                               <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]}}</p>
-                                  <h3><a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1343&amp;clubId=2565">{{ $teams[$data['team_id_a']]}}</a> 
-                    <span class="v">v</span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $teams[$data['team_id_b']]}}</a> 
+                                  <h3><a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1343&amp;clubId=2565">{{ $header_teams[$data['team_id_a']]}}</a> 
+                    <span class="v">v</span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $header_teams[$data['team_id_b']]}}</a> 
                     </h3>
                       <h4>L @  <a style="color: inherit;" href="/MississaugaCricketLeague/viewGround.do?groundId=8&amp;clubId=2565" target="_new">{{ $ground2[$data['ground_id']] }}</a>
                     
@@ -277,13 +277,13 @@ margin-top: 15px;}
                       <td nowrap="nowrap">{{ date('h:i:s a', strtotime($data['match_starttime'])) }}</td>
                       <td>
                         <div style="display: flex;">
-                        <a href="#">{{ $teams[$data['team_id_a']]}}</a> 
+                        <a href="#">{{ $header_teams[$data['team_id_a']]}}</a> 
                        <a target="new" href="#"><img alt="Print Roster" title="Print Roster" width="12px" height="12px" src="/utilsv2/images/roster2.png"></a>
                        </div>
                         </td>
                       <td>
                         <div style="display: flex;">
-                        <a href="#">{{ $teams[$data['team_id_b']]}}</a>
+                        <a href="#">{{ $header_teams[$data['team_id_b']]}}</a>
                         <a target="new" href="#"><img alt="Print Roster" title="Print Roster" width="12px" height="12px" src="/utilsv2/images/roster2.png"></a>
                         </div>
                         </td>
@@ -359,7 +359,7 @@ margin-top: 15px;}
                                                     <div class="col-xs-12 col-sm-5">
                                                     <div class="schedule-text">
                                                     <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]}}</p>
-                                                        <h3><a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1341&amp;clubId=2565">{{ $teams[$data['team_id_a']]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $teams[$data['team_id_b']]}}</a> </h3>
+                                                        <h3><a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1341&amp;clubId=2565">{{ $header_teams[$data['team_id_a']]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $header_teams[$data['team_id_b']]}}</a> </h3>
 
                                                             <h4>L @  <a style="color: inherit;" href="/MississaugaCricketLeague/viewGround.do?groundId=8&amp;clubId=2565" target="_new">{{ $ground2[$data['ground_id']] }}</a>
                                             
@@ -432,13 +432,13 @@ margin-top: 15px;}
                       <td nowrap="nowrap">{{ date('h:i:s a', strtotime($data['match_starttime'])) }}</td>
                       <td>
                         <div style="display: flex;">
-                        <a href="#">{{ $teams[$data['team_id_a']]}}</a> 
+                        <a href="#">{{ $header_teams[$data['team_id_a']]}}</a> 
                        <a target="new" href="#"><img alt="Print Roster" title="Print Roster" width="12px" height="12px" src="/utilsv2/images/roster2.png"></a>
                        </div>
                         </td>
                       <td>
                         <div style="display: flex;">
-                        <a href="#">{{ $teams[$data['team_id_b']]}}</a>
+                        <a href="#">{{ $header_teams[$data['team_id_b']]}}</a>
                         <a target="new" href="#"><img alt="Print Roster" title="Print Roster" width="12px" height="12px" src="/utilsv2/images/roster2.png"></a>
                         </div>
                         </td>
