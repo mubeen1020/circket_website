@@ -21,7 +21,12 @@ class header_slider
           $sponsor_gallery =DB::table('sponsors')
                                 ->where('isActive', '=', 1)
                                 ->get();
+
+
+         $teams = DB::table('teams')->pluck('name', 'id');
+         // dd($teams);
           view()->share('sponsor_gallery', $sponsor_gallery);
+          view()->share('teams', $teams);
 
         return $next($request);
     }

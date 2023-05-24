@@ -508,19 +508,22 @@ navbarSlider.addEventListener("mouseout", function() {
           <li class="dropdown">
             <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">Series</a>
             <ul class="dropdown-menu"  >
-              <li><a href="{{ route('seasonresponsers')}}">2022 - Boom Boom T10</a></li>
-              <li><a href="{{ route('comingsoon')}}">2022 MCLT12 Winter League</a></li>
-              <li><a href="{{ route('comingsoon')}}">MCL vs Singapore</a></li>
-              <li><a href="{{ route('comingsoon')}}">2022 MCLT25</a></li>
-              <li><a href="{{ route('comingsoon')}}">2022 MCLT20</a></li>
-              <li><a href="{{ route('comingsoon')}}"><span>View all</span></a></li>
+            @foreach($tournament_name as $tname)
+
+<li><a href="{{ url('view_tournaments/' . $tname->id) }}">{{ $tname->name }}</a></li>
+
+@endforeach
+<li><a href="{{ route('view_all_tournaments')}}"><span>View all</span></a></li>
+            
+            
+            
             </ul>
           </li>
           <li class="dropdown">
             <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">League</a>
             <ul class="dropdown-menu"  >
-              <li><a href="{{ route('leagueinfo')}}">League Info</a></li>
-              <li><a href="{{ route('comingsoon')}}">Grounds</a></li>
+              <li><a href="{{ route('comingsoon')}}">League Info</a></li>
+              <li><a href="{{ route('view_all_grounds')}}">Grounds</a></li>
               <li><a href="{{ route('comingsoon')}}">Documents</a></li>
               <li><a href="{{ route('comingsoon')}}">Umpires/Coaches/Scorers</a></li>
               <li><a href="{{ route('comingsoon')}}">DLS Calculator</a></li>
