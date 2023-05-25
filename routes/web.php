@@ -77,3 +77,5 @@ Route::get('clubviewteams_submit',[HomeController::class,'clubviewteams']);
 Route::get('articals',[HomeController::class,'articals'])->name('articals');
 Route::get('newsdata',[HomeController::class,'newsdata'])->name('newsdata');
 Route::get('contactus',[HomeController::class,'contactus'])->name('contactus');
+
+Route::get('tournamnet_all_data/{id}', [ApiController::class, 'tournamnet_all_data'])->name('tournamnet_all_data');

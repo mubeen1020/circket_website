@@ -15,6 +15,7 @@ use App\Models\FixtureScore;
 use App\Models\Team;
 use App\Models\Ground;
 use App\Models\TeamPlayer;
+use App\Models\Dismissal;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon; 
 
@@ -332,6 +333,54 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ->get();
         return response()->json($top_scorers);
     }
+
+    public function tournamnet_all_data(int $tournament_id)
+    {
+        DB::enableQueryLog();
+        $tournamnetdata = Fixture::where('fixtures.tournament_id', $tournament_id)
+            ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->selectRaw("SUM(fixture_scores.runs = 6 AND fixture_scores.balltype = 'R') as total_sixes")
+            ->selectRaw("SUM(fixture_scores.runs = 4 AND fixture_scores.balltype = 'R') as total_fours")
+            ->selectRaw("SUM(fixture_scores.balltype = 'RunOut' OR fixture_scores.balltype = 'RunOut(WD)' OR fixture_scores.balltype = 'RunOut(NB)') as runout")
+            ->selectRaw("SUM(fixture_scores.isout = 1 ) as total_Wicket")
+            ->selectRaw("SUM(fixture_scores.balltype = 'WD') as total_wides")
+            ->selectRaw('SUM(fixture_scores.runs) as total_runs')
+            ->groupBy('fixtures.tournament_id')
+            ->get();
+
+            $tournament_players =Fixture::where('fixtures.tournament_id', $tournament_id) 
+            ->join('tournament_groups', 'tournament_groups.tournament_id', '=', 'fixtures.tournament_id')
+            ->join('tournament_players', 'tournament_players.tournament_id', '=', 'tournament_groups.tournament_id') 
+            ->selectRaw("COUNT(DISTINCT tournament_players.player_id) as total_players")   
+            ->groupBy('fixtures.tournament_id')
+            ->get();
+    
+            $match_dissmissal_name= Dismissal::where('dismissals.name', '=', 'Caught')
+            ->selectRaw("dismissals.id as dissmissalname")
+            ->groupBy('dismissals.id')
+            ->get()->pluck('dissmissalname');
+
+            $tournament_cauches = Fixture::where('fixtures.tournament_id', $tournament_id)
+            ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+            ->where('match_dismissals.dismissal_id',$match_dissmissal_name)
+            ->selectRaw("COUNT(match_dismissals.id) as total_catches")
+            ->groupBy('fixtures.tournament_id')
+            ->get();
+
+            $player_hatricks = Fixture::where('fixtures.tournament_id', $tournament_id)
+            ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->where('fixture_scores.isout', '=', 1)
+            ->selectRaw('fixture_scores.playerid, COUNT(*) as hatrick_count')
+            ->groupBy('fixture_scores.playerid')
+            ->get();
+            // $query = DB::getQueryLog();
+            //         $query = DB::getQueryLog();
+            // dd($query);
+            
+        return response()->json($player_hatricks);
+    }
+    
     
 
     

@@ -93,7 +93,6 @@ class HomeController extends Controller
         $tournament_season = array_merge($tournamentArray, $seasonArray);
 
      
-        // dd($tournament_season);
 
         $ground = Ground::query();
         $ground = $ground->orderBy('id')->get();
@@ -1071,10 +1070,13 @@ foreach ($team_battingdata as $teamPlayer) {
 $image_gallery =GalleryImages::query()
   ->where('isActive','=',1)
   ->get();
+  $teams = Team::query()->get()->pluck(
+    'name',
+    'id'
+  );
 
 
-
-  return view('team_batting', compact('teamData', 'tournament_ids','match_results',  'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount','team_resultData', 'teamPlayers', 'team_id_data', 'team_battingdata', 'match_count_player', 'player_runs', 'balls_faced','fours','sixes' , "image_gallery" ));
+  return view('team_batting', compact('teams','teamData', 'tournament_ids','match_results',  'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount','team_resultData', 'teamPlayers', 'team_id_data', 'team_battingdata', 'match_count_player', 'player_runs', 'balls_faced','fours','sixes' , "image_gallery" ));
 
 }
 
@@ -1131,9 +1133,12 @@ public function team_bowling(int $team_id,int $tournament_id){
   $image_gallery =GalleryImages::query()
   ->where('isActive','=',1)
   ->get();
+  $teams = Team::query()->get()->pluck(
+    'name',
+    'id'
+  );
 
-
-  return view('team_bowling', compact('tournamentData', 'tournament_ids','player','teamPlayerCount','team_resultData','teamPlayers','teamData','match_results','tournament','team_id_data','team_bowlingdata' , 'image_gallery' ));
+  return view('team_bowling', compact('teams','tournamentData', 'tournament_ids','player','teamPlayerCount','team_resultData','teamPlayers','teamData','match_results','tournament','team_id_data','team_bowlingdata' , 'image_gallery' ));
 }
     
 public function team_fielding(int $team_id,int $tournament_id){
@@ -1181,8 +1186,11 @@ public function team_fielding(int $team_id,int $tournament_id){
   ->where('isActive','=',1)
   ->get();
 
-
-  return view('team_fielding', compact('tournamentData', 'player','teamPlayers','teamData','match_results','tournament','team_id_data','team_bowlingdata','teamPlayerCount','team_resultData','tournament_ids' , 'image_gallery' ));
+  $teams = Team::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  return view('team_fielding', compact('teams','tournamentData', 'player','teamPlayers','teamData','match_results','tournament','team_id_data','team_bowlingdata','teamPlayerCount','team_resultData','tournament_ids' , 'image_gallery' ));
 }
 
 

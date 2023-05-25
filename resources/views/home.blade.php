@@ -98,7 +98,7 @@
 
 					<div id="slider-container">
     <button type="button" class="slick-prev slick-arrow slick-disabled" aria-label="Previous" role="button" aria-disabled="true" style="display: block;">Previous</button>
-    <ul class="resp-tabs-list hor_1 common__slider">
+  <ul class="resp-tabs-list hor_1 common__slider">
     @foreach($tournament_season as $index => $tour_name)
         @if($tour_name['type'] === 'T')
             <li onclick="get_point_table({{$tour_name['tournament_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item {{ $index === 0 ? 'active' : '' }} hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
@@ -1144,6 +1144,7 @@ function get_point_table(tornament_season_id, type) {
     get_top_bowler(tornament_season_id);
     get_season_group(tornament_season_id);
     get_season_tournament(tornament_season_id);
+    get_tournamnet_all_data(tornament_season_id);
 }
 
 
@@ -1334,6 +1335,20 @@ function get_top_bowler(tournament_season_id) {
                     </tr>
                 `;
             });
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+function get_tournamnet_all_data(tournament_season_id) {
+    $.ajax({
+        url: "{{ url('/tournamnet_all_data/')}}/" + tournament_season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+           
         },
         error: function(error) {
             console.log(error);
