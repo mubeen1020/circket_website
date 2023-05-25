@@ -340,7 +340,7 @@ function unLockMatch(matchId,name){
              <div class="col-xs-12 col-sm-4">
                    <div class="schedule-text">
                    <h4>{{$tournament[$data['tournament_id']]}}</h4>
-                       <h3>{{ $teams[$data['team_id_a']]}}<span class="v"> v </span>  {{ $teams[$data['team_id_b']]}}</h3>
+                       <h3>{{ $header_teams[$data['team_id_a']]}}<span class="v"> v </span>  {{ $header_teams[$data['team_id_b']]}}</h3>
                        <h4>{{$data['match_result_description']}}</h4>
                         </div>
                </div>
