@@ -326,7 +326,7 @@ margin-top: 15px;}
                             <div class="col-xs-12 col-sm-5">
                               <div class="schedule-text">
                                <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]}}</p>
-                                  <h3><a style="color: inherit;" href="">{{$teams[$data->team_id_a]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="">{{$teams[$data->team_id_b]}}</a> </h3>
+                                  <h3><a style="color: inherit;" href="">{{$header_teams[$data->team_id_a]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="">{{$header_teams[$data->team_id_b]}}</a> </h3>
 
                                     <h4>L @  <a style="color: inherit;" href="" target="_new">Danville South</a>
                     

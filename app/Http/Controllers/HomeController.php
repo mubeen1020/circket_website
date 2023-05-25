@@ -705,7 +705,7 @@ public function team_bowling(int $team_id,int $tournament_id){
 })
   ->join('fixture_scores', 'fixture_scores.bowlerId', '=', 'team_players.player_id')
   ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
-  ->groupBy('team_players.player_id', 'team_players.team_id')
+  ->groupBy('team_players.player_id', 'team_players.team_id', 'fixture_scores.bowlerId')
   ->get();
 
   $image_gallery =GalleryImages::query()
@@ -745,20 +745,26 @@ public function team_fielding(int $team_id,int $tournament_id){
   $match_results = Fixture::where('id', '=', $team_id)->orderBy('id')->get();
   // $teams = Team::pluck('name', 'id');
   $tournament = Tournament::pluck('name', 'id');
-  $team_bowlingdata = TeamPlayer::where('team_id', $team_id)
+  $team_bowlingdata= TournamentPlayer::where('tournament_players.team_id', $team_id)
+  ->where('tournament_players.tournament_id', '=', $tournament_id)
   ->selectRaw('fixture_scores.bowlerId as bowler_id')
-  ->selectRaw('player_id')
-  ->selectRaw('team_id')
+  ->selectRaw('team_players.player_id')
+  ->selectRaw('team_players.team_id')
   ->selectRaw('COUNT(DISTINCT fixtures.id) as total_matches') 
   ->selectRaw('COUNT(DISTINCT fixture_scores.overnumber) as total_overs') 
   ->selectRaw('SUM(fixture_scores.balltype = "WD") as total_wides')
   ->selectRaw('SUM(fixture_scores.balltype = "NB") as total_noball')
-  ->selectRaw('SUM( fixture_scores.runs) as total_runs') 
-  ->selectRaw('SUM( fixture_scores.isout) as total_out') 
+  ->selectRaw('SUM(fixture_scores.runs) as total_runs') 
+  ->selectRaw('SUM(fixture_scores.isout) as total_wickets') 
+  ->join('team_players', function ($join) {
+    $join->on('team_players.team_id', '=', 'tournament_players.team_id')
+    ->on('team_players.player_id', '=', 'tournament_players.player_id');
+})
   ->join('fixture_scores', 'fixture_scores.bowlerId', '=', 'team_players.player_id')
   ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
-  ->groupBy('bowler_id','team_id')
+  ->groupBy('team_players.player_id', 'team_players.team_id', 'fixture_scores.bowlerId')
   ->get();
+
 
   $image_gallery =GalleryImages::query()
   ->where('isActive','=',1)
@@ -1056,7 +1062,7 @@ public function team_fielding(int $team_id,int $tournament_id){
       });
 
     $match_results = Fixture::where('id', '=', $team_id)->orderBy('id')->get();
-    // $teams = Team::pluck('name', 'id');
+    $teams = Team::pluck('name', 'id');
     $tournament = Tournament::pluck('name', 'id');
     $data = Fixture::query();
     $results = $data->get();
@@ -1141,7 +1147,7 @@ public function team_fielding(int $team_id,int $tournament_id){
       ->orWhere('team_id_b', $team_id)
       ->orderBy('match_startdate')
       ->get();
-    // $teams = Team::pluck('name', 'id');
+    // $teams_data = Team::pluck('name', 'id');
 
 
 
