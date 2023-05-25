@@ -7,12 +7,12 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="border-heading">
-                        @if (isset($select_tournament_name[0]->name))
-                        <h5>{{ $select_tournament_name[0]->name}}</h5>
+                            @if (isset($select_tournament_name[0]->name))
+                            <h5>{{ $select_tournament_name[0]->name}}</h5>
                             @else
                             <h5>N/A</h5>
                             @endif
-                            
+
                         </div>
                     </div>
                 </div>
@@ -22,35 +22,35 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <ul class="list-inline">
-                            <li class="width1"><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">Start Date</a></li>
+                            <li class="width1"><a href="#">Start Date</a></li>
                             <li class="width2">:</li>
                             @if (isset($select_tournament_name[0]->tournamentstartdate))
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">{{ $select_tournament_name[0]->tournamentstartdate}}</a></li>
+                            <li><a href="#">{{ $select_tournament_name[0]->tournamentstartdate}}</a></li>
                             @else
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">N/A</a></li>
+                            <li><a href="#">N/A</a></li>
                             @endif
-                            
+
                         </ul>
 
                         <ul class="list-inline">
-                            <li class="width1"><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">End Date</a></li>
+                            <li class="width1"><a href="#">End Date</a></li>
                             <li class="width2">:</li>
                             @if (isset($select_tournament_name[0]->tournamentenddate))
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">{{ $select_tournament_name[0]->tournamentenddate}}</a></li>
+                            <li><a href="#">{{ $select_tournament_name[0]->tournamentenddate}}</a></li>
                             @else
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">N/A</a></li>
+                            <li><a href="#">N/A</a></li>
                             @endif
-                            
+
                         </ul>
                         <ul class="list-inline">
-                            <li class="width1"><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">Series Type</a></li>
+                            <li class="width1"><a href="#">Series Type</a></li>
                             <li class="width2">:</li>
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">Ten10</a></li>
+                            <li><a href="#">Ten10</a></li>
                         </ul>
                         <ul class="list-inline">
-                            <li class="width1"><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">Max Overs</a></li>
+                            <li class="width1"><a href="#">Max Overs</a></li>
                             <li class="width2">:</li>
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">10</a></li>
+                            <li><a href="#">10</a></li>
                         </ul>
 
                     </div>
@@ -58,24 +58,24 @@
 
 
                         <ul class="list-inline">
-                            <li class="width1"><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">Description</a></li>
+                            <li class="width1"><a href="#">Description</a></li>
                             <li class="width2">:</li>
                             @if (isset($select_tournament_name[0]->description))
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">{{ $select_tournament_name[0]->description}}</a></li>
+                            <li><a href="#">{{ $select_tournament_name[0]->description}}</a></li>
                             @else
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">N/A</a></li>
+                            <li><a href="#">N/A</a></li>
                             @endif
                         </ul>
-                        
+
                         <ul class="list-inline">
-                            <li class="width1"><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">Winner</a></li>
+                            <li class="width1"><a href="#">Winner</a></li>
                             <li class="width2">:</li>
-                            <li><a href="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/viewTeam.do?teamId=0&amp;clubId=2565"></a></li>
+                            <li><a href="#"></a></li>
                         </ul>
                         <ul class="list-inline">
-                            <li class="width1"><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#">More Info</a></li>
+                            <li class="width1"><a href="#">More Info</a></li>
                             <li class="width2">:</li>
-                            <li><a href="viewLeague.do%3Fleague=116&amp;clubId=2565.html#"></a></li>
+                            <li><a href="#"></a></li>
                         </ul>
                     </div>
                 </div>
@@ -87,20 +87,24 @@
             <div class="row">
                 <div class="col-sm-4">
                     <ul class="series-d">
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/viewTeams.do?league=116&amp;clubId=2565">Teams</a></li>
 
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/viewPointsTable.do?league=116&amp;clubId=2565">Points Table</a></li>
+                        @if (isset($select_tournament_name[0]->id))
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="{{ url('show_team/' . $select_tournament_name[0]->id) }}">Teams</a></li>
+                        @else
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Teams</a></li>
+                        @endif
 
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/battingRecords.do?league=116&amp;clubId=2565">Batting Records</a></li>
+
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Points Table</a></li>
+
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Batting Records</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-4">
                     <ul class="series-d">
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/bowlingRecords.do?league=116&amp;clubId=2565">Bowling Records</a></li>
-
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/fieldingRecords.do?league=116&amp;clubId=2565">Fielding Records</a></li>
-
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/playerRankings.do?league=116&amp;clubId=2565">Player Rankings</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Bowling Records</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Fielding Records</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Player Rankings</a></li>
                     </ul>
                 </div>
             </div>

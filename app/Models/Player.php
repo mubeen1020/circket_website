@@ -57,6 +57,8 @@ class Player extends Model
 		'occupation',
 		'employer',
 		'email',
+		'battingStyle',
+		'bowlingstyle',
 		'domain_id',
 		'createdby',
 		'isActive'

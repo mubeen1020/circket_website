@@ -27,6 +27,8 @@ Route::get('search_player',[HomeController::class,'search_player'])->name('searc
 Route::get('view_tournaments/{tournament_id}',[HomeController::class,'view_tournaments'])->name('view_tournaments');
 Route::get('view_all_tournaments',[HomeController::class,'view_all_tournaments'])->name('view_all_tournaments');
 Route::get('view_all_grounds',[HomeController::class,'view_all_grounds'])->name('view_all_grounds');
+Route::get('show_team/{tournament_id}',[HomeController::class,'show_team'])->name('show_team');
+
 
 Route::post('searchplayer-form-submit',[HomeController::class,'searchplayer_form_submit']);
 Route::get('searchplayer-form-submit',[HomeController::class,'search_player']);

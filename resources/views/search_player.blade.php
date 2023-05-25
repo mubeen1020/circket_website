@@ -122,6 +122,58 @@
                		</div>
                	</div>
                 
+                   <div class="row">
+                   <div class="col-lg-4">
+	               		 <div class="row">
+	               		 	<div class="col-lg-5">
+		                    	<div class="form-text">
+                                    <h5>Batting Style</h5>
+                                </div>
+		                    </div>
+	               		 	 <div class="col-lg-7">
+                                 <div class="form-in">
+                                 	<select name="battingStyle" id="battingStyle" class="form-control">
+                                 	<option value=""></option>
+                                    <option value="All">All</option>
+										<option value="Right Handed Batsman">Right Handed Batter</option>
+										<option value="Left Handed Batsman">Left Handed Batter</option>
+									</select>
+                                 </div>
+                             </div>
+	               		 </div>
+               		</div>
+
+
+
+                       <div class="col-lg-4">
+	               		 <div class="row">
+	               		 	<div class="col-lg-5">
+		                    	<div class="form-text">
+                                    <h5>Bowling Style</h5>
+                                </div>
+		                    </div>
+	               		 	 <div class="col-lg-7">
+                                 <div class="form-in">
+                                 		
+                                        <select name="bowlingStyle" id="bowlingStyle" class="form-control">
+                                        <option value=""></option>
+	                             			<option value="All">All</option>
+											<option value="Right Arm Medium">Right Arm Medium</option>
+											<option value="Right Arm Fast">Right Arm Fast</option>
+											<option value="Right Arm Off Spin">Right Arm Off Spin</option>
+											<option value="Right Arm Leg Spin">Right Arm Leg Spin</option>
+											<option value="Left Arm Fast">Left Arm Fast</option>
+											<option value="Left Arm Medium">Left Arm Medium</option>
+											<option value="Left Arm Off Spin">Left Arm Off Spin</option>
+											<option value="Left Arm Leg Spin">Left Arm Leg Spin</option>
+										</select>
+                                 </div>
+                             </div>
+	               		 </div>
+               		</div>
+
+                   </div>
+
                 <div class="row">
                 <div class="col-lg-4">
 	               		 <div class="row">

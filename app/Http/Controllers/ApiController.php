@@ -371,9 +371,11 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             $player_hatricks = Fixture::where('fixtures.tournament_id', $tournament_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
             ->where('fixture_scores.isout', '=', 1)
-            ->selectRaw('fixture_scores.playerid, COUNT(*) as hatrick_count')
             ->groupBy('fixture_scores.playerid')
+            ->selectRaw('fixture_scores.playerid, COUNT(*) as hatrick_count')
+            ->havingRaw('COUNT(*) >= 3')
             ->get();
+        
             // $query = DB::getQueryLog();
             //         $query = DB::getQueryLog();
             // dd($query);
