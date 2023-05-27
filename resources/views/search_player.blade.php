@@ -248,9 +248,9 @@
       
                         <tr role="row" class="even"> 
                             <th class="sorting_1" style="text-align:left!important"><a>{{$key +1}}</a></th> 
-                            <th style="text-align:left!important"><a href=""> {{$player['fullname']}} </a></th>
-                            <th style="text-align:left!important"><a href=""> {{$player['email']}} </a></th>
-                            <th style="text-align:left!important"><a href=""> {{$player['contact']}} </a></th>
+                            <th style="text-align:left!important"><a href="{{ route('playerview', $player['id']) }}"> {{$player['fullname']}} </a></th>
+                            <th style="text-align:left!important"><a href="{{ route('playerview', $player['id']) }}"> {{$player['email']}} </a></th>
+                            <th style="text-align:left!important"><a href="{{ route('playerview', $player['id']) }}"> {{$player['contact']}} </a></th>
                                     <th><table>
                         <tbody><tr class="even">
                             <td>

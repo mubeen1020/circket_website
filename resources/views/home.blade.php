@@ -349,24 +349,19 @@ $(document).ready(function() {
                                     	 <div class="runs">
                                             <div id="carousel-runs" class="carousel slide" data-ride="carousel">
                                                 <div class="carousel-inner">
-                                                    <div class="item">
+                                                    <div class="item active">
                                                         <h4>Runs</h4>
-                                                        <h2><a style="color: white;" href="#">12,070</a></h2>
+                                                        <h2><a style="color: white;" href="#" id="tournamentruns"></a></h2>
                                                     </div>
                                                     <div class="item">
                                                         <h4>Balls</h4>
-                                                        <h2><a style="color: white;" href="#">17,338</a></h2>
-                                                    </div>
-                                                    <div class="item active">
-                                                        <h4>Wickets</h4>
-                                                        <h2><a style="color: white;" href="#">628</a></h2>
+                                                        <h2><a style="color: white;" href="#" id="tournamentballs"></a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
                                                         <ol class="carousel-indicators">
-                                                        <li data-target="#carousel-runs" data-slide-to="0" class=""></li>
+                                                        <li data-target="#carousel-runs" data-slide-to="0" class="active"></li>
                                                         <li data-target="#carousel-runs" data-slide-to="1" class=""></li>
-                                                        <li data-target="#carousel-runs" data-slide-to="2" class="active"></li>
                                                     </ol>
                                                 </div>
                                             </div>
@@ -376,24 +371,20 @@ $(document).ready(function() {
                                     	<div class="fifty">
                                             <div id="carousel-fifty" class="carousel slide" data-ride="carousel">
                                                 <div class="carousel-inner">
-                                                    <div class="item">
-                                                        <h4>100's</h4>
-                                                        <h2><a style="color: white;" href="#">8</a></h2>
-                                                    </div>
                                                     <div class="item active left">
-                                                        <h4>50's</h4>
-                                                        <h2><a style="color: white;" href="#">40</a></h2>
+                                                        <h4>100's</h4>
+                                                        <h2><a style="color: white;" href="#" id="tournamenthundred"></a></h2>
                                                     </div>
-                                                    <div class="item next left">
-                                                        <h4>25's</h4>
-                                                        <h2><a style="color: white;" href="#">114</a></h2>
+                                                    <div class="item  next left">
+                                                        <h4>50's</h4>
+                                                        <h2><a style="color: white;" href="#" id="tournamentfifty"></a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
                                                         <ol class="carousel-indicators">
                                                         <li data-target="#carousel-fifty" data-slide-to="0" class=""></li>
-                                                        <li data-target="#carousel-fifty" data-slide-to="1" class=""></li>
-                                                        <li data-target="#carousel-fifty" data-slide-to="2" class="active"></li>
+                                                        <li data-target="#carousel-fifty" data-slide-to="1" class="active"></li>
+                                                        
                                                     </ol>
                                                 </div>
                                             </div>
@@ -403,24 +394,19 @@ $(document).ready(function() {
                                     	<div class="six">
                                             <div id="carousel-six" class="carousel slide" data-ride="carousel">
                                                 <div class="carousel-inner">
-                                                    <div class="item active left">
-                                                        <h4>5 Wickets</h4>
-                                                        <h2><a style="color: white;" href="#">10</a></h2>
+                                                    <div class="item  ">
+                                                        <h4> Wickets</h4>
+                                                        <h2><a style="color: white;" id="tournamentwickets" href="#"></a></h2>
                                                     </div>
-                                                    <div class="item next left">
-                                                        <h4>4 Wickets</h4>
-                                                        <h2><a style="color: white;" href="#">20</a></h2>
-                                                    </div>
-                                                    <div class="item">
+                                                    <div class="item active">
                                                         <h4>Hat-trick</h4>
-                                                        <h2><a style="color: white;" href="#">0</a></h2>
+                                                        <h2><a style="color: white;" href="#" id ="tournamenthatrics"></a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
                                                         <ol class="carousel-indicators">
                                                         <li data-target="#carousel-six" data-slide-to="0" class=""></li>
                                                         <li data-target="#carousel-six" data-slide-to="1" class="active"></li>
-                                                         <li data-target="#carousel-six" data-slide-to="2" class=""></li>
                                                     </ol>
                                                 </div>
                                             </div>
@@ -432,7 +418,7 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item active">
                                                         <h4>players</h4>
-                                                        <h2><a style="color: white;" href="#">265</a></h2>
+                                                        <h2><a style="color: white;"  id="tournamentplayers" href="#"></a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -451,11 +437,11 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item active">
                                                         <h4>Fours</h4>
-                                                        <h2><a style="color: white;" href="#">982</a></h2>
+                                                        <h2><a style="color: white;" id="tournamnetfour" href="#"></a></h2>
                                                     </div>
                                                     <div class="item">
                                                         <h4>Sixers</h4>
-                                                        <h2><a style="color: white;" href="#">209</a></h2>
+                                                        <h2><a style="color: white;" href="#" id="tournamnetsix"></a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
@@ -473,22 +459,17 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item">
                                                         <h4>Catches</h4>
-                                                        <h2><a style="color: white;" href="#">314</a></h2>
+                                                        <h2><a style="color: white;" id="tournamentcauche" href="#"></a></h2>
                                                     </div>
                                                     <div class="item active">
                                                         <h4>Runouts</h4>
-                                                        <h2><a style="color: white;" href="#">30</a></h2>
-                                                    </div>
-                                                    <div class="item">
-                                                        <h4>Ducks</h4>
-                                                        <h2><a style="color: white;" href="#">96</a></h2>
+                                                        <h2><a style="color: white;" id="tournamentrunouts" href="#"></a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
                                                         <ol class="carousel-indicators">
                                                         <li data-target="#carousel-fives" data-slide-to="0" class=""></li>
                                                         <li data-target="#carousel-fives" data-slide-to="1" class="active"></li>
-                                                        <li data-target="#carousel-fives" data-slide-to="2" class=""></li>
                                                     </ol>
                                                 </div>
                                             </div>
@@ -501,18 +482,17 @@ $(document).ready(function() {
                                                   
                                                     <div class="item active">
                                                         <h4>wides</h4>
-                                                        <h2><a style="color: white;" href="#">1,377</a></h2>
+                                                        <h2><a style="color: white;" id="tournamentwides" href="#"></a></h2>
                                                     </div>
                                                     <div class="item">
                                                         <h4>no-balls</h4>
-                                                        <h2><a style="color: white;" href="#">94</a></h2>
+                                                        <h2><a style="color: white;" href="#" id="tournamentnoballs"></a></h2>
                                                     </div>
                                                 </div>
                                                 <div class="carousel-nav">
                                                         <ol class="carousel-indicators">
                                                         <li data-target="#carousel-no-balls" data-slide-to="0" class=""></li>
                                                         <li data-target="#carousel-no-balls" data-slide-to="1" class="active"></li>
-                                                        <li data-target="#carousel-no-balls" data-slide-to="2" class=""></li>
                                                     </ol>
                                                 </div>
                                             </div>
@@ -524,11 +504,16 @@ $(document).ready(function() {
                                                 <div class="carousel-inner">
                                                     <div class="item active" style="height: 86px;  display: flex; align-items: center;">
                                                         
-                                                        <h4><a style="color: white;" href="#">view More <i class="fa fa-arrow-circle-o-right"></i></a></h4>
+                                                        <h4><a style="color: white;"  href="#">Total Teams<h2><a style="color: white;" href="#" id="tournamentteams"></a></h2></a></h4>
                                                     </div>
                                                 </div>
-                                                
+                                                <div class="carousel-nav">
+                                                        <ol class="carousel-indicators">
+                                                        <li data-target="#carousel-no-balls" data-slide-to="0" class="active"></li>
+                                                        </ol>
+                                                </div>
                                             </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -975,9 +960,9 @@ margin-right: 10px;
 				`;
 			} else {
             liveScoreDiv.innerHTML = '';
-			console.log("final ==> ", final)
+			
 			final.forEach(function(item, index) {
-                console.log(final[index],"final[index][1].max_ball");
+              
                 // console.log(final[index][1].max_ball/6);
 
                 liveScoreDiv.innerHTML += `
@@ -1194,6 +1179,7 @@ function get_season_tournament(season_id) {
 
 
 function get_season_group(tornament_season_id) {
+    get_tournamnet_all_data(tornament_season_id);
     $.ajax({
         url: "{{ url('/get_season_group/')}}/" + tornament_season_id,
         type: 'GET',
@@ -1348,13 +1334,95 @@ function get_tournamnet_all_data(tournament_season_id) {
         type: 'GET',
         dataType: 'json',
         success: function(data) {
+            console.log(data,"=>============>=>")
            
+            const tournamnetdata=data[0]
+            const tournament_players=data[1]
+            const tournament_cauches=data[2]
+            const total_hat_tricks=data[3]
+            const tournament_total_hundreds=data[4]
+            const tournament_total_fifties=data[5]
+            const tournament_balls=data[6]
+            const tournament_teams=data[7]
+            
+            // total balls
+            const tournamentBalls=document.getElementById('tournamentballs');
+            tournamentBalls.innerHTML = '';
+            tournamentBalls.innerHTML += `${tournament_balls==undefined?0:tournament_balls[0]['max_ball']}`;
+
+
+            // total runs
+            const tournamentRuns=document.getElementById('tournamentruns');
+            tournamentRuns.innerHTML = '';
+            tournamentRuns.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_runs']}`;
+
+            // total six
+            const tournamentSix=document.getElementById('tournamnetsix');
+            tournamentSix.innerHTML = '';
+            tournamentSix.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_sixes']}`;
+
+            // total four
+            const tournamentFour=document.getElementById('tournamnetfour');
+            tournamentFour.innerHTML = '';
+            tournamentFour.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_fours']}`;
+
+            // total wickets
+            const tournamentWickets=document.getElementById('tournamentwickets');
+            tournamentWickets.innerHTML = '';
+            tournamentWickets.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_Wicket']}`;
+
+            // total runout
+            const tournamentRunout=document.getElementById('tournamentrunouts');
+            tournamentRunout.innerHTML = '';
+            tournamentRunout.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['runout']}`;
+
+            // total wides
+            const tournamentWides=document.getElementById('tournamentwides');
+            tournamentWides.innerHTML = '';
+            tournamentWides.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_wides']}`;
+
+            // total noballs
+            const tournamentNoballs=document.getElementById('tournamentnoballs');
+            tournamentNoballs.innerHTML = '';
+            tournamentNoballs.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_noballs']}`;
+
+            // total players
+            const tournamentPlayer=document.getElementById('tournamentplayers');
+            tournamentPlayer.innerHTML = '';
+            tournamentPlayer.innerHTML += `${tournament_players==undefined?0:tournament_players[0]['total_players']}`;
+
+            // total cauches total_catches
+            const tournamentCauches=document.getElementById('tournamentcauche');
+            tournamentCauches.innerHTML = '';
+            tournamentCauches.innerHTML += `${tournament_cauches==undefined?0:tournament_cauches[0]['total_catches']}`;
+
+            // total hatricks
+            const tournamentHatricks=document.getElementById('tournamenthatrics');
+            tournamentHatricks.innerHTML = '';
+            tournamentHatricks.innerHTML += `${total_hat_tricks==undefined?0:total_hat_tricks['hatricks']}`;
+
+            // total hundreds
+            const tournamentHundreds=document.getElementById('tournamenthundred');
+            tournamentHundreds.innerHTML = '';
+            tournamentHundreds.innerHTML += `${tournament_total_hundreds==undefined?0:tournament_total_hundreds['tournament_hundreds']}`;
+      
+      
+            // total fifties
+            const tournamentFifties=document.getElementById('tournamentfifty');
+            tournamentFifties.innerHTML = '';
+            tournamentFifties.innerHTML += `${tournament_total_fifties==undefined?0:tournament_total_fifties['tournament_fifties']}`;
+        
+            // total teams
+            const tournamentTeams=document.getElementById('tournamentteams');
+            tournamentTeams.innerHTML = '';
+            tournamentTeams.innerHTML += `${tournament_teams==undefined?0:tournament_teams[0]['totalteams']}`;
         },
         error: function(error) {
             console.log(error);
         }
     });
 }
+
 
 
 </script><style >

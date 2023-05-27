@@ -211,16 +211,20 @@
 
         .dropdown-menu {
             background-color: #333;
-            position: relative;
+            position: absolute;
             z-index: 10000;
+            
             }
 
         .dropdown-menu li a {
             color: white;
             background-color: #333 !important;
+          
         }
         .mainmenu a {
         background-color: #707372 !important;
+        position :relative;
+        
         }
         .mainmenu a:hover {
         background-color: #333 !important;
@@ -460,7 +464,7 @@ navbarSlider.addEventListener("mouseout", function() {
         </script>
 
 <div class="mainmenu">
-  <div class="container">
+  <div class="">
     <nav role="navigation" class="navbar top-navbar">
       <div class="navbar-header">
         <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -528,7 +532,7 @@ navbarSlider.addEventListener("mouseout", function() {
               <li><a href="{{ route('leagueinfo')}}">League Info</a></li>
               <li><a href="{{ route('view_all_grounds')}}">Grounds</a></li>
               <li><a href="{{ route('comingsoon')}}">Documents</a></li>
-              <li><a href="{{ route('comingsoon')}}">Umpires/Coaches/Scorers</a></li>
+              <li><a href="{{ route('matchofficial')}}">Umpires/Coaches/Scorers</a></li>
               <li><a href="{{ route('comingsoon')}}">DLS Calculator</a></li>
               <li><a href="{{ route('imagegallery')}}">Photo Gallery</a></li>
               <li><a href="{{ route('newsdata')}}">News</a></li>

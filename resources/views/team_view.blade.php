@@ -123,7 +123,8 @@
                                                 <div class="team-player-text text-center">
                                                 	<h4>{{ $player[$teamPlayer['player_id']] }}<img alt="Not Verified" title="Not Verified" src="https://cdn-icons-png.flaticon.com/512/7595/7595571.png" style="width: 30px;height: 30px;margin: 0px;"> </h4>
                                                    <h5></h5>
-                                             <a href="" class="btn btn-team">View Profile <i class="fa fa-chevron-circle-right"></i></a>
+												   <a style="cursor:pointer;" href="{{ route('playerview', $teamPlayer->player_id) }}" class="btn btn-team">View Profile <i class="fa fa-chevron-circle-right"></i></a>
+
 														</div>
 													</div>
 										</div>
@@ -131,30 +132,7 @@
 										@else
                                        <p>No players found.</p>
                                         @endif
-										<div class="tab-pane fade " id="umpiringSchedule">
-											
-											Loading ...
-											</div>
-										<div class="tab-pane fade " id="batting">
-											
-											Loading ...
-											</div>
-										<div class="tab-pane fade " id="bowling">
-											
-											Loading ...
-											</div>
-										<div class="tab-pane fade " id="fielding">
-											
-											Loading ...
-											</div>
-										<div class="tab-pane fade " id="ranking">
-											
-											Loading ...
-											</div>
-										 <div class="tab-pane fade " id="stats">
-											
-											Loading ...
-											</div> 
+									
 									</div>
 								</div>
 							</div>

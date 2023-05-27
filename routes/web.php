@@ -81,3 +81,7 @@ Route::get('newsdata',[HomeController::class,'newsdata'])->name('newsdata');
 Route::get('contactus',[HomeController::class,'contactus'])->name('contactus');
 
 Route::get('tournamnet_all_data/{id}', [ApiController::class, 'tournamnet_all_data'])->name('tournamnet_all_data');
+
+Route::get('matchofficial',[HomeController::class,'matchofficial'])->name('matchofficial');
+Route::get('playerview/{playerid}',[HomeController::class,'playerview'])->name('playerview');
+
