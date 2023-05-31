@@ -25,6 +25,7 @@ use App\Models\Season;
 use App\Models\Sponsor;
 use App\Models\Umpire;
 use App\Models\Dismissal;
+use App\Models\Rulesandregulation;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -1576,7 +1577,7 @@ public function team_fielding(int $team_id,int $tournament_id){
     return view('seasonresponsers', compact('teams', 'match_results', 'image_gallery'));
   }
 
-  public function leagueinfo()
+  public function leagueinfo(int $id)
   {
     $match_results = Fixture::query()->orderBy('id')->get();
     $teams = Team::query()->get()->pluck(
@@ -1590,9 +1591,10 @@ public function team_fielding(int $team_id,int $tournament_id){
     $image_gallery = GalleryImages::query()
       ->where('isActive', '=', 1)
       ->get();
+      $rulesandregulations =Rulesandregulation::where('id', '=', $id)
+      ->get();
 
-
-    return view('leagueinfo', compact('teams', 'match_results', 'image_gallery'));
+    return view('leagueinfo', compact('teams', 'match_results', 'image_gallery','rulesandregulations'));
   }
 
 
@@ -2106,13 +2108,13 @@ $player_strike_rate = number_format($player_strike_rate, 2);
 
 $player_six = FixtureScore::where('playerid', $playerid)
 ->where('fixture_scores.balltype','=','R')
-->selectRaw("SUM(fixture_scores.runs = 6 AND fixture_scores.balltype = 'R') as total_sixes")
+->selectRaw("SUM(fixture_scores.issix = 1 AND fixture_scores.balltype = 'R') as total_sixes")
 ->groupBy('playerid')
 ->get();
 
 $player_four = FixtureScore::where('playerid', $playerid)
 ->where('fixture_scores.balltype','=','R')
-->selectRaw("SUM(fixture_scores.runs = 4 AND fixture_scores.balltype = 'R') as total_four")
+->selectRaw("SUM(fixture_scores.isfour = 1 AND fixture_scores.balltype = 'R') as total_four")
 ->groupBy('playerid')
 ->get();
 

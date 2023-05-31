@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\Tournament;
+use App\Models\Rulesandregulation;
 
 class header_slider
 {
@@ -26,9 +27,14 @@ class header_slider
 
          $teams = DB::table('teams')->pluck('name', 'id');
          $tournament_name = Tournament::query()->where('season_id','=',0)->where('is_web_display','=',1)->get();
+         
+         $rulesandregulations =Rulesandregulation::query()
+         ->get();
+
           view()->share('header_sponsor_gallery', $sponsor_gallery);
           view()->share('header_tournament_name', $tournament_name);
           view()->share('header_teams', $teams);
+          view()->share('headerrulesandregulations', $rulesandregulations);
 
         return $next($request);
     }

@@ -206,7 +206,7 @@ $(document).ready(function() {
                                                         <th>Lost</th>
                                                         <th>N/R</th>
                                                         <th>Pts</th> 
-                                                        <!-- <th class="hidden-phone">Net RR</th> -->
+                                                        <th class="hidden-phone">Net RR</th>
                                                         </tr> 
                                                     </thead> 
                                                     <tbody id="point_table"> 
@@ -1118,6 +1118,8 @@ function get_point_table(tornament_season_id, type) {
                             <th>${item.losses}</th>
                             <th>${item.draws}</th>
                             <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th>
+                            <th>${item.net_rr.toFixed(3)}</th>
+
                         </tr>
                     `;
                 });
@@ -1243,7 +1245,8 @@ function get_group_team(group_id,tournamnet_id) {
 			<th>${item.losses}</th>
 			<th>${item.draws}</th>
 			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
-			
+            <th>${item.net_rr.toFixed(3)}</th>
+
 			</tr>
 			`
 			})

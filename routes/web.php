@@ -70,7 +70,7 @@ Route::get('schedulesearch_form_submit',[HomeController::class,'schedulesearch']
 
 Route::get('imagegallery',[HomeController::class,'imagegallery'])->name('imagegallery');
 Route::get('seasonresponsers',[HomeController::class,'seasonresponsers'])->name('seasonresponsers');
-Route::get('leagueinfo',[HomeController::class,'leagueinfo'])->name('leagueinfo');
+Route::get('leagueinfo/{id}',[HomeController::class,'leagueinfo'])->name('leagueinfo');
 
 Route::get('clubviewteams',[HomeController::class,'clubviewteams'])->name('clubviewteams');
 Route::post('clubviewteams_submit',[HomeController::class,'clubviewteams_submit'])->name('clubviewteams_submit');

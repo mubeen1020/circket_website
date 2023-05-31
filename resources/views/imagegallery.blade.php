@@ -25,7 +25,7 @@
                     <div class="small-video ash-border">
                         <center class="center-padding">
                             <a href="data:image/png;base64,{{ $image->image }}" data-rel="prettyPhoto[gallery]">
-                                <img src="data:image/png;base64,{{ $image->image }}" alt="MCL_awardTeam.jpg" style="height: 150px;width: 200px;">
+                                <img src="data:image/png;base64,{{ $image->image }}" alt="EOSCL__awardTeam.jpg" style="height: 150px;width: 200px;">
                             </a>
                         </center>
                     </div>
