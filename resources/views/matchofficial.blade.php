@@ -51,7 +51,7 @@
                             <th>Role</th>
                             <th>Level</th>
                             <th>Phone</th>
-                            <th>Email </th>
+                            <th>Address </th>
                             </tr> 
                     </thead> 
                     <tbody>
