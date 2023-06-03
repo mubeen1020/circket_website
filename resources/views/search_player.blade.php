@@ -244,19 +244,20 @@
     if(count($result) > 0){
 @endphp
                          @foreach($result as $key => $player )
-
+                            <?php $pid = $player['id']; ?>
       
                         <tr role="row" class="even"> 
                             <th class="sorting_1" style="text-align:left!important"><a>{{$key +1}}</a></th> 
-                            <th style="text-align:left!important"><a href="{{ route('playerview', $player['id']) }}"> {{$player['fullname']}} </a></th>
-                            <th style="text-align:left!important"><a href="{{ route('playerview', $player['id']) }}"> {{$player['email']}} </a></th>
-                            <th style="text-align:left!important"><a href="{{ route('playerview', $player['id']) }}"> {{$player['contact']}} </a></th>
+                            <th style="text-align:left!important"><a >
+                             {{$player['fullname']}} </a></th>
+                            <th style="text-align:left!important"><a > {{$player['id']}} </a></th>
+                            <th style="text-align:left!important"><a > {{$player['contact']}} </a></th>
                                     <th><table>
                         <tbody><tr class="even">
                             <td>
-                            <img src="https://cricclubs.com/documentsRep/teamLogos/24166e99-e7a3-42ec-9078-33110d9b82cb.jpeg" class="img-responsive img-circle" style="width: 20px; height: 20px;">
+                            <img src="https://eoscl.ca/admin/public/Team/{{$player['team_id']}}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;">
                                     </td>
-                                        <td style="text-align:left!important">&nbsp;{{$player['team_name']}}</td>
+                                        <td style="text-align:left!important">&nbsp;{{$teams[$player['team_id']]}}</td>
                                     </tr>
                                 </tbody></table></th>
                         </tr>

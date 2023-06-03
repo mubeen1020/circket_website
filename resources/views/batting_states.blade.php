@@ -174,22 +174,22 @@
 										<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->player_id]}}</a><br></div>
 								</td>
 						<td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
-								<td>{{ isset($match_count_player[$data['id']]) ? $match_count_player[$data['id']] : '0' }}</td>
-								<td>{{ isset($match_count_player[$data['id']]) ? $match_count_player[$data['id']] : '0' }}</td>
-								<td>{{$balls_faced[$data['id']]}}</td>
-								<td> {{$player_runs[$data['id']]}}</td>
-								<td>{{$fours[$data['id']]['fours']}}</td>
-								<td>{{$sixes[$data['id']]}}</td>
-								<td>{{$fifty[$data['id']]}}</td>
-								<td>{{$hundreds[$data['id']]}}</td>
-								<td>{{$higest_score[$data['id']]}}</td>
-								@if($balls_faced[$data['id']] > 0)
-                    <td>{{ number_format(($player_runs[$data['id']] / $balls_faced[$data['id']]) * 100, 2) }}</td>
+								<td>{{ isset($match_count_player[$data->player_id]) ? $match_count_player[$data->player_id] : '0' }}</td>
+								<td>{{ isset($match_count_player[$data->player_id]) ? $match_count_player[$data->player_id] : '0' }}</td>
+								<td>{{$balls_faced[$data->player_id]}}</td>
+								<td> {{$player_runs[$data->player_id]}}</td>
+								<td>{{$fours[$data->player_id]['fours']}}</td>
+								<td>{{$sixes[$data->player_id]}}</td>
+								<td>{{$fifty[$data->player_id]}}</td>
+								<td>{{$hundreds[$data->player_id]}}</td>
+								<td>{{$higest_score[$data->player_id]}}</td>
+								@if($balls_faced[$data->player_id] > 0)
+                    <td>{{ number_format(($player_runs[$data->player_id] / $balls_faced[$data->player_id]) * 100, 2) }}</td>
                 @else
                     <td>0</td>
                 @endif
-								@if($match_count_player[$data['id']] > 0)
-                <td>{{ number_format($player_runs[$data['id']] / $match_count_player[$data['id']], 2)}}</td>
+								@if($match_count_player[$data->player_id] > 0)
+                <td>{{ number_format($player_runs[$data->player_id] / $match_count_player[$data->player_id], 2)}}</td>
                 @else
                 <td>0</td>
                 @endif

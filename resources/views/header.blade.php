@@ -515,7 +515,7 @@ navbarSlider.addEventListener("mouseout", function() {
           <li class="dropdown">
             <a href="{{ route('batting_states')}}" class="dropdown-toggle" data-toggle="dropdown">Statistics</a>
             <ul class="dropdown-menu"  >
-              <li><a href="{{ route('comingsoon')}}">Points Table</a></li>
+              <li><a href="{{ route('pointtable')}}">Points Table</a></li>
               <li><a href="{{ route('batting_states')}}">Batting Records</a></li>
               <li><a href="{{ route('bowling_state')}}">Bowling Records</a></li>
               <li><a href="{{ route('comingsoon')}}">Fielding Records</a></li>

@@ -91,3 +91,7 @@ Route::get('batting_states_submit',[HomeController::class,'batting_states']);
 Route::get('bowling_state',[HomeController::class,'bowling_state'])->name('bowling_state');
 Route::post('bowling_state_submit',[HomeController::class,'bowling_state_submit'])->name('bowling_state_submit');
 Route::get('bowling_state_submit',[HomeController::class,'bowling_state']);
+
+Route::get('pointtable',[HomeController::class,'pointtable'])->name('pointtable');
+Route::post('pointtable_submit',[HomeController::class,'pointtable_submit'])->name('pointtable_submit');
+Route::get('pointtable_submit',[HomeController::class,'pointtable']);
