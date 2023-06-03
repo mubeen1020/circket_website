@@ -260,6 +260,37 @@ class HomeController extends Controller
 
 
 
+  public function fullScorecard_chart(int $id)
+  {
+    $match_results = Fixture::query();
+    $match_results->where('id', '=', $id);
+    $match_results = $match_results->orderBy('id')->get();
+
+
+    $sum_inning_one = FixtureScore::query()
+    ->select(DB::raw('SUM(runs) as over_run'))
+    ->where('fixture_id', $id)
+    ->where('inningnumber', 1)
+    ->groupBy('overnumber')
+    ->get()->pluck('over_run')->toArray();
+    $sum_inning_one = array_map('intval', $sum_inning_one);
+    
+
+    $sum_inning_two = FixtureScore::query()
+    ->select(DB::raw('SUM(runs) as over_run'))
+    ->where('fixture_id', $id)
+    ->where('inningnumber', 2)
+    ->groupBy('overnumber')
+    ->get()->pluck('over_run')->toArray();
+
+    
+
+    $sum_inning_two = array_map('intval', $sum_inning_two);
+
+    return view('fullScorecard_chart', compact('match_results', 'sum_inning_one', 'sum_inning_two','id'));
+  }
+
+
   public function fullScorecard_overbyover(int $id)
   {
     $match_results = Fixture::query();
@@ -2112,6 +2143,50 @@ $player_six = FixtureScore::where('playerid', $playerid)
 ->groupBy('playerid')
 ->get();
 
+
+$player_inning_score = FixtureScore::where('playerid', $playerid)
+->where('fixture_scores.balltype','=','R')
+->selectRaw('SUM(runs) as runs')
+->selectRaw('fixture_id')
+->groupBy('fixture_id')
+->get()->pluck('runs')->toArray();
+
+$bowler_wicket_chart = DB::table('match_dismissals')
+    ->select(DB::raw('count(match_dismissals.id) as count, dismissals.name as name'))
+    ->join('fixture_scores', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+    ->join('dismissals', 'dismissals.id', '=', 'match_dismissals.dismissal_id')
+    ->where('fixture_scores.bowlerId', '=', $playerid)
+    ->groupBy('match_dismissals.dismissal_id', 'name')
+    ->get()->toArray();
+
+
+$batsman_wicket_chart = DB::table('match_dismissals')
+->select(DB::raw('count(match_dismissals.id) as count, dismissals.name as name'))
+->join('fixture_scores', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+->join('dismissals', 'dismissals.id', '=', 'match_dismissals.dismissal_id')
+->where('fixture_scores.playerid', '=', $playerid)
+->groupBy('match_dismissals.dismissal_id', 'name')
+->get()->toArray();
+
+
+
+// $player_inning_wickets = FixtureScore::where('playerid', $playerid)
+// ->where('fixture_scores.isout','=',1)
+// ->selectRaw('SUM(runs) as runs')
+// ->selectRaw('fixture_id')
+// ->groupBy('fixture_id')
+// ->get()->pluck('runs')->toArray();
+
+
+   $player_inning_wickets = FixtureScore::where('bowlerid', $playerid)
+   ->where('balltype','=','Wicket')
+   ->selectRaw('SUM(isout) as playerwickets')
+   ->groupBy('fixture_id')
+   ->get()->pluck('playerwickets')->toArray();
+
+// dd($player_inning_wickets);
+
+
 $player_four = FixtureScore::where('playerid', $playerid)
 ->where('fixture_scores.balltype','=','R')
 ->selectRaw("SUM(fixture_scores.isfour = 1 AND fixture_scores.balltype = 'R') as total_four")
@@ -2138,11 +2213,23 @@ $player_cauches = FixtureScore::where('bowlerid', $playerid)
 ->groupBy('fixture_scores.bowlerid')
 ->get();
 
+
+// $player_total_out = FixtureScore::where('fixture_scores.bowlerid', $playerid)
+// ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+// ->join('dismissals', 'dismissals.id', '=', 'match_dismissals.dismissal_id')
+// ->selectRaw("COUNT(match_dismissals.id) as wicket_count",)
+// ->selectRaw("dismissals.id as out_id")
+// ->groupBy('dismissals.id')
+// ->get()->pluck('out_id, wicket_count');
+
+// dd($player_total_out);
+
 $player_balls1 = FixtureScore::where('playerid', $playerid)
 ->where('fixture_scores.balltype', 'R')
 ->selectRaw('COUNT(id) as playerballs')
 ->groupBy('playerid')
 ->first();
+
 
 $bowler_strike_rate = 0;
 
@@ -2180,12 +2267,33 @@ if ($bowler_balls > 0) {
 $bowler_economy = number_format($bowler_economy, 2);
 
 
+        $chart = (object)[
+          'labels' => '',
+          'dataset' => '',
+        ];
+        $chart->labels = (array_keys($player_inning_score));
+        $chart->dataset = (array_values($player_inning_score));
+        
+
+        $bowler_inning_wicket = (object)[
+          'labels' => '',
+          'dataset' => '',
+        ];
+        $bowler_inning_wicket->labels = (array_keys($player_inning_wickets));
+        $bowler_inning_wicket->dataset = (array_values($player_inning_wickets));
+      
+
+//         $wicket_chart = (object)[
+//           'labels' => '',
+//           'dataset' => '',
+//         ];
+//         $wicket_chart->labels = (array_keys($bowler_wicket_chart));
+//         $wicket_chart->dataset = (array_values($bowler_wicket_chart));
+      
+// dd($wicket_chart);
 
 
-
-
-
-      return view('playerview'  , compact( "bowler_economy","bowler_balls","bowler_strike_rate","player_cauches","bower_over",'player_four','match_results', 'teams','player_team'  , "tournament_name" , "grounds","player_data","teams","player","player_club","player_match","player_runs","player_wicket","player_fifties","total_hundreds","player_balls","player_average","player_strike_rate","player_innings","player_six","player_matchbowler"));   
+      return view('playerview'  , compact( "bowler_economy","bowler_balls","bowler_strike_rate","player_cauches","bower_over",'player_four','match_results', 'teams','player_team'  , "tournament_name" , "grounds","player_data","teams","player","player_club","player_match","player_runs","player_wicket","player_fifties","total_hundreds","player_balls","player_average","player_strike_rate","player_innings","player_six","player_matchbowler", "chart", 'bowler_inning_wicket','bowler_wicket_chart','batsman_wicket_chart'));   
   }
   
 }

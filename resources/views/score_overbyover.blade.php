@@ -22,7 +22,7 @@
   							<li><a href="{{ route('balltoballScorecard', $match_results[0]->id) }}" >Ball By Ball</a></li>
 							<li><a href="{{ route('fullScorecard', $match_results[0]->id) }}" >Full Scorecard</a></li>
 							<li class="active"><a href="{{ route('fullScorecard_overbyover', $match_results[0]->id) }}" >Over by Over Score</a></li>
-							<li><a href="#tab4default" role="tab" data-toggle="tab" onclick="loadView('graphsView');">Charts</a></li>
+							<li><a href="{{ route('fullScorecard_chart', $match_results[0]->id) }}" >Charts</a></li>
 							</ul>
                        </div>
                        <div class="panel-body">

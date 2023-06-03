@@ -36,6 +36,7 @@ Route::get('searchplayer-form-submit',[HomeController::class,'search_player']);
 Route::get('balltoballscorecard/{id}',[HomeController::class,'balltoballScorecard'])->name('balltoballScorecard');
 Route::get('fullScorecard/{id}', [HomeController::class, 'fullScorecard'])->name('fullScorecard');
 Route::get('fullScorecard_overbyover/{id}',[HomeController::class,'fullScorecard_overbyover'])->name('fullScorecard_overbyover');
+Route::get('fullScorecard_chart/{id}',[HomeController::class,'fullScorecard_chart'])->name('fullScorecard_chart');
 
 Route::get('result', [HomeController::class, 'result'])->name('result');
 Route::post('result-form-submit',[HomeController::class,'result_form_submit'])->name('result_form_submit');
@@ -84,4 +85,7 @@ Route::get('tournamnet_all_data/{id}', [ApiController::class, 'tournamnet_all_da
 
 Route::get('matchofficial',[HomeController::class,'matchofficial'])->name('matchofficial');
 Route::get('playerview/{playerid}',[HomeController::class,'playerview'])->name('playerview');
+
+
+Route::get('test_chart',[HomeController::class,'test_chart'])->name('test_chart');
 

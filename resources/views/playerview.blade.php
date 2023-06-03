@@ -1,5 +1,7 @@
 @extends('default')
 @section('content')
+
+
 <div class="score-top sp text-center">
 			<div class="container">
 				<div class="match-summary">
@@ -244,16 +246,66 @@
 									</div>
 									<div class="stat-row">
 										<div class="row">
-											<div class="col-sm-7">
+											<div class="col-sm-6">
 												<div class="stat-image-all">
 													<div class="border-heading">
 														<h5>BATTING: RUNS PER INNINGS</h5>
 													</div>
-													<div class="stat-image">
-														<div id="bar_chart" style="width: 100%; height: 400px;"><div style="position: relative; width: 635px; height: 400px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="635" height="400"><defs><clipPath id="rablfilter1"><rect x="20.5" y="7.5" width="574" height="340"></rect></clipPath></defs><g><rect x="0" y="0" width="635" height="400" fill="#ffffff" fill-opacity="0" stroke="#ffffff" stroke-opacity="0" stroke-width="0"></rect><rect x="20.5" y="7.5" width="574" height="340" fill="#ffffff" fill-opacity="0" stroke="#ffffff" stroke-opacity="0" stroke-width="1"></rect></g><g><line x1="20.5" x2="594.5" y1="347.5" y2="347.5" stroke="#9E9E9E" stroke-width="1"></line><line x1="20.5" x2="594.5" y1="279.5" y2="279.5" stroke="#E0E0E0" stroke-width="1"></line><line x1="20.5" x2="594.5" y1="211.5" y2="211.5" stroke="#E0E0E0" stroke-width="1"></line><line x1="20.5" x2="594.5" y1="143.5" y2="143.5" stroke="#E0E0E0" stroke-width="1"></line><line x1="20.5" x2="594.5" y1="75.5" y2="75.5" stroke="#E0E0E0" stroke-width="1"></line><line x1="20.5" x2="594.5" y1="7.5" y2="7.5" stroke="#E0E0E0" stroke-width="1"></line></g><g><path d="M 580 48.80000000000001 A 2 2 0 0 1 582 50.80000000000001 L 582 347 A 0 0 0 0 1 582 347 L 33 347 A 0 0 0 0 1 33 347 L 33 50.80000000000001 A 2 2 0 0 1 35 48.80000000000001 Z" fill="#4285f4" clip-path="url(#rablfilter1)"></path></g><g></g><g><text x="307.50000000000006" y="364.5" style="cursor: default; user-select: none; -webkit-font-smoothing: antialiased; font-family: Roboto; font-size: 12px;" fill="#757575" dx="-31.8984375px">07/16/2022</text><text x="307.5" y="396.5" style="cursor: default; user-select: none; -webkit-font-smoothing: antialiased; font-family: Roboto; font-size: 12px;" fill="#424242" dx="-30.734375px">Match Date</text><text x="14.5" y="351.5" style="cursor: default; user-select: none; -webkit-font-smoothing: antialiased; font-family: Roboto; font-size: 12px;" fill="#757575" dx="-6.75px">0</text><text x="14.5" y="283.5" style="cursor: default; user-select: none; -webkit-font-smoothing: antialiased; font-family: Roboto; font-size: 12px;" fill="#757575" dx="-6.75px">5</text><text x="14.5" y="215.5" style="cursor: default; user-select: none; -webkit-font-smoothing: antialiased; font-family: Roboto; font-size: 12px;" fill="#757575" dx="-13.484375px">10</text><text x="14.5" y="147.5" style="cursor: default; user-select: none; -webkit-font-smoothing: antialiased; font-family: Roboto; font-size: 12px;" fill="#757575" dx="-13.484375px">15</text><text x="14.5" y="79.5" style="cursor: default; user-select: none; -webkit-font-smoothing: antialiased; font-family: Roboto; font-size: 12px;" fill="#757575" dx="-13.484375px">20</text><text x="14.5" y="11.5" style="cursor: default; user-select: none; -webkit-font-smoothing: antialiased; font-family: Roboto; font-size: 12px;" fill="#757575" dx="-13.484375px">25</text></g><g></g><g></g><g></g></svg></div></div></div>
-													</div>
-												</div>
+
+
+
+        										            <div class="col-lg-8">
+		                                            <canvas id="userChart" class="rounded shadow"></canvas>
+                  									</div>
+
 											</div>
+										</div>
+										<div class="col-sm-6">
+												<div class="stat-image-all">
+													<div class="border-heading">
+														<h5>BATTING: DISMISSAL TYPE</h5>
+													</div>
+										            <div class="col-lg-8">
+		                                            <canvas id="batsman_wicket_type_chart" class="rounded shadow"></canvas>
+                  									</div>
+
+											</div>
+										</div>
+										
+
+									</div>
+									<div class="row">
+										<div class="col-sm-6">
+												<div class="stat-image-all">
+													<div class="border-heading">
+														<h5>BOWLING: DISMISSAL TYPE</h5>
+													</div>
+        										            <div class="col-lg-8">
+		                                            <canvas id="bolwer_wicket_type_chart" class="rounded shadow"></canvas>
+                  									</div>
+
+											</div>
+										</div>
+
+										<div class="col-sm-6">
+												<div class="stat-image-all">
+													<div class="border-heading">
+														<h5>BOWLING: WICKETS PER INNINGS</h5>
+													</div>
+
+
+
+        										            <div class="col-lg-8">
+		                                            <canvas id="bolwer_wicket_chart" class="rounded shadow"></canvas>
+                  									</div>
+
+											</div>
+										</div>
+
+									</div>
+
+									<!-- </div> -->
+
 											<div class="col-sm-5">
 												<div class="stat-image-all">
 													<div class="border-heading">
@@ -299,3 +351,202 @@
 		</div>
 	</div>
 @stop
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+	$( document ).ready(function() {
+
+
+  const data_batsman_wicket_chart = @json($batsman_wicket_chart); // Assuming you pass the object from Laravel to JavaScript
+
+  const labels_bat = [];
+  const counts_bat = [];
+
+  // Iterating over the data object to extract label and count values
+  data_batsman_wicket_chart.forEach((item) => {
+    labels_bat.push(item.name);
+    counts_bat.push(item.count);
+  });
+var batsman_wicket_type_chart  = document.getElementById('batsman_wicket_type_chart').getContext('2d');
+
+    var chart = new Chart(batsman_wicket_type_chart, {
+    	type: 'pie',
+  data: {
+  labels: labels_bat,
+  datasets: [{
+        data: counts_bat,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.8)',   // Color for "Caught"
+          'rgba(54, 162, 235, 0.8)',   // Color for "Bowled"
+          'rgba(255, 206, 86, 0.8)',   // Color for other data points
+  		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+          // Add more colors here if needed
+        ],
+      }]
+},
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Pie Chart'
+      }
+    }
+  },
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const data_bowler_wicket_chart = @json($bowler_wicket_chart); // Assuming you pass the object from Laravel to JavaScript
+
+  const labels = [];
+  const counts = [];
+
+  // Iterating over the data object to extract label and count values
+  data_bowler_wicket_chart.forEach((item) => {
+    labels.push(item.name);
+    counts.push(item.count);
+  });
+
+
+	var bolwer_wicket_type_chart  = document.getElementById('bolwer_wicket_type_chart').getContext('2d');
+
+    var chart = new Chart(bolwer_wicket_type_chart, {
+    	type: 'pie',
+  data: {
+  labels: labels,
+  datasets: [{
+        data: counts,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.8)',   // Color for "Caught"
+          'rgba(54, 162, 235, 0.8)',   // Color for "Bowled"
+          'rgba(255, 206, 86, 0.8)',   // Color for other data points
+  		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+		  'rgba(255, 206, 86, 0.8)',   // Color for other data points
+          // Add more colors here if needed
+        ],
+      }]
+},
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Pie Chart'
+      }
+    }
+  },
+    });
+
+
+
+    var ctx1 = document.getElementById('bolwer_wicket_chart').getContext('2d');
+
+    var chart = new Chart(ctx1, {
+    	type: 'bar',
+  data: {
+  labels: {!!json_encode($bowler_inning_wicket->labels)!!},
+  datasets: [
+    {
+      label: 'Inning Wickets',
+      data: {!! json_encode($bowler_inning_wicket->dataset)!!},
+      backgroundColor: '#2b1ec8',
+    }
+  ]
+},
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Pie Chart'
+      }
+    }
+  },
+    });
+
+
+
+
+
+    var ctx = document.getElementById('userChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+// The data for our dataset
+        data: {
+            labels:  {!!json_encode($chart->labels)!!} ,
+            datasets: [
+                {
+                    label: 'Inning Runs',
+                    backgroundColor: '#2b1ec8' ,
+                    data:  {!! json_encode($chart->dataset)!!} ,
+                },
+            ]
+        },
+// Configuration options go here
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function(value) {if (value % 1 === 0) {return value;}}
+                    },
+                    scaleLabel: {
+                        display: false
+                    }
+                }]
+            },
+            legend: {
+                labels: {
+                    // This more specific font property overrides the global property
+                    fontColor: '#122C4B',
+                    fontFamily: "'Muli', sans-serif",
+                    padding: 25,
+                    boxWidth: 25,
+                    fontSize: 14,
+                }
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 0,
+                    bottom: 10
+                }
+            }
+        }
+    });
+
+    });
+</script>
