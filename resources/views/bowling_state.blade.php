@@ -9,7 +9,7 @@
 </div>
 
 	<div class="sta-sidemenu" style="top: 13px;background-color:black">
-		<h4>Batting stats</h4>
+		<h4>Bowling Stats</h4>
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">Click here for More <i class="fa fa-sort-desc" aria-hidden="true" style=" float: right; margin-right: 2%;"></i></button>
 		<div class="collapse navbar-collapse" id="myNavbar">
 		<div class="league-image">
@@ -70,7 +70,7 @@
 		</div>
 
 	<div class="sta-content">
-	<form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('batting_states_submit')}}">
+	<form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('bowling_state_submit')}}">
                 @csrf
 		<section class="sta-search-filter">
 			<div class="row">
@@ -129,7 +129,7 @@
 		<div id="reloaddiv">
 		<div class="sta-tables">		
 			<div class="flex-top">
-				<div class="filter-title">Most Runs</div>
+				<div class="filter-title">Most Wickets</div>
 				<div class="text-right">
 				
 				<!-- <div class="btn-group btn-group-sm" role="group">
@@ -153,15 +153,13 @@
                         <th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Team : activate to sort column ascending" style="width: 210px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">Team<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Mat <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Inns: activate to sort column ascending" style="width: 31px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">Inns<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Overs: activate to sort column ascending" style="width: 41px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">Balls <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Overs: activate to sort column ascending" style="width: 41px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">Overs <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Runs: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">Runs</p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Wkts: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">4's<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Ave: activate to sort column ascending" style="width: 45px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">6's<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-						<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Inns: activate to sort column ascending" style="width: 31px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">50's<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Overs: activate to sort column ascending" style="width: 41px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">100's <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Runs: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">HS</p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Wkts: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">SR<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Ave: activate to sort column ascending" style="width: 45px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">Avg<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Wkts: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">Wkts<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Ave: activate to sort column ascending" style="width: 45px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">Econ<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+						<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Inns: activate to sort column ascending" style="width: 31px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">Avg<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Overs: activate to sort column ascending" style="width: 41px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">SR<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Runs: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">Hat-Ricks</p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                        </tr> 
                     </thead>
 						<tbody>
@@ -171,28 +169,50 @@
 								<td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
 									<div>
 										<div class="player-img" style="background-image: url('pic.jpg');"></div>
-										<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->player_id]}}</a><br></div>
+										<a href="" >{{$player[$data['bowler_id']]}}</a><br></div>
 								</td>
-						<td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
-								<td>{{ isset($match_count_player[$data['id']]) ? $match_count_player[$data['id']] : '0' }}</td>
-								<td>{{ isset($match_count_player[$data['id']]) ? $match_count_player[$data['id']] : '0' }}</td>
-								<td>{{$balls_faced[$data['id']]}}</td>
-								<td> {{$player_runs[$data['id']]}}</td>
-								<td>{{$fours[$data['id']]['fours']}}</td>
-								<td>{{$sixes[$data['id']]}}</td>
-								<td>{{$fifty[$data['id']]}}</td>
-								<td>{{$hundreds[$data['id']]}}</td>
-								<td>{{$higest_score[$data['id']]}}</td>
-								@if($balls_faced[$data['id']] > 0)
-                    <td>{{ number_format(($player_runs[$data['id']] / $balls_faced[$data['id']]) * 100, 2) }}</td>
-                @else
-                    <td>0</td>
-                @endif
-								@if($match_count_player[$data['id']] > 0)
-                <td>{{ number_format($player_runs[$data['id']] / $match_count_player[$data['id']], 2)}}</td>
-                @else
-                <td>0</td>
-                @endif
+						<td style="text-align: left;font-size: smaller;">{{$header_teams[$data['team_id']]}}</td>
+								<td>{{$data->total_matches}}</td>
+								<td>{{$data->total_matches}}</td>
+								<td>{{$data->total_overs}}</td>
+								<td>{{$data->total_runs}}</td>
+								<td>{{$data->total_wickets}}</td>
+								@if ($data->total_overs != 0) 
+                <td>{{number_format($data->total_runs / $data->total_overs,2)}}</td>
+				@else
+				<td>0</td>
+				@endif
+                @if ($data->total_wickets != 0) 
+                <td>{{number_format($data->total_runs / $data->total_wickets,2)}}</td>
+				@else
+				<td>0</td>
+				@endif
+                @if ($data->total_wickets != 0) 
+                <td>{{number_format($data->total_overs/$data->total_wickets,2)}}</td>
+				@else
+				<td>0</td>
+				@endif
+								<td>
+                                <?php
+				$hat_tricks = 0;
+				$current_overs = 0;
+				$current_wickets = 0;
+				if ($data->bowling_details) {
+					foreach($data->bowling_details as $detail) {
+					if ($detail->isout) {
+						$current_wickets++;
+						if ($current_wickets >= 3) {
+						$hat_tricks++;
+						$current_wickets = 0;
+						$current_overs = 0;
+						}
+					}
+					$current_overs = $detail->overnumber;
+					}
+				}
+				echo $hat_tricks;
+				?>
+                                </td>
 							</tr>
 						@endforeach
 						</tbody>

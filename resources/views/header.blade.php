@@ -517,7 +517,7 @@ navbarSlider.addEventListener("mouseout", function() {
             <ul class="dropdown-menu"  >
               <li><a href="{{ route('comingsoon')}}">Points Table</a></li>
               <li><a href="{{ route('batting_states')}}">Batting Records</a></li>
-              <li><a href="{{ route('comingsoon')}}">Bowling Records</a></li>
+              <li><a href="{{ route('bowling_state')}}">Bowling Records</a></li>
               <li><a href="{{ route('comingsoon')}}">Fielding Records</a></li>
               <li><a href="{{ route('comingsoon')}}">Player Rankings</a></li>
             </ul>
@@ -542,7 +542,7 @@ navbarSlider.addEventListener("mouseout", function() {
             <a href="{{ route('comingsoon') }}" class="dropdown-toggle" data-toggle="dropdown">League</a>
             <ul class="dropdown-menu">
                 <li class="dropdown-submenu">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown">League Info</a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">League Rules and Guidlines</a>
                 <ul class="dropdown-menu">
                     @foreach($headerrulesandregulations as $rule)
                     <li ><a href="{{ url('leagueinfo/'.  $rule->id) }}">{{$rule->year}}</a></li>
@@ -552,14 +552,11 @@ navbarSlider.addEventListener("mouseout", function() {
                 <li><a href="{{ route('view_all_grounds') }}">Grounds</a></li>
                 <li><a href="{{ route('comingsoon') }}">Documents</a></li>
                 <li><a href="{{ route('matchofficial') }}">Umpires/Coaches/Scorers</a></li>
-                <li><a href="{{ route('comingsoon') }}">DLS Calculator</a></li>
                 <li><a href="{{ route('imagegallery') }}">Photo Gallery</a></li>
                 <li><a href="{{ route('newsdata') }}">News</a></li>
                 <li><a href="{{ route('articals') }}">Articles</a></li>
-                <li><a href="{{ route('comingsoon') }}" target="_blank">2023 Summer Club Registration Form</a></li>
                 <li><a href="{{ route('contactus') }}">CONTACT US</a></li>
-                <li><a href="{{ route('comingsoon') }}" target="_blank">MCL Tapeball League 22-23</a></li>
-                <li><a href="{{ route('comingsoon') }}">Contact</a></li>
+                <!-- <li><a href="{{ route('comingsoon') }}">Contact</a></li>  -->
             </ul>
             </li>
           <li class="dropdown">

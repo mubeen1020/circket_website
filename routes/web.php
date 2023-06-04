@@ -21,7 +21,6 @@ use App\Http\Controllers\ApiController;
 // });
 
 Route::get('/',[HomeController::class,'home'])->name('home');
-Route::get('batting_states',[HomeController::class,'batting_states'])->name('batting_states');
 Route::get('comingsoon', [HomeController::class, 'comingsoon'])->name('comingsoon');
 Route::get('search_player',[HomeController::class,'search_player'])->name('search_player');
 Route::get('view_tournaments/{tournament_id}',[HomeController::class,'view_tournaments'])->name('view_tournaments');
@@ -88,4 +87,12 @@ Route::get('playerview/{playerid}',[HomeController::class,'playerview'])->name('
 
 
 Route::get('test_chart',[HomeController::class,'test_chart'])->name('test_chart');
+
+Route::get('batting_states',[HomeController::class,'batting_states'])->name('batting_states');
+Route::post('batting_states_submit',[HomeController::class,'batting_states_submit'])->name('batting_states_submit');
+Route::get('batting_states_submit',[HomeController::class,'batting_states']);
+
+Route::get('bowling_state',[HomeController::class,'bowling_state'])->name('bowling_state');
+Route::post('bowling_state_submit',[HomeController::class,'bowling_state_submit'])->name('bowling_state_submit');
+Route::get('bowling_state_submit',[HomeController::class,'bowling_state']);
 
