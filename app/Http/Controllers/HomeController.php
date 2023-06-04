@@ -277,7 +277,7 @@ class HomeController extends Controller
     ->groupBy('overnumber')
     ->get()->pluck('over_run')->toArray();
     $sum_inning_one = array_map('intval', $sum_inning_one);
-    
+    // dd();
 
     $sum_inning_two = FixtureScore::query()
     ->select(DB::raw('SUM(runs) as over_run'))
@@ -289,8 +289,30 @@ class HomeController extends Controller
     
 
     $sum_inning_two = array_map('intval', $sum_inning_two);
+    $over = array_keys($sum_inning_one);
 
-    return view('fullScorecard_chart', compact('match_results', 'sum_inning_one', 'sum_inning_two','id'));
+
+    foreach ($over as &$element) {
+        $element += 1;
+    }
+
+    $match_results = Fixture::query();
+    $match_results->where('id', '=', $id);
+    $match_results = $match_results ->where('isActive',1)->orderBy('id')->get();
+    // $teams = Team::query()->get()pluck('name')->toArray();
+    //   'name',
+    //   'id'
+    // );
+    $teams_one = Team::query()->get()->where('id', '=', $match_results[0]->first_inning_team_id)->pluck(
+      'name'
+    )->first();
+    // dd($teams_one);
+    $teams_two = Team::query()->get()->where('id', '=', $match_results[0]->second_inning_team_id)->pluck(
+      'name',
+    )->first();
+
+
+    return view('fullScorecard_chart', compact('match_results','teams_one','teams_two', 'sum_inning_one', 'sum_inning_two','id', 'over'));
   }
 
 

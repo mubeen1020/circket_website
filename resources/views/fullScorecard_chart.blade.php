@@ -1,7 +1,8 @@
 @extends('default')
 @section('content')
 
-<div class="container">
+<div class="container p-sm-0">
+	<div class="profile-in-container">
        
        <table style="width: 100%; margin-bottom: 10px;text-align: center;">
 	<tbody><tr>
@@ -56,7 +57,7 @@
 				
 </div>
 
-
+</div>
 @stop
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -71,17 +72,17 @@
 console.log(@json($sum_inning_one))
 		    // Data for the chart
         var data = {
-            labels: ["Item 1", "Item 2", "Item 3"],
+            labels: @json($over),
             datasets: [
                 {
-                    label: "Dataset 1",
+                    label: "{{$teams_one}}",
                     data: @json($sum_inning_one), // Replace with your actual data for Dataset 1
                     backgroundColor: "rgba(54, 162, 235, 0.5)",
                     borderColor: "rgba(54, 162, 235, 1)",
                     borderWidth: 1
                 },
                 {
-                    label: "Dataset 2",
+                    label:  "{{$teams_two}}",
                     data: @json($sum_inning_two), // Replace with your actual data for Dataset 2
                     backgroundColor: "rgba(255, 99, 132, 0.5)",
                     borderColor: "rgba(255, 99, 132, 1)",
