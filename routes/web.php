@@ -76,6 +76,12 @@ Route::get('clubviewteams',[HomeController::class,'clubviewteams'])->name('clubv
 Route::post('clubviewteams_submit',[HomeController::class,'clubviewteams_submit'])->name('clubviewteams_submit');
 Route::get('clubviewteams_submit',[HomeController::class,'clubviewteams']);
 
+
+Route::post('viewteams_submit',[HomeController::class,'viewteams_submit']);
+
+
+
+
 Route::get('articals',[HomeController::class,'articals'])->name('articals');
 Route::get('newsdata',[HomeController::class,'newsdata'])->name('newsdata');
 Route::get('contactus',[HomeController::class,'contactus'])->name('contactus');
@@ -95,4 +101,7 @@ Route::get('batting_states_submit',[HomeController::class,'batting_states']);
 Route::get('bowling_state',[HomeController::class,'bowling_state'])->name('bowling_state');
 Route::post('bowling_state_submit',[HomeController::class,'bowling_state_submit'])->name('bowling_state_submit');
 Route::get('bowling_state_submit',[HomeController::class,'bowling_state']);
+
+
+Route::get('fieldingRecords',[HomeController::class,'fieldingRecords'])->name('fieldingRecords');
 

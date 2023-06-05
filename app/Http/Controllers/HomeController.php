@@ -29,8 +29,7 @@ use App\Models\Rulesandregulation;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-
-
+use function PHPSTORM_META\type;
 
 class HomeController extends Controller
 
@@ -1396,6 +1395,9 @@ public function team_fielding(int $team_id,int $tournament_id){
           ->groupBy(DB::raw('YEAR(created_at)'))
           ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
           ->pluck('year');
+
+
+
   
       $tournamentdata = Tournament::query()
           ->pluck('name', 'id');
@@ -1415,7 +1417,7 @@ public function team_fielding(int $team_id,int $tournament_id){
           ->distinct('tournament_players.player_id');
   
       $term = $request->input();
-      // dd($term);
+      
       if (!empty($term['year'])) {
           $year = $term['year'];
           $data->whereRaw("YEAR(tournament_players.created_at) = $year");
@@ -1431,7 +1433,7 @@ public function team_fielding(int $team_id,int $tournament_id){
       // }
   
       $getresult = $data->get();
-  // dd($getresult);
+  
       $match_count_player = collect();
       $player_runs = collect();
       $balls_faced = collect();
@@ -2097,6 +2099,8 @@ $grounds =Ground::query()
 
     $results = $data->orderby('tournament_groups.team_id')
       ->get();
+
+      // dd($results);
       
     $tournament = Tournament::query()->pluck(
       'name',
@@ -2117,7 +2121,7 @@ $grounds =Ground::query()
     ->get();
 
 
-    return view('clubviewteams', compact('results', 'ground2', 'match_results', 'ground', 'years', 'tournament', 'image_gallery' , 'name'));
+    return view('viewteams', compact('results', 'ground2', 'match_results', 'ground', 'years', 'tournament', 'image_gallery' , 'name'));
 
   
   }
@@ -2582,5 +2586,116 @@ return view('bowling_state', compact('tournamentdata', 'player','teams', 'match_
 
   
   }
+
+
+
+
+  public function fieldingRecords()
+  {
+
+    $tournamentdata = Tournament::query()->pluck(
+      'name',
+      'id'
+    );
+    $teams = Team::query()->get()->pluck(
+      'name',
+      'id'
+    );
+    $player = Player::query()->get()->pluck(
+      'fullname',
+      'id'
+    );
+    $match_results = Fixture::query();
+    $match_results->where('running_inning', '=', 3);
+    $match_results = $match_results->orderBy('id')->get();
+
+
+    $image_gallery = GalleryImages::query()
+      ->where('isActive', '=', 1)
+      ->get();
+      DB::enableQueryLog();
+
+      $years = DB::table('fixtures')
+        ->select(DB::raw('YEAR(created_at) as year'))
+        ->groupBy(DB::raw('YEAR(created_at)'))
+        ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
+        ->pluck('year');
+        $getresult=[];
+        $match_count_player = collect();
+        $player_runs = collect();
+        $balls_faced = collect();
+        $sixes = collect();
+        $fours = [];
+
+    return view('fieldingRecords', compact('fours','balls_faced','sixes','balls_faced','player_runs','match_count_player','player','getresult','teams','tournamentdata', 'match_results',  'image_gallery','years'));
+  }
+
+  public  function viewteams_submit(Request $request)
+  {
+
+    $ground = Ground::query()->get()->pluck(
+      'name',
+      'id'
+    );
+    DB::enableQueryLog();
+     
+      $years = DB::table('tournaments')
+          ->select(DB::raw('YEAR(tournamentstartdate) as year'))
+          ->groupBy(DB::raw('YEAR(tournamentstartdate)'))
+          ->orderBy(DB::raw('YEAR(tournamentstartdate)'), 'desc')
+          ->pluck('year');
+      $match_results = Fixture::query()->where('isActive',1)->get();
+     
+      $data = TournamentGroup::query()
+      ->selectRaw('players.fullname, teams.id, teams.clubname, teams.name, tournament_groups.tournament_id, tournaments.tournamentstartdate,tournaments.name as tournamentname')
+      ->where('teams.isclub', 1)
+      ->where('team_players.iscaptain', 1)
+      ->join('tournaments', 'tournaments.id', '=', 'tournament_groups.tournament_id')
+      ->join('teams', function ($join) {
+          $join->on('teams.id', '=', 'tournament_groups.team_id');
+      })->join('team_players', 'team_players.team_id', '=', 'teams.id')
+      ->join('players', 'players.id', '=', 'team_players.player_id');
+
+      // dd($data->get());
+     
+  
+  $term = $request;
+  if (!empty($term['year'])) {
+      $year = $term['year'];
+      $data->whereRaw("YEAR(tournaments.tournamentstartdate) = $year");
+  }
+  
+  if (!empty($term['tournament'])) {
+      $tournaments = $term['tournament'];
+      // dd($tournaments);
+      $data->where('tournament_groups.tournament_id', '=', $tournaments);
+      // dd($data);
+  }
+  
+  $results = $data->orderby('tournament_groups.team_id')
+  ->get();
+      $tournament = Tournament::query()->pluck(
+              'name',
+              'id'
+          );
+
+          // dd($results);
+        
+      $image_gallery =GalleryImages::query()
+      ->where('isActive','=',1)
+      ->get();
+  
+      $ground2= Ground::query()->get()->pluck(
+        'name',
+        'id'
+      );
+      
+      return view('viewteams', compact('results','ground2', 'match_results', 'ground','years', 'tournament', 'image_gallery' ));
+
+
+  }
+
+ 
+  
   
 }

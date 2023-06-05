@@ -518,7 +518,7 @@ navbarSlider.addEventListener("mouseout", function() {
               <li><a href="{{ route('comingsoon')}}">Points Table</a></li>
               <li><a href="{{ route('batting_states')}}">Batting Records</a></li>
               <li><a href="{{ route('bowling_state')}}">Bowling Records</a></li>
-              <li><a href="{{ route('comingsoon')}}">Fielding Records</a></li>
+              <li><a href="{{ route('fieldingRecords')}}">Fielding Records</a></li>
               <li><a href="{{ route('comingsoon')}}">Player Rankings</a></li>
             </ul>
           </li>
