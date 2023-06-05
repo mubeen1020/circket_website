@@ -337,12 +337,11 @@ class HomeController extends Controller
 
     $player_runs = FixtureScore::Where('fixture_id', '=', $id)
       ->selectRaw("sum(runs) as total_runs")
-      ->selectRaw("count(isfour) as total_fours")
-      ->selectRaw("count(issix) as total_six")
+      ->selectRaw("SUM(isfour = 1) as total_fours")
+      ->selectRaw("SUM(issix = 1) as total_six")
       ->selectRaw("playerId")
       ->selectRaw("inningnumber")
-      ->groupBy('playerId')
-      ->groupBy('inningnumber')
+      ->groupBy('playerId','inningnumber')
       ->get();
 
     $variable1 = 'R';
@@ -704,7 +703,7 @@ public function team_bowling(int $team_id,int $tournament_id){
   ->selectRaw('SUM(fixture_scores.balltype = "WD") as total_wides')
   ->selectRaw('SUM(fixture_scores.balltype = "NB") as total_noball')
   ->selectRaw('SUM(fixture_scores.runs) as total_runs') 
-  ->selectRaw('SUM(fixture_scores.isout) as total_wickets') 
+  ->selectRaw('SUM(fixture_scores.isout = 1) as total_wickets') 
   ->join('team_players', function ($join) {
     $join->on('team_players.team_id', '=', 'tournament_players.team_id')
     ->on('team_players.player_id', '=', 'tournament_players.player_id');
@@ -865,7 +864,8 @@ public function team_fielding(int $team_id,int $tournament_id){
 
     $result = $player
     ->leftjoin('team_players','team_players.player_id','=','players.id')
-    ->orderBy('players.id')->get();
+    ->leftjoin('teams','teams.id','=','team_players.team_id')
+    ->distinct('players.id')->get();
 
       //  dd($result);
 
@@ -889,7 +889,7 @@ public function team_fielding(int $team_id,int $tournament_id){
     // dd($teams);
     $match_results = $match_results->orderBy('id')->get();;
     $results = [];
-    $tournament = Tournament::query()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -967,7 +967,7 @@ public function team_fielding(int $team_id,int $tournament_id){
     //         $query = DB::getQueryLog();
     //         $query = DB::getQueryLog();
     // dd($query);
-    $tournament = Tournament::query()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -1007,7 +1007,7 @@ public function team_fielding(int $team_id,int $tournament_id){
     $tournament_ids = $tournament_id;
     $ground = Ground::orderBy('id')->get();
     $ground = $ground->pluck('name', 'id');
-    $tournament = Tournament::pluck('name', 'id');
+    $tournament = Tournament::where('isActive', '=', 1)->pluck('name', 'id');
     $match_results = Fixture::where('id', '=', $team_id)->where('isActive',1)->orderBy('id')->get();
 
     $player = Player::pluck('fullname', 'id');
@@ -1071,7 +1071,7 @@ public function team_fielding(int $team_id,int $tournament_id){
 
     $match_results = Fixture::where('id', '=', $team_id)->where('isActive',1)->orderBy('id')->get();
     $teams = Team::pluck('name', 'id');
-    $tournament = Tournament::pluck('name', 'id');
+    $tournament = Tournament::where('isActive', '=', 1)->pluck('name', 'id');
     $data = Fixture::query();
     $results = $data->get();
 
@@ -1128,7 +1128,7 @@ public function team_fielding(int $team_id,int $tournament_id){
   {
     $team_id_data = $team_id;
     $tournament_ids = $tournament_id;
-    $tournament = Tournament::pluck('name', 'id');
+    $tournament = Tournament::where('isActive', '=', 1)->pluck('name', 'id');
     $ground = Ground::orderBy('id')->get();
     $player = Player::pluck('fullname', 'id');
     $tournamentData = TournamentGroup::where('tournament_id', $tournament_id)->value('tournament_id');
@@ -1166,6 +1166,7 @@ public function team_fielding(int $team_id,int $tournament_id){
     })
       ->where('tournament_players.tournament_id', '=', $tournament_id)
       ->where('fixtures.running_inning', '=', 0)
+      ->where('fixtures.isActive',1)
       ->distinct('fixtures.id')
       ->selectRaw('fixtures.id, fixtures.team_id_a, fixtures.tournament_id, fixtures.team_id_b, fixtures.running_inning, fixtures.numberofover, fixtures.match_startdate, fixtures.match_result_description')
       ->join('fixtures', 'fixtures.tournament_id', '=', 'tournament_players.tournament_id')
@@ -1188,7 +1189,7 @@ public function team_fielding(int $team_id,int $tournament_id){
   {
     $team_id_data = $team_id;
     $tournament_ids = $tournament_id;
-    $tournament = Tournament::pluck('name', 'id');
+    $tournament = Tournament::where('isActive', '=', 1)->pluck('name', 'id');
     $ground = Ground::orderBy('id')->get();
     $player = Player::pluck('fullname', 'id');
     $tournamentData = TournamentGroup::where('tournament_id', $tournament_id)->value('tournament_id');
@@ -1290,7 +1291,7 @@ public function team_fielding(int $team_id,int $tournament_id){
   public function batting_states()
   {
 
-    $tournamentdata = Tournament::query()->pluck(
+    $tournamentdata = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -1347,6 +1348,7 @@ public function team_fielding(int $team_id,int $tournament_id){
           ->pluck('year');
   
       $tournamentdata = Tournament::query()
+      ->where('isActive', '=', 1)->where('isActive', '=', 1)
           ->pluck('name', 'id');
   
       $image_gallery = GalleryImages::query()
@@ -1480,7 +1482,7 @@ public function team_fielding(int $team_id,int $tournament_id){
     $match_results = $match_results->orderBy('id')->get();
     // $teams = Team::pluck('name', 'id');
 
-    $tournament = Tournament::query()->get()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->get()->pluck(
       'name',
       'id'
     );
@@ -1553,7 +1555,7 @@ public function team_fielding(int $team_id,int $tournament_id){
     );
 
     $results = $data->get();
-    $tournament = Tournament::query()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -1635,7 +1637,7 @@ public function team_fielding(int $team_id,int $tournament_id){
 
 
     $results = $data->get();
-    $tournament = Tournament::query()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -1747,7 +1749,7 @@ public function clubviewteams(){
 
 
     $results = [];
-    $tournament = Tournament::query()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -1805,7 +1807,7 @@ if (!empty($term['tournament'])) {
 
 $results = $data->orderby('tournament_groups.team_id')
 ->get();
-    $tournament = Tournament::query()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
             'name',
             'id'
         );
@@ -2037,7 +2039,7 @@ $grounds =Ground::query()
     $results = $data->orderby('tournament_groups.team_id')
       ->get();
       
-    $tournament = Tournament::query()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -2301,7 +2303,7 @@ $bowler_economy = number_format($bowler_economy, 2);
 
 
   public function bowling_state(){
-    $tournamentdata = Tournament::query()->pluck(
+    $tournamentdata = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -2353,6 +2355,7 @@ $years = DB::table('fixtures')
     ->pluck('year');
 
 $tournamentdata = Tournament::query()
+->where('isActive', '=', 1)
     ->pluck('name', 'id');
 
 $image_gallery = GalleryImages::query()
@@ -2467,6 +2470,7 @@ $years = DB::table('fixtures')
 ->pluck('year');
 
 $tournamentdata = Tournament::query()
+->where('isActive', '=', 1)
 ->pluck('name', 'id');
 
 $result = array();
@@ -2507,6 +2511,7 @@ $result = array();
     ->pluck('year');
 
     $tournamentdata = Tournament::query()
+    ->where('isActive', '=', 1)
     ->pluck('name', 'id');
 
 

@@ -184,8 +184,7 @@ margin-top: 15px;}
                          @foreach($results as $data)
 						
                        	@if($data['running_inning'] == 0)
-                <div class="col-sm-3 col-xs-3 admins-drop text-right">
-                  </div>
+           
                 </div>
                   <input type="hidden" name="upcoming_selected" value="5973">
                     <input type="hidden" name="removeumpire_selected" value="5973">
@@ -226,6 +225,7 @@ margin-top: 15px;}
                    <p style="color:#fff;font-size:13px"> </p>
                    </div>
                             </div>
+                          
                             @endif
        							@endforeach
         

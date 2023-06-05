@@ -234,6 +234,7 @@
                 <table class="table sortable table-striped dataTable no-footer">
     <thead>
         <th class="sorting_1" class="sortheader" style="text-align: left !important">S.No <i class="fa-solid fa-arrow-down-short-wide"></i></th>
+        <th class="sorting_1" class="sortheader">Player ID  <i class="fa-solid fa-arrow-down-short-wide"></i></th>
         <th class="sorting_1" class="sortheader">Player Name  <i class="fa-solid fa-arrow-down-short-wide"></i></th>
         <th class="sorting_1" class="sortheader">Email <i class="fa-solid fa-arrow-down-short-wide"></i></th>
         <th class="sorting_1" class="sortheader">Contact Number <i class="fa-solid fa-arrow-down-short-wide"></i></th>
@@ -244,20 +245,21 @@
     if(count($result) > 0){
 @endphp
                          @foreach($result as $key => $player )
-                            <?php $pid = $player['id']; ?>
+                           
       
                         <tr role="row" class="even"> 
                             <th class="sorting_1" style="text-align:left!important"><a>{{$key +1}}</a></th> 
-                            <th style="text-align:left!important"><a >
+                            <th class="sorting_1" style="text-align:left!important"><a href="{{ url('playerview/' . $player['id']) }}">{{$player['id']}}</a></th> 
+                            <th style="text-align:left!important"><a href="{{ url('playerview/' . $player['id']) }}">
                              {{$player['fullname']}} </a></th>
-                            <th style="text-align:left!important"><a > {{$player['id']}} </a></th>
-                            <th style="text-align:left!important"><a > {{$player['contact']}} </a></th>
+                            <th style="text-align:left!important"><a href="{{ url('playerview/' . $player['id']) }}"> {{$player['email']}} </a></th>
+                            <th style="text-align:left!important"><a href="{{ url('playerview/' . $player['id']) }}"> {{$player['contact']}} </a></th>
                                     <th><table>
                         <tbody><tr class="even">
                             <td>
                             <img src="https://eoscl.ca/admin/public/Team/{{$player['team_id']}}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;">
                                     </td>
-                                        <td style="text-align:left!important">&nbsp;{{$teams[$player['team_id']]}}</td>
+                                        <td style="text-align:left!important">&nbsp;{{$player['name']}}</td>
                                     </tr>
                                 </tbody></table></th>
                         </tr>
