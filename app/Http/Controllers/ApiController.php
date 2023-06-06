@@ -483,11 +483,6 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ];
         }
         
-        
-        
-    
-        
-    
         return response()->json($result);
     }
     
@@ -508,17 +503,28 @@ public function get_group_team(int $group_id,int $tournamnet_id)
     
     public function get_top_bowler(int $tournament_id)
     {
-        $top_scorers = Fixture::where('tournament_id', $tournament_id)
-            ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
-            ->join('match_dismissals', 'match_dismissals.fixture_id', '=', 'fixture_scores.fixture_id')
-            ->join('players', 'players.id', '=', 'fixture_scores.bowlerid')
-            ->whereIn('match_dismissals.dismissal_id', [2, 3, 4, 6, 7, 8])
-            ->where('fixture_scores.isout', '=', 1)
-            ->selectRaw('players.fullname, SUM(fixture_scores.isout) as total_wickets, fixture_scores.bowlerid')
-            ->groupBy('fixture_scores.bowlerid', 'fixture_scores.isout') 
-            ->orderbyDesc('total_wickets')
-            ->take(5)
-            ->get();
+        // $top_scorers = Fixture::where('tournament_id', $tournament_id)
+        //     ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+        //     ->join('match_dismissals', 'match_dismissals.fixture_id', '=', 'fixture_scores.fixture_id')
+        //     ->join('players', 'players.id', '=', 'fixture_scores.bowlerid')
+        //     ->whereIn('match_dismissals.dismissal_id', [2, 3, 4, 6, 7, 8])
+        //     ->where('fixture_scores.isout', '=', 1)
+        //     ->selectRaw('players.fullname, SUM(fixture_scores.isout) as total_wickets, fixture_scores.bowlerid')
+        //     ->groupBy('fixture_scores.bowlerid', 'fixture_scores.isout') 
+        //     ->orderbyDesc('total_wickets')
+        //     ->take(5)
+        //     ->get();
+
+
+        $top_scorers=Fixture::where('tournament_id', $tournament_id)
+        ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+        ->join('players', 'players.id', '=', 'fixture_scores.bowlerid')
+        ->selectRaw('players.fullname, SUM(fixture_scores.isout = 1) as total_wickets, fixture_scores.bowlerid')
+        ->groupBy('fixture_scores.bowlerid', 'fixture_scores.isout') 
+        ->orderbyDesc('total_wickets')
+        ->take(5)
+        ->get();
+
         return response()->json($top_scorers);
     }
 
@@ -527,8 +533,8 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         DB::enableQueryLog();
         $tournamnetdata = Fixture::where('fixtures.tournament_id', $tournament_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
-            ->selectRaw("SUM(fixture_scores.issix = 1 AND fixture_scores.balltype = 'R') as total_sixes")
-            ->selectRaw("SUM(fixture_scores.isfour = 1 AND fixture_scores.balltype = 'R') as total_fours")
+            ->selectRaw("SUM(fixture_scores.issix = 1 ) as total_sixes")
+            ->selectRaw("SUM(fixture_scores.isfour = 1 ) as total_fours")
             ->selectRaw("SUM(fixture_scores.balltype = 'RunOut' OR fixture_scores.balltype = 'RunOut(WD)' OR fixture_scores.balltype = 'RunOut(NB)') as runout")
             ->selectRaw("SUM(fixture_scores.isout = 1 ) as total_Wicket")
             ->selectRaw("SUM(fixture_scores.balltype = 'WD') as total_wides")

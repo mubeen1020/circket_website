@@ -1098,7 +1098,17 @@ function get_point_table(tornament_season_id, type) {
             if (data.length === 0) {
                 point_table_data.innerHTML = '<tr><td colspan="7">Empty list</td></tr>';
             } else {
-                data.sort((a, b) => b.teambonusPoints - a.teambonusPoints);
+                data.sort((a, b) => {
+                // Sort by teambonusPoints in descending order
+                if (a.teambonusPoints > b.teambonusPoints) return -1;
+                if (a.teambonusPoints < b.teambonusPoints) return 1;
+                // If teambonusPoints are equal, sort by net_rr in descending order
+                if (a.teambonusPoints === b.teambonusPoints) {
+                    if (a.net_rr > b.net_rr) return -1;
+                    if (a.net_rr < b.net_rr) return 1;
+                }
+                return 0;
+            });
                 data.forEach((item, index) => {
                     point_table_data.innerHTML += `
                         <tr>
@@ -1217,42 +1227,52 @@ function get_season_group(tornament_season_id) {
 }
 
 
-
-function get_group_team(group_id,tournamnet_id) {
+function get_group_team(group_id, tournamnet_id) {
     $.ajax({
-        url: "{{ url('/get_group_team/')}}/"  + group_id+'/'+tournamnet_id,
+        url: "{{ url('/get_group_team/')}}/" + group_id + '/' + tournamnet_id,
         type: 'GET',
         dataType: 'json',
-        success: function(data) {
+        success: function (data) {
             const point_table_data = document.getElementById('point_table');
-		point_table_data.innerHTML = '';
-		data.forEach(item => {
-		point_table_data.innerHTML +=`
-		<tr>	
-		<th>1</th> 
-			<th>
-			<table>
-			<tbody>
-				<tr>
-					<td><img src="https://eoscl.ca/admin/public/Team/${item.team_id}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
-					<td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
-				</tr>
-			</tbody>
-			</table>
-			</th>
-			<th><a ">${item.total_matches}</a></th>
-			<th>${item.wins}</th> 
-			<th>${item.losses}</th>
-			<th>${item.draws}</th>
-			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
-            <th>${item.net_rr.toFixed(3)}</th>
-
-			</tr>
-			`
-			})
-		}
+            point_table_data.innerHTML = '';
+            data.sort((a, b) => {
+                // Sort by teambonusPoints in descending order
+                if (a.teambonusPoints > b.teambonusPoints) return -1;
+                if (a.teambonusPoints < b.teambonusPoints) return 1;
+                // If teambonusPoints are equal, sort by net_rr in descending order
+                if (a.teambonusPoints === b.teambonusPoints) {
+                    if (a.net_rr > b.net_rr) return -1;
+                    if (a.net_rr < b.net_rr) return 1;
+                }
+                return 0;
+            });
+            data.forEach((item, index) => {
+                point_table_data.innerHTML += `
+                    <tr>	
+                        <th>${index + 1}</th> 
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="https://eoscl.ca/admin/public/Team/${item.team_id}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                                        <td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th>
+                        <th><a ">${item.total_matches}</a></th>
+                        <th>${item.wins}</th> 
+                        <th>${item.losses}</th>
+                        <th>${item.draws}</th>
+                        <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
+                        <th>${item.net_rr.toFixed(3)}</th>
+                    </tr>
+                `;
+            });
+        }
     });
 }
+
 
 function get_top_scorers(tournament_season_id) {
     $.ajax({

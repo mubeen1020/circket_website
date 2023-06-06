@@ -55,8 +55,8 @@
                                                                     <thead> 
                                                                         <tr> 
                                                                         <th style="text-align: left;" colspan="2" class="hidden-phone">
-                                                                        Royal Tigers innings   
-                                                                        (12 overs maximum) </th> 
+                                                                        {{$teams_one}} innings   
+                                                                        (@foreach($total_over as $over){{$over->numberofover}} @endforeach overs maximum) </th> 
                                                                        <th style="text-align: left;" class="show-phone">Royal Tigers innings</th> 
                                                                         <th style="text-align: right;">R</th>
                                                                         <th style="text-align: right;">B</th>
@@ -75,10 +75,10 @@
                                                                         
                                                                         	<a href=""><b>{{$player[$item->playerId]}}</b> </a>
                                                                         	<a style="display:none" id="btm_video_1207430" href="javascript:openVideoHTMLvs('1207430','bt', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	<div class="scorecard-out-text show-phone" style="margin-left:34px;">c <a href="viewPlayer.do?playerId=1277414&amp;clubId=2565">Sandy D</a> b <a href="viewPlayer.do?playerId=2993131&amp;clubId=2565">Shubh A P</a><a style="display:none" id="bthowOutPH_video_1207430" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<div class="scorecard-out-text show-phone" style="margin-left:34px;">- <a href="viewPlayer.do?playerId=1277414&amp;clubId=2565">-</a> - <a href="viewPlayer.do?playerId=2993131&amp;clubId=2565">-</a><a style="display:none" id="bthowOutPH_video_1207430" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	</div>
                                                                         </th> 
-                                                                        <th class="hidden-phone">c <a href="viewPlayer.do?playerId=1277414&amp;clubId=2565">Sandy D</a> b <a href="viewPlayer.do?playerId=2993131&amp;clubId=2565">Shubh A P</a><a id="bthowOut_video_1207430" style="display:none" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        <th class="hidden-phone">c <a href="viewPlayer.do?playerId=1277414&amp;clubId=2565">-</a> - <a href="viewPlayer.do?playerId=2993131&amp;clubId=2565">-</a><a id="bthowOut_video_1207430" style="display:none" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	</th>
                                                                         <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
                                                                         <th style="text-align: right;">{{$player_balls[$item->playerId]}}</th> 
@@ -91,9 +91,16 @@
                                                                     @endif
                                                                     @endforeach
                                                                     <tr> 
-                                                                        <th>Extras<div class="scorecard-out-text show-phone">(b 0 lb 1 w 5 nb 1)</div></th> 
-                                                                        <th class="hidden-phone">(b 0 lb 1 w 5 nb 1)</th>
-                                                                        <th style="text-align: right;"><b>7</b></th>
+                                                                        <th>Extras<div class="scorecard-out-text show-phone"></div></th> 
+                                                                        <th class="hidden-phone">
+																		@foreach($extra_runs as $item)
+		@if($item->inningnumber == 1)
+			( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
+		
+																		</th>
+                                                                        <th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)}}</b></th>
+																		@endif
+	@endforeach
                                                                         <th></th> 
                                                                         <!-- <th class="show-phone-cell"></th> -->
                                                                         <th></th>
@@ -102,9 +109,14 @@
                                                                         
                                                                     </tr>
                                                                     <tr> 
+																	@foreach($totalData as $item)
+		                                                             @if($item->inningnumber == 1)
                                                                         <th>Total<div class="scorecard-out-text show-phone">(6 wickets, 12.0 overs)</div></th> 
-                                                                        <th class="hidden-phone">(6 wickets, 12.0 overs )</th>
-                                                                        <th style="text-align: right;"><b>106</b></th>
+                                                                        <th class="hidden-phone">({{$item->total_wicket}} wickets, {{round(($item->max_ball)/6) }}.{{($item->max_ball)%6 }}
+ overs )</th>
+                                                                        <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
+																		@endif
+																		@endforeach
                                                                         <th></th>
                                                                         <th></th>
                                                                        <!--   <th class="show-phone-cell"></th> -->
@@ -116,10 +128,7 @@
                                                                 </table>
                                                                 
                                                                 <table class="table">
-                                                                    <tbody><tr> 
-                                                                        <th colspan="7">Did not bat: &nbsp;&nbsp;
-                                                                        <i class="fa fa-user"></i> <a href=""><b>Saad Haroon</b></a>*, <i class="fa fa-user"></i> <a href=""><b>Khawar Azad</b></a>, <i class="fa fa-user"></i> <a href=""><b>Aziz Hassan</b></a></th>
-                                                                    </tr>
+                                                                    <tbody>
                                                                     </tbody>
                                                                 </table>
                                             				</div>
@@ -139,119 +148,43 @@
                                                                         <th style="text-align: left;" colspan="2">Bowling</th> 
                                                                         <th style="text-align: right;"> O</th>
                                                                        <th style="text-align: right;">M</th>
-                                                                       	<th style="text-align: right;">Dot</th>
                                                                         <th style="text-align: right;">R</th>
                                                                         <th style="text-align: right;">W</th> 
                                                                         <th style="text-align: right;">Econ</th>
-                                                                        <th></th>
+                                                                        
                                                                         
                                                                         
                                                                         </tr> 
                                                                     </thead> 
                                                                     <tbody> 
+																	@foreach($bowler_data as $item)
+		                                                             @if($item->inningnumber == 1)
                                                                     <tr> 
                                                                     <th style="width:40px;">
 															      	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
                                                                     </th>
+
                                                                         <th>
-                                                                        	<a href=""><b>Rohit Miglani</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>{{$player[$item->bowlerid]}}</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
-                                                                        <th style="text-align: right;">3.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          		<th style="text-align: right;">6</th>
-                                                                        <th style="text-align: right;">27</th> 
-                                                                        <th style="text-align: right;"><b>0</b>
+                                                                        <th style="text-align: right;">{{($item->over) }}.{{6%($item->over) }}</th>
+                                                                          <th style="text-align: right;">
+																		  @foreach($maiden_overs as $maidenover)
+																		@if($maidenover->inningnumber == 1)
+																		{{$maidenover->maiden_count}}
+																		@endif
+																		@endforeach
+																		</th>
+                                                                          		<th style="text-align: right;">{{$item->total_runs}}</th>
+                                                                        <th style="text-align: right;">{{$item->total_wicket}}</th> 
                                                                         </th>
-                                                                        <th style="text-align: right;">9.00</th>
-                                                                        <th>
-								(3w1nb) </th>
+                                                                        <th style="text-align: right;">{{ number_format(($item->total_runs)/round(($item->max_ball)/6), 2) }}
+</th>
+                                               
                                                                     </tr> 
-                                                                    <tr> 
-                                                                    <th style="width:40px;">
-															      	<img src="https://cricclubs.com/documentsRep/profilePics/7216d4b9-4a00-4ee3-bd5c-99eebb0c7936.jpeg" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
-                                                                    </th>
-                                                                        <th>
-                                                                        	<a href=""><b>Shubh A Patel</b></a><a style="display:none" id="bwl_video_2993131" href="javascript:openVideoHTMLvs('2993131','bwl', 'Shubh A Patel');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">2.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          		<th style="text-align: right;">6</th>
-                                                                        <th style="text-align: right;">13</th> 
-                                                                        <th style="text-align: right;"><b>1</b>
-                                                                        <a style="display:none" id="bwlwicket_video_2993131" href="javascript:openVideoHTMLvs('2993131','blwicket', 'Shubh A Patel');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	</th>
-                                                                        <th style="text-align: right;">6.50</th>
-                                                                        <th>
-								(1w) </th>
-                                                                    </tr> 
-                                                                    <tr> 
-                                                                    <th style="width:40px;">
-															      	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
-                                                                    </th>
-                                                                        <th>
-                                                                        	<a href=""><b>Rohit Arora</b></a><a style="display:none" id="bwl_video_3088351" href="javascript:openVideoHTMLvs('3088351','bwl', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">3.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          		<th style="text-align: right;">6</th>
-                                                                        <th style="text-align: right;">19</th> 
-                                                                        <th style="text-align: right;"><b>1</b>
-                                                                        <a style="display:none" id="bwlwicket_video_3088351" href="javascript:openVideoHTMLvs('3088351','blwicket', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	</th>
-                                                                        <th style="text-align: right;">6.33</th>
-                                                                        <th></th>
-                                                                    </tr> 
-                                                                    <tr> 
-                                                                    <th style="width:40px;">
-															      	<img src="https://cricclubs.com/documentsRep/profilePics/a052f5b9-f07c-4597-9fa8-ccf72ba021c3.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
-                                                                    </th>
-                                                                        <th>
-                                                                        	<a href=""><b>Jival Sachdeva</b></a><a style="display:none" id="bwl_video_2155902" href="javascript:openVideoHTMLvs('2155902','bwl', 'Jival Sachdeva');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">2.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          		<th style="text-align: right;">4</th>
-                                                                        <th style="text-align: right;">14</th> 
-                                                                        <th style="text-align: right;"><b>2</b>
-                                                                        <a style="display:none" id="bwlwicket_video_2155902" href="javascript:openVideoHTMLvs('2155902','blwicket', 'Jival Sachdeva');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	</th>
-                                                                        <th style="text-align: right;">7.00</th>
-                                                                        <th>
-								(1w) </th>
-                                                                    </tr> 
-                                                                    <tr> 
-                                                                    <th style="width:40px;">
-															      	<img src="https://cricclubs.com/documentsRep/profilePics/e3eded48-ec87-4508-a149-0a192784861d.jpg" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
-                                                                    </th>
-                                                                        <th>
-                                                                        	<a href=""><b>Prashant Sachdeva</b></a>*<a style="display:none" id="bwl_video_1287040" href="javascript:openVideoHTMLvs('1287040','bwl', 'Prashant Sachdeva');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">1.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          		<th style="text-align: right;">1</th>
-                                                                        <th style="text-align: right;">19</th> 
-                                                                        <th style="text-align: right;"><b>1</b>
-                                                                        <a style="display:none" id="bwlwicket_video_1287040" href="javascript:openVideoHTMLvs('1287040','blwicket', 'Prashant Sachdeva');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	</th>
-                                                                        <th style="text-align: right;">19.00</th>
-                                                                        <th></th>
-                                                                    </tr> 
-                                                                    <tr> 
-                                                                    <th style="width:40px;">
-															      	<img src="https://cricclubs.com/documentsRep/profilePics/66f17808-5d5e-48f7-83e9-ffc27ddc140a.jpeg" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
-                                                                    </th>
-                                                                        <th>
-                                                                        	<a href=""><b>Junesh Thapasi Muthu</b></a><a style="display:none" id="bwl_video_2617639" href="javascript:openVideoHTMLvs('2617639','bwl', 'Junesh Thapasi Muthu');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">1.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          		<th style="text-align: right;">3</th>
-                                                                        <th style="text-align: right;">13</th> 
-                                                                        <th style="text-align: right;"><b>0</b>
-                                                                        </th>
-                                                                        <th style="text-align: right;">13.00</th>
-                                                                        <th></th>
-                                                                    </tr> 
+																	@endif
+																	@endforeach
+                                                                   
                                                                     </tbody>
                                                                 </table>
                                             				</div>
@@ -269,24 +202,24 @@
                                                             </div>
                                                             <div class="fall-of-content">
                                                             	<div class="row" style="color:white;">
-		                                                            <div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/b8e79395-ac46-4e68-b8a5-5ae31d78ee59.png" class="img-responsive center-block">	 
-		                                                                            	
-		                                                                            	
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Noman S</h5>
-		                                                                                <h5>1-22 , 
-		                                                                                
-		                                                                                Over 3.2</h5>
-		                                                                                
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
+		                                                         
+																		
+																@php
+																                         
+																							$sum_score = 0;
+																							$sum_wicket=0;
+																							$sum_run = 0;  @endphp
+
+																							@foreach($fallwickets as $score)
+																						
+
+																							@if($score->inningnumber==1)
+																							@php 
+																								$sum_score +=$score['runs'];
+																								$sum_run +=$score['runs'];
+																						$sum_wicket += ($score['isout'] == 1) ? 1 : 0;
+																						 @endphp
+																						 @if($score->isout==1)
 																		
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
@@ -294,94 +227,35 @@
 		                                                                        	<a href="">
 		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
 		                                                                            	
-		                                                                            	
+																						
 		                                                                            	</a>
 		                                                                            	</div>
 		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Abdullah</h5>
-		                                                                                <h5>2-33 , 
+		                                                                            	<h5>{{$player[$score->playerId]}}</h5>
+		                                                                                <h5>
+																						
+
+
+																						 
+																						 {{$sum_score}}/{{$sum_wicket}}
+																						
+																						
+																							
+																						, 
 		                                                                                
-		                                                                                Over 4.3</h5>
+		                                                                                Over {{round($score['ballnumber']/6)}}.{{$score['ballnumber']%6}}</h5>
 		                                                                                
 		                                                                            </div>
 		                                                                           </div>
 		                                                                    </div>
+																			@endif
+																			@endif
+																						 @endforeach
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
-		                                                                            	
-		                                                                            	
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Turab G</h5>
-		                                                                                <h5>3-59 , 
-		                                                                                
-		                                                                                Over 7.4</h5>
-		                                                                                
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
-		                                                                            	
-		                                                                            	
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Saood P</h5>
-		                                                                                <h5>4-59 , 
-		                                                                                
-		                                                                                Over 7.5</h5>
-		                                                                                
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/e8b0d6d5-494d-4615-8832-66d07113eab5.png" class="img-responsive center-block">	 
-		                                                                            	
-		                                                                            	
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Manik S</h5>
-		                                                                                <h5>5-76 , 
-		                                                                                
-		                                                                                Over 9.3</h5>
-		                                                                                
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/14461a6d-3328-446b-9e27-82e35cf05d6f.jpeg" class="img-responsive center-block">	 
-		                                                                            	
-		                                                                            	
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Muhammad</h5>
-		                                                                                <h5>6-82 , 
-		                                                                                
-		                                                                                Over 9.5</h5>
-		                                                                                
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
+																	
 																		
 																		</div>
                                                             </div>
@@ -401,9 +275,9 @@
                                                                 <table class="table"> 
                                                                     <thead> 
                                                                         <tr> 
-                                                                        <th style="text-align: left;" colspan="2" class="hidden-phone">820 CC innings <div class="name visible-xs"> </div> 
+                                                                        <th style="text-align: left;" colspan="2" class="hidden-phone">{{$teams_two}} <div class="name visible-xs"> </div> 
                                                                         
-                                                                        (target: 107 runs from 12 overs) </th> 
+                                                                        (target: @foreach($totalData as $item) @if($item->inningnumber == 1) {{$item->total_runs}} @endif @endforeach runs from @foreach($total_over as $over){{$over->numberofover}} @endforeach overs) </th> 
                                                                        <th style="text-align: left;" class="show-phone">820 CC innings </th>
                                                                         <th style="text-align: right;">R</th>
                                                                         <th style="text-align: right;">B</th>
@@ -427,8 +301,8 @@
                                                                         <th class="hidden-phone">b <a href="viewPlayer.do?playerId=2674040&amp;clubId=2565">Irfan S</a><a style="display:none" id="bthowOut_video_3088351" href="javascript:openVideoHTMLvs('3088351','out', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	</th>
                                                                             <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
-                                                                            <th style="text-align: right;"> {{$item->total_fours}}</th>
-                                                                            <th style="text-align: right;">{{$player_balls[$item->playerId]}}</th> 
+                                                                            <th style="text-align: right;">{{$player_balls[$item->playerId]}}  </th>
+                                                                            <th style="text-align: right;">{{$item->total_fours}}</th> 
                                                                         <th style="text-align: right;">{{$item->total_six}}</th>
                                                                         <th style="text-align: center;"> {{ isset($player_balls[$item->playerId]) && $player_balls[$item->playerId] != 0 ? number_format(($item->total_runs / $player_balls[$item->playerId]) * 100, 2) : 0.00 }}</th>
                                                                     </tr> 
@@ -436,8 +310,16 @@
                                                                     @endforeach
                                                                     <tr> 
                                                                         <th>Extras<div class="scorecard-out-text show-phone">(b 0 lb 0 w 7 nb 0)</div></th> 
-                                                                        <th class="hidden-phone">(b 0 lb 0 w 7 nb 0)</th>
-                                                                        <th style="text-align: right;"><b>7</b></th>
+                                                                        <th class="hidden-phone">
+																		
+																												@foreach($extra_runs as $item)
+												@if($item->inningnumber == 2)
+													( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
+												
+																												</th>
+																												<th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)}}</b></th>
+																												@endif
+											@endforeach
                                                                         <th></th> 
                                                                        <!--  <th class="show-phone-cell"></th> -->
                                                                         <th></th>
@@ -445,9 +327,14 @@
                                                                         <th></th>
                                                                     </tr>
                                                                     <tr> 
-                                                                        <th>Total<div class="scorecard-out-text show-phone">(8 wickets, 10.4 overs)</div></th> 
-                                                                        <th class="hidden-phone">(8 wickets, 10.4 overs)</th>
-                                                                        <th style="text-align: right;"><b>70</b></th>
+																	@foreach($totalData as $item)
+		                                                             @if($item->inningnumber == 2)
+                                                                        <th>Total<div class="scorecard-out-text show-phone">(6 wickets, 12.0 overs)</div></th> 
+                                                                        <th class="hidden-phone">({{$item->total_wicket}} wickets, {{ round(($item->max_ball)/6) }}.{{($item->max_ball)%6 }}
+ overs )</th>
+                                                                        <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
+																		@endif
+																		@endforeach
                                                                         <th></th> 
                                                                         <!-- <th class="show-phone-cell"></th> -->
                                                                         <th></th>
@@ -457,10 +344,7 @@
                                                                     </tbody>
                                                                     </table>
                                                                     <table class="table"> 
-                                                                    <tbody><tr> 
-                                                                        <th colspan="7">Did not bat: &nbsp;&nbsp;
-                                                                        <i class="fa fa-user"></i><a href=""><b>Niral Kumar</b></a>, <i class="fa fa-user"></i><a href=""><b>Bikram Sandhu</b></a></th>
-                                                                    </tr>
+                                                                    <tbody>
                                                                     
                                                                 </tbody></table>
                                             				</div>
@@ -482,116 +366,42 @@
                                                                         <th style="text-align: left;" colspan="2">Bowling</th> 
                                                                         <th style="text-align: right;">O</th>
                                                                           <th style="text-align: right;">M</th>
-                                                                          <th style="text-align: right;">Dot</th>
+                                                                         
                                                                         <th style="text-align: right;">R</th>
                                                                         <th style="text-align: right;">W</th> 
                                                                         <th style="text-align: right;">Econ</th>
-                                                                        <th></th>
+                                                                      
                                                                         </tr> 
                                                                     </thead> 
                                                                     <tbody> 
-                                                                    <tr>
+                                                                    @foreach($bowler_data as $item)
+		                                                             @if($item->inningnumber == 2)
+                                                                    <tr> 
                                                                     <th style="width:40px;">
-																		<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
-																	</th> 
+															      	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
+                                                                    </th>
+
                                                                         <th>
-                                                                        	<a href=""><b>Irfan Sadaat</b></a><a style="display:none" id="bwl_video_2674040" href="javascript:openVideoHTMLvs('2674040','bwl', 'Irfan Sadaat');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href=""><b>{{$player[$item->bowlerid]}}</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
-                                                                        <th style="text-align: right;">2.4</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          <th style="text-align: right;">14</th>
-                                                                        <th style="text-align: right;">5</th> 
-                                                                        <th style="text-align: right;"><b>5</b>
-                                                                        <a style="display:none" id="bwlwicket_video_2674040" href="javascript:openVideoHTMLvs('2674040','blwicket', 'Irfan Sadaat');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	</th>
-                                                                        <th style="text-align: right;">1.88</th>
-                                                                       	<th>
-								(3w) </th>
-                                                                    </tr> 
-                                                                    <tr>
-                                                                    <th style="width:40px;">
-																		<img src="https://cricclubs.com/documentsRep/profilePics/ded9fcde-c763-4134-ac0b-e76970da84a4.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
-																	</th> 
-                                                                        <th>
-                                                                        	<a href=""><b>Imran Samdani</b></a><a style="display:none" id="bwl_video_1207349" href="javascript:openVideoHTMLvs('1207349','bwl', 'Imran Samdani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">2.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          <th style="text-align: right;">8</th>
-                                                                        <th style="text-align: right;">16</th> 
-                                                                        <th style="text-align: right;"><b>1</b>
-                                                                        <a style="display:none" id="bwlwicket_video_1207349" href="javascript:openVideoHTMLvs('1207349','blwicket', 'Imran Samdani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	</th>
-                                                                        <th style="text-align: right;">8.00</th>
-                                                                       	<th></th>
-                                                                    </tr> 
-                                                                    <tr>
-                                                                    <th style="width:40px;">
-																		<img src="https://cricclubs.com/documentsRep/profilePics/e8b0d6d5-494d-4615-8832-66d07113eab5.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
-																	</th> 
-                                                                        <th>
-                                                                        	<a href=""><b>Manik Sharma</b></a><a style="display:none" id="bwl_video_941674" href="javascript:openVideoHTMLvs('941674','bwl', 'Manik Sharma');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">1.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                        <th style="text-align: right;">11</th> 
-                                                                        <th style="text-align: right;"><b>0</b>
+                                                                        <th style="text-align: right;">{{($item->over) }}.{{6%($item->over) }}</th>
+                                                                          <th style="text-align: right;">
+																		@foreach($maiden_overs as $maidenover)
+																		@if($maidenover->inningnumber == 2)
+																		{{$maidenover->maiden_count}}
+																		@endif
+																		@endforeach
+																		</th>
+                                                                          		<th style="text-align: right;">{{$item->total_runs}}</th>
+                                                                        <th style="text-align: right;">{{$item->total_wicket}}</th> 
                                                                         </th>
-                                                                        <th style="text-align: right;">11.00</th>
-                                                                       	<th>
-								(2w) </th>
+                                                                        <th style="text-align: right;">{{ number_format(($item->total_runs)/round(($item->max_ball)/6), 2) }}
+</th>
+                                               
                                                                     </tr> 
-                                                                    <tr>
-                                                                    <th style="width:40px;">
-																		<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
-																	</th> 
-                                                                        <th>
-                                                                        	<a href=""><b>Abdullah Abbas</b></a><a style="display:none" id="bwl_video_2237865" href="javascript:openVideoHTMLvs('2237865','bwl', 'Abdullah Abbas');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">2.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          <th style="text-align: right;">7</th>
-                                                                        <th style="text-align: right;">15</th> 
-                                                                        <th style="text-align: right;"><b>0</b>
-                                                                        </th>
-                                                                        <th style="text-align: right;">7.50</th>
-                                                                       	<th>
-								(2w) </th>
-                                                                    </tr> 
-                                                                    <tr>
-                                                                    <th style="width:40px;">
-																		<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
-																	</th> 
-                                                                        <th>
-                                                                        	<a href=""><b>Saood Pirzada</b></a><a style="display:none" id="bwl_video_3103735" href="javascript:openVideoHTMLvs('3103735','bwl', 'Saood Pirzada');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">2.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          <th style="text-align: right;">8</th>
-                                                                        <th style="text-align: right;">14</th> 
-                                                                        <th style="text-align: right;"><b>1</b>
-                                                                        <a style="display:none" id="bwlwicket_video_3103735" href="javascript:openVideoHTMLvs('3103735','blwicket', 'Saood Pirzada');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	</th>
-                                                                        <th style="text-align: right;">7.00</th>
-                                                                       	<th></th>
-                                                                    </tr> 
-                                                                    <tr>
-                                                                    <th style="width:40px;">
-																		<img src="https://cricclubs.com/documentsRep/profilePics/14461a6d-3328-446b-9e27-82e35cf05d6f.jpeg" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
-																	</th> 
-                                                                        <th>
-                                                                        	<a href=""><b>Muhammad Salman Arshad</b></a><a style="display:none" id="bwl_video_1036746" href="javascript:openVideoHTMLvs('1036746','bwl', 'Muhammad Salman Arshad');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        </th> 
-                                                                        <th style="text-align: right;">1.0</th>
-                                                                          <th style="text-align: right;">0</th>
-                                                                          <th style="text-align: right;">3</th>
-                                                                        <th style="text-align: right;">9</th> 
-                                                                        <th style="text-align: right;"><b>0</b>
-                                                                        </th>
-                                                                        <th style="text-align: right;">9.00</th>
-                                                                       	<th></th>
-                                                                    </tr> 
+																	@endif
+																	@endforeach
+                                                                    
                                                                     </tbody>
                                                                 </table>
                                             				</div>
@@ -608,149 +418,64 @@
                                                             </div>
                                                             <div class="fall-of-content">
                                                             	<div class="row" style="color:white;">
-		                                                            <div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Rohit A</h5>
-		                                                                                <h5>1-2 , 
-		                                                                                
-		                                                                                 
-		                                                                                Over 0.4</h5>
-		                                                                               
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
+		                                                           
+																@php
+																							$sum_score = 0;
+																							$sum_wicket=0;
+																							$sum_run = 0;  @endphp
+
+																							@foreach($fallwickets as $score)
+																						
+
+																							@if($score->inningnumber==2)
+																							@php 
+																								$sum_score +=$score['runs'];
+																								$sum_run +=$score['runs'];
+																								
+																						$sum_wicket += ($score['isout'] == 1) ? 1 : 0;
+																						 @endphp
+																						 @if($score->isout==1)
 																		
 																		<div class="col-sm-6 col-xs-6 sp">
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
 		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">
+		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
+		                                                                            	
+																						
 		                                                                            	</a>
 		                                                                            	</div>
 		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Rohit M</h5>
-		                                                                                <h5>2-4 , 
+		                                                                            	<h5>{{$player[$score->playerId]}}</h5>
+		                                                                                <h5>
+																						
+
+
+																						 
+																						 {{$sum_score}}/{{$sum_wicket}}
+																						
+																						
+																							
+																						, 
 		                                                                                
-		                                                                                 
-		                                                                                Over 1.5</h5>
-		                                                                               
+		                                                                                 Over {{round($score['ballnumber']/6)}}.{{$score['ballnumber']%6}}</h5>
+		                                                                                
 		                                                                            </div>
 		                                                                           </div>
 		                                                                    </div>
+																			@endif
+																			@endif
+																						 @endforeach	
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/66f17808-5d5e-48f7-83e9-ffc27ddc140a.jpeg" class="img-responsive center-block">
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Junesh T</h5>
-		                                                                                <h5>3-4 , 
-		                                                                                
-		                                                                                 
-		                                                                                Over 2.2</h5>
-		                                                                               
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/7216d4b9-4a00-4ee3-bd5c-99eebb0c7936.jpeg" class="img-responsive center-block">
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Shubh A </h5>
-		                                                                                <h5>4-5 , 
-		                                                                                
-		                                                                                 
-		                                                                                Over 2.4</h5>
-		                                                                               
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/a052f5b9-f07c-4597-9fa8-ccf72ba021c3.png" class="img-responsive center-block">
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Jival S</h5>
-		                                                                                <h5>5-6 , 
-		                                                                                
-		                                                                                 
-		                                                                                Over 2.6</h5>
-		                                                                               
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/4b652093-bde7-4ffe-b316-1a9d22dcb530.png" class="img-responsive center-block">
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Sandy D</h5>
-		                                                                                <h5>6-68 , 
-		                                                                                
-		                                                                                 
-		                                                                                Over 9.3</h5>
-		                                                                               
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/e3eded48-ec87-4508-a149-0a192784861d.jpg" class="img-responsive center-block">
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Prashant</h5>
-		                                                                                <h5>7-68 , 
-		                                                                                
-		                                                                                 
-		                                                                                Over 9.4</h5>
-		                                                                               
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
 																		
-																		<div class="col-sm-6 col-xs-6 sp">
-		                                                                    	<div class="fall-in-all">
-		                                                                        	<div class="fall-image">
-		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/04a9757e-fe42-4d15-a2d1-b4a4cc879802.png" class="img-responsive center-block">
-		                                                                            	</a>
-		                                                                            	</div>
-		                                                                            	<div class="fall-text">
-		                                                                            	<h5>Kanwarje</h5>
-		                                                                                <h5>8-70 , 
-		                                                                                
-		                                                                                 
-		                                                                                Over 10.4</h5>
-		                                                                               
-		                                                                            </div>
-		                                                                           </div>
-		                                                                    </div>
+																		
+																		
+																		
+																
 																		
 																		</div>
                                                             </div>
@@ -777,10 +502,7 @@
 								                        </div>
 							                            <div class="exportOptions-panel" style="float:right">
 							                            <div style="text-align: right;padding-left: 10px;">
-      															<a href="javascript:window.open('');" class="btn btn-default dropdown-toggle">Paper Score Card</a>
-      														</div>
-      														<img alt="Print" title="Print" style="cursor:pointer;" src="/utilsv2/images/print.png" onclick="printScorecard();" width="32" height="32">&nbsp;
-												   			<img alt="Download as PDF" title="Download as PDF" style="cursor:pointer;" src="/utilsv2/images/pdf.png" onclick="pdfScorecard();" width="32" height="32">&nbsp;
+      															
 												    		<a href="{{ route('downloadCSV', $match_results[0]->id) }}"><img alt="Download as Excel" title="Download as Excel" class="excelBtn" style="cursor:pointer;" src="/utilsv2/images/excel.png" width="32" height="32"></a>
 												    	</div><br>
 							                        </div>
@@ -831,8 +553,8 @@
 															<th>
 																	<strong>Points Earned:</strong> </th><th>Royal Tigers: 6, 820 CC: 0</th>
 														</tr>
-														<tr title="America/New_York"><th style="padding-left: 10px"><strong>1st Innings: </strong></th><th><strong>45 min</strong> &nbsp; &nbsp; &nbsp; &nbsp;{{$match_data->match_starttime->format('h:i:s A')}}   &nbsp; &nbsp; &nbsp; &nbsp;{{$match_data->match_endtime->format('h:i:s A')}}</th></tr><tr title="America/New_York"><th style="padding-left: 10px"><strong><font size="2">Innings break:</font></strong></th><th><strong>5 min</strong> &nbsp; &nbsp; &nbsp; &nbsp;9:16 PM   &nbsp; &nbsp; &nbsp; &nbsp;9:21 PM </th></tr><tr title="America/New_York"><th style="padding-left: 10px"><strong>2nd Innings: </strong></th><th><strong>33 min</strong> &nbsp; &nbsp; &nbsp; &nbsp;{{$match_data->match_starttime->format('h:i:s A')}}    &nbsp; &nbsp; &nbsp; &nbsp;{{$match_data->match_endtime->format('h:i:s A')}} </th></tr><tr title="America/New_York">
-															<th><strong>Last Updated:  </strong></th><th>Syed Muhammad Talha Anwar ({{$match_data-> updated_at }})
+														<tr title="America/New_York"><th style="padding-left: 10px"><strong>Match Start: </strong></th><th><strong></strong> &nbsp; &nbsp; &nbsp; &nbsp;{{$match_data->match_starttime->format('h:i:s A')}}  </th></tr><tr title="America/New_York">
+															<th><strong>Last Updated:  </strong></th><th> ({{$match_data-> updated_at }})
 															</th>
 														</tr>
 														<tr>

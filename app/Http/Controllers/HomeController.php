@@ -336,13 +336,14 @@ class HomeController extends Controller
 
 
     $player_runs = FixtureScore::Where('fixture_id', '=', $id)
+    ->select("inningnumber")
       ->selectRaw("sum(runs) as total_runs")
       ->selectRaw("SUM(isfour = 1) as total_fours")
       ->selectRaw("SUM(issix = 1) as total_six")
       ->selectRaw("playerId")
-      ->selectRaw("inningnumber")
       ->groupBy('playerId','inningnumber')
       ->get();
+      
 
     $variable1 = 'R';
     $variable2 = 'Wicket';
@@ -359,10 +360,50 @@ class HomeController extends Controller
       ->where('isActive', '=', 1)
       ->get();
 
+    $total_over = Fixture::where('id', '=', $id)
+   ->select('numberofover')
+    ->get();
+
+    $extra_runs = FixtureScore::where('fixture_id', '=', $id)
+    ->selectRaw('inningnumber')
+    ->selectRaw("SUM(CASE WHEN balltype IN ('NB', 'NBB', 'NBP') THEN runs ELSE 0 END) AS noball_total_runs")
+    ->selectRaw("SUM(CASE WHEN balltype = 'WD' THEN runs ELSE 0 END) AS wideball_total_runs")
+    ->selectRaw("SUM(CASE WHEN balltype = 'BYES' THEN runs ELSE 0 END) AS byes_total_runs")
+    ->groupBy('inningnumber')
+    ->get();
+
+    $totalData=FixtureScore::where('fixture_id', '=', $id)
+    ->selectRaw('inningnumber')
+    ->selectRaw('max(ballnumber) as max_ball ')
+    ->selectRaw("SUM(CASE WHEN isout = 1 THEN 1 ELSE 0 END) AS total_wicket")
+    ->selectRaw("SUM(runs) AS total_runs")
+    ->groupBy('inningnumber')
+    ->get();
+
+    $bowler_data = FixtureScore::where('fixture_id', '=', $id)
+    ->select('inningnumber')
+    ->selectRaw('SUM(runs) as total_runs')
+    ->selectRaw('MAX(ballnumber) as max_ball')
+    ->selectRaw('COUNT(DISTINCT overnumber) as `over`')
+    ->selectRaw("SUM(CASE WHEN balltype = 'Wicket' THEN 1 ELSE 0 END) AS total_wicket")
+    ->selectRaw('bowlerid')
+    ->groupBy('bowlerid', 'inningnumber')
+    ->get();
+
+    $maiden_overs = FixtureScore::where('fixture_id', '=', $id)
+    ->select('overnumber', 'bowlerid')
+    ->selectRaw('COUNT(*) as maiden_count')
+    ->groupBy('overnumber', 'bowlerid')
+    ->havingRaw('SUM(runs) = 0')
+    ->get();
 
 
+    // dd($maiden_overs);
 
-    return view('score_card', compact('player_runs', 'teams_one', 'teams_two', 'player_balls', 'match_results', 'teams', 'player', 'tournament', 'ground', 'match_data', 'image_gallery'));
+      $fallwickets = FixtureScore::where('fixture_id', '=', $id)
+      ->get();
+      
+    return view('score_card', compact('player_runs','maiden_overs','fallwickets','total_over' ,'bowler_data','totalData','extra_runs','teams_one', 'teams_two', 'player_balls', 'match_results', 'teams', 'player', 'tournament', 'ground', 'match_data', 'image_gallery'));
   }
 
 
