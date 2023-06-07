@@ -26,7 +26,7 @@ class header_slider
 
 
          $teams = DB::table('teams')->pluck('name', 'id');
-         $tournament_name = Tournament::query()->where('season_id','=',0)->where('is_web_display','=',1)->get();
+         $tournament_name = Tournament::query()->where('isActive', '=', 1)->where('season_id','=',0)->where('is_web_display','=',1)->get();
          
          $rulesandregulations =Rulesandregulation::query()
          ->get();

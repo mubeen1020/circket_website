@@ -490,9 +490,9 @@ navbarSlider.addEventListener("mouseout", function() {
         <ul class="nav navbar-nav">
           <li><a href="{{ route('home')}}">Home</a></li>
           <li class="dropdown">
-            <a href="{{ route('search_player')}}" class="dropdown-toggle" data-toggle="dropdown">Players</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Players</a>
             <ul class="dropdown-menu"  >
-              <li><a href="search_player">Player</a></li>
+              <li><a href="{{ route('search_player')}}">Player</a></li>
               <li><a href="{{ route('comingsoon')}}">Player Matches Count</a></li>
             </ul>
           </li>
@@ -515,7 +515,7 @@ navbarSlider.addEventListener("mouseout", function() {
           <li class="dropdown">
             <a href="{{ route('batting_states')}}" class="dropdown-toggle" data-toggle="dropdown">Statistics</a>
             <ul class="dropdown-menu"  >
-              <li><a href="{{ route('comingsoon')}}">Points Table</a></li>
+              <li><a href="{{ route('pointtable')}}">Points Table</a></li>
               <li><a href="{{ route('batting_states')}}">Batting Records</a></li>
               <li><a href="{{ route('bowling_state')}}">Bowling Records</a></li>
               <li><a href="{{ route('fieldingRecords')}}">Fielding Records</a></li>

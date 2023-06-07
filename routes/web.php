@@ -113,3 +113,6 @@ Route::get('playerRanking',[HomeController::class,'playerRanking'])->name('playe
 
 
 
+Route::get('pointtable',[HomeController::class,'pointtable'])->name('pointtable');
+Route::post('pointtable_submit',[HomeController::class,'pointtable_submit'])->name('pointtable_submit');
+Route::get('pointtable_submit',[HomeController::class,'pointtable']);

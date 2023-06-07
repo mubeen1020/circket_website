@@ -55,7 +55,7 @@
                     	</tr>
                     	<tr>
                     		<th valign="top">EOSCL Rules and Guidlines: </th>
-                    		<th><strong>EOSCL</strong> <strong>- Event Ontario Softball Circket Rules and Guidlines</strong><br/> {{$rule->content}}.<br>&nbsp;</th>
+                    		<th><strong>EOSCL</strong> <strong>- Event Ontario Softball Circket Rules and Guidlines</strong><br/> {!! $rule->content !!}.<br>&nbsp;</th>
                     	</tr>
 						<tr>
                     		<th valign="top">About: </th>

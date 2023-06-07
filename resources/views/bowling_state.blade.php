@@ -8,7 +8,7 @@
 
 </div>
 
-	<div class="sta-sidemenu" style="top: 13px;background-color:black">
+	<div class="sta-sidemenu" style="top: 13px;background-color:black;over-flow:auto">
 		<h4>Bowling Stats</h4>
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">Click here for More <i class="fa fa-sort-desc" aria-hidden="true" style=" float: right; margin-right: 2%;"></i></button>
 		<div class="collapse navbar-collapse" id="myNavbar">
@@ -19,52 +19,44 @@
                                                     class="img-responsive center-block img-circle" /></a>
 										</div>
 
-						<p style="color:white;font-weigth:bold;padding:30px"><strong>EOSCL</strong> <strong>- Event Ontario Softball Circket League Batting Stats </strong> 
-						  The EOSCL (East Open Super Cricket League) is a cricket league that showcases the skills and talent of cricket players in the region. As part of the league, batting statistics are maintained to keep track of the players' performances and provide insights into their batting abilities.
+                                        <p style="color:white;font-weight:bold;padding:30px">
+    <strong>EOSCL - Event Ontario Softball Cricket League Bowling Stats</strong>
+    The EOSCL (East Open Super Cricket League) is a cricket league that showcases the skills and talent of cricket players in the region. As part of the league, bowling statistics are maintained to keep track of the players' performances and provide insights into their bowling abilities.
 
-							The batting stats in the EOSCL Cricket League provide valuable information about each player's performance with the bat. These statistics highlight various aspects of a player's batting performance, including runs scored, matches played, balls faced, boundaries hit (such as fours and sixes), and notable milestones achieved, such as centuries and half-centuries.
+    The bowling stats in the EOSCL Cricket League provide valuable information about each player's performance with the ball. These statistics highlight various aspects of a player's bowling performance, including wickets taken, matches played, overs bowled, economy rate, and notable milestones achieved, such as five-wicket hauls and hat-tricks.
 
-							The batting stats are collected and organized for each player participating in the league. They help assess a player's overall performance and contribution to their team. The stats also allow for comparisons between players, highlighting those who consistently perform at a high level and make significant contributions to their team's success.
-
-                        </p>
-
-<ol style="color:white;font-weigth:bold;padding:30px">
-	<li>
-	<strong>Total Runs:</strong>
-	
-	This represents the cumuative number of runs scored by a player throughout the league. It showcases a player's ability to accumulate runs and contribute to their team's total score.
-	
-	</li>
-	<li>
-	<strong>Matches Played:</strong>
-	
-	This stat indicates the number of matches in which a player has participated. It reflects their consistency and availability in the league.
-   	
-	</li>
-	<li>
-	<strong>Balls Faced:</strong>
-	
-	This represents the number of deliveries a player has faced while batting. It provides insights into their ability to spend time at the crease and handle the opposition's bowling attack.
-    
-	</li>
-	<li>
-	<strong>Boundaries</strong>
-	
-	This includes the number of fours and sixes hit by a player. It demonstrates their power-hitting ability and their capability to find the gaps in the field.
-   
-	</li>
-	<li>
-	<strong>Centuries and Half-Centuries:</strong>
-	
-	These stats track the number of centuries (100 or more runs) and half-centuries (50 to 99 runs) scored by a player. It signifies their ability to convert good starts into substantial innings and make significant contributions to their team's success.
-   
-	</li>
-</ol>
-<p style="color:white;font-weigth:bold;padding:30px">
-			By analyzing these batting stats, fans, coaches, and team management can identify standout performers, evaluate player form, and make informed decisions about team composition and strategy. It also provides a historical record of a player's achievements, allowing them to track their progress over time and set personal milestones.
-
-			The EOSCL Cricket League batting stats play a crucial role in recognizing and appreciating the batting prowess of players, fostering healthy competition, and enhancing the overall cricketing experience for fans, players, and stakeholders associated with the league.	
+    The bowling stats are collected and organized for each player participating in the league. They help assess a player's overall performance and contribution to their team. The stats also allow for comparisons between players, highlighting those who consistently perform at a high level and make significant contributions to their team's success.
 </p>
+
+<ol style="color:white;font-weight:bold;padding:30px">
+    <li>
+        <strong>Total Wickets:</strong>
+        This represents the cumulative number of wickets taken by a player throughout the league. It showcases a player's ability to dismiss opposing batsmen and contribute to their team's success.
+    </li>
+    <li>
+        <strong>Matches Played:</strong>
+        This stat indicates the number of matches in which a player has participated. It reflects their consistency and availability in the league.
+    </li>
+    <li>
+        <strong>Overs Bowled:</strong>
+        This represents the number of overs a player has bowled. It provides insights into their endurance and ability to maintain pressure on the batsmen.
+    </li>
+    <li>
+        <strong>Economy Rate:</strong>
+        The economy rate is the average number of runs conceded by a bowler per over. It indicates how economically a bowler is bowling, with lower economy rates being more favorable.
+    </li>
+    <li>
+        <strong>Five-Wicket Hauls and Hat-Tricks:</strong>
+        These stats track the number of times a player has taken five or more wickets in a single innings and the number of hat-tricks achieved. They signify exceptional bowling performances and the ability to dismantle the opposition's batting lineup.
+    </li>
+</ol>
+
+<p style="color:white;font-weight:bold;padding:30px">
+    By analyzing these bowling stats, fans, coaches, and team management can identify standout performers, evaluate player form, and make informed decisions about team composition and strategy. It also provides a historical record of a player's achievements, allowing them to track their progress over time and set personal milestones.
+
+    The EOSCL Cricket League bowling stats play a crucial role in recognizing and appreciating the bowling prowess of players, fostering healthy competition, and enhancing the overall cricketing experience for fans, players, and stakeholders associated with the league.
+</p>
+
                     	
 		</div>
 		</div>
@@ -131,13 +123,6 @@
 			<div class="flex-top">
 				<div class="filter-title">Most Wickets</div>
 				<div class="text-right">
-				
-				<!-- <div class="btn-group btn-group-sm" role="group">
-						<button type="btn" class="btn btn-primary pdfBtn">PDF</button>
-						<button type="btn" class="btn btn-primary csvBtn">CSV</button>
-						<button type="btn" class="btn btn-primary excelBtn">Excel</button>
-						<button type="btn" class="btn btn-primary printBtn">Print</button>
-					</div> -->
 				</div>
 			</div>
 

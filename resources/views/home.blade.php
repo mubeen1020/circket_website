@@ -663,11 +663,11 @@ color:#333;
 															href="{{ url('fullScorecard/' . $match_result->id) }}">
 															<ul class="list-inline">
 																<li><img
-																	src="https://cricclubs.com/documentsRep/teamLogos/9deaa818-6154-4a1a-8eaf-89bb6e54f83d.jpg"
+																	src="https://eoscl.ca/admin/public/Team/{{$match_result->team_id_a}}.png"
 																	class="img-responsive img-circle"
 																	style="width: 40px; height: 40px;" /></li>
 																<li><img
-																	src="https://cricclubs.com/documentsRep/teamLogos/57dddf01-13bf-48f5-bb38-bffc5faa2d67.jpeg"
+																	src="https://eoscl.ca/admin/public/Team/{{$match_result->team_id_b}}.png"
 																	class="img-responsive img-circle"
 																	style="width: 40px; height: 40px;" /></li>
 															</ul>
@@ -723,11 +723,11 @@ margin-right: 10px;
 													<div class="vsteam-image">
 														<ul class="list-inline">
 															<li><img
-																src="https://cricclubs.com/documentsRep/teamLogos/95c38746-679e-45d2-804d-2971933b0169.jpg"
+																src="https://eoscl.ca/admin/public/Team/{{$upcoming_match->team_id_a}}.png"
 																class="img-responsive img-circle"
 																style="width: 40px; height: 40px;" /></li>
 															<li><img
-																src="https://cricclubs.com/documentsRep/teamLogos/a2530a09-334e-4d16-9206-1dfb63857ac8.jpg"
+																src="https://eoscl.ca/admin/public/Team/{{$upcoming_match->team_id_b}}.png"
 																class="img-responsive img-circle"
 																style="width: 40px; height: 40px;" /></li>
 														</ul>
@@ -973,11 +973,11 @@ margin-right: 10px;
                             <div class="vsteam-image" >
                                 <ul class="list-inline" >
                                     <li><img
-                                        src="https://cricclubs.com/documentsRep/teamLogos/95c38746-679e-45d2-804d-2971933b0169.jpg"
+                                        src="https://eoscl.ca/admin/public/Team/${item[0].team_id_a}.png"
                                         class="img-responsive img-circle"
                                         style="width: 40px; height: 40px;" /></li>
                                     <li><img
-                                        src="https://cricclubs.com/documentsRep/teamLogos/a2530a09-334e-4d16-9206-1dfb63857ac8.jpg"
+                                        src="https://eoscl.ca/admin/public/Team/${item[0].team_id_b}.png"
                                         class="img-responsive img-circle"
                                         style="width: 40px; height: 40px;" /></li>
                                 </ul>
@@ -1098,7 +1098,17 @@ function get_point_table(tornament_season_id, type) {
             if (data.length === 0) {
                 point_table_data.innerHTML = '<tr><td colspan="7">Empty list</td></tr>';
             } else {
-                data.sort((a, b) => b.teambonusPoints - a.teambonusPoints);
+                data.sort((a, b) => {
+                // Sort by teambonusPoints in descending order
+                if (a.teambonusPoints > b.teambonusPoints) return -1;
+                if (a.teambonusPoints < b.teambonusPoints) return 1;
+                // If teambonusPoints are equal, sort by net_rr in descending order
+                if (a.teambonusPoints === b.teambonusPoints) {
+                    if (a.net_rr > b.net_rr) return -1;
+                    if (a.net_rr < b.net_rr) return 1;
+                }
+                return 0;
+            });
                 data.forEach((item, index) => {
                     point_table_data.innerHTML += `
                         <tr>
@@ -1107,7 +1117,7 @@ function get_point_table(tornament_season_id, type) {
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                                            <td><img src="https://eoscl.ca/admin/public/Team/${item.team_id}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
                                             <td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
                                         </tr>
                                     </tbody>
@@ -1217,42 +1227,52 @@ function get_season_group(tornament_season_id) {
 }
 
 
-
-function get_group_team(group_id,tournamnet_id) {
+function get_group_team(group_id, tournamnet_id) {
     $.ajax({
-        url: "{{ url('/get_group_team/')}}/"  + group_id+'/'+tournamnet_id,
+        url: "{{ url('/get_group_team/')}}/" + group_id + '/' + tournamnet_id,
         type: 'GET',
         dataType: 'json',
-        success: function(data) {
+        success: function (data) {
             const point_table_data = document.getElementById('point_table');
-		point_table_data.innerHTML = '';
-		data.forEach(item => {
-		point_table_data.innerHTML +=`
-		<tr>	
-		<th>1</th> 
-			<th>
-			<table>
-			<tbody>
-				<tr>
-					<td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
-					<td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
-				</tr>
-			</tbody>
-			</table>
-			</th>
-			<th><a ">${item.total_matches}</a></th>
-			<th>${item.wins}</th> 
-			<th>${item.losses}</th>
-			<th>${item.draws}</th>
-			<th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
-            <th>${item.net_rr.toFixed(3)}</th>
-
-			</tr>
-			`
-			})
-		}
+            point_table_data.innerHTML = '';
+            data.sort((a, b) => {
+                // Sort by teambonusPoints in descending order
+                if (a.teambonusPoints > b.teambonusPoints) return -1;
+                if (a.teambonusPoints < b.teambonusPoints) return 1;
+                // If teambonusPoints are equal, sort by net_rr in descending order
+                if (a.teambonusPoints === b.teambonusPoints) {
+                    if (a.net_rr > b.net_rr) return -1;
+                    if (a.net_rr < b.net_rr) return 1;
+                }
+                return 0;
+            });
+            data.forEach((item, index) => {
+                point_table_data.innerHTML += `
+                    <tr>	
+                        <th>${index + 1}</th> 
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="https://eoscl.ca/admin/public/Team/${item.team_id}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                                        <td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th>
+                        <th><a ">${item.total_matches}</a></th>
+                        <th>${item.wins}</th> 
+                        <th>${item.losses}</th>
+                        <th>${item.draws}</th>
+                        <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
+                        <th>${item.net_rr.toFixed(3)}</th>
+                    </tr>
+                `;
+            });
+        }
     });
 }
+
 
 function get_top_scorers(tournament_season_id) {
     $.ajax({
@@ -1270,7 +1290,7 @@ function get_top_scorers(tournament_season_id) {
                                 <tbody>
                                     <tr>
                                         <td style="padding-right:5px;min-width:35px">
-                                            <img src="https://cricclubs.com/documentsRep/profilePics/206f3b84-ba02-4cf4-a10e-a98d4975e46b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.id}.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
                                         </td>
                                         <td>
                                             <a href="viewPlayer.do?playerId=1242838&amp;clubId=2565">${item.fullname}</a>
@@ -1309,7 +1329,7 @@ function get_top_bowler(tournament_season_id) {
                                 <tbody>
                                     <tr>
                                         <td style="padding-right:5px;min-width:35px">
-                                            <img src="https://cricclubs.com/documentsRep/profilePics/206f3b84-ba02-4cf4-a10e-a98d4975e46b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.bowlerid}.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
                                         </td>
                                         <td>
                                             <a href="viewPlayer.do?playerId=1242838&amp;clubId=2565">${item.fullname}</a>
