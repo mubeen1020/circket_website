@@ -9,7 +9,7 @@
     </div>
 
     <div class="sta-sidemenu" style="top: 13px;background-color:black">
-        <h4>Fielding Stats</h4>
+        <h4>Ranking Stats</h4>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">Click here for More <i class="fa fa-sort-desc" aria-hidden="true" style=" float: right; margin-right: 2%;"></i></button>
         <div class="collapse navbar-collapse" id="myNavbar">
             <div class="league-image">
@@ -101,7 +101,7 @@
                         <div class="form-group">
                             <div class="custom-select">
                                 <select name="teams" id="teams" class="form-control">
-                                    <option value="" >Teams</option>
+                                    <option value="">Teams</option>
                                     @foreach($header_teams as $team_id => $team_name)
                                     <option value="{{ $team_id }}">{{ $team_name }}</option>
                                     @endforeach
@@ -163,12 +163,17 @@
 					</div> -->
                     </div>
                 </div>
-
-                <div class="table-responsive about-table">
-
-                    <div id="webrecordtable_wrapper" class="dataTables_wrapper no-footer">
-                        <div id="webrecordtable_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="webrecordtable"></label></div>
-                        <table class="table table-striped table-active2 playersData sortable dataTable no-footer" role="grid" aria-describedby="webrecordtable_info">
+                <div class="about-table table-responsive" id="tab1default">
+                    <div class="text-right">
+                        <!-- <div class="btn-group btn-group-sm" role="group">
+						<img alt="Download as PDF" title="Download as PDF" class="pdfBtn" style="cursor:pointer;" width="32" height="32" src="/utilsv2/images/pdf.png">&nbsp;
+						<img alt="Download as CSV" title="Download as CSV" class="csvBtn" style="cursor:pointer;" width="32" height="32" src="/utilsv2/images/csvicon.png">&nbsp;
+				<img alt="Download as Excel" title="Download as Excel" class="excelBtn" style="cursor:pointer;" width="32" height="32" src="/utilsv2/images/excel.png">	
+				<img alt="Print" title="Print" class="printBtn" style="cursor:pointer;" width="32" height="32" src="/utilsv2/images/print.png">&nbsp;
+						</div> -->
+                    </div>
+                    <div id="tablePlayerRankings_wrapper" class="dataTables_wrapper no-footer">
+                        <table class="table sortable dataTable no-footer" id="tablePlayerRankings" role="grid">
 
                             <thead>
                                 <tr role="row">
@@ -177,11 +182,16 @@
                                     <th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Player : activate to sort column ascending" style="width: 80px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">Player<p><a href="#"></a></p></a></th>
                                     <th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Team : activate to sort column ascending" style="width: 80px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">Team<p><a href="#"></a></p></a></th>
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Matches <p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Catches <p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Stumpings <p><a href="#"></a></p></a></th>
+                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Batting <p><a href="#"></a></p></a></th>
+                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Bowling <p><a href="#"></a></p></a></th>
+                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Fielding <p><a href="#"></a></p></a></th>
+                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Other <p><a href="#"></a></p></a></th>
+                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">MOM #<p><a href="#"></a></p></a></th>
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Total <p><a href="#"></a></p></a></th>
                                 </tr>   
                             </thead>
+
+   
                             <tbody>
                                 @foreach($getresult as $key => $data)
                                 <tr role="row" class="even">
@@ -202,10 +212,23 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="dataTables_info" id="webrecordtable_info" role="status" aria-live="polite">Showing 1 to 200 of 200 entries</div>
-                        <div class="dataTables_paginate paging_simple_numbers" id="webrecordtable_paginate"><a class="paginate_button previous disabled" aria-controls="webrecordtable" data-dt-idx="0" tabindex="-1" id="webrecordtable_previous">Previous</a><span><a class="paginate_button current" aria-controls="webrecordtable" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="webrecordtable" data-dt-idx="2" tabindex="-1" id="webrecordtable_next">Next</a></div>
                     </div>
-
+                    <table id="header-fixed" style="position: fixed; top: 0px; background-color: white; width: 1110px; display: none;" class="sortable dataTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 51px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 0);return false;">#<span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="width" style="text-align: left !important; width: 194px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">Player <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="width" style="text-align: left !important; width: 229px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">Team <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="spa" style="width: 100px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Matches <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="spa" style="width: 90px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">Batting <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="spa" style="width: 95px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">Bowling <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="spa" style="width: 95px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">Fielding <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="spa" style="width: 79px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">Other <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="spa" style="width: 91px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">MOM # <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                                <th class="spa" style="width: 76px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 9);return false;">Total <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>

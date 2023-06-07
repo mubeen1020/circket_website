@@ -104,4 +104,12 @@ Route::get('bowling_state_submit',[HomeController::class,'bowling_state']);
 
 
 Route::get('fieldingRecords',[HomeController::class,'fieldingRecords'])->name('fieldingRecords');
+Route::post('fielding_states_submit',[HomeController::class,'fielding_states_submit'])->name('fielding_states_submit');
+
+
+
+Route::get('playerRanking',[HomeController::class,'playerRanking'])->name('playerRanking');
+
+
+
 
