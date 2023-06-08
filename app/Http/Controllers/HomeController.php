@@ -352,111 +352,7 @@ class HomeController extends Controller
     return view('score_overbyover', compact('scores', 'match_results', 'teams', 'player', 'teams_one', 'teams_two', 'image_gallery'));
   }
 
-  // public function fullScorecard(int $id)
-  // {
-  //   $ground = Ground::query();
-  //   $ground = $ground->orderBy('id')->get();
-  //   $ground = Ground::query()->get()->pluck(
-  //     'name',
-  //     'id'
-  //   );
-  //   $match_results = Fixture::query();
-  //   $match_results->where('id', '=', $id);
-  //   $match_results = $match_results->where('isActive', 1)->orderBy('id')->get();
-  //   $result = [];
-  //   $match_data = $match_results->find($id);
-  //   $tournamentId = $match_results->first()->tournament_id;
-  //   $tournament = Tournament::query()->where('id', '=', $tournamentId)->get()->pluck(
-  //     'name'
-  //   );
-  //   $teams = Team::query()->get()->pluck(
-  //     'name',
-  //     'id'
-  //   );
-  //   $player = Player::query()->get()->pluck(
-  //     'fullname',
-  //     'id'
-  //   );
-  //   $teams_one = Team::query()->get()->where('id', '=', $match_results[0]->first_inning_team_id)->pluck(
-  //     'name',
-  //     'id'
-  //   )->first();
-  //   $teams_two = Team::query()->get()->where('id', '=', $match_results[0]->second_inning_team_id)->pluck(
-  //     'name',
-  //     'id'
-  //   )->first();
-
-
-  //   $player_runs = FixtureScore::Where('fixture_id', '=', $id)
-  //     ->select("inningnumber")
-  //     ->selectRaw("sum(runs) as total_runs")
-  //     ->selectRaw("SUM(isfour = 1) as total_fours")
-  //     ->selectRaw("SUM(issix = 1) as total_six")
-  //     ->selectRaw("playerId")
-  //     ->groupBy('playerId', 'inningnumber')
-  //     ->get();
-
-
-  //   $variable1 = 'R';
-  //   $variable2 = 'Wicket';
-  //   $player_balls = FixtureScore::where('fixture_id', '=', $id)
-  //     ->where(function ($query) use ($variable1, $variable2) {
-  //       $query->where('balltype', '=', $variable1)
-  //         ->orWhere('balltype', '=', $variable2);
-  //     })->selectRaw("count(id) as balls")
-  //     ->selectRaw("playerId")->groupBy('playerId')
-  //     ->get()->pluck('balls', 'playerId');;
-
-
-  //   $image_gallery = GalleryImages::query()
-  //     ->where('isActive', '=', 1)
-  //     ->get();
-
-  //   $total_over = Fixture::where('id', '=', $id)
-  //     ->select('numberofover')
-  //     ->get();
-
-  //   $extra_runs = FixtureScore::where('fixture_id', '=', $id)
-  //     ->selectRaw('inningnumber')
-  //     ->selectRaw("SUM(CASE WHEN balltype IN ('NB', 'NBB', 'NBP') THEN runs ELSE 0 END) AS noball_total_runs")
-  //     ->selectRaw("SUM(CASE WHEN balltype = 'WD' THEN runs ELSE 0 END) AS wideball_total_runs")
-  //     ->selectRaw("SUM(CASE WHEN balltype = 'BYES' THEN runs ELSE 0 END) AS byes_total_runs")
-  //     ->groupBy('inningnumber')
-  //     ->get();
-
-  //   $totalData = FixtureScore::where('fixture_id', '=', $id)
-  //     ->selectRaw('inningnumber')
-  //     ->selectRaw('max(ballnumber) as max_ball ')
-  //     ->selectRaw("SUM(CASE WHEN isout = 1 THEN 1 ELSE 0 END) AS total_wicket")
-  //     ->selectRaw("SUM(runs) AS total_runs")
-  //     ->groupBy('inningnumber')
-  //     ->get();
-
-  //   $bowler_data = FixtureScore::where('fixture_id', '=', $id)
-  //     ->select('inningnumber')
-  //     ->selectRaw('SUM(runs) as total_runs')
-  //     ->selectRaw('MAX(ballnumber) as max_ball')
-  //     ->selectRaw('COUNT(DISTINCT overnumber) as `over`')
-  //     ->selectRaw("SUM(CASE WHEN balltype = 'Wicket' THEN 1 ELSE 0 END) AS total_wicket")
-  //     ->selectRaw('bowlerid')
-  //     ->groupBy('bowlerid', 'inningnumber')
-  //     ->get();
-
-  //   $maiden_overs = FixtureScore::where('fixture_id', '=', $id)
-  //     ->select('overnumber', 'bowlerid')
-  //     ->selectRaw('COUNT(*) as maiden_count')
-  //     ->groupBy('overnumber', 'bowlerid')
-  //     ->havingRaw('SUM(runs) = 0')
-  //     ->get();
-
-
-  //   // dd($maiden_overs);
-
-  //   $fallwickets = FixtureScore::where('fixture_id', '=', $id)
-  //     ->get();
-
-  //   return view('score_card', compact('player_runs', 'maiden_overs', 'fallwickets', 'total_over', 'bowler_data', 'totalData', 'extra_runs', 'teams_one', 'teams_two', 'player_balls', 'match_results', 'teams', 'player', 'tournament', 'ground', 'match_data', 'image_gallery'));
-  // }
+  
 
   public function fullScorecard(int $id)
   {
@@ -560,8 +456,35 @@ class HomeController extends Controller
 
       $fallwickets = FixtureScore::where('fixture_id', '=', $id)
       ->get();
+
+      $match_description = FixtureScore::where('fixture_scores.fixture_id', '=', $id)
+      ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+      ->leftJoin('players as player_bowler', 'player_bowler.id', '=', 'fixture_scores.bowlerId')
+      ->leftJoin('players as player_filder', 'player_filder.id', '=', 'match_dismissals.outbyplayer_id')
+      ->join('dismissals', 'dismissals.id', '=', 'match_dismissals.dismissal_id')
+      ->where(function($query) {
+          $query->where('fixture_scores.balltype', '=', 'Wicket')
+              ->orWhere('fixture_scores.balltype', '=', 'RunOut')
+              ->orWhere('fixture_scores.balltype', '=', 'RunOut(WD)')
+              ->orWhere('fixture_scores.balltype', '=', 'RunOut(NB)')
+              ->orWhere('fixture_scores.balltype', '=', 'R');
+      })
+      ->where('fixture_scores.isout', '=', 1)
+      ->select(
+          "dismissals.name as out_description",
+          "fixture_scores.bowlerid as bowler_Id",
+          "match_dismissals.outbyplayer_id as fielder_id",
+          "fixture_scores.playerid as batsman_id",
+          "player_filder.fullname as fielder_name",
+          "player_bowler.fullname as bowler_name",
+          "fixture_scores.inningnumber as inningnumber"
+      )
+      ->get();
+  
+  
+  // dd($match_description);
       
-    return view('score_card', compact('player_runs','maiden_overs','fallwickets','total_over' ,'bowler_data','totalData','extra_runs','teams_one', 'teams_two', 'player_balls', 'match_results', 'teams', 'player', 'tournament', 'ground', 'match_data', 'image_gallery'));
+    return view('score_card', compact('player_runs','match_description','maiden_overs','fallwickets','total_over' ,'bowler_data','totalData','extra_runs','teams_one', 'teams_two', 'player_balls', 'match_results', 'teams', 'player', 'tournament', 'ground', 'match_data', 'image_gallery'));
   }
 
 
@@ -1089,7 +1012,9 @@ class HomeController extends Controller
 
 
 
-    $player = Player::query();
+    $player = Player::query()
+    ->select('players.fullname','players.battingstyle','players.bowlingstyle','players.email','players.id','teams.team_id')
+    ;
 
     $term = $request;
     // dd($term);

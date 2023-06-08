@@ -75,10 +75,24 @@
                                                                         
                                                                         	<a href=""><b>{{$player[$item->playerId]}}</b> </a>
                                                                         	<a style="display:none" id="btm_video_1207430" href="javascript:openVideoHTMLvs('1207430','bt', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	<div class="scorecard-out-text show-phone" style="margin-left:34px;">- <a href="viewPlayer.do?playerId=1277414&amp;clubId=2565">-</a> - <a href="viewPlayer.do?playerId=2993131&amp;clubId=2565">-</a><a style="display:none" id="bthowOutPH_video_1207430" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<div class="scorecard-out-text show-phone" style="margin-left:34px;">
+																			
+
+																			<a style="display:none" id="bthowOutPH_video_1207430" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	</div>
                                                                         </th> 
-                                                                        <th class="hidden-phone">c <a href="viewPlayer.do?playerId=1277414&amp;clubId=2565">-</a> - <a href="viewPlayer.do?playerId=2993131&amp;clubId=2565">-</a><a id="bthowOut_video_1207430" style="display:none" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        <th class="hidden-phone">
+																		@foreach ($match_description as $out)
+																				@if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
+																					@if ($out->out_description == "Retired Hurt")
+																						<span>{{ $out->out_description }}</span>
+																					@elseif ($out->out_description == "Run Out" || $out->out_description == "Caught" || $out->out_description == "Run Out (WD)" || $out->out_description == "Run Out (NB)")
+																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;&nbsp;{{ $out->fielder_name }}</a>)
+																					@elseif ($out->out_description == "Bowled")
+																						<span>b</span> (<a href="#"> {{ $out->bowler_name }}</a>)
+																					@endif
+																				@endif
+																			@endforeach
                                                                         	</th>
                                                                         <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
                                                                         <th style="text-align: right;">{{$player_balls[$item->playerId]}}</th> 
@@ -291,10 +305,22 @@
                                                                         
                                                                           <a href=""><b> {{$player[$item->playerId]}}</b> </a>
                                                                         	<a style="display:none" id="btm_video_3088351" href="javascript:openVideoHTMLvs('3088351','bt', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        <div class="scorecard-out-text show-phone" style="margin-left:34px">b <a href="viewPlayer.do?playerId=2674040&amp;clubId=2565">Irfan S</a><a style="display:none" id="bthowOutPH_video_3088351" href="javascript:openVideoHTMLvs('3088351','out', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        <div class="scorecard-out-text show-phone" style="margin-left:34px">
+																
                                                                         	</div>
                                                                         </th> 
-                                                                        <th class="hidden-phone">b <a href="viewPlayer.do?playerId=2674040&amp;clubId=2565">Irfan S</a><a style="display:none" id="bthowOut_video_3088351" href="javascript:openVideoHTMLvs('3088351','out', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        <th class="hidden-phone">
+																		@foreach ($match_description as $out)
+																				@if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
+																					@if ($out->out_description == "Retired Hurt")
+																						<span><a href="#"> b<{{ $out->out_description }}</a></span>
+																					@elseif ($out->out_description == "Run Out" || $out->out_description == "Caught" || $out->out_description == "Run Out (WD)" || $out->out_description == "Run Out (NB)")
+																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;&nbsp;{{ $out->fielder_name }}</a>)
+																					@elseif ($out->out_description == "Bowled")
+																						<span><a href="#"> b</span> {{ $out->bowler_name }}</a>
+																					@endif
+																				@endif
+																			@endforeach
                                                                         	</th>
                                                                             <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
                                                                             <th style="text-align: right;">{{$player_balls[$item->playerId]}}  </th>
