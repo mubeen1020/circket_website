@@ -323,7 +323,7 @@
 																			@endforeach
                                                                         	</th>
                                                                             <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
-                                                                            <th style="text-align: right;">{{$player_balls[$item->playerId]}}  </th>
+                                                                            <th style="text-align: right;">{{$player_balls[$item->playerId]??0}}  </th>
                                                                             <th style="text-align: right;">{{$item->total_fours}}</th> 
                                                                         <th style="text-align: right;">{{$item->total_six}}</th>
                                                                         <th style="text-align: center;"> {{ isset($player_balls[$item->playerId]) && $player_balls[$item->playerId] != 0 ? number_format(($item->total_runs / $player_balls[$item->playerId]) * 100, 2) : 0.00 }}</th>

@@ -275,7 +275,7 @@ flex: auto;}
                                                           
                                                           {{$player[$player1->playerId]}} N<span style="float: right;"> {{$player1->total_runs}}(
                                                            
-                                                            {{$player_balls[$player1->playerId]}}
+                                                            {{$player_balls[$player1->playerId]??0}}
                                                             
                                                             )</span></p>
                                                           @endforeach
@@ -369,7 +369,7 @@ flex: auto;}
                                                           
                                                           {{$player[$player1->playerId]}} N<span style="float: right;"> {{$player1->total_runs}}(
                                                            
-                                                            {{$player_balls[$player1->playerId]}}
+                                                            {{$player_balls[$player1->playerId]??0}}
                                                             
                                                             )</span></p>
                                                           @endforeach
