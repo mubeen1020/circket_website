@@ -118,3 +118,10 @@ Route::post('playerRanking_submit',[HomeController::class,'playerRanking_submit'
 Route::get('pointtable',[HomeController::class,'pointtable'])->name('pointtable');
 Route::post('pointtable_submit',[HomeController::class,'pointtable_submit'])->name('pointtable_submit');
 Route::get('pointtable_submit',[HomeController::class,'pointtable']);
+
+
+Route::get('show_point_table/{tournament_id}',[HomeController::class,'show_point_table'])->name('show_point_table');
+Route::get('show_batting_records/{tournament_id}',[HomeController::class,'show_batting_records'])->name('show_batting_records');
+Route::get('show_bowling_records/{tournament_id}',[HomeController::class,'show_bowling_records'])->name('show_bowling_records');
+Route::get('show_fielding_records/{tournament_id}',[HomeController::class,'show_fielding_records'])->name('show_fielding_records');
+Route::get('show_player_ranking/{tournament_id}',[HomeController::class,'show_player_ranking'])->name('show_player_ranking');
