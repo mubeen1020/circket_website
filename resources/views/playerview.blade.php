@@ -145,7 +145,12 @@
 														<tbody>
 															<tr>
 																<th>{{$player_match}}</th>
-																<th>{{$player_innings->innings}}</th>
+																@if(isset($player_innings->innings))
+    <th>{{$player_innings->innings}}</th>
+@else
+    <th>N/A</th> <!-- or any appropriate fallback value -->
+@endif
+
 																<th>1</th>
 																<th>@foreach($player_runs as $runs)
                                                     {{$runs->playerruns}}
@@ -205,7 +210,12 @@
 														<tbody>
 															<tr>
 																<th>{{$player_matchbowler}}</th>
-																<th>{{$player_innings->innings}}</th>
+																@if(isset($player_innings->innings))
+    <th>{{$player_innings->innings}}</th>
+@else
+    <th>N/A</th> <!-- or any appropriate fallback value -->
+@endif
+
                                                                 @foreach($bower_over as $over)
 																<th>
                                                                 
@@ -306,16 +316,7 @@
 
 									<!-- </div> -->
 
-											<div class="col-sm-5">
-												<div class="stat-image-all">
-													<div class="border-heading">
-														<h5>BATTING: DISMISSAL TYPE</h5>
-													</div>
-													<div class="stat-image">
-														<div id="out_type_chart" style="width: 100%; height: 400px;"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 445px; height: 400px;"><div aria-label="A chart." style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="445" height="400" aria-label="A chart." style="overflow: hidden;"><defs id="defs"></defs><rect x="0" y="0" width="445" height="400" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><rect x="289" y="40" width="134" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="289" y="40" width="134" height="12" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="306" y="50.2" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#222222">Bowled</text></g><circle cx="295" cy="46" r="6" stroke="none" stroke-width="0" fill="#3366cc"></circle></g></g><g><path d="M270,187.6L270,212.4A124,99.2,0,0,1,22,212.4L22,187.6A124,99.2,0,0,0,270,187.6" stroke="#264d99" stroke-width="1" fill="#264d99"></path><ellipse cx="146" cy="187.6" rx="124" ry="99.2" stroke="#3366cc" stroke-width="1" fill="#3366cc"></ellipse><text text-anchor="start" x="142.5" y="191.79999999999998" font-family="Arial" font-size="12" stroke="none" stroke-width="0" fill="#ffffff">1</text></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>Out type</th><th>Count</th></tr></thead><tbody><tr><td>Bowled</td><td>1</td></tr></tbody></table></div></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 410px; left: 455px; white-space: nowrap; font-family: Arial; font-size: 12px;">Bowled</div><div></div></div></div>
-													</div>
-												</div>
-											</div>
+											
 											</div>
 									</div>
 									<div class="stat-row">

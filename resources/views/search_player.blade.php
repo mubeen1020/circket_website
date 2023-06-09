@@ -257,7 +257,7 @@
                                     <th><table>
                         <tbody><tr class="even">
                             <td>
-                            <img src="https://eoscl.ca/admin/public/Team/{{$player['id']}}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;">
+                            <img src="https://eoscl.ca/admin/public/Team/{{$player['team_id']}}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;">
                                     </td>
                                         <td style="text-align:left!important">&nbsp;{{$player['name']}}</td>
                                     </tr>

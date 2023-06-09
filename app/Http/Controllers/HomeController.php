@@ -243,16 +243,47 @@ class HomeController extends Controller
       ->selectRaw("inningnumber")
       ->get();
 
-    $matchnotouts=FixtureScore::Where('fixture_id', '=', $id)
-    ->where('isout',0)
-    ->selectRaw("playerId")
-    ->selectRaw("balltype")
-    ->selectRaw("runs")
-    ->selectRaw("overnumber")
-    ->selectRaw("ballnumber")
-    ->selectRaw("bowlerId")
-    ->selectRaw("inningnumber")
-    ->get();
+      $matchnotouts1 = FixtureScore::where('fixture_id', '=', $id)
+      ->where('isout', 0)
+      ->where('isActive', 1)
+      ->where('inningnumber',1)
+      ->select('playerId', \DB::raw('SUM(runs) as total_runs'), \DB::raw('COUNT(id) as total_ball'))
+      ->groupBy('playerId')
+      ->get();
+
+      $variable1 = 'R';
+      $variable2 = 'Wicket';
+      $player_balls = FixtureScore::where('fixture_id', '=', $id)
+        ->where(function ($query) use ($variable1, $variable2) {
+          $query->where('balltype', '=', $variable1)
+            ->orWhere('balltype', '=', $variable2);
+        })->selectRaw("count(id) as balls")
+        ->selectRaw("playerId")->groupBy('playerId')
+        ->get()->pluck('balls', 'playerId');
+
+      $matchnotouts2 = FixtureScore::where('fixture_id', '=', $id)
+      ->where('isout', 0)
+      ->where('isActive', 1)
+      ->where('inningnumber',2)
+      ->select('playerId', \DB::raw('SUM(runs) as total_runs'), \DB::raw('COUNT(id) as total_ball'))
+      ->groupBy('playerId')
+      ->get();
+
+      $runnerbowler1 = FixtureScore::where('fixture_id', '=', $id)
+      ->where('isActive', 1)
+      ->where('inningnumber',1)
+      ->select('bowlerid', \DB::raw('SUM(runs) as total_runs'), \DB::raw('max(ballnumber) as max_ball ') ,\DB::raw('COUNT(DISTINCT overnumber) as `total_ball`'),  \DB::raw("SUM(CASE WHEN balltype = 'Wicket' THEN 1 ELSE 0 END) AS total_wickets"))
+      ->groupBy('bowlerid')
+      ->first();
+
+      $runnerbowler2 = FixtureScore::where('fixture_id', '=', $id)
+      ->where('isActive', 1)
+      ->where('inningnumber',2)
+      ->select('bowlerid', \DB::raw('SUM(runs) as total_runs'),\DB::raw('max(ballnumber) as max_ball ') ,\DB::raw('COUNT(DISTINCT overnumber) as `total_ball`' ), \DB::raw("SUM(CASE WHEN balltype = 'Wicket' THEN 1 ELSE 0 END) AS total_wickets"))
+      ->groupBy('bowlerid')
+      ->first();
+
+    // dd($runnerbowler2);
 
     $team_one_runs = FixtureScore::where('fixture_id', '=', $id)
       ->where('inningnumber', '=', 1)
@@ -276,7 +307,7 @@ class HomeController extends Controller
 
 
 
-    return view('ballbyballscorecard', compact('team_one_run_rate','match_over' ,'team_two_run_rate', 'teams_one', 'match_total_overs', 'match_data', 'teams_two', 'match_detail', 'match_results', 'teams', 'player', 'total_run', 'total_wickets', 'total_overs', 'tournament', 'teams_two_player', 'teams_one_player', 'image_gallery'));
+    return view('ballbyballscorecard', compact('player_balls','team_one_run_rate','runnerbowler1','runnerbowler2','match_over','matchnotouts1','matchnotouts2' ,'team_two_run_rate', 'teams_one', 'match_total_overs', 'match_data', 'teams_two', 'match_detail', 'match_results', 'teams', 'player', 'total_run', 'total_wickets', 'total_overs', 'tournament', 'teams_two_player', 'teams_one_player', 'image_gallery'));
   }
 
 
@@ -426,7 +457,7 @@ class HomeController extends Controller
           ->orWhere('balltype', '=', $variable2);
       })->selectRaw("count(id) as balls")
       ->selectRaw("playerId")->groupBy('playerId')
-      ->get()->pluck('balls', 'playerId');;
+      ->get()->pluck('balls', 'playerId');
 
 
     $image_gallery = GalleryImages::query()
@@ -1032,7 +1063,7 @@ class HomeController extends Controller
 
 
     $player = Player::query()
-    ->select('players.fullname','players.battingstyle','players.bowlingstyle','players.email','players.id','teams.team_id')
+    ->select('players.fullname','players.battingstyle','players.bowlingstyle','players.email','players.id','team_players.team_id','teams.name','players.contact')
     ;
 
     $term = $request;
