@@ -46,7 +46,7 @@
                                                     @endif
                                                     @endforeach</span> <br> 
 						                           		<p style="text-transform: lowercase;">
-                                           {{ $total_overs[2] }}/{{$match_total_overs}} ov 
+                                           {{ $total_overs[2] }}/{{$match_over}} ov 
 						                           		</p>
 						                           </li>
 					                       </ul>
@@ -239,7 +239,11 @@ flex: auto;}
                                 <span class="ov" style="padding-left: 5px;">
                                     
                                     <!-- Condition for match level comment to not to show over and ball number -->
-                                    {{$matchball->overnumber}}  . {{$matchball->ballnumber}}</span> &nbsp;
+                                    {{$matchball->overnumber}}  .@if($matchball->ballnumber == 0) 0 
+                                    @elseif($matchball->ballnumber%6 == 0)
+                                    6 @else
+                                    {{$matchball->ballnumber%6}}
+                                  @endif</span> &nbsp;
                                        </li> 
                    <li class="col3">
                    {{$player[$matchball->bowlerId]}} to {{$player[$matchball->playerId]}}, {{$matchball->runs}} {{$matchball->balltype}} </li>
@@ -319,7 +323,11 @@ flex: auto;}
                                 <span class="ov" style="padding-left: 5px;">
                                     
                                     <!-- Condition for match level comment to not to show over and ball number -->
-                                    {{$matchball->overnumber}}  . {{$matchball->ballnumber}}</span> &nbsp;
+                                    {{$matchball->overnumber}}  .@if($matchball->ballnumber == 0) 0 
+                                    @elseif($matchball->ballnumber%6 == 0)
+                                    6 @else
+                                    {{$matchball->ballnumber%6}}
+                                  @endif</span> &nbsp;
                                        </li> 
                    <li class="col3">
                    {{$player[$matchball->bowlerId]}} to {{$player[$matchball->playerId]}}, {{$matchball->runs}} {{$matchball->balltype}} </li>

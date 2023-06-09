@@ -406,7 +406,9 @@
                                                                         <th>
                                                                         	<a href=""><b>{{$player[$item->bowlerid]}}</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
-                                                                        <th style="text-align: right;">{{($item->over) }}.{{6%($item->over) }}</th>
+                                                                        <th style="text-align: right;">
+																		{{($item->over) }}.{{6%($item->over) }}
+																	</th>
                                                                           <th style="text-align: right;">
 																		  {{$maiden_overs[$item->bowlerid] ?? 0}}
 																		</th>

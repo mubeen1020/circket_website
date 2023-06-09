@@ -202,6 +202,12 @@ class HomeController extends Controller
       ->first()
       ->max_over;
 
+    $match_over=Fixture::where('id', '=', $id)
+    ->selectRaw('numberofover')
+    ->first()
+    ->numberofover;
+
+       
     $overs = floor($match_total_overs);
     $balls = ($match_total_overs - $overs) * 10;
     $total_balls = ($overs * 6) + $balls;
@@ -215,11 +221,13 @@ class HomeController extends Controller
       ->get();
 
     $total_overs = array();
+    $total_ball=array();
 
     foreach ($innings as $inning) {
       $overs = $inning->max_over;
       $balls = ($overs - floor($overs)) * 10;
       $total_balls = ($overs * 6) + $balls;
+      $total_ball[$inning->inningnumber]=($overs * 6) + $balls;
       $total_over = $total_balls / 6;
       $total_overs[$inning->inningnumber] = round($total_over, 2);
     }
@@ -234,6 +242,17 @@ class HomeController extends Controller
       ->selectRaw("bowlerId")
       ->selectRaw("inningnumber")
       ->get();
+
+    $matchnotouts=FixtureScore::Where('fixture_id', '=', $id)
+    ->where('isout',0)
+    ->selectRaw("playerId")
+    ->selectRaw("balltype")
+    ->selectRaw("runs")
+    ->selectRaw("overnumber")
+    ->selectRaw("ballnumber")
+    ->selectRaw("bowlerId")
+    ->selectRaw("inningnumber")
+    ->get();
 
     $team_one_runs = FixtureScore::where('fixture_id', '=', $id)
       ->where('inningnumber', '=', 1)
@@ -257,7 +276,7 @@ class HomeController extends Controller
 
 
 
-    return view('ballbyballscorecard', compact('team_one_run_rate', 'team_two_run_rate', 'teams_one', 'match_total_overs', 'match_data', 'teams_two', 'match_detail', 'match_results', 'teams', 'player', 'total_run', 'total_wickets', 'total_overs', 'tournament', 'teams_two_player', 'teams_one_player', 'image_gallery'));
+    return view('ballbyballscorecard', compact('team_one_run_rate','match_over' ,'team_two_run_rate', 'teams_one', 'match_total_overs', 'match_data', 'teams_two', 'match_detail', 'match_results', 'teams', 'player', 'total_run', 'total_wickets', 'total_overs', 'tournament', 'teams_two_player', 'teams_one_player', 'image_gallery'));
   }
 
 

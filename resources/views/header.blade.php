@@ -16,7 +16,7 @@
     <meta property='og:description' content='' />
     <meta property='og:type' content='website' />
     <!-- CSS -->
-    <link href="/utilsv2/app/assets/css/main.css" rel="stylesheet">
+    <link href="{!! asset('utilsv2/app/assets/css/main.css') !!}"  rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/styles/jquery-ui-1.10.3.custom.css') !!}" media="all" />
     <!-- NOTE :  Above Commented 13 CSS is compressed and minified into given below CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="{!! asset('utilsv2/css/compressed-premium.css') !!}" media="all">
