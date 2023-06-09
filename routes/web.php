@@ -109,6 +109,8 @@ Route::post('fielding_states_submit',[HomeController::class,'fielding_states_sub
 
 
 Route::get('playerRanking',[HomeController::class,'playerRanking'])->name('playerRanking');
+Route::post('playerRanking_submit',[HomeController::class,'playerRanking_submit'])->name('playerRanking_submit');
+
 
 
 

@@ -67,7 +67,7 @@
     </div>
 
     <div class="sta-content">
-        <form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('fielding_states_submit')}}">
+        <form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('playerRanking_submit')}}">
             @csrf
             <section class="sta-search-filter">
                 <div class="row">
@@ -184,8 +184,6 @@
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Matches <p><a href="#"></a></p></a></th>
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Batting <p><a href="#"></a></p></a></th>
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Bowling <p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Fielding <p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Other <p><a href="#"></a></p></a></th>
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">MOM #<p><a href="#"></a></p></a></th>
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Total <p><a href="#"></a></p></a></th>
                                 </tr>   
@@ -199,36 +197,22 @@
                                     <td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
                                         <div>
                                             <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                                            <a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->bowler_id]}}</a><br>
+                                            <a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->player_id]}}</a><br>
                                         </div>
                                     </td>
                                     <td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
-                                    <td>{{  $data->total_matches   }}</td>
-                                    <td>{{ $data->catch }}</td>
-                                    <td>{{ $data->stump }}</td>
-                                    <td> {{ $data->catch + $data->stump  }} </td>
+                                    <td style="text-align: left;font-size: smaller;">{{ collect($match_counts)->where('player_id', $data->player_id)->pluck('total_matches')->first() ?? 0 }}</td>
+                                    <td>{{  $data->Batting   }}</td>
+                                    <td>{{ $data->Bowling }}</td>
+                                    <td>{{ collect($man_of_matchs)->where('player_id', $data->player_id)->pluck('MOM')->first() ?? 0 }}</td>
+                                    <td>{{  $data->Batting ?? 0  +  $data->Bowling ?? 0 }}</td>
 
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <table id="header-fixed" style="position: fixed; top: 0px; background-color: white; width: 1110px; display: none;" class="sortable dataTable">
-                        <thead>
-                            <tr>
-                                <th style="width: 51px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 0);return false;">#<span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="width" style="text-align: left !important; width: 194px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">Player <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="width" style="text-align: left !important; width: 229px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">Team <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="spa" style="width: 100px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Matches <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="spa" style="width: 90px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">Batting <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="spa" style="width: 95px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">Bowling <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="spa" style="width: 95px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">Fielding <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="spa" style="width: 79px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">Other <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="spa" style="width: 91px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">MOM # <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                                <th class="spa" style="width: 76px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 9);return false;">Total <span class="sortarrow">&nbsp;<img src="/utilsv2/images/arrow-none.gif" alt="↓"></span></a></th>
-                            </tr>
-                        </thead>
-                    </table>
+                   
                 </div>
             </div>
         </div>

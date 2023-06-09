@@ -91,7 +91,7 @@
                         @if (isset($select_tournament_name[0]->id))
                         <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="{{ url('show_team/' . $select_tournament_name[0]->id) }}">Teams</a></li>
                         @else
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Teams</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">TTTTTTTeams</a></li>
                         @endif
 
 
