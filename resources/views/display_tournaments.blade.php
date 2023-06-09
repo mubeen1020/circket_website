@@ -88,25 +88,20 @@
                 <div class="col-sm-4">
                     <ul class="series-d">
 
-                        @if (isset($select_tournament_name[0]->id))
                         <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="{{ url('show_team/' . $select_tournament_name[0]->id) }}">Teams</a></li>
-                        @else
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Teams</a></li>
-                        @endif
-
-
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Points Table</a></li>
-
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Batting Records</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="{{ url('show_point_table/' . $select_tournament_name[0]->id) }}">Points Table</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="{{ url('show_batting_records/' . $select_tournament_name[0]->id) }}">Batting Records</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-4">
                     <ul class="series-d">
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Bowling Records</a></li>
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Fielding Records</a></li>
-                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="#">Player Rankings</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="{{ url('show_bowling_records/' . $select_tournament_name[0]->id) }}">Bowling Records</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="{{ url('show_fielding_records/' . $select_tournament_name[0]->id) }}">Fielding Records</a></li>
+                        <li nowrap="nowrap" valign="top" style="padding-left: 10px;"><a href="{{ url('show_player_ranking/' . $select_tournament_name[0]->id) }}">Player Rankings</a></li>
                     </ul>
                 </div>
+
+
             </div>
         </div>
     </div>
