@@ -125,3 +125,6 @@ Route::get('show_batting_records/{tournament_id}',[HomeController::class,'show_b
 Route::get('show_bowling_records/{tournament_id}',[HomeController::class,'show_bowling_records'])->name('show_bowling_records');
 Route::get('show_fielding_records/{tournament_id}',[HomeController::class,'show_fielding_records'])->name('show_fielding_records');
 Route::get('show_player_ranking/{tournament_id}',[HomeController::class,'show_player_ranking'])->name('show_player_ranking');
+
+
+Route::get('get_top_ranking/{id}',[ApiController::class,'get_top_ranking'])->name('get_top_ranking');

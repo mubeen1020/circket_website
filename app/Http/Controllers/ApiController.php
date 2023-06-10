@@ -643,6 +643,38 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         return response()->json([$tournamnetdata,$tournament_players,$tournament_cauches,$result,$tournament_total_hundreds,$tournament_total_fifties,$tournament_balls,$tournament_teams]);
     }
     
+
+    public function get_top_ranking(int $tournament_id)
+    {
+       
+        $top_ranking = DB::select("SELECT 
+        p.fullname,
+        pc.tournament_id, 
+        pc.fixture_id, 
+        pc.player_id, 
+        pc.team_id, 
+        COALESCE(SUM(CASE WHEN pc.player_type = 'batsmen' THEN pc.points END), '') AS 'Batting',
+        COALESCE(SUM(CASE WHEN pc.player_type = 'Bowler' THEN pc.points END), '') AS 'Bowling',
+        COALESCE(SUM(CASE WHEN pc.player_type IN ('batsmen', 'Bowler') THEN pc.points END), '') AS 'Total'
+      FROM 
+        players_contain_points AS pc
+      JOIN 
+        players AS p ON p.id = pc.player_id
+      WHERE 
+        pc.player_type IN ('batsmen', 'Bowler')
+        AND pc.tournament_id = 48
+      GROUP BY 
+        p.fullname,
+        pc.tournament_id, 
+        pc.fixture_id, 
+        pc.player_id, 
+        pc.team_id
+      ORDER BY
+        CAST(Total AS DECIMAL(10,2)) DESC
+      LIMIT 5") ;
+
+        return response()->json($top_ranking);
+    }
     
 
     
