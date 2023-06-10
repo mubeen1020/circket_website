@@ -291,47 +291,8 @@ $(document).ready(function() {
                                                         <th class="ls">Points</th>
                                                         </tr> 
                                                     </thead> 
-                                                    <tbody> 
-                                                    <tr> 
-                                                        <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
-														<img src="https://cricclubs.com/documentsRep/profilePics/2c42f3e9-437d-4233-b69b-e4832bbdf2e3.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-														</td>
-                                                        <td><a href="#"> Vijay Subramanya (SCC)</a></td></tr></tbody></table></th> 
-                                                       <!--  <th>12</th>-->
-                                                        <th class="ls">2000</th>
-                                                     </tr> 
-                                                     <tr> 
-                                                        <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
-														<img src="https://cricclubs.com/documentsRep/profilePics/daa17ece-3476-47d3-9fd9-d653ffdd357b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-														</td>
-                                                        <td><a href="#"> Yasir Abbasi (RC9)</a></td></tr></tbody></table></th> 
-                                                       <!--  <th>9</th>-->
-                                                        <th class="ls">1903</th>
-                                                     </tr> 
-                                                     <tr> 
-                                                        <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
-														<img src="https://cricclubs.com/documentsRep/profilePics/052853ab-cd4d-435a-aca7-7abd382346dd.png" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-														</td>
-                                                        <td><a href="#"> Varun Sehdev (RPT)</a></td></tr></tbody></table></th> 
-                                                       <!--  <th>7</th>-->
-                                                        <th class="ls">1879</th>
-                                                     </tr> 
-                                                     <tr> 
-                                                        <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
-														<img src="https://cricclubs.com/documentsRep/profilePics/1a0f1178-665f-4e84-994b-ef4717ab51dc.jpeg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-														</td>
-                                                        <td><a href="#"> Manik Sharma (LCC)</a></td></tr></tbody></table></th> 
-                                                       <!--  <th>10</th>-->
-                                                        <th class="ls">1671</th>
-                                                     </tr> 
-                                                     <tr> 
-                                                        <th><table><tbody><tr><td style="padding-right:5px;min-width:35px">
-														<img src="https://cricclubs.com/documentsRep/profilePics/206f3b84-ba02-4cf4-a10e-a98d4975e46b.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-														</td>
-                                                        <td><a href="viewPlayer.do?playerId=1242838&amp;clubId=2565"> Abubaker Kalair (MQ)</a></td></tr></tbody></table></th> 
-                                                       <!--  <th>12</th>-->
-                                                        <th class="ls">1418</th>
-                                                     </tr> 
+                                                    <tbody id="topranking"> 
+                                                    
                                                      </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
@@ -1142,6 +1103,7 @@ function get_point_table(tornament_season_id, type) {
     get_season_group(tornament_season_id);
     get_season_tournament(tornament_season_id);
     get_tournamnet_all_data(tornament_season_id);
+    get_top_ranking(tornament_season_id);
 }
 
 
@@ -1439,6 +1401,45 @@ function get_tournamnet_all_data(tournament_season_id) {
             const tournamentTeams=document.getElementById('tournamentteams');
             tournamentTeams.innerHTML = '';
             tournamentTeams.innerHTML += `${tournament_teams==undefined?0:tournament_teams[0]['totalteams']}`;
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+
+function get_top_ranking(tournament_season_id) {
+    $.ajax({
+        url: "{{ url('/get_top_ranking/')}}/" + tournament_season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const scores = document.getElementById('topranking');
+            scores.innerHTML = ''; // Clear the previous data before appending new data
+            data.forEach(item => {
+                scores.innerHTML += `
+                    <tr>
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding-right:5px;min-width:35px">
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.player_id}.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
+                                        </td>
+                                        <td>
+                                            <a href="viewPlayer.do?playerId=1242838&amp;clubId=2565">${item.fullname}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th> 
+                        <th class="ls">
+                            <a style="font-size: 17px;" class="linkStyle" href="">${item.Total}</a>
+                        </th>
+                    </tr>
+                `;
+            });
         },
         error: function(error) {
             console.log(error);
