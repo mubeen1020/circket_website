@@ -646,7 +646,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
 
     public function get_top_ranking(int $tournament_id)
     {
-       
+       error_log($tournament_id);
         $top_ranking = DB::select("SELECT 
         p.fullname,
         pc.tournament_id, 
@@ -662,7 +662,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         players AS p ON p.id = pc.player_id
       WHERE 
         pc.player_type IN ('batsmen', 'Bowler')
-        AND pc.tournament_id = 48
+        AND pc.tournament_id = $tournament_id
       GROUP BY 
         p.fullname,
         pc.tournament_id, 
