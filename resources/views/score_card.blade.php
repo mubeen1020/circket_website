@@ -86,7 +86,7 @@
 																				@if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
 																					@if ($out->out_description == "Retired Hurt")
 																						<span>{{ $out->out_description }}</span>
-																					@elseif ($out->out_description == "Run Out" || $out->out_description == "Caught" || $out->out_description == "Run Out (WD)" || $out->out_description == "Run Out (NB)")
+																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)")
 																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;&nbsp;{{ $out->fielder_name }}</a>)
 																					@elseif ($out->out_description == "Bowled")
 																						<span>b</span> (<a href="#"> {{ $out->bowler_name }}</a>)
@@ -95,7 +95,7 @@
 																			@endforeach
                                                                         	</th>
                                                                         <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
-                                                                        <th style="text-align: right;">{{$player_balls[$item->playerId]}}</th> 
+                                                                        <th style="text-align: right;">{{$player_balls[$item->playerId]??0}}</th> 
                                                                         <th style="text-align: right;">{{$item->total_fours}}<a style="display:none" id="btfour_video_1207430" href="javascript:openVideoHTMLvs('1207430','four', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	</th>
                                                                         <th style="text-align: right;">{{$item->total_six}}</th>
@@ -189,7 +189,7 @@
       </th>
       <th style="text-align: right;">{{$item->total_runs}}</th>
       <th style="text-align: right;">{{$item->total_wicket}}</th> 
-      <th style="text-align: right;">{{ number_format(($item->total_runs) / round(($item->max_ball) / 6), 2) }}</th>
+      <th style="text-align: right;">{{ number_format(($item->total_runs)/$item->over, 2) }}</th>
     </tr> 
   @endif
 @endforeach
@@ -314,7 +314,7 @@
 																				@if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
 																					@if ($out->out_description == "Retired Hurt")
 																						<span><a href="#"> b<{{ $out->out_description }}</a></span>
-																					@elseif ($out->out_description == "Run Out" || $out->out_description == "Caught" || $out->out_description == "Run Out (WD)" || $out->out_description == "Run Out (NB)")
+																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)")
 																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;&nbsp;{{ $out->fielder_name }}</a>)
 																					@elseif ($out->out_description == "Bowled")
 																						<span><a href="#"> b</span> {{ $out->bowler_name }}</a>
@@ -323,7 +323,7 @@
 																			@endforeach
                                                                         	</th>
                                                                             <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
-                                                                            <th style="text-align: right;">{{$player_balls[$item->playerId]??0}}  </th>
+                                                                            <th style="text-align: right;">{{$player_balls[$item->playerId]?? 0}}  </th>
                                                                             <th style="text-align: right;">{{$item->total_fours}}</th> 
                                                                         <th style="text-align: right;">{{$item->total_six}}</th>
                                                                         <th style="text-align: center;"> {{ isset($player_balls[$item->playerId]) && $player_balls[$item->playerId] != 0 ? number_format(($item->total_runs / $player_balls[$item->playerId]) * 100, 2) : 0.00 }}</th>
@@ -415,7 +415,7 @@
                                                                           		<th style="text-align: right;">{{$item->total_runs}}</th>
                                                                         <th style="text-align: right;">{{$item->total_wicket}}</th> 
                                                                         </th>
-                                                                        <th style="text-align: right;">{{ number_format(($item->total_runs)/round(($item->max_ball)/6), 2) }}
+                                                                        <th style="text-align: right;">{{ number_format(($item->total_runs)/$item->over, 2) }}
 </th>
                                                
                                                                     </tr> 

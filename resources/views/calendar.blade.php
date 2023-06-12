@@ -1,0 +1,163 @@
+@extends('default')
+@section('content')
+<div class="holder point">
+    	<div class="container">
+        	<div class="point-table-all border">
+            <div class="series-drop">
+            	            <div class="series-drop">
+            <div class="row">
+                	<div class="col-sm-6">
+                    	<div class="border-heading">
+                            <h5 style=" text-align: left; ">Schedule: 2023 MCL50 - Super 6</h5>
+                        </div>
+                    </div>
+              </div>
+            	<div class="row">
+            	
+            		
+					
+                    <div class="col-sm-2" title="Change Series">
+						<div class="dropdown">
+						
+							<button class="btn btn-default dropdown-toggle btn-align" type="button" id="dropdownMenu1" data-toggle="dropdown">
+								<p>2023 MCL50 - Super 6</p> <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-height" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=All&amp;clubId=2565">All Series</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;clubId=2565">2023 MCL50 - Super 6</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=131&amp;clubId=2565">2023 MCL100 - Super 8</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=117&amp;clubId=2565">2023 MCL T25</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=125&amp;clubId=2565">2023 MCL T20</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=116&amp;clubId=2565">2022 - Boom Boom T10</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=92&amp;clubId=2565">2022 - MCL50 SUPER 7</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=93&amp;clubId=2565">2022 MCLT20</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=114&amp;clubId=2565">2022 MCLT12 Winter League</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=91&amp;clubId=2565">2022 MCL100 - Super 8</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=100&amp;clubId=2565">2022 MCLT25</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=108&amp;clubId=2565">MCL vs Singapore</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=90&amp;clubId=2565">2021 MCL Tapeball Winter League</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=89&amp;clubId=2565">2021 MCLT12 Winter League</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=86&amp;clubId=2565">2021 MCL100</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=85&amp;clubId=2565">2021 MCLT20 Day/Night</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=80&amp;clubId=2565">2021 MCLT20</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=79&amp;clubId=2565">2021 MCL50 Super 9</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=71&amp;clubId=2565">2021 MCLT25</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=70&amp;clubId=2565">2021 - BOOM BOOM T10 BLAST</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=66&amp;clubId=2565">2020 MCL Winter</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=65&amp;clubId=2565">RGILL Corporation &amp; Phat Sportsplex -Boom Boom T10 Blast</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=64&amp;clubId=2565">September Boom Boom T10 Blast</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=59&amp;clubId=2565">2020 MCLT20</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=52&amp;clubId=2565">2020 MCLT25</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=51&amp;clubId=2565">2020 MCL100</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=50&amp;clubId=2565">2020 MCL50 Super 8</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=49&amp;clubId=2565">2019 MCL 100</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=46&amp;clubId=2565">2018 T25&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=45&amp;clubId=2565">2018 T20&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=44&amp;clubId=2565">2018 - T25 Playoffs&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=43&amp;clubId=2565">2018 - T25 Finals&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=42&amp;clubId=2565">2018 - T20 Playoffs&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=41&amp;clubId=2565">2018 - T20 Finals&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=40&amp;clubId=2565">2017 T25&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=39&amp;clubId=2565">2017 T20&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=38&amp;clubId=2565">2017 - T25 Playoffs&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=37&amp;clubId=2565">2017 - T25 Finals&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=36&amp;clubId=2565">2017 - T20 Playoffs&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=35&amp;clubId=2565">2017 - T20 Finals&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=34&amp;clubId=2565">2016 T25&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=33&amp;clubId=2565">2016 T20&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=32&amp;clubId=2565">2015 T20&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=31&amp;clubId=2565">2015 T20 Playoffs&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=20&amp;clubId=2565">2019 MCL T20</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=15&amp;clubId=2565">2019 MCL T25</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=11&amp;clubId=2565">2016 T25 Playoffs</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=10&amp;clubId=2565">2016 T25 Final</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=8&amp;clubId=2565">2016 T20 Div2 Playoffs</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=7&amp;clubId=2565">2016 T20 Div2 Final</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=6&amp;clubId=2565">2016 T20 Div1 Playoffs</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=5&amp;clubId=2565">2016 T20 Div1 Final</a></li>
+								</ul>
+						</div>
+                    </div>
+                 	<div class="col-sm-2" title="Change Team">
+                    <div class="dropdown">
+								<button class="btn btn-default dropdown-toggle btn-align" type="button" id="dropdownMenu2" data-toggle="dropdown">
+									 All Teams<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-height" role="menu" aria-labelledby="dropdownMenu2">
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;internalClubId=null&amp;clubId=2565">All Teams</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=1339&amp;internalClubId=null&amp;clubId=2565">Ghaznavi Progressive Rehab</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=1341&amp;internalClubId=null&amp;clubId=2565">Jammu Elite</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=1343&amp;internalClubId=null&amp;clubId=2565">Mississauga Dolphins</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=1340&amp;internalClubId=null&amp;clubId=2565">Mississauga Qalandars</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=1342&amp;internalClubId=null&amp;clubId=2565">Royal Panthers Toronto</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=1344&amp;internalClubId=null&amp;clubId=2565">Toronto Renegades</a></li>
+									</ul>
+							</div>
+                    </div>
+                    
+                    <div class="col-sm-2" title="Change internal club">
+                    <div class="dropdown">
+								<button class="btn btn-default dropdown-toggle btn-align" type="button" id="dropdownMenu2" data-toggle="dropdown">
+								All Clubs<span class="caret"></span>
+								</button> 
+								<ul class="dropdown-menu dropdown-height" role="menu" aria-labelledby="dropdownMenu2">
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;clubId=2565">All</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;internalClubId=114&amp;clubId=2565">Royal Panthers Toronto CC</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;internalClubId=68&amp;clubId=2565">Ghaznavi Cricket Club</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;internalClubId=55&amp;clubId=2565">Mississauga Qalandars Cricket Club</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;internalClubId=11&amp;clubId=2565">Mississauga Dolphins</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;internalClubId=111&amp;clubId=2565">Toronto Renegades</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;internalClubId=159&amp;clubId=2565">Jammu Elite</a></li>
+									</ul>
+							</div>
+                    </div>
+                    <div class="col-sm-2" title="Change Ground">
+                    <div class="dropdown">
+								<button class="btn btn-default dropdown-toggle btn-align" type="button" id="dropdownMenu2" data-toggle="dropdown">
+									 All Grounds<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-height" role="menu" aria-labelledby="dropdownMenu2">
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;internalClubId=null&amp;clubId=2565">All Grounds</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;groundId=8&amp;internalClubId=null&amp;clubId=2565">Danville North</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;groundId=17&amp;internalClubId=null&amp;clubId=2565">Paul Coffey</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/MississaugaCricketLeague/fixturesCalendar.do?league=132&amp;teamId=null&amp;groundId=9&amp;internalClubId=null&amp;clubId=2565">Danville South</a></li>
+									</ul>
+							</div>
+                    </div>   
+            </div>
+            		<table style="width: 100%">
+						<tbody><tr>
+							<td style="text-align: right;"><div class="addthis_sharing_toolbox hidden-phone" style="height: 24px;text-align: right;"></div>
+							<table style="width: 100%; margin-bottom: 10px;text-align: center;">
+	<tbody><tr>
+		<td><a class="show-phone" href="#" onclick="javascript:mobileFacebookShare();return false;"> <img src="/utilsv2/images/fb_new.png"></a></td>
+		<td><a class="show-phone" href="#" onclick="javascript:mobileTwitterShare();return false;"><img src="/utilsv2/images/twi.png"></a></td>
+		<td><a class="show-phone" href="#" onclick="javascript:mobileGoogleShare(); return false;"><img src="/utilsv2/images/goo.png"></a></td>
+		<td><a class="show-phone" href="#" onclick="javascript:mobileMailShare(); return false;"><img width="40" src="/utilsv2/images/mail.png"></a></td>
+		<td><a class="show-phone whatsapp"><img src="/utilsv2/images/whatsapp.png"></a></td>
+	</tr>
+</tbody></table></td>
+						</tr>
+					</tbody></table>
+					<table style="width: 100%; margin-bottom: 15px; margin-top: 15px; text-align: center;">
+						<tbody><tr>
+							<td style="text-align: left;">
+							<img alt="Download as Excel" id="excel-download" title="Download as Excel" class="excelBtn" style="cursor:pointer; margin:5px !important;" width="32" height="32" src="/utilsv2/images/excel.png">
+								<!-- <button type="button" id="excel-download" title="Excel Download" class="btn btn-md hidden-phone"  
+									style="font-size:18px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button> -->
+							</td>							
+						</tr>
+					</tbody></table>
+					<div id="jMonthCalendar" class="fc fc-ltr"><table class="fc-header" style="width:100%"><tbody><tr><td class="fc-header-left"><span class="fc-button fc-button-prev fc-state-default fc-corner-left" unselectable="on"><span class="fc-icon fc-icon-left-single-arrow"></span></span><span class="fc-button fc-button-next fc-state-default fc-corner-right" unselectable="on"><span class="fc-icon fc-icon-right-single-arrow"></span></span><span class="fc-header-space"></span><span class="fc-button fc-button-today fc-state-default fc-corner-left fc-corner-right fc-state-disabled" unselectable="on">today</span></td><td class="fc-header-center"><span class="fc-header-title"><h2>June 2023</h2></span></td><td class="fc-header-right"><span class="fc-button fc-button-month fc-state-default fc-corner-left fc-state-active" unselectable="on">month</span><span class="fc-button fc-button-basicWeek fc-state-default" unselectable="on">week</span><span class="fc-button fc-button-basicDay fc-state-default fc-corner-right" unselectable="on">day</span></td></tr></tbody></table><div class="fc-content" style=""><div class="fc-view fc-view-month fc-grid" unselectable="on"><div class="fc-event-container" style="position:absolute;z-index:8;top:0;left:0"><a href="javascript:showCalendarEvent('12:30 PM - Jammu Elite vs Mississauga Qalandars	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 951px; width: 156px; top: 715px;"><div class="fc-event-inner"><span class="fc-event-title">12:30 PM - Jammu Elite vs Mississauga Qalandars</span></div></a><a href="javascript:showCalendarEvent('12:00 PM - Royal Panthers Toronto vs Mississauga Qalandars	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 3px; width: 153px; top: 715px;"><div class="fc-event-inner"><span class="fc-event-title">12:00 PM - Royal Panthers Toronto vs Mississauga Qalandars</span></div></a><a href="javascript:showCalendarEvent('12:30 PM - Mississauga Dolphins vs Mississauga Qalandars	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 3px; width: 153px; top: 622px;"><div class="fc-event-inner"><span class="fc-event-title">12:30 PM - Mississauga Dolphins vs Mississauga Qalandars</span></div></a><a href="javascript:showCalendarEvent('12:00 PM - Royal Panthers Toronto vs Toronto Renegades	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 3px; width: 153px; top: 585px;"><div class="fc-event-inner"><span class="fc-event-title">12:00 PM - Royal Panthers Toronto vs Toronto Renegades</span></div></a><a href="javascript:showCalendarEvent('12:00 PM - Ghaznavi Progressive Rehab vs Jammu Elite	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 3px; width: 153px; top: 455px;"><div class="fc-event-inner"><span class="fc-event-title">12:00 PM - Ghaznavi Progressive Rehab vs Jammu Elite</span></div></a><a href="javascript:showCalendarEvent('12:30 PM - Mississauga Qalandars vs Mississauga Dolphins	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 3px; width: 153px; top: 362px;"><div class="fc-event-inner"><span class="fc-event-title">12:30 PM - Mississauga Qalandars vs Mississauga Dolphins</span></div></a><a href="javascript:showCalendarEvent('12:30 PM - Jammu Elite vs Toronto Renegades	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 3px; width: 153px; top: 325px;"><div class="fc-event-inner"><span class="fc-event-title">12:30 PM - Jammu Elite vs Toronto Renegades</span></div></a><a href="javascript:showCalendarEvent('12:30 PM - Mississauga Dolphins vs Toronto Renegades	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 3px; width: 153px; top: 195px;"><div class="fc-event-inner"><span class="fc-event-title">12:30 PM - Mississauga Dolphins vs Toronto Renegades</span></div></a><a href="javascript:showCalendarEvent('12:30 PM - Mississauga Qalandars vs Ghaznavi Progressive Rehab	 ,		 Series Name: 2023 MCL50 - Super 6')" class="fc-event fc-event-hori fc-event-start fc-event-end" style="position: absolute; left: 3px; width: 153px; top: 64px;"><div class="fc-event-inner"><span class="fc-event-title">12:30 PM - Mississauga Qalandars vs Ghaznavi Progressive Rehab</span></div></a></div><table class="fc-border-separate" style="width:100%" cellspacing="0"><thead><tr class="fc-first fc-last"><th class="fc-day-header fc-sun fc-widget-header fc-first" style="width: 158px;">Sun</th><th class="fc-day-header fc-mon fc-widget-header" style="width: 158px;">Mon</th><th class="fc-day-header fc-tue fc-widget-header" style="width: 158px;">Tue</th><th class="fc-day-header fc-wed fc-widget-header" style="width: 158px;">Wed</th><th class="fc-day-header fc-thu fc-widget-header" style="width: 158px;">Thu</th><th class="fc-day-header fc-fri fc-widget-header" style="width: 158px;">Fri</th><th class="fc-day-header fc-sat fc-widget-header fc-last">Sat</th></tr></thead><tbody><tr class="fc-week fc-first"><td class="fc-day fc-sun fc-widget-content fc-other-month fc-past fc-first" data-date="2023-05-28"><div style="min-height: 130px;"><div class="fc-day-number">28</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-mon fc-widget-content fc-other-month fc-past" data-date="2023-05-29"><div><div class="fc-day-number">29</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-tue fc-widget-content fc-other-month fc-past" data-date="2023-05-30"><div><div class="fc-day-number">30</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-wed fc-widget-content fc-other-month fc-past" data-date="2023-05-31"><div><div class="fc-day-number">31</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-thu fc-widget-content fc-past" data-date="2023-06-01"><div><div class="fc-day-number">1</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-fri fc-widget-content fc-past" data-date="2023-06-02"><div><div class="fc-day-number">2</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-sat fc-widget-content fc-past fc-last" data-date="2023-06-03"><div><div class="fc-day-number">3</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td></tr><tr class="fc-week"><td class="fc-day fc-sun fc-widget-content fc-past fc-first" data-date="2023-06-04"><div style="min-height: 129px;"><div class="fc-day-number">4</div><div class="fc-day-content"><div style="position: relative; height: 37px;">&nbsp;</div></div></div></td><td class="fc-day fc-mon fc-widget-content fc-past" data-date="2023-06-05"><div><div class="fc-day-number">5</div><div class="fc-day-content"><div style="position: relative; height: 37px;">&nbsp;</div></div></div></td><td class="fc-day fc-tue fc-widget-content fc-past" data-date="2023-06-06"><div><div class="fc-day-number">6</div><div class="fc-day-content"><div style="position: relative; height: 37px;">&nbsp;</div></div></div></td><td class="fc-day fc-wed fc-widget-content fc-past" data-date="2023-06-07"><div><div class="fc-day-number">7</div><div class="fc-day-content"><div style="position: relative; height: 37px;">&nbsp;</div></div></div></td><td class="fc-day fc-thu fc-widget-content fc-past" data-date="2023-06-08"><div><div class="fc-day-number">8</div><div class="fc-day-content"><div style="position: relative; height: 37px;">&nbsp;</div></div></div></td><td class="fc-day fc-fri fc-widget-content fc-past" data-date="2023-06-09"><div><div class="fc-day-number">9</div><div class="fc-day-content"><div style="position: relative; height: 37px;">&nbsp;</div></div></div></td><td class="fc-day fc-sat fc-widget-content fc-today fc-state-highlight fc-last" data-date="2023-06-10"><div><div class="fc-day-number">10</div><div class="fc-day-content"><div style="position: relative; height: 37px;">&nbsp;</div></div></div></td></tr><tr class="fc-week"><td class="fc-day fc-sun fc-widget-content fc-future fc-first" data-date="2023-06-11"><div style="min-height: 129px;"><div class="fc-day-number">11</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-mon fc-widget-content fc-future" data-date="2023-06-12"><div><div class="fc-day-number">12</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-tue fc-widget-content fc-future" data-date="2023-06-13"><div><div class="fc-day-number">13</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-wed fc-widget-content fc-future" data-date="2023-06-14"><div><div class="fc-day-number">14</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-thu fc-widget-content fc-future" data-date="2023-06-15"><div><div class="fc-day-number">15</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-fri fc-widget-content fc-future" data-date="2023-06-16"><div><div class="fc-day-number">16</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-sat fc-widget-content fc-future fc-last" data-date="2023-06-17"><div><div class="fc-day-number">17</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td></tr><tr class="fc-week"><td class="fc-day fc-sun fc-widget-content fc-future fc-first" data-date="2023-06-18"><div style="min-height: 129px;"><div class="fc-day-number">18</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-mon fc-widget-content fc-future" data-date="2023-06-19"><div><div class="fc-day-number">19</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-tue fc-widget-content fc-future" data-date="2023-06-20"><div><div class="fc-day-number">20</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-wed fc-widget-content fc-future" data-date="2023-06-21"><div><div class="fc-day-number">21</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-thu fc-widget-content fc-future" data-date="2023-06-22"><div><div class="fc-day-number">22</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-fri fc-widget-content fc-future" data-date="2023-06-23"><div><div class="fc-day-number">23</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-sat fc-widget-content fc-future fc-last" data-date="2023-06-24"><div><div class="fc-day-number">24</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td></tr><tr class="fc-week"><td class="fc-day fc-sun fc-widget-content fc-future fc-first" data-date="2023-06-25"><div style="min-height: 129px;"><div class="fc-day-number">25</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-mon fc-widget-content fc-future" data-date="2023-06-26"><div><div class="fc-day-number">26</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-tue fc-widget-content fc-future" data-date="2023-06-27"><div><div class="fc-day-number">27</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-wed fc-widget-content fc-future" data-date="2023-06-28"><div><div class="fc-day-number">28</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-thu fc-widget-content fc-future" data-date="2023-06-29"><div><div class="fc-day-number">29</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-fri fc-widget-content fc-future" data-date="2023-06-30"><div><div class="fc-day-number">30</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td><td class="fc-day fc-sat fc-widget-content fc-other-month fc-future fc-last" data-date="2023-07-01"><div><div class="fc-day-number">1</div><div class="fc-day-content"><div style="position: relative; height: 91px;">&nbsp;</div></div></div></td></tr><tr class="fc-week fc-last"><td class="fc-day fc-sun fc-widget-content fc-other-month fc-future fc-first" data-date="2023-07-02"><div style="min-height: 128px;"><div class="fc-day-number">2</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-mon fc-widget-content fc-other-month fc-future" data-date="2023-07-03"><div><div class="fc-day-number">3</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-tue fc-widget-content fc-other-month fc-future" data-date="2023-07-04"><div><div class="fc-day-number">4</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-wed fc-widget-content fc-other-month fc-future" data-date="2023-07-05"><div><div class="fc-day-number">5</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-thu fc-widget-content fc-other-month fc-future" data-date="2023-07-06"><div><div class="fc-day-number">6</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-fri fc-widget-content fc-other-month fc-future" data-date="2023-07-07"><div><div class="fc-day-number">7</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td><td class="fc-day fc-sat fc-widget-content fc-other-month fc-future fc-last" data-date="2023-07-08"><div><div class="fc-day-number">8</div><div class="fc-day-content"><div style="position: relative; height: 54px;">&nbsp;</div></div></div></td></tr></tbody></table></div></div></div>
+					
+				</div>
+
+			</div>
+		</div>
+		</div>
+		</div>
+
+
+
+
+@stop
