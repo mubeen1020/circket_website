@@ -206,18 +206,18 @@ margin-top: 15px;}
                                   <li><a href="#">
                                   <img src="https://cricclubs.com/documentsRep/teamLogos/654d8ff3-3e3f-4137-8f4c-13063ce902b1.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
                                       
-                                  <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">
+                                  <li><a href="">
                                   <img src="https://cricclubs.com/documentsRep/teamLogos/61443e16-7f18-452a-a807-040ce00e712d.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-5">
                               <div class="schedule-text">
-                              <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]}}</p>
-                                  <h3><a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1343&amp;clubId=2565">{{ $header_teams[$data['team_id_a']]}}</a> 
-                    <span class="v">v</span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $header_teams[$data['team_id_b']]}}</a> 
+                              <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']??""]}}</p>
+                                  <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]}}</a> 
+                    <span class="v">v</span>  <a style="color: inherit;" href="">{{ $header_teams[$data['team_id_b']]}}</a> 
                     </h3>
-                      <h4>L @  <a style="color: inherit;" href="/MississaugaCricketLeague/viewGround.do?groundId=8&amp;clubId=2565" target="_new">{{ $ground2[$data['ground_id']] }}</a>
+                      <h4>L @  <a style="color: inherit;" href="" target="_new">{{ $ground2[$data['ground_id']] }}</a>
                     
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Umpires:
                   </h4>
