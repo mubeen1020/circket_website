@@ -85,7 +85,7 @@
 																		@foreach ($match_description as $out)
 																				@if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
 																					@if ($out->out_description == "Retired Hurt")
-																						<span>{{ $out->out_description }}</span>
+																						<span><a>b &nbsp;{{ $out->out_description }}</span>
 																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)")
 																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;&nbsp;{{ $out->fielder_name }}</a>)
 																					@elseif ($out->out_description == "Bowled")
@@ -313,9 +313,9 @@
 																		@foreach ($match_description as $out)
 																				@if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
 																					@if ($out->out_description == "Retired Hurt")
-																						<span><a href="#"> b<{{ $out->out_description }}</a></span>
+																						<span><a href="#"> b &nbsp;{{ $out->out_description }}</a></span>
 																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)")
-																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;&nbsp;{{ $out->fielder_name }}</a>)
+																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
 																					@elseif ($out->out_description == "Bowled")
 																						<span><a href="#"> b</span> {{ $out->bowler_name }}</a>
 																					@endif

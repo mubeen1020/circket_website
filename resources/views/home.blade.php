@@ -821,7 +821,7 @@ margin-right: 10px;
 					<div class="border-heading sp">
 						<h5>Facebook</h5>
 					</div>
-					<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%EOSCLeague%2F&amp;tabs=timeline&amp;width=340&amp;height=500&amp;small_header=true&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false&amp;appId=745734118815722" target="_top" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+					<iframe src="http://instagram.com/p/qbq6fIJMVZ/embed" target="_top" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 				</div>
 				<div class="facebook">
 					<div class="border-heading sp">
@@ -928,10 +928,15 @@ margin-right: 10px;
 
                 liveScoreDiv.innerHTML += `
                 <a  href="{{ url('fullScorecard/${item[0].fixture_id}') }}" style="cursor:pointer" >
+        
                 <div class="team-vs-team">
+                
                     <div class="row list-slign">
+                    
                         <div class="col-sm-4 col-xs-4">
+                        
                             <div class="vsteam-image" >
+           
                                 <ul class="list-inline" >
                                     <li><img
                                         src="https://eoscl.ca/admin/public/Team/${item[0].team_id_a}.png"
@@ -950,8 +955,16 @@ margin-right: 10px;
                             <div class="vsteam-text ">
 							
                             <h4>
+                            <span style="color:red;font-weight:bold;float:right;padding-right:10px">Live</span>
   <p>
-    <span style="color:red;font-weight:bold;float:right;padding-right:10px">Live</span>
+  <span style="float:right;">
+  <a style="font-size: 0.85rem;background: #2098d1;
+    padding: 4px 9px;
+    border-radius: 5px;
+    color: #fff;
+    margin-right: 1rem;margin-top:10px"  href="{{ url('fullScorecard/${item[0].fixture_id}') }}"> Scorecard</a>
+  </span>
+   
     ${item[0].tournaments_name} at ${item[0].ground_name}
   </p>
  
@@ -1028,7 +1041,6 @@ margin-right: 10px;
                     </div>
                   
                    
-                 
 					
                 </div>
             

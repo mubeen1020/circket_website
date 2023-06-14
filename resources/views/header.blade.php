@@ -257,20 +257,20 @@
                             <div class="logo">
                                 <table>
                                     <tr>
-                                        <td style='width:100px;height:100px;'><a
+                                        <td style='width:100%;height:100%;'><a
                                                 href="{{ route('home')}}"><img
                                                     src="{{ asset('utilsv2/img/others/eoscl-logo.png') }}" border="0"
                                                     style='width:100px;height:100px;'
-                                                    class="img-responsive center-block img-circle" /></a>
+                                                    class="img-responsive center-block img-circle" />
+                                                   
+                                                <font class="logo-name" size="5" style="color: white; font-size: 2rem;font-weigth:bold !important;">
+                                                    Event Ontario Softball Circket</font>
+                                           
+                                                </a>
+                                                   
 
                                         </td>
-                                        <td style="padding-left:8px;">
-                                            <a href="{{ route('home')}}"
-                                                style="text-decoration: none; display: inline-block;">
-                                                <font class="logo-name" size="5" style="color: white; font-size: 2rem;">
-                                                    Event Ontario Softball Circket</font>
-                                            </a>
-                                        </td>
+                                      
                                     </tr>
                                     <tr>
                                         <td>
@@ -286,32 +286,12 @@
 
                         </div>
                         <div id="navbarSlider" class="col-sm-3   hidden-phone slider " style="overflow-x: hidden;">
-                            @foreach($match_results as $match_result)
-                            <div class="navbar-slide" style="margin-left:15px;margin-right:15px;">
-                                <!-- <div class="spon-image hvr-grow"> -->
-                                <a href='#' style='text-decoration: none;' target='_blank'>
-                                    <table class='thinBorder'>
-                                        <tr>
-                                            <td class='thinBorder' title='' style='padding:0px;height:90px;'>
-                                                <div class="card">
-                                                    <div class="card-content">
-                                                        <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$header_teams[$match_result->team_id_a]}} - vs - {{$header_teams[$match_result->team_id_b]}}</span></h6>
-                                                        <p style="color:white">{{$match_result->match_result_description}}</p>
 
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </a>
-                                <!-- </div> -->
-                            </div>
-                            @endforeach
                         </div>
 
 
 
-                        <div class="col-sm-4    hidden-phone slider " style="overflow-x: hidden;  padding-top: 20px;">
+                        <div class="col-sm-12 col-md-12    hidden-phone slider " style="overflow-x: hidden;  padding-top: 20px;width:100%">
                             <div class="slick-carousel-header" id="navbarSlider" style="display:flex;">
                                 @foreach($header_sponsor_gallery as $image)
                                 <div class="gallery-image-all">

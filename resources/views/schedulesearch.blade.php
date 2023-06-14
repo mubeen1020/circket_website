@@ -213,7 +213,13 @@ margin-top: 15px;}
                             </div>
                             <div class="col-xs-12 col-sm-5">
                               <div class="schedule-text">
-                              <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']??""]}}</p>
+                              <p style="color: #fff; margin-bottom: 3px;">
+                              @if (!empty($data['tournament_id']) && isset($tournament[$data['tournament_id']]))
+        {{$tournament[$data['tournament_id']]}}
+    @else
+       ""
+    @endif
+                            </p>
                                   <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]}}</a> 
                     <span class="v">v</span>  <a style="color: inherit;" href="">{{ $header_teams[$data['team_id_b']]}}</a> 
                     </h3>

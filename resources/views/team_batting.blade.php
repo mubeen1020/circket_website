@@ -173,9 +173,9 @@ th { min-width:30px !important; padding: 10px 5px !important; }
 				@endif
         <th>{{$playerhigestruns[$playerId]??0}}</th>
 	
-        <th>0</th>
+        <th>{{$playerHundreds[$playerId]??0}}</th>
 	
-        <th>0</th>
+        <th>{{$playerfifty[$playerId]??0}}</th>
         <th>{{$playersix[$playerId]??0}}</th>
         <th>{{$playerfour[$playerId]??0}}</th>
     </tr>

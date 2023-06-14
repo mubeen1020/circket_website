@@ -138,67 +138,51 @@ th { min-width:30px !important; padding: 10px 5px !important; }
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Nb: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 15);return false;">Nb<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th></tr> 
                     </thead>
 		<tbody>
-		@foreach($team_bowlingdata as $key => $data)
+		@foreach($playername as  $playerId => $playerName)
 			<tr role="row" class="odd">
-				<th class="sorting_1">{{ $key+1 }}</th>
-				<th align="left" title="Abubaker Kalair"><i class="fa fa-user"></i> <b><a href="viewPlayer.do?playerId=1242838&amp;clubId=2565"> {{$player[$data['bowler_id']]}}</a></b></th>
+				<th class="sorting_1">{{ $playerId}}</th>
+				<th align="left" title="Abubaker Kalair"><i class="fa fa-user"></i> <b><a href="viewPlayer.do?playerId=1242838&amp;clubId=2565"> {{ $playerName }}</a></b></th>
 				<th>
 				<table>
 					<tbody><tr>
 						<td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
-						<td>&nbsp;{{$header_teams[$data['team_id']]}}</td>
+						<td>&nbsp;{{$header_teams[$playerteam[$playerId]]}}</td>
 					</tr>
 				</tbody></table>
 				</th>
-				<th>{{$data->total_matches}}</th>
+				<th>{{$playermatch[$playerId]}}</th>
 
-				<th>{{$data->total_matches}}</th>
+				<th>{{ isset($matchcount[$playerId]) ? $matchcount[$playerId] : 0 }}</th>
 
-				<th>{{$data->total_overs}}</th>
+				<th>{{($playerballs[$playerId] ?? 0)}}</th>
+
+
 				<th>
-                			<b><a class="linkStyle" href="">
-               {{$data->total_runs}}</a></b>
+                			<b><a class="linkStyle" href="">{{ isset($playerruns[$playerId]) ? $playerruns[$playerId] : 0 }}
+               </a></b>
 				</th>
-				<th>{{$data->total_out}}</th>
-				@if ($data->total_out != 0) 
-                <th>{{number_format($data->total_runs / $data->total_out,2)}}</th>
+				<th>{{$playerouts[$playerId]??0}}</th>
+			
+				@if ($playerouts[$playerId]??0 != 0) 
+                <th>{{number_format($playerruns[$playerId]/$playerouts[$playerId],2)}}</th>
+				@else
+				<th>0</th>
+				@endif
+				@if ($playerballs[$playerId]??0 != 0) 
+                <th>{{number_format($playerruns[$playerId]/$playerballs[$playerId],2)}}</th>
 				@else
 				<th>0</th>
 				@endif
 				
-				@if ($data->total_overs != 0) 
-                <th>{{number_format($data->total_runs / $data->total_overs,2)}}</th>
-				@else
-				<th>0</th>
-				@endif
-				@if ($data->total_out != 0) 
-                <th>{{number_format($data->total_overs/$data->total_out,2)}}</th>
-				@else
-				<th>0</th>
-				@endif
-				<th>
-				<?php
-				$hat_tricks = 0;
-				$current_overs = 0;
-				$current_wickets = 0;
-				if ($data->bowling_details) {
-					foreach($data->bowling_details as $detail) {
-					if ($detail->isout) {
-						$current_wickets++;
-						if ($current_wickets >= 3) {
-						$hat_tricks++;
-						$current_wickets = 0;
-						$current_overs = 0;
-						}
-					}
-					$current_overs = $detail->overnumber;
-					}
-				}
-				echo $hat_tricks;
-				?>
-				</th>
-				<th>{{$data->total_wides}}</th>
-				<th>{{$data->total_noball}}</th>
+				@if (isset($playerballs[$playerId]) && isset($playerouts[$playerId]) && $playerballs[$playerId] != 0)
+    <th>{{ number_format($playerouts[$playerId] / $playerballs[$playerId], 2) }}</th>
+@else
+    <th>0</th>
+@endif
+
+				<th></th>
+				<th>{{$playerwide[$playerId]??0}}</th>
+				<th>{{$playernoball[$playerId]??0}}</th>
 			</tr>
 			@endforeach
            </tbody>
