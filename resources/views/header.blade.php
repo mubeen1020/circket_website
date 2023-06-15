@@ -256,14 +256,14 @@
                         <div class="col-sm-4 col-xs-12">
                             <div class="logo">
                                 <table>
-                                    <tr>
-                                        <td style='width:100%;height:100%;'><a
+                                    <tr >
+                                        <td style='width:100%;height:100%;' class=''><a
                                                 href="{{ route('home')}}"><img
                                                     src="{{ asset('utilsv2/img/others/eoscl-logo.png') }}" border="0"
                                                     style='width:100px;height:100px;'
-                                                    class="img-responsive center-block img-circle" />
+                                                    class="img-responsive immobile center-block img-circle" />
                                                    
-                                                <font class="logo-name" size="5" style="color: white; font-size: 2rem;font-weigth:bold !important;">
+                                                <font class="logo-name headname" size="5" style="color: white; font-size: 2rem;font-weigth:bold !important;">
                                                     Event Ontario Softball Circket</font>
                                            
                                                 </a>
@@ -310,49 +310,26 @@
         </div>
 
 
-        <div class="col-sm-12">
+        <div class="col-sm-12 head">
             <div class="col-sm-12 add-phone slider">
 
                 <div class="slick-carousel-header">
 
-                    <div style="margin-left:15px;margin-right:15px;display:flex;">
-                        <div class="spon-image hvr-grow">
-                            <a href='https://yashisports.com/' style='text-decoration: none;' target='_blank'>
-                                <table class='thinBorder'>
-                                    <tr>
-                                        <td class='thinBorder' title='Yashi Sports' style='padding:0px;height:90px;'>
-                                            <img style='border-style:none;' src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </a>
+                <div class="col-sm-12 col-md-12    hidden-phone slider " style="overflow-x: hidden;  padding-top: 20px;width:100%">
+                            <div class="slick-carousel-header" id="navbarSlider" style="display:flex;">
+                                @foreach($header_sponsor_gallery as $image)
+                                <div class="gallery-image-all">
+                                    <div class="gallery-image">
+                                        <img src="data:image/png;base64,{{ $image->image }}" alt="{{ $image->name }}" class="img-responsive center-block" style="width: 100px; height: 100px;" />
+                                    </div>
+                                    <div class="gallery-text">
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                    <div style="margin-left:15px;margin-right:15px;display:flex;">
-                        <div class="spon-image hvr-grow">
-                            <a href='https://www.sbsexpedited.com/' style='text-decoration: none;' target='_blank'>
-                                <table class='thinBorder'>
-                                    <tr>
-                                        <td class='thinBorder' title='SBS Expedite Services Ltd.' style='padding:0px;height:90px;'><img style='border-style:none;' src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </a>
-                        </div>
-                    </div>
-                    <div style="margin-left:15px;margin-right:15px;display:flex;">
-                        <div class="spon-image hvr-grow">
-                            <a href='http://fusionlounge.ca/' style='text-decoration: none;' target='_blank'>
-                                <table class='thinBorder'>
-                                    <tr>
-                                        <td class='thinBorder' title='Fusion Launge' style='padding:0px;height:90px;'>
-                                            <img style='border-style:none;' src='https://i.pinimg.com/236x/42/32/34/423234fab5acc499402f87720d0ee28f.jpg' />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </a>
-                        </div>
-                    </div>
+                 
+                 
 
                 </div>
 
@@ -360,56 +337,7 @@
         </div>
 
 
-        <div class="col-sm-12">
-            <div class="col-sm-12 add-phone slider">
-
-                <div class="slick-carousel-header">
-
-                    <div style="margin-left:15px;margin-right:15px;display:flex;">
-                        <div class="spon-image hvr-grow">
-                            <a href='https://yashisports.com/' style='text-decoration: none;' target='_blank'>
-                                <table class='thinBorder'>
-                                    <tr>
-                                        <td class='thinBorder' title='Yashi Sports' style='padding:0px;height:90px;'>
-                                            <div id="navbarSlider" style="overflow-x: hidden;">
-                                                @foreach($match_results as $match_result)
-                                                <div class="navbar-slide" style="margin-left:15px;margin-right:15px;">
-                                                    <div class="spon-image hvr-grow">
-                                                        <a href='#' style='text-decoration: none;' target='_blank'>
-                                                            <table class='thinBorder'>
-                                                                <tr>
-                                                                    <td class='thinBorder' title='' style='padding:0px;height:90px;'>
-                                                                        <div class="card">
-                                                                            <div class="card-content">
-                                                                                <h6 style="margin-top: 20px;color:white">L:&nbsp;&nbsp;<span style="color:white;font-weight:bold">{{$header_teams[$match_result->team_id_a]}} - vs - {{$header_teams[$match_result->team_id_b]}}</span></h6>
-                                                                                <p style="color:white;">{{$match_result->match_result_description}}</p>
-                                                                                
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </a>
-                                                        <a href="{{ url('fullScorecard/${item[0].fixture_id}') }}" style="float:right;font-size: 0.85rem;background: #2098d1;
-padding: 4px 9px;
-border-radius: 5px;
-color: #fff;
-margin-right: 1rem;" >Scorecard</a>
-                                                    </div>
-                                                </div>
-                                                @endforeach
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
+    
 
         <script>
       // Get the navbar slider element
@@ -473,7 +401,7 @@ navbarSlider.addEventListener("mouseout", function() {
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Players</a>
             <ul class="dropdown-menu"  >
               <li><a href="{{ route('search_player')}}">Player</a></li>
-              <li><a href="{{ route('comingsoon')}}">Player Matches Count</a></li>
+              <li><a href="{{ route('playermatchcount')}}">Player Matches Count</a></li>
             </ul>
           </li>
           <li class="dropdown">

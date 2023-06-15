@@ -4443,9 +4443,52 @@ GROUP BY
 
   }
 
+public function playermatchcount(){
+  $teams = Team::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  $player = Player::query()->get()->pluck(
+    'fullname',
+    'id'
+  );
+  $match_results = Fixture::query();
+  $match_results->where('running_inning', '=', 3);
+  $match_results = $match_results->orderBy('id')->get();
+  $image_gallery = GalleryImages::query()
+  ->where('isActive', 1)
+  ->get();
 
+  $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    'name',
+    'id'
+  );
 
+  return view ('playermatchcount', compact('teams','tournament','image_gallery','match_results'));
+}
 
+public function playermatchcount_submit(){
+  $teams = Team::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  $player = Player::query()->get()->pluck(
+    'fullname',
+    'id'
+  );
+  $match_results = Fixture::query();
+  $match_results->where('running_inning', '=', 3);
+  $match_results = $match_results->orderBy('id')->get();
+  $image_gallery = GalleryImages::query()
+  ->where('isActive', 1)
+  ->get();
+  $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    'name',
+    'id'
+  );
+
+  return view ('playermatchcount', compact('teams','tournament','image_gallery','match_results'));
+}
 
 
   //////////////////////////////////////////////////////////////////////////////////////

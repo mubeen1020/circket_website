@@ -3,15 +3,7 @@
 
 <div class="container">
        
-       <table style="width: 100%; margin-bottom: 10px;text-align: center;">
-	<tbody><tr>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileFacebookShare();return false;"> <img src="/utilsv2/images/fb_new.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileTwitterShare();return false;"><img src="/utilsv2/images/twi.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileGoogleShare(); return false;"><img src="/utilsv2/images/goo.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileMailShare(); return false;"><img src="/utilsv2/images/mail.png" width="40"></a></td>
-		<td><a class="show-phone whatsapp"><img src="/utilsv2/images/whatsapp.png"></a></td>
-	</tr>
-</tbody></table><div class="show-phone">
+       <div class="show-phone">
 			</div>
 
        	<div class="score-tab">            
@@ -288,7 +280,7 @@
                                                                         <th style="text-align: left;" colspan="2" class="hidden-phone">{{$teams_two}} <div class="name visible-xs"> </div> 
                                                                         
                                                                         (target: @foreach($totalData as $item) @if($item->inningnumber == 1) {{$item->total_runs}} @endif @endforeach runs from @foreach($total_over as $over){{$over->numberofover}} @endforeach overs) </th> 
-                                                                       <th style="text-align: left;" class="show-phone">820 CC innings </th>
+                                                                       <th style="text-align: left;" class="show-phone">{{$teams_two}} innings </th>
                                                                         <th style="text-align: right;">R</th>
                                                                         <th style="text-align: right;">B</th>
                                                                         <th style="text-align: right;">4s</th> 

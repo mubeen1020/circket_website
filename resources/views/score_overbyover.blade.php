@@ -3,15 +3,7 @@
 
 <div class="container">
        
-       <table style="width: 100%; margin-bottom: 10px;text-align: center;">
-	<tbody><tr>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileFacebookShare();return false;"> <img src="/utilsv2/images/fb_new.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileTwitterShare();return false;"><img src="/utilsv2/images/twi.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileGoogleShare(); return false;"><img src="/utilsv2/images/goo.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileMailShare(); return false;"><img width="40" src="/utilsv2/images/mail.png"></a></td>
-		<td><a class="show-phone whatsapp"><img src="/utilsv2/images/whatsapp.png"></a></td>
-	</tr>
-</tbody></table><div class="show-phone">
+      <div class="show-phone">
 			</div>
 
        	<div class="score-tab">            

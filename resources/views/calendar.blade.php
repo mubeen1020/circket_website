@@ -125,18 +125,7 @@
 							</div>
                     </div>   
             </div>
-            		<table style="width: 100%">
-						<tbody><tr>
-							<td style="text-align: right;"><div class="addthis_sharing_toolbox hidden-phone" style="height: 24px;text-align: right;"></div>
-							<table style="width: 100%; margin-bottom: 10px;text-align: center;">
-	<tbody><tr>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileFacebookShare();return false;"> <img src="/utilsv2/images/fb_new.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileTwitterShare();return false;"><img src="/utilsv2/images/twi.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileGoogleShare(); return false;"><img src="/utilsv2/images/goo.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileMailShare(); return false;"><img width="40" src="/utilsv2/images/mail.png"></a></td>
-		<td><a class="show-phone whatsapp"><img src="/utilsv2/images/whatsapp.png"></a></td>
-	</tr>
-</tbody></table></td>
+            		</td>
 						</tr>
 					</tbody></table>
 					<table style="width: 100%; margin-bottom: 15px; margin-top: 15px; text-align: center;">
