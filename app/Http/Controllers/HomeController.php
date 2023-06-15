@@ -297,9 +297,11 @@ class HomeController extends Controller
       ->where('inningnumber', '=', 2)
       ->sum('runs');
 
-    $team_two_overs = $total_overs[2];
+      $team_two_overs = isset($total_overs[2]) ? $total_overs[2] : 0;
 
-    $team_two_run_rate = ($team_two_runs / $team_two_overs);
+
+      $team_two_run_rate = ($team_two_overs != 0) ? ($team_two_runs / $team_two_overs) : 0;
+
 
     $image_gallery = GalleryImages::query()
       ->where('isActive', '=', 1)
@@ -439,15 +441,16 @@ class HomeController extends Controller
     )->first();
 
 
-    $player_runs = FixtureScore::Where('fixture_id', '=', $id)
+    $player_runs = FixtureScore::where('fixture_id', $id)
     ->select("inningnumber")
-      ->selectRaw("sum(runs) as total_runs")
-      ->selectRaw("SUM(isfour = 1) as total_fours")
-      ->selectRaw("SUM(issix = 1) as total_six")
-      ->selectRaw("playerId")
-      ->groupBy('playerId','inningnumber')
-      ->get();
-      
+    ->selectRaw("sum(runs) as total_runs")
+    ->selectRaw("SUM(isfour = 1) as total_fours")
+    ->selectRaw("SUM(issix = 1) as total_six")
+    ->selectRaw("playerId")
+    ->groupBy('playerId', 'inningnumber')
+    ->orderBy('playerId')
+    ->get();
+
 
     $variable1 = 'R';
     $variable2 = 'Wicket';
@@ -867,6 +870,7 @@ class HomeController extends Controller
       ->where('tournament_players.tournament_id', '=', $tournament_id)
       ->selectRaw('fixture_scores.bowlerId as bowler_id')
       ->selectRaw('team_players.player_id')
+      ->selectRaw('fixture_scores.bowlerid')
       ->selectRaw('team_players.team_id')
       ->selectRaw('COUNT(DISTINCT fixtures.id) as total_matches')
       ->selectRaw('COUNT(DISTINCT fixture_scores.overnumber) as total_overs')
@@ -880,8 +884,41 @@ class HomeController extends Controller
       })
       ->join('fixture_scores', 'fixture_scores.bowlerId', '=', 'team_players.player_id')
       ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
-      ->groupBy('team_players.player_id', 'team_players.team_id', 'fixture_scores.bowlerId')
+      ->groupBy('fixture_scores.bowlerid', 'team_players.team_id', 'fixture_scores.bowlerId')
       ->get();
+      $hatricks ;
+    foreach($team_bowlingdata as $bowlerData){
+      $total_hat_tricks = DB::table('fixture_scores AS fs1')
+      ->join('fixture_scores AS fs2', function ($join) {
+          $join->on('fs2.fixture_id', '=', 'fs1.fixture_id')
+              ->where('fs2.id', '=', DB::raw('(fs1.id + 1)'))
+              ->where('fs2.isout', '=', 1)
+              ->where('fs2.bowlerid', '=', DB::raw('fs1.bowlerid'));
+      })
+      ->join('fixture_scores AS fs3', function ($join) {
+          $join->on('fs3.fixture_id', '=', 'fs1.fixture_id')
+              ->where('fs3.id', '=', DB::raw('(fs1.id + 2)'))
+              ->where('fs3.isout', '=', 1)
+              ->where('fs3.bowlerid', '=', DB::raw('fs1.bowlerid'));
+      })
+      ->leftJoin('fixture_scores AS fs4', function ($join) {
+          $join->on('fs4.fixture_id', '=', 'fs1.fixture_id')
+              ->where('fs4.id', '=', DB::raw('(fs1.id + 3)'))
+              ->where('fs4.isout', '=', 1)
+              ->where('fs4.bowlerid', '=', DB::raw('fs1.bowlerid'));
+      })
+      ->join('fixtures', 'fixtures.id', '=', 'fs1.fixture_id')
+      ->where('fs1.bowlerId', $bowlerData->bowler_id)
+      ->where('fs1.isout', '=', 1)
+      ->whereNull('fs4.id')
+      ->select(DB::raw('COUNT(*) as total_hat_tricks'))
+      ->pluck('total_hat_tricks')
+      ->toArray();
+  
+  $hatricks = $total_hat_tricks;
+  
+  
+    }
 
     $image_gallery = GalleryImages::query()
       ->where('isActive', '=', 1)
@@ -891,7 +928,72 @@ class HomeController extends Controller
       'id'
     );
 
-    return view('team_bowling', compact('teams', 'tournamentData', 'tournament_ids', 'player', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'teamData', 'match_results', 'tournament', 'team_id_data', 'team_bowlingdata', 'image_gallery'));
+    $playername = TournamentPlayer::where('tournament_id', $tournament_id)
+    ->where('team_id', $team_id)
+    ->select('tournament_players.player_id', 'players.fullname')
+    ->join('players', 'players.id', '=', 'tournament_players.player_id')
+    ->pluck('players.fullname', 'tournament_players.player_id');
+
+    $matchcount = Fixture::where('tournament_id', $tournament_id)
+    ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+    ->groupBy('fixture_scores.bowlerid')
+    ->selectRaw('COUNT(DISTINCT(fixture_scores.fixture_id)) as matches_played, CAST(fixture_scores.bowlerid AS UNSIGNED) as playerId')
+    ->pluck('matches_played', 'playerId');
+
+    $playermatch = TournamentPlayer::where('tournament_players.tournament_id', $tournament_id)
+    ->where('tournament_players.team_id', $team_id)
+    ->where('fixtures.running_inning',3)
+    ->join('fixtures', 'fixtures.tournament_id', '=', 'tournament_players.tournament_id')
+    ->groupBy('tournament_players.player_id')
+    ->selectRaw('COUNT(DISTINCT(fixtures.id)) as `match`, tournament_players.player_id')
+    ->pluck('match', 'tournament_players.player_id');
+
+     $playerruns =Fixture::where('tournament_id', $tournament_id)
+     ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+     ->groupBy('fixture_scores.bowlerid')
+     ->selectRaw('SUM(fixture_scores.runs) as playerurns, CAST(fixture_scores.bowlerid AS UNSIGNED) as playerId')
+     ->pluck('playerurns', 'playerId');
+
+    //  dd($playerruns);
+
+     $playerteam = TournamentPlayer::where('tournament_players.tournament_id', $tournament_id)
+     ->where('tournament_players.team_id', $team_id)
+     ->join('fixtures', 'fixtures.tournament_id', '=', 'tournament_players.tournament_id')
+     ->groupBy('tournament_players.player_id', 'tournament_players.team_id')
+     ->selectRaw('tournament_players.team_id, tournament_players.player_id')
+     ->pluck('tournament_players.team_id', 'tournament_players.player_id');
+
+     $playerballs =Fixture::where('tournament_id', $tournament_id)
+     ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+     ->groupBy('fixture_scores.bowlerid')
+     ->selectRaw('COUNT(DISTINCT overnumber) as `over`, CAST(fixture_scores.bowlerid AS UNSIGNED) as playerId')
+     ->pluck('over', 'playerId');
+
+     $playerouts =Fixture::where('tournament_id', $tournament_id)
+     ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+     ->where('fixture_scores.balltype','=','Wicket')
+     ->where('fixture_scores.isout','=',1)
+     ->groupBy('fixture_scores.bowlerid')
+     ->selectRaw('COUNT(fixture_scores.balltype ) as playeouts, CAST(fixture_scores.bowlerid AS UNSIGNED) as playerId')
+     ->pluck('playeouts', 'playerId');
+
+     $playerwide =Fixture::where('tournament_id', $tournament_id)
+     ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+     ->where('fixture_scores.balltype','=','WD')
+     ->groupBy('fixture_scores.bowlerid')
+     ->selectRaw('COUNT(fixture_scores.balltype ) as playeouts, CAST(fixture_scores.bowlerid AS UNSIGNED) as playerId')
+     ->pluck('playeouts', 'playerId');
+
+     $playernoball =Fixture::where('tournament_id', $tournament_id)
+     ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+     ->where('fixture_scores.balltype','=','NB')
+     ->groupBy('fixture_scores.bowlerid')
+     ->selectRaw('COUNT(fixture_scores.balltype ) as playeouts, CAST(fixture_scores.bowlerid AS UNSIGNED) as playerId')
+     ->pluck('playeouts', 'playerId');
+
+    
+
+    return view('team_bowling', compact('playerouts','hatricks','playernoball','playerwide','matchcount','playerruns','playerballs','playermatch','playerteam','playername','teams', 'tournamentData', 'tournament_ids', 'player', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'teamData', 'match_results', 'tournament', 'team_id_data', 'team_bowlingdata', 'image_gallery'));
   }
 
   public function team_fielding(int $team_id, int $tournament_id)
@@ -1328,26 +1430,25 @@ class HomeController extends Controller
     $data = Fixture::query();
     $results = $data->get();
 
-    $team_resultData = TournamentPlayer::where(function ($query) use ($team_id) {
-      $query->where('team_id', $team_id);
+    $team_resultData = TournamentGroup::where('tournament_groups.team_id', $team_id)
+    ->where('fixture.running_inning', 3)
+    ->where(function ($query) use ($team_id) {
+        $query->where('fixture.team_id_a', $team_id)
+            ->orWhere('fixture.team_id_b', $team_id);
     })
-      ->distinct('fixture.id')
-      ->where('fixture.running_inning', 3)
-      ->where('tournament_players.tournament_id', '=', $tournament_id)
-      ->selectRaw('fixture.created_at')
-      ->selectRaw('fixture.team_id_b')
-      ->selectRaw('fixture.id')
-      ->selectRaw('fixture.running_inning')
-      ->selectRaw("fixture.numberofover")
-      ->selectRaw('fixture.match_result_description')
-      ->selectRaw('tournament_players.tournament_id')
-      ->selectRaw('tournament_players.team_id')
-      ->selectRaw('tournament_players.player_id')
-      ->selectRaw('tournament_players.domain_id')
-      ->selectRaw('fixture.team_id_a')
-      ->join('fixtures as fixture', 'fixture.tournament_id', '=', 'tournament_players.tournament_id')
-      ->orderBy('tournament_id')
-      ->get();
+    ->where('tournament_groups.tournament_id', $tournament_id)
+    ->selectRaw('DISTINCT fixture.id')
+    ->selectRaw('fixture.created_at')
+    ->selectRaw('fixture.team_id_b')
+    ->selectRaw('fixture.running_inning')
+    ->selectRaw('fixture.numberofover')
+    ->selectRaw('fixture.match_result_description')
+    ->selectRaw('tournament_groups.tournament_id')
+    ->selectRaw('tournament_groups.team_id')
+    ->selectRaw('fixture.team_id_a')
+    ->join('fixtures as fixture', 'fixture.tournament_id', '=', 'tournament_groups.tournament_id')
+    ->orderBy('tournament_groups.tournament_id')
+    ->get();
 
     $total_runs = [];
     $total_wicket_fixture = [];
@@ -1417,6 +1518,10 @@ class HomeController extends Controller
       $query->where('tournament_players.team_id', $team_id)
         ->where('fixtures.match_startdate', '>=', $today);
     })
+    ->where(function ($query) use ($team_id) {
+      $query->where('fixtures.team_id_a', $team_id)
+          ->orWhere('fixtures.team_id_b', $team_id);
+  })
       ->where('tournament_players.tournament_id', '=', $tournament_id)
       ->where('fixtures.running_inning', '=', 0)
       ->where('fixtures.isActive', 1)
@@ -1470,75 +1575,122 @@ class HomeController extends Controller
       ->orWhere('team_id_b', $team_id)
       ->orderBy('match_startdate')
       ->get();
+  
+      $playername = TournamentPlayer::where('tournament_id', $tournament_id)
+      ->where('team_id', $team_id)
+      ->select('tournament_players.player_id', 'players.fullname')
+      ->join('players', 'players.id', '=', 'tournament_players.player_id')
+      ->pluck('players.fullname', 'tournament_players.player_id');
 
-    $team_battingdata = TournamentPlayer::where('tournament_players.team_id', $team_id)
-      ->where('tournament_players.tournament_id', '=', $tournament_id)
-      ->selectRaw('team_players.player_id')
-      ->selectRaw('team_players.team_id')
-      ->selectRaw('team_players.id')
-      ->join('team_players', function ($join) {
-        $join->on('team_players.team_id', '=', 'tournament_players.team_id')
-          ->on('team_players.player_id', '=', 'tournament_players.player_id');
-      })
-      ->get();
+      $matchcount = Fixture::where('tournament_id', $tournament_id)
+      ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+      ->groupBy('fixture_scores.playerId')
+      ->selectRaw('COUNT(DISTINCT(fixture_scores.fixture_id)) as matches_played, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+      ->pluck('matches_played', 'playerId');
 
-    $match_count_player = collect();
-    $player_runs = collect();
+      $playermatch = TournamentPlayer::where('tournament_players.tournament_id', $tournament_id)
+      ->where('tournament_players.team_id', $team_id)
+      ->where('fixtures.running_inning',3)
+      ->join('fixtures', 'fixtures.tournament_id', '=', 'tournament_players.tournament_id')
+      ->groupBy('tournament_players.player_id')
+      ->selectRaw('COUNT(DISTINCT(fixtures.id)) as `match`, tournament_players.player_id')
+      ->pluck('match', 'tournament_players.player_id');
+  
+       $playerruns =Fixture::where('tournament_id', $tournament_id)
+       ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+       ->groupBy('fixture_scores.playerId')
+       ->selectRaw('SUM(fixture_scores.runs) as playerurns, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+       ->pluck('playerurns', 'playerId');
 
-    foreach ($team_battingdata as $teamPlayer) {
-      $match_count = FixtureScore::where('fixture_id', $teamPlayer->id)
-        ->selectRaw("COUNT(playerId)")
-        ->selectRaw("fixture_id")
-        ->groupby('fixture_id')
-        ->pluck('COUNT(playerId)', 'fixture_id')
-        ->first();
+       $playerteam = TournamentPlayer::where('tournament_players.tournament_id', $tournament_id)
+       ->where('tournament_players.team_id', $team_id)
+       ->join('fixtures', 'fixtures.tournament_id', '=', 'tournament_players.tournament_id')
+       ->groupBy('tournament_players.player_id', 'tournament_players.team_id')
+       ->selectRaw('tournament_players.team_id, tournament_players.player_id')
+       ->pluck('tournament_players.team_id', 'tournament_players.player_id');
 
-      $match_count_player[$teamPlayer->id] = $match_count;
+       $playerballs =Fixture::where('tournament_id', $tournament_id)
+       ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+       ->groupBy('fixture_scores.playerId')
+       ->selectRaw('COUNT(fixture_scores.id) as playeballs, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+       ->pluck('playeballs', 'playerId');
 
-      $player_runs[$teamPlayer->id] = FixtureScore::where('fixture_id', $teamPlayer->id)
-        ->where('playerId', $teamPlayer->player_id)
-        ->sum('runs');
-    }
+       $playerouts =Fixture::where('tournament_id', $tournament_id)
+       ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+       ->where('fixture_scores.balltype','=','Wicket')
+       ->groupBy('fixture_scores.playerId')
+       ->selectRaw('COUNT(fixture_scores.balltype ) as playeouts, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+       ->pluck('playeouts', 'playerId');
 
-    $balls_faced = collect();
+       $playersix =Fixture::where('tournament_id', $tournament_id)
+       ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+       ->where('fixture_scores.issix','=',1)
+       ->groupBy('fixture_scores.playerId')
+       ->selectRaw('COUNT(fixture_scores.issix ) as playesix, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+       ->pluck('playesix', 'playerId');
 
-    foreach ($team_battingdata as $teamPlayer) {
-      $balls_faced[$teamPlayer->id] = FixtureScore::where('fixture_id', $teamPlayer->id)
-        ->where('playerId', $teamPlayer->player_id)
-        ->where(function ($query) {
-          $query->where('balltype', '!=', 'w')
-            ->orWhere('balltype', null);
-        })
-        ->count();
-    }
+       $playerfour =Fixture::where('tournament_id', $tournament_id)
+       ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+       ->where('fixture_scores.isfour','=',1)
+       ->groupBy('fixture_scores.playerId')
+       ->selectRaw('COUNT(fixture_scores.isfour ) as playefour, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+       ->pluck('playefour', 'playerId');
 
-    $sixes = collect();
+       $playerhigestruns = Fixture::where('tournament_id', $tournament_id)
+       ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+       ->groupBy('fixture_scores.playerId')
+       ->selectRaw('SUM(fixture_scores.runs) as total_runs, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+       ->pluck('total_runs', 'playerId');
 
-    foreach ($team_battingdata as $teamPlayer) {
-      $sixes[$teamPlayer->id] = FixtureScore::where('fixture_id', $teamPlayer->id)
-        ->where('playerId', $teamPlayer->player_id)
-        ->where('runs', 6)
-        ->count();
-    }
 
-    $fours = [];
+       $playerHundreds = Fixture::where('tournament_id', $tournament_id)
+           ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+           ->where(function ($query) use ($team_id) {
+               $query->where('team_id_a', $team_id)
+                     ->orWhere('team_id_b', $team_id);
+           })
+           ->groupBy('fixture_scores.playerId')
+           ->havingRaw('SUM(fixture_scores.runs) >= 100')
+           ->selectRaw('COUNT(*) as hundreds_count, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+           ->pluck('hundreds_count', 'playerId');
 
-    foreach ($team_battingdata as $teamPlayer) {
-      $fours[$teamPlayer->id]['fours'] = FixtureScore::where('fixture_id', $teamPlayer->id)
-        ->where('playerId', $teamPlayer->player_id)
-        ->where('runs', 4)
-        ->count();
+           $playerfifty = Fixture::where('tournament_id', $tournament_id)
+           ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+           ->where(function ($query) use ($team_id) {
+               $query->where('team_id_a', $team_id)
+                     ->orWhere('team_id_b', $team_id);
+           })
+           ->groupBy('fixture_scores.playerId')
+           ->havingRaw('SUM(fixture_scores.runs)>= 50')
+        ->havingRaw('SUM(fixture_scores.runs)< 100')
+           ->selectRaw('COUNT(*) as fifty_count, CAST(fixture_scores.playerId AS UNSIGNED) as playerId')
+           ->pluck('fifty_count', 'playerId');
 
-      $fours[$teamPlayer->id]['high_score'] = DB::select("select max(td.score) as score from (select SUM(runs) as score FROM fixture_scores WHERE playerId=$teamPlayer->player_id group by fixture_id) td")[0]->score;
-    }
 
+  //          $subquery = DB::table(function ($query) {
+  //           $query->select(DB::raw('MAX(playerId) AS playerId'))
+  //               ->from('fixture_scores AS fs')
+  //               ->join('fixtures AS f', 'fs.fixture_id', '=', 'f.id')
+  //               ->where('f.tournament_id', 50)
+  //               ->groupBy('fs.playerId')
+  //               ->havingRaw('SUM(fs.runs) >= 100');
+  //       }, 'subquery');
+        
+  //       $hundredCounts = DB::table($subquery)
+  //           ->select('playerId')
+  //           ->selectRaw('COUNT(*) AS hundred_count')
+  //           ->groupBy('playerId')
+  //           ->pluck('hundred_count', 'playerId');
+        
+        
+        
     $image_gallery = GalleryImages::query()
       ->where('isActive', '=', 1)
       ->get();
 
 
 
-    return view('team_batting', compact('teamData', 'tournament_ids', 'match_results',  'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'team_id_data', 'team_battingdata', 'match_count_player', 'player_runs', 'balls_faced', 'fours', 'sixes', "image_gallery"));
+    return view('team_batting', compact('teamData','playerfifty','playerHundreds','playerhigestruns','playerfour','playersix','playerouts','playerballs','playerteam','playerruns','playername','playermatch', 'tournament_ids', 'match_results',  'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'team_id_data',  "image_gallery",'matchcount'));
   }
 
   public function batting_states()
@@ -1629,6 +1781,8 @@ class HomeController extends Controller
 
 
 
+
+    
     $getresult = $data->get();
     // dd($getresult);
     $match_count_player = collect();
@@ -1644,11 +1798,12 @@ class HomeController extends Controller
 
     foreach ($getresult as $teamPlayer) {
       $match_count = FixtureScore::where('playerId', $teamPlayer->player_id)
-        ->selectRaw("COUNT(fixture_id)")
-        ->selectRaw("fixture_id")
-        ->groupBy('fixture_id')
-        ->pluck('COUNT(fixture_id)', 'fixture_id')
-        ->first();
+      ->selectRaw("COUNT(DISTINCT fixture_id) as match_count")
+      ->selectRaw("fixture_id")
+      ->groupBy('fixture_id')
+      ->pluck('match_count', 'fixture_id')
+      ->first();
+  
 
       $match_count_player[$teamPlayer->player_id] = $match_count;
 
@@ -1657,10 +1812,7 @@ class HomeController extends Controller
         ->sum('runs');
 
       $balls_faced[$teamPlayer->player_id] = FixtureScore::where('playerId', $teamPlayer->player_id)
-        ->where(function ($query) {
-          $query->where('balltype', '!=', 'w')
-            ->orWhereNull('balltype');
-        })
+      ->selectRaw("COUNT(DISTINCT fixture_scores.id) as playeballs")
         ->count();
 
       $sixes[$teamPlayer->player_id] = FixtureScore::where('playerId', $teamPlayer->player_id)
@@ -2753,6 +2905,7 @@ class HomeController extends Controller
 
     $data = TournamentPlayer::query()
       ->selectRaw('fixture_scores.bowlerId as bowler_id')
+      ->selectRaw('tournament_players.tournament_id')
       ->selectRaw('team_players.player_id')
       ->selectRaw('team_players.team_id')
       ->selectRaw('COUNT(DISTINCT fixtures.id) as total_matches')
@@ -2768,7 +2921,7 @@ class HomeController extends Controller
       ->join('fixture_scores', 'fixture_scores.bowlerId', '=', 'team_players.player_id')
       ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
       ->groupBy('team_players.player_id', 'team_players.team_id')
-      ->groupBy('fixture_scores.bowlerId');
+      ->groupBy('fixture_scores.bowlerId','tournament_players.tournament_id');
 
 
     $term = $request->input();
@@ -3096,10 +3249,14 @@ class HomeController extends Controller
   public function fieldingRecords()
   {
 
-    $tournamentdata = Tournament::query()->pluck(
-      'name',
-      'id'
-    );
+    $tournamentdata = Tournament::query()
+      ->where('isActive', '=', 1)
+      ->where('is_web_display' , '=' , 1)
+      ->get()
+      ->pluck(
+        'name',
+        'id'
+      );
     $teams = Team::query()->get()->pluck(
       'name',
       'id'
@@ -3232,11 +3389,16 @@ class HomeController extends Controller
   }
 
 
+  
   public function fielding_states_submit(Request $request)
   {
 
 
-    $tournamentdata = Tournament::query()->pluck(
+    $tournamentdata = Tournament::query()
+    ->where('isActive', '=', 1)
+    ->where('is_web_display' , '=' , 1)
+    ->get()
+    ->pluck(
       'name',
       'id'
     );
@@ -3284,187 +3446,119 @@ class HomeController extends Controller
     $getresult = [];
 
     $term = $request->input();
-    // dd($term);
-    if (!empty($term['year'])) {
-      $year = $term['year'];
-      $year = $term['year'];
-     
-
-
-    $results = DB::select("
-    SELECT 
-        bowler_id,
-        team_id,
-        MAX(total_matches_catch) AS total_matches,
-        SUM(catch) AS catch,
-        SUM(stump) AS stump
+    $query = "
+SELECT 
+    bowler_id,
+    team_id,
+    MAX(total_matches_catch) AS total_matches,
+    SUM(catch) AS catch,
+    SUM(stump) AS stump
+FROM 
+    (SELECT 
+        tournament_players.player_id AS bowler_id,
+        tournament_players.team_id AS team_id,
+        COUNT(DISTINCT fixture_scores.fixture_id) AS total_matches_catch,
+        COUNT(DISTINCT CASE WHEN match_dismissals.dismissal_id = $dismissalIdcatch THEN match_dismissals.fixturescores_id END) AS catch,
+        0 AS stump
     FROM 
-        (SELECT 
-            fixture_scores.bowlerId AS bowler_id,
-            tournament_players.team_id AS team_id,
-            COUNT(DISTINCT CASE WHEN match_dismissals.dismissal_id = $dismissalIdcatch THEN fixture_scores.fixture_id END) AS total_matches_catch,
-            0 AS total_matches_stump,
-            COUNT(DISTINCT CASE WHEN match_dismissals.dismissal_id = $dismissalIdcatch THEN match_dismissals.fixturescores_id END) AS catch,
-            0 AS stump
-        FROM 
-            fixture_scores
-        JOIN 
-            match_dismissals ON match_dismissals.outbyplayer_id = fixture_scores.bowlerId
-        JOIN
-            tournament_players ON tournament_players.player_id = fixture_scores.bowlerId
-        WHERE 
-            YEAR(fixture_scores.created_at) = $year
-            AND match_dismissals.dismissal_id = $dismissalIdcatch
-        GROUP BY 
-            fixture_scores.bowlerId,
-            tournament_players.team_id
-        
-        UNION ALL
-        
-        SELECT 
-            fixture_scores.bowlerId AS bowler_id,
-            tournament_players.team_id AS team_id,
-            0 AS total_matches_catch,
-            COUNT(DISTINCT CASE WHEN match_dismissals.dismissal_id = $dismissalIdstump THEN fixture_scores.fixture_id END) AS total_matches_stump,
-            0 AS catch,
-            COUNT(DISTINCT CASE WHEN match_dismissals.dismissal_id = $dismissalIdstump THEN match_dismissals.fixturescores_id END) AS stump
-        FROM 
-            fixture_scores
-        JOIN 
-            match_dismissals ON match_dismissals.outbyplayer_id = fixture_scores.bowlerId
-        JOIN
-            tournament_players ON tournament_players.player_id = fixture_scores.bowlerId
-        WHERE 
-            YEAR(fixture_scores.created_at) = $year
-            AND match_dismissals.dismissal_id = $dismissalIdstump
-        GROUP BY 
-            fixture_scores.bowlerId,
-            tournament_players.team_id) AS combined
-    GROUP BY 
-        bowler_id,
-        team_id;");
-    
-        $getresult = $results;
-    
-    
+        tournaments 
+    JOIN 
+        fixtures ON fixtures.tournament_id = tournaments.id 
+    JOIN 
+        fixture_scores ON fixture_scores.fixture_id = fixtures.id
+    JOIN 
+        match_dismissals ON match_dismissals.outbyplayer_id = fixture_scores.bowlerId
+    JOIN 
+        tournament_players ON tournament_players.player_id = fixture_scores.bowlerId
+    WHERE 
+        fixture_scores.isout = 1
+        AND match_dismissals.dismissal_id = $dismissalIdcatch";
 
-      //////////////////////////////////////////////////////////////////////////////////
-    }
+if (!empty($term['year'])) {
+  $year = $term['year'];
+    $query .= " AND YEAR(fixture_scores.created_at) = $year";
+}
 
-    if (!empty($term['tournament'])) {
-      $tournament = $term['tournament'];
 
-      // dd($tournament ) ;
+if (!empty($term['tournament'])) {
+  $tournament = $term['tournament'];
+  $tournament = (int)$tournament;
+  $query .= " AND tournaments.id = $tournament";
+}
 
-      $tournaments = DB::select("SELECT id FROM `tournaments` WHERE id = $tournament  limit 1");
+if (!empty($term['teams'])) {
+  $team = $term['teams'];
+  $team = (int)$team;
+  $query .= " AND  tournament_players.team_id = $team";
+}
 
-      $tournament_id = $tournaments[0]->id ;
+$query .= " GROUP BY tournament_players.player_id, tournament_players.team_id
+    UNION ALL
+    SELECT 
+        tournament_players.player_id AS bowler_id,
+        tournament_players.team_id AS team_id,
+        COUNT(DISTINCT fixture_scores.fixture_id) AS total_matches_stump,
+        0 AS catch,
+        COUNT(DISTINCT CASE WHEN match_dismissals.dismissal_id = $dismissalIdstump THEN match_dismissals.fixturescores_id END) AS stump
+    FROM 
+        tournaments 
+    JOIN 
+        fixtures ON fixtures.tournament_id = tournaments.id
+    JOIN 
+        fixture_scores ON fixture_scores.fixture_id = fixtures.id
+    JOIN 
+        match_dismissals ON match_dismissals.outbyplayer_id = fixture_scores.bowlerId
+    JOIN 
+        tournament_players ON tournament_players.player_id = fixture_scores.bowlerId
+    WHERE 
+        fixture_scores.isout = 1
+        AND match_dismissals.dismissal_id = $dismissalIdstump";
 
-      // dd($tournaments) ;name
-      $results = DB::select("SELECT 
-      fixture_scores.bowlerId AS bowler_id,
-      tournament_players.team_id AS team_id,
-      COUNT(DISTINCT fixture_scores.fixture_id) AS total_matches,
-      COUNT(DISTINCT match_dismissals.fixturescores_id) AS catch,
-      0 AS stump
-  FROM 
-      tournaments 
-      JOIN fixtures ON fixtures.tournament_id = $tournament_id 
-      JOIN fixture_scores ON fixture_scores.fixture_id = fixtures.id
-      JOIN match_dismissals ON match_dismissals.outbyplayer_id = fixture_scores.bowlerId
-      JOIN tournament_players ON tournament_players.player_id = fixture_scores.bowlerId
-  WHERE 
-      tournaments.id = $tournament_id 
-      AND fixture_scores.isout = 1
-      AND match_dismissals.dismissal_id = $dismissalIdcatch
-  GROUP BY 
-      fixture_scores.bowlerId,
-      tournament_players.team_id
-  
-  UNION
-  
-  SELECT 
-      fixture_scores.bowlerId AS bowler_id,
-      tournament_players.team_id AS team_id,
-      COUNT(DISTINCT fixture_scores.fixture_id) AS total_matches,
-      0 AS catch,
-      COUNT(DISTINCT match_dismissals.fixturescores_id) AS stump
-  FROM 
-      tournaments 
-      JOIN fixtures ON fixtures.tournament_id = tournaments.id
-      JOIN fixture_scores ON fixture_scores.fixture_id = fixtures.id
-      JOIN match_dismissals ON match_dismissals.outbyplayer_id = fixture_scores.bowlerId
-      JOIN tournament_players ON tournament_players.player_id = fixture_scores.bowlerId
-  WHERE 
-  tournaments.id = $tournament_id 
-      AND fixture_scores.isout = 1
-      AND match_dismissals.dismissal_id = $dismissalIdstump
-  GROUP BY 
-      fixture_scores.bowlerId,
-      tournament_players.team_id;");
-      
-          $getresult = $results;
 
-          // dd($getresult);
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!empty($term['year'])) {
+  $year = $term['year'];
+    $query .= " AND YEAR(fixture_scores.created_at) = $year";
+}
 
-    }
 
-    if (!empty($term['teams'])) {
-      $team = $term['teams'];
-      $team = (int)$team;
+if (!empty($term['tournament'])) {
+  $tournament = $term['tournament'];
+  $tournament = (int)$tournament;
+  $query .= " AND tournaments.id = $tournament";
+}
 
-      // dd($team);
+if (!empty($term['teams'])) {
+  $team = $term['teams'];
+  $team = (int)$team;
+  $query .= " AND  tournament_players.team_id = $team";
+}
 
-      $results = DB::select("SELECT 
-      tournament_players.player_id AS bowler_id,
-      tournament_players.team_id AS team_id,
-      COUNT(DISTINCT fixture_scores.fixture_id) AS total_matches,
-      COUNT(DISTINCT match_dismissals.fixturescores_id) AS catch,
-      0 AS stump
-  FROM tournament_players
-  JOIN fixture_scores ON fixture_scores.bowlerId = tournament_players.player_id
-  JOIN match_dismissals ON match_dismissals.outbyplayer_id = tournament_players.player_id
-  WHERE 
-      tournament_players.team_id = $team
-      AND fixture_scores.isout = 1
-      AND match_dismissals.dismissal_id = $dismissalIdcatch
-  GROUP BY 
-      tournament_players.player_id,
-      tournament_players.team_id
-  
-  UNION
-  
-  SELECT 
-      tournament_players.player_id AS bowler_id,
-      tournament_players.team_id AS team_id,
-      COUNT(DISTINCT fixture_scores.fixture_id) AS total_matches,
-      0 AS catch,
-      COUNT(DISTINCT match_dismissals.fixturescores_id) AS stump
-  FROM tournament_players
-  JOIN fixture_scores ON fixture_scores.bowlerId = tournament_players.player_id
-  JOIN match_dismissals ON match_dismissals.outbyplayer_id = tournament_players.player_id
-  WHERE 
-      tournament_players.team_id = $team
-      AND fixture_scores.isout = 1
-      AND match_dismissals.dismissal_id = $dismissalIdstump
-  GROUP BY 
-      tournament_players.player_id,
-      tournament_players.team_id;");
+$query .= " GROUP BY tournament_players.player_id, tournament_players.team_id) AS combined
+";
 
-     $getresult = $results;
-      /////////////////////////////////////////////////////
-   
-    }
+$query .= " GROUP BY bowler_id, team_id";
+
+$result = DB::select($query) ;
+// dd($result) ;
+$getresult = $result;
+
+////////////////////////////////////////////////////////////////////
+    // dd($term)
     return view('fieldingRecords', compact('fours', 'balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_count_player', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years'));
   }
+
+
 
 
 
   public function playerRanking()
   {
 
-    $tournamentdata = Tournament::query()->pluck(
+    $tournamentdata = Tournament::query()
+    ->where('isActive', '=', 1)
+    ->where('is_web_display' , '=' , 1)
+    ->get()
+    ->pluck(
       'name',
       'id'
     );
@@ -3526,7 +3620,11 @@ class HomeController extends Controller
   public function playerRanking_submit(Request $request)
   {
 
-    $tournamentdata = Tournament::query()->pluck(
+    $tournamentdata = Tournament::query()
+    ->where('isActive', '=', 1)
+    ->where('is_web_display' , '=' , 1)
+    ->get()
+    ->pluck(
       'name',
       'id'
     );
@@ -3583,153 +3681,151 @@ class HomeController extends Controller
       ->get();
 
       $getresult=[];
-
-
-
-    $match_counts = DB::select("SELECT
-    subquery.player_id,
-    COUNT(DISTINCT subquery.fixture_id) AS total_matches
-FROM (
-    SELECT
-        fixture_id,
-        playerId AS player_id
-    FROM
-        fixture_scores
-    WHERE
-        playerId IN (
-            SELECT
-                player_id
-            FROM
-                players_contain_points
-            WHERE
-                player_type IN ('batsmen', 'Bowler')
-                
-        )
-    UNION
-    SELECT
-        fixture_id,
-        bowlerId AS player_id
-    FROM
-        fixture_scores
-    WHERE
-        bowlerId IN (
-            SELECT
-                player_id
-            FROM
-                players_contain_points
-            WHERE
-                player_type IN ('batsmen', 'Bowler')
-        )
-) AS subquery
-GROUP BY
-    subquery.player_id");
-
-
       $term = $request->input();
       // dd($term);
-      if (!empty($term['year'])) {
-        $year = $term['year'];
-     
+      $match_counts_query =  "
+SELECT playerId AS player_id, COUNT(DISTINCT fixture_id) AS total_matches
+FROM `fixture_scores`
+JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+WHERE
+fixtures.isActive  = 1
+";
+if (!empty($term['year'])) {
+            $year = $term['year'];
+            $match_counts_query .= " AND YEAR(fixtures.created_at)= $year";
+        }
         
-
-    $results = DB::select("SELECT 
-    tournament_id, 
-    fixture_id, 
-    player_id, 
-    team_id, 
-    COALESCE(SUM(CASE WHEN player_type = 'batsmen' THEN points END), '') AS 'Batting',
-    COALESCE(SUM(CASE WHEN player_type = 'Bowler' THEN points END), '') AS 'Bowling'
-FROM 
-    players_contain_points
-WHERE 
-    player_type IN ('batsmen', 'Bowler')
-    AND YEAR(created_at) = $year
-GROUP BY 
-    tournament_id, 
-    fixture_id, 
-    player_id, 
-    team_id  
-");
-
-$getresult = $results;
-      
-      
-      }
+        if (!empty($term['tournament'])) {
+          $tournament = $term['tournament'];
+          $tournament = (int)$tournament;
+          $match_counts_query .= " AND fixtures.tournament_id = $tournament";
+        }
+        
+        if (!empty($term['teams'])) {
+          $team = $term['teams'];
+          $team = (int)$team;
+          $match_counts_query .= " AND (fixtures.team_id_a = $team or fixtures.team_id_b = $team)";
+        }
 
 
+$match_counts_query .= "
+GROUP BY playerId
+UNION ALL
+SELECT bowlerId AS player_id, COUNT(DISTINCT fixture_id) AS total_matches
+FROM `fixture_scores`
+JOIN fixtures ON fixture_scores.fixture_id = fixtures.id 
+WHERE
+fixtures.isActive  = 1
+";
+        if (!empty($term['year'])) {
+            $year = $term['year'];
+            $match_counts_query .= " AND YEAR(fixtures.created_at)= $year";
+        }
+        
+        if (!empty($term['tournament'])) {
+          $tournament = $term['tournament'];
+          $tournament = (int)$tournament;
+          $match_counts_query .= " AND fixtures.tournament_id = $tournament";
+        }
+        
+        if (!empty($term['teams'])) {
+          $team = $term['teams'];
+          $team = (int)$team;
+          $match_counts_query .= " AND (fixtures.team_id_a = $team or fixtures.team_id_b = $team)";
+        }
+$match_counts_query .= "
+    GROUP BY bowlerId "; 
 
- if (!empty($term['tournament'])) {
-  $tournament = $term['tournament'];
+//  dd($match_counts_query);
 
-  $tournament = (int) $tournament;
-
-
-  $results = DB::select("SELECT 
-  tournament_id, 
-  fixture_id, 
-  player_id, 
-  team_id, 
-  COALESCE(SUM(CASE WHEN player_type = 'batsmen' THEN points END), '') AS 'Batting',
-  COALESCE(SUM(CASE WHEN player_type = 'Bowler' THEN points END), '') AS 'Bowling'
-FROM 
-  players_contain_points
-WHERE 
-  player_type IN ('batsmen', 'Bowler')
-  AND tournament_id = $tournament
-GROUP BY 
-  tournament_id, 
-  fixture_id, 
-  player_id, 
-  team_id") ;
-
-        $getresult = $results;
-
-  
+ $match_counts =  DB::select($match_counts_query);
 
 
- }
+// dd($match_counts);
 
- if (!empty($term['teams'])) {
-  $team = $term['teams'];
-  $team = (int)$team;
+      /////////////////////////
 
-  // dd($team) ;
+      $query = "
+      SELECT 
+          tournament_id, 
+          fixture_id, 
+          player_id, 
+          team_id, 
+          COALESCE(SUM(CASE WHEN player_type = 'batsmen' THEN points END), '') AS 'Batting',
+          COALESCE(SUM(CASE WHEN player_type = 'Bowler' THEN points END), '') AS 'Bowling'
+      FROM 
+          players_contain_points
+      WHERE 
+          player_type IN ('batsmen', 'Bowler') ";
+          if (!empty($term['year'])) {
+            $year = $term['year'];
+            $query .= " AND YEAR(created_at) = $year";
+        }
+        
+        if (!empty($term['tournament'])) {
+          $tournament = $term['tournament'];
+          $tournament = (int)$tournament;
+          $query .= " AND tournament_id = $tournament";
+        }
+        
+        if (!empty($term['teams'])) {
+          $team = $term['teams'];
+          $team = (int)$team;
+          $query .= " AND team_id = $team";
+        }
+      $query .= " GROUP BY 
+          tournament_id, 
+          fixture_id, 
+          player_id, 
+          team_id  ";
 
-  $results = DB::select("SELECT 
-  tournament_id, 
-  fixture_id, 
-  player_id, 
-  team_id, 
-  COALESCE(SUM(CASE WHEN player_type = 'batsmen' THEN points END), '') AS 'Batting',
-  COALESCE(SUM(CASE WHEN player_type = 'Bowler' THEN points END), '') AS 'Bowling'
-FROM 
-  players_contain_points
-WHERE 
-  player_type IN ('batsmen', 'Bowler')
-  AND team_id = $team
-GROUP BY 
-  tournament_id, 
-  fixture_id, 
-  player_id, 
-  team_id");
+          // dd($query);
+          $results = DB::select($query);
+          $getresult = $results;
 
-$getresult = $results;
+          // dd($getresult);
 
- }
-    $man_of_matchs =  DB::select("SELECT fixtures.manofmatch_player_id, COUNT(fixtures.manofmatch_player_id) AS `Count`
-    FROM fixtures
-    JOIN (
-      SELECT players_contain_points.player_id
-      FROM players_contain_points
-      GROUP BY players_contain_points.player_id
-    ) AS derived_table
-    ON fixtures.manofmatch_player_id = derived_table.player_id
-    GROUP BY fixtures.manofmatch_player_id");
+
+          /////////////////////////////////////////////////////////
+
+
+          $man_of_matchs_query =" SELECT fixtures.id, fixtures.tournament_id, fixtures.manofmatch_player_id , COUNT(DISTINCT fixtures.manofmatch_player_id) as MOM
+          FROM fixtures
+          JOIN players_contain_points ON fixtures.manofmatch_player_id = players_contain_points.player_id
+          WHERE
+          fixtures.isActive  = 1
+          ";
+          
+          if (!empty($term['year'])) {
+                      $year = $term['year'];
+                      $man_of_matchs_query .= " AND YEAR(fixtures.created_at)= $year";
+                  }
+                  
+                  if (!empty($term['tournament'])) {
+                    $tournament = $term['tournament'];
+                    $tournament = (int)$tournament;
+                    $man_of_matchs_query .= " AND fixtures.tournament_id = $tournament";
+                  }
+                  
+                  if (!empty($term['teams'])) {
+                    $team = $term['teams'];
+                    $team = (int)$team;
+                    $man_of_matchs_query .= " AND players_contain_points.team_id = $team";
+                  }
+          
+          
+          $man_of_matchs_query .= "
+          GROUP BY fixtures.id, fixtures.tournament_id, fixtures.manofmatch_player_id ";
+          
+
+
+// dd($man_of_matchs_query);
+
+$man_of_matchs =  DB::select($man_of_matchs_query);
 
     // dd($totalMatchesArray);
     return view('playerRanking', compact('fours', 'balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_counts', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years' , 'man_of_matchs'));
   }
-
 
   public function show_point_table(int $tournament_id)
   {
@@ -3972,8 +4068,13 @@ $getresult = $results;
     ->pluck('year');
 
   $tournamentdata = Tournament::query()
-    ->where('isActive', '=', 1)->where('isActive', '=', 1)
+    ->where('isActive', '=', 1)
+    ->where('is_web_display' , '=' , 1)
+    ->get()
     ->pluck('name', 'id');
+
+   
+   
 
   $image_gallery = GalleryImages::query()
     ->where('isActive', 1)
@@ -4090,7 +4191,10 @@ $getresult = $results;
 
   $tournamentdata = Tournament::query()
     ->where('isActive', '=', 1)
+    ->where('is_web_display' , '=' , 1)
+    ->get()
     ->pluck('name', 'id');
+
 
   $image_gallery = GalleryImages::query()
     ->where('isActive', 1)
@@ -4169,10 +4273,15 @@ $getresult = $results;
   {
 
 
-    $tournamentdata = Tournament::query()->pluck(
+    $tournamentdata = Tournament::query()
+    ->where('isActive', '=', 1)
+    ->where('is_web_display' , '=' , 1)
+    ->get()
+    ->pluck(
       'name',
       'id'
     );
+    
     $teams = Team::query()->get()->pluck(
       'name',
       'id'
@@ -4269,7 +4378,11 @@ $getresult = $results;
   public function show_player_ranking(int $tournament_id)
   {
 
-    $tournamentdata = Tournament::query()->pluck(
+    $tournamentdata = Tournament::query()
+    ->where('isActive', '=', 1)
+    ->where('is_web_display' , '=' , 1)
+    ->get()
+    ->pluck(
       'name',
       'id'
     );
@@ -4326,92 +4439,129 @@ $getresult = $results;
       ->get();
 
       $getresult=[];
+      // $term = $request->input();
+      // dd($term);
+      $match_counts_query =  "
+SELECT playerId AS player_id, COUNT(DISTINCT fixture_id) AS total_matches
+FROM `fixture_scores`
+JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+WHERE
+fixtures.isActive  = 1
+";
+          $match_counts_query .= " AND fixtures.tournament_id = $tournament_id";
+
+$match_counts_query .= "
+GROUP BY playerId
+UNION ALL
+SELECT bowlerId AS player_id, COUNT(DISTINCT fixture_id) AS total_matches
+FROM `fixture_scores`
+JOIN fixtures ON fixture_scores.fixture_id = fixtures.id 
+WHERE
+fixtures.isActive  = 1
+";
+          $match_counts_query .= " AND fixtures.tournament_id = $tournament_id";
+$match_counts_query .= "
+    GROUP BY bowlerId "; 
+
+//  dd($match_counts_query);
+
+ $match_counts =  DB::select($match_counts_query);
 
 
+// dd($match_counts);
 
-    $match_counts = DB::select("SELECT
-    subquery.player_id,
-    COUNT(DISTINCT subquery.fixture_id) AS total_matches
-FROM (
-    SELECT
-        fixture_id,
-        playerId AS player_id
-    FROM
-        fixture_scores
-    WHERE
-        playerId IN (
-            SELECT
-                player_id
-            FROM
-                players_contain_points
-            WHERE
-                player_type IN ('batsmen', 'Bowler')
-                
-        )
-    UNION
-    SELECT
-        fixture_id,
-        bowlerId AS player_id
-    FROM
-        fixture_scores
-    WHERE
-        bowlerId IN (
-            SELECT
-                player_id
-            FROM
-                players_contain_points
-            WHERE
-                player_type IN ('batsmen', 'Bowler')
-        )
-) AS subquery
-GROUP BY
-    subquery.player_id");
+      /////////////////////////
+
+      $query = "
+      SELECT 
+          tournament_id, 
+          fixture_id, 
+          player_id, 
+          team_id, 
+          COALESCE(SUM(CASE WHEN player_type = 'batsmen' THEN points END), '') AS 'Batting',
+          COALESCE(SUM(CASE WHEN player_type = 'Bowler' THEN points END), '') AS 'Bowling'
+      FROM 
+          players_contain_points
+      WHERE 
+          player_type IN ('batsmen', 'Bowler') ";
+          $query .= " AND tournament_id = $tournament_id";
+      $query .= " GROUP BY 
+          tournament_id, 
+          fixture_id, 
+          player_id, 
+          team_id  ";
+
+          // dd($query);
+          $results = DB::select($query);
+          $getresult = $results;
+
+          // dd($getresult);
 
 
-   
+          /////////////////////////////////////////////////////////
 
-  $results = DB::select("SELECT 
-  tournament_id, 
-  fixture_id, 
-  player_id, 
-  team_id, 
-  COALESCE(SUM(CASE WHEN player_type = 'batsmen' THEN points END), '') AS 'Batting',
-  COALESCE(SUM(CASE WHEN player_type = 'Bowler' THEN points END), '') AS 'Bowling'
-FROM 
-  players_contain_points
-WHERE 
-  player_type IN ('batsmen', 'Bowler')
-  AND tournament_id = $tournament_id
-GROUP BY 
-  tournament_id, 
-  fixture_id, 
-  player_id, 
-  team_id") ;
 
-        $getresult = $results;
- 
+          $man_of_matchs_query =" SELECT fixtures.id, fixtures.tournament_id, fixtures.manofmatch_player_id , COUNT(DISTINCT fixtures.manofmatch_player_id) as MOM
+          FROM fixtures
+          JOIN players_contain_points ON fixtures.manofmatch_player_id = players_contain_points.player_id
+          WHERE
+          fixtures.isActive  = 1
+          ";
+                    $man_of_matchs_query .= " AND fixtures.tournament_id = $tournament_id";
+          
+          
+          $man_of_matchs_query .= "
+          GROUP BY fixtures.id, fixtures.tournament_id, fixtures.manofmatch_player_id ";
+          
 
- 
-      $man_of_matchs =  DB::select("SELECT fixtures.manofmatch_player_id, COUNT(fixtures.manofmatch_player_id) AS `Count`
-      FROM fixtures
-      JOIN (
-        SELECT players_contain_points.player_id
-        FROM players_contain_points
-        GROUP BY players_contain_points.player_id
-      ) AS derived_table
-      ON fixtures.manofmatch_player_id = derived_table.player_id
-      GROUP BY fixtures.manofmatch_player_id");
 
-    // dd($totalMatchesArray);
+// dd($man_of_matchs_query);
+
+$man_of_matchs =  DB::select($man_of_matchs_query);
+
     return view('playerRanking', compact('fours', 'balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_counts', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years' , 'man_of_matchs'));
  
 
 
   }
 
+public function playermatchcount(){
+  $teams = Team::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  $player = Player::query()->get()->pluck(
+    'fullname',
+    'id'
+  );
+  $match_results = Fixture::query();
+  $match_results->where('running_inning', '=', 3);
+  $match_results = $match_results->orderBy('id')->get();
+  $image_gallery = GalleryImages::query()
+  ->where('isActive', 1)
+  ->get();
 
+  return view ('playermatchcount', compact('teams','image_gallery','match_results'));
+}
 
+public function playermatchcount_submit(){
+  $teams = Team::query()->get()->pluck(
+    'name',
+    'id'
+  );
+  $player = Player::query()->get()->pluck(
+    'fullname',
+    'id'
+  );
+  $match_results = Fixture::query();
+  $match_results->where('running_inning', '=', 3);
+  $match_results = $match_results->orderBy('id')->get();
+  $image_gallery = GalleryImages::query()
+  ->where('isActive', 1)
+  ->get();
 
+  return view ('playermatchcount', compact('teams','image_gallery','match_results'));
+}
 
 
   //////////////////////////////////////////////////////////////////////////////////////

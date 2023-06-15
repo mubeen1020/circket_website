@@ -205,7 +205,8 @@
                                     <td>{{  $data->Batting   }}</td>
                                     <td>{{ $data->Bowling }}</td>
                                     <td>{{ collect($man_of_matchs)->where('player_id', $data->player_id)->pluck('MOM')->first() ?? 0 }}</td>
-                                    <td>{{  $data->Batting ?? 0  +  $data->Bowling ?? 0 }}</td>
+                                    <td>{{ (int)($data->Batting ?? 0) + (int)($data->Bowling ?? 0) }}</td>
+
 
                                 </tr>
                                 @endforeach
