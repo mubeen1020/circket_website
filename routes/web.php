@@ -128,3 +128,7 @@ Route::get('show_player_ranking/{tournament_id}',[HomeController::class,'show_pl
 
 
 Route::get('get_top_ranking/{id}',[ApiController::class,'get_top_ranking'])->name('get_top_ranking');
+
+
+
+Route::get('team_ranking/{team_id}_{tournament_id}',[HomeController::class,'team_ranking'])->name('team_ranking');
