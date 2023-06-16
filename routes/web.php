@@ -132,3 +132,6 @@ Route::get('get_top_ranking/{id}',[ApiController::class,'get_top_ranking'])->nam
 Route::get('playermatchcount',[HomeController::class,'playermatchcount'])->name('playermatchcount');
 Route::post('playermatchcount_submit',[HomeController::class,'playermatchcount_submit'])->name('playermatchcount_submit');
 Route::get('playermatchcount_submit',[HomeController::class,'playermatchcount']);
+
+Route::get('fixturesCalendar',[HomeController::class,'fixturesCalendar']);
+Route::post('fixturesCalendar',[HomeController::class,'fixturesCalendar_post']);

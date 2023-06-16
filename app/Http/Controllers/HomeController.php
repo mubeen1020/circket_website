@@ -1289,7 +1289,7 @@ class HomeController extends Controller
 
     if (!empty($term['year'])) {
       $year = $term['year'];
-      $data->whereRaw("YEAR(created_at) = $year");
+      $data->whereRaw("YEAR(match_startdate) = $year");
     }
     if (!empty($term['teams'])) {
       $team = $term['teams'];
@@ -1931,6 +1931,7 @@ class HomeController extends Controller
 
   public function schedulesearch()
   {
+
     $ground = Ground::query()->get()->pluck(
       'name',
       'id'
@@ -2001,7 +2002,7 @@ class HomeController extends Controller
 
     if (!empty($term['year'])) {
       $year = $term['year'];
-      $data->whereRaw("YEAR(created_at) = $year");
+      $data->whereRaw("YEAR(match_startdate) = $year");
     }
     if (!empty($term['tournament'])) {
       $tournaments = $term['tournament'];
@@ -2597,7 +2598,8 @@ class HomeController extends Controller
       ->distinct('players.playerid')
       ->get();
 
-    $player_match = FixtureScore::where('playerid', $playerid)->count();
+    $player_match = FixtureScore::where('playerid', $playerid)->groupBy('playerid', 'fixture_id')->selectRaw('playerid')->selectRaw('fixture_id')->get();
+    $player_match = $player_match->count();
 
     $player_runs = FixtureScore::where('playerid', $playerid)
       ->where('fixture_scores.balltype', '=', 'R')
@@ -4491,5 +4493,232 @@ public function playermatchcount_submit(){
 }
 
 
+
+public function fixturesCalendar()
+{
+
+
+    $ground = Ground::query()->get()->pluck(
+      'name',
+      'id'
+    );
+    DB::enableQueryLog();
+
+    $years = DB::table('fixtures')
+      ->select(DB::raw('YEAR(created_at) as year'))
+      ->groupBy(DB::raw('YEAR(created_at)'))
+      ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
+      ->pluck('year');
+
+    $match_results = Fixture::query()->orderBy('id')->get();
+    $data = Fixture::where('running_inning', '=', 0);
+
+
+    $teams = Team::query()->get()->pluck(
+      'name',
+      'id'
+    );
+
+    $clubs = Team::query()->where('isclub', '=', 1)->get()->pluck(
+      'clubname',
+      'id'
+    );
+
+    $results = $data->get();
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+      'name',
+      'id'
+    );
+    $image_gallery = GalleryImages::query()
+      ->where('isActive', '=', 1)
+      ->get();
+
+    $ground2 = Ground::query()->get()->pluck(
+      'name',
+      'id'
+    );
+
+
+  $today = Carbon::now()->toDateString();
+    $upcoming_match = Fixture::query()->where('match_startdate', '>=', $today)
+      ->where('isActive', 1)
+      ->orderBy('id')
+      ->selectRaw('match_description')
+      ->selectRaw('match_startdate')
+      ->selectRaw('match_enddate')
+      ->selectRaw('match_starttime')
+      ->selectRaw('match_endtime')
+      ->get()
+      ->filter(function ($fixture) use ($today) {
+        return Carbon::parse($fixture->match_startdate)->greaterThanOrEqualTo($today);
+      });
+      
+  $jsObjects = $upcoming_match->map(function ($fixture) {
+    $startDate = Carbon::parse($fixture->match_startdate);
+    $startTime = Carbon::parse($fixture->match_starttime);
+    $startDateTime = $startDate->format('Y-m-d') . 'T' . $startTime->format('H:i:s');
+
+    $jsObject = [
+        'title' => $fixture->match_description,
+        'start' => $startDateTime,
+    ];
+
+    if ($fixture->match_enddate && $fixture->match_endtime) {
+        $endDate = Carbon::parse($fixture->match_enddate);
+        $endTime = Carbon::parse($fixture->match_endtime);
+        $endDateTime = $endDate->format('Y-m-d') . 'T' . $endTime->format('H:i:s');
+        $jsObject['end'] = $endDateTime;
+    }
+
+    return $jsObject;
+})->toArray();
+
+   return view ('calendar', compact('jsObjects','ground2', 'ground', 'clubs', 'match_results', 'years', 'tournament', 'image_gallery')); 
+
+}
   //////////////////////////////////////////////////////////////////////////////////////
+
+
+
+public function fixturesCalendar_post(Request $request)
+{
+
+
+    $ground = Ground::query()->get()->pluck(
+      'name',
+      'id'
+    );
+    DB::enableQueryLog();
+
+    $years = DB::table('fixtures')
+      ->select(DB::raw('YEAR(created_at) as year'))
+      ->groupBy(DB::raw('YEAR(created_at)'))
+      ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
+      ->pluck('year');
+
+    // $match_results = Fixture::query()->orderBy('id')->get();
+    $data = Fixture::where('running_inning', '=', 0);
+
+
+    $teams = Team::query()->get()->pluck(
+      'name',
+      'id'
+    );
+
+    $clubs = Team::query()->where('isclub', '=', 1)->get()->pluck(
+      'clubname',
+      'id'
+    );
+
+    // $results = $data->get();
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+      'name',
+      'id'
+    );
+    $image_gallery = GalleryImages::query()
+      ->where('isActive', '=', 1)
+      ->get();
+
+    $ground2 = Ground::query()->get()->pluck(
+      'name',
+      'id'
+    );
+
+
+$term = $request;
+    if (!empty($term->created_at)) {
+      $data->whereRaw("DATE(match_startdate) >= Date('$term->created_at')");
+    }
+    if (!empty($term->end_at)) {
+      $data->whereRaw("DATE(match_enddate) <= Date('$term->end_at')");
+    }
+
+    if (!empty($term['year'])) {
+      $year = $term['year'];
+      $data->whereRaw("YEAR(match_startdate) = $year");
+    }
+    if (!empty($term['tournament'])) {
+      $tournaments = $term['tournament'];
+      $data->where('tournament_id', '=', $tournaments);
+    }
+
+    if (!empty($term['teams'])) {
+      $team = $term['teams'];
+      $data->where('team_id_a', '=', $team)
+        ->oRWhere('team_id_b', '=', $team);
+    }
+
+    if (!empty($term->club)) {
+      $club = $term->club;
+      $data->where('team_id_a', '=', $club)
+        ->oRWhere('team_id_b', '=', $club);
+    }
+
+    if (!empty($term['grounddata'])) {
+      $grounddata = $term['grounddata'];
+      $data->where('ground_id', '=', $grounddata);
+    }
+
+
+
+    $teams = Team::query()->get()->pluck(
+      'name',
+      'id'
+    );
+
+    $clubs = Team::query()->where('isclub', '=', 1)->get()->pluck(
+      'clubname',
+      'id'
+    );
+
+
+
+    $results = $data->selectRaw('match_description')
+      ->selectRaw('match_startdate')
+      ->selectRaw('match_enddate')
+      ->selectRaw('match_starttime')
+      ->selectRaw('match_endtime')->get();
+      // dd($results);
+
+
+  $today = Carbon::now()->toDateString();
+    $upcoming_match = Fixture::query()->where('match_startdate', '>=', $today)
+      ->where('isActive', 1)
+      ->orderBy('id')
+      ->selectRaw('match_description')
+      ->selectRaw('match_startdate')
+      ->selectRaw('match_enddate')
+      ->selectRaw('match_starttime')
+      ->selectRaw('match_endtime')
+      ->get()
+      ->filter(function ($fixture) use ($today) {
+        return Carbon::parse($fixture->match_startdate)->greaterThanOrEqualTo($today);
+      });
+      
+  $jsObjects = $results->map(function ($fixture) {
+    $startDate = Carbon::parse($fixture->match_startdate);
+    $startTime = Carbon::parse($fixture->match_starttime);
+    $startDateTime = $startDate->format('Y-m-d') . 'T' . $startTime->format('H:i:s');
+
+    $jsObject = [
+        'title' => $fixture->match_description,
+        'start' => $startDateTime,
+    ];
+
+    if ($fixture->match_enddate && $fixture->match_endtime) {
+        $endDate = Carbon::parse($fixture->match_enddate);
+        $endTime = Carbon::parse($fixture->match_endtime);
+        $endDateTime = $endDate->format('Y-m-d') . 'T' . $endTime->format('H:i:s');
+        $jsObject['end'] = $endDateTime;
+    }
+
+    return $jsObject;
+})->toArray();
+
+   return view ('calendar', compact('jsObjects','ground2', 'ground', 'clubs', 'years', 'tournament', 'image_gallery')); 
+
+}
+
+
+
 }
