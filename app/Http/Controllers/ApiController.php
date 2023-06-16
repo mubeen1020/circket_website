@@ -65,7 +65,7 @@ class ApiController extends Controller
             ->selectRaw("tournament.id as tournamentID")
             ->selectRaw("ground.name as ground_name")
             ->selectRaw("team_a.name as team_a_name, team_b.name as team_b_name")
-            ->selectRaw("team_id_a,team_id_b")
+            ->selectRaw("first_inning_team_id as team_id_a,second_inning_team_id as team_id_b")
             ->selectRaw("match_startdate")
             ->selectRaw("numberofover")
             ->selectRaw("inningnumber")
@@ -74,8 +74,8 @@ class ApiController extends Controller
             ->selectRaw('inningnumber, max(overnumber) as max_over ')
             ->selectRaw('inningnumber, max(ballnumber) as max_ball ')
             ->join('fixtures', 'fixtures.id', '=', 'fixture_id')
-            ->Join('teams as team_a', 'team_a.id', '=', 'fixtures.team_id_a')
-            ->Join('teams as team_b', 'team_b.id', '=', 'fixtures.team_id_b')
+            ->Join('teams as team_a', 'team_a.id', '=', 'fixtures.first_inning_team_id')
+            ->Join('teams as team_b', 'team_b.id', '=', 'fixtures.second_inning_team_id')
             ->Join('tournaments as tournament', 'tournament.id', '=', 'fixtures.tournament_id')
             ->Join('grounds as ground', 'ground.id', '=', 'fixtures.ground_id')
             ->whereDate('match_startdate', $today)
@@ -241,7 +241,7 @@ class ApiController extends Controller
             $team_balls_bowled = ($team_balls_bowledA + $team_balls_bowledB)*6;
 
             if ($team_ball_face != 0 && $team_balls_bowled != 0) {
-                $net_run_rate = ($team_runs_scored / $team_ball_face) - ($team_runs_conceded / $team_balls_bowled);
+                $net_run_rate =($team_runs_conceded / $team_balls_bowled) -($team_runs_scored / $team_ball_face) ;
             } else {
                 $net_run_rate=0.00;
             }
@@ -464,7 +464,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             $team_balls_bowled = ($team_balls_bowledA + $team_balls_bowledB)*6;
 
             if ($team_ball_face != 0 && $team_balls_bowled != 0) {
-                $net_run_rate = ($team_runs_scored / $team_ball_face) - ($team_runs_conceded / $team_balls_bowled);
+                $net_run_rate =($team_runs_conceded / $team_balls_bowled) -($team_runs_scored / $team_ball_face) ;
             } else {
                 $net_run_rate=0.00;
             }

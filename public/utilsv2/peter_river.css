@@ -473,8 +473,26 @@ padding-top: 0px!important;
 }
 
 .logo .img-responsive{
-	width: 100px!important;
-	height: 60px!important;
+	width: 147px!important;
+    height: 94px!important;
+}
+@media screen and (max-width: 280px) {
+	.immobile{
+		width: 147px!important;
+        height: 94px!important;
+		margin-top: 78px;
+	}
+
+}
+@media screen and (min-width: 280px) {
+
+	.head{
+		margin-top: 56px;
+	}
+	.headname{
+		width: 106% !important;
+    text-align: center !important;
+	}
 }
 .text-lg-right{
 	text-align: right;

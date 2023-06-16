@@ -46,7 +46,8 @@
                                                     @endif
                                                     @endforeach</span> <br> 
 						                           		<p style="text-transform: lowercase;">
-                                           {{ $total_overs[2] }}/{{$match_over}} ov 
+                                           {{ isset($total_overs[2]) ? $total_overs[2] : '0' }}/{{$match_over}} ov
+
 						                           		</p>
 						                           </li>
 					                       </ul>
@@ -77,15 +78,7 @@
    <div class="all-tab-table sp scorecard">
        <div class="container">
        
-       <table style="width: 100%; margin-bottom: 10px;text-align: center;">
-	<tbody><tr>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileFacebookShare();return false;"> <img src="/utilsv2/images/fb_new.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileTwitterShare();return false;"><img src="/utilsv2/images/twi.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileGoogleShare(); return false;"><img src="/utilsv2/images/goo.png"></a></td>
-		<td><a class="show-phone" href="#" onclick="javascript:mobileMailShare(); return false;"><img width="40" src="/utilsv2/images/mail.png"></a></td>
-		<td><a class="show-phone whatsapp"><img src="/utilsv2/images/whatsapp.png"></a></td>
-	</tr>
-</tbody></table><div class="show-phone">
+      <div class="show-phone">
 			</div>
 
        	<div class="score-tab">            
@@ -275,7 +268,7 @@ flex: auto;}
                                                           
                                                           {{$player[$player1->playerId]}} N<span style="float: right;"> {{$player1->total_runs}}(
                                                            
-                                                            {{$player_balls[$player1->playerId]}}
+                                                            {{$player_balls[$player1->playerId]??0}}
                                                             
                                                             )</span></p>
                                                           @endforeach
@@ -358,7 +351,8 @@ flex: auto;}
                                                       <div class="col-sm-3 col-xs-6 sp"> 
                                                           <div class="end-head" style="text-align: left;">                                                           
                                                               <p style="line-height: 1.85">Over 
-                                                              {{ $total_overs[2] }} ({{ $teams_two }})
+                                                              {{ isset($total_overs[2]) ? $total_overs[2] : '0' }} ({{ $teams_two }})
+
                                                                    </p>
                                                             </div>
                                                         </div>
@@ -369,7 +363,7 @@ flex: auto;}
                                                           
                                                           {{$player[$player1->playerId]}} N<span style="float: right;"> {{$player1->total_runs}}(
                                                            
-                                                            {{$player_balls[$player1->playerId]}}
+                                                            {{$player_balls[$player1->playerId]??0}}
                                                             
                                                             )</span></p>
                                                           @endforeach
@@ -378,7 +372,15 @@ flex: auto;}
                                                         <div class="col-sm-5 col-xs-12 sp"> 
                                                           <div class="end-test">
                                                          
-    <p style="line-height: 1.85">{{$player[$runnerbowler2->bowlerid]}} J<span style="float: right;"> {{$runnerbowler2->total_ball}}.{{$runnerbowler2->max_ball%6}}-0-{{$runnerbowler2->total_runs}}-{{$runnerbowler2->total_wickets}}</span> </p>
+                                                          @if(isset($runnerbowler2) && is_object($runnerbowler2))
+    <p style="line-height: 1.85">
+        {{$player[$runnerbowler2->bowlerid]}} J
+        <span style="float: right;">
+            {{$runnerbowler2->total_ball}}.{{$runnerbowler2->max_ball%6}}-0-{{$runnerbowler2->total_runs}}-{{$runnerbowler2->total_wickets}}
+        </span>
+    </p>
+@endif
+
 
 
                                                               <p style="line-height: 1.85" class="hidden-phone">Run Rate : <span style="float: right"> {{number_format($team_two_run_rate, 2)}}</span>

@@ -132,3 +132,6 @@ Route::get('get_top_ranking/{id}',[ApiController::class,'get_top_ranking'])->nam
 
 
 Route::get('team_ranking/{team_id}_{tournament_id}',[HomeController::class,'team_ranking'])->name('team_ranking');
+Route::get('playermatchcount',[HomeController::class,'playermatchcount'])->name('playermatchcount');
+Route::post('playermatchcount_submit',[HomeController::class,'playermatchcount_submit'])->name('playermatchcount_submit');
+Route::get('playermatchcount_submit',[HomeController::class,'playermatchcount']);

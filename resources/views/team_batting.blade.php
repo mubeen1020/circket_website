@@ -132,58 +132,57 @@ th { min-width:30px !important; padding: 10px 5px !important; }
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Balls : activate to sort column ascending" style="width: 32px;">Balls <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Avg : activate to sort column ascending" style="width: 41px;">Avg <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Sr : activate to sort column ascending" style="width: 50px;">Sr <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th><th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Hs : activate to sort column ascending" style="width: 28px;">Hs <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
-            <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="100's : activate to sort column ascending" style="width: 35px;">100's <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th><th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="75's : activate to sort column ascending" style="width: 27px;">75's <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
+            <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="100's : activate to sort column ascending" style="width: 35px;">100's <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="50's : activate to sort column ascending" style="width: 27px;">50's <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
-            <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="25's : activate to sort column ascending" style="width: 27px;">25's <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
-            <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="0 : activate to sort column ascending" style="width: 27px;">0 <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="6's : activate to sort column ascending" style="width: 27px;">6's <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="4's : activate to sort column ascending" style="width: 27px;">4's <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th></tr>
 		</thead>
 		<tbody>
-        
-        @foreach($team_battingdata as $key => $data)
-			<tr role="row" class="odd">
-				<th class="sorting_1">{{ $key+1 }}</th>
-				<th align="left" title="Abubaker Kalair"><i class="fa fa-user"></i> <b><a href="viewPlayer.do?playerId=1242838&amp;clubId=2565"> {{$player[$data['player_id']]}}</a></b></th>
-				<th>
-				<table>
-					<tbody><tr>
-						<td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
-						<td>&nbsp;{{$header_teams[$data['team_id']]}}</td>
-					</tr>
-				</tbody></table></th>
-				<th>{{ isset($match_count_player[$data['id']]) ? $match_count_player[$data['id']] : '0' }}</th>
-
-				<th>{{ isset($match_count_player[$data['id']]) ? $match_count_player[$data['id']] : '0' }}</th>
-
-				<th>1</th>
-				<th>
-                			<b><a class="linkStyle" href="">
-                {{$player_runs[$data['id']]}}</a></b>
-				</th>
-				<th>{{$balls_faced[$data['id']]}}</th>
-				@if($match_count_player[$data['id']] > 0)
-                <th>{{ number_format($player_runs[$data['id']] / $match_count_player[$data['id']], 2)}}</th>
-                @else
-                <th>0</th>
-                @endif
-                @if($balls_faced[$data['id']] > 0)
-                    <th>{{ number_format(($player_runs[$data['id']] / $balls_faced[$data['id']]) * 100, 2) }}</th>
-                @else
-                    <th>0</th>
-                @endif
-
-
-				<th>{{$fours[$data['id']]['high_score']}}</th>
-				<th>2</th>
+		@foreach($playername as $playerId => $playerName)
+    <tr role="row" class="odd">
+        <th class="sorting_1">{{ $playerId }}</th>
+		
+        <th align="left" title="Abubaker Kalair"><i class="fa fa-user"></i> <b><a href="#">{{ $playerName }}</a></b></th>
+        <th>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                        <td>&nbsp;{{$header_teams[$playerteam[$playerId]]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </th>
+        <th>{{$playermatch[$playerId]}}</th>
+        <th>{{ isset($matchcount[$playerId]) ? $matchcount[$playerId] : 0 }}</th>
+        <th>1</th>
+        <th>
+            <b><a class="linkStyle" href="">{{$playerruns[$playerId]??0}}</a></b>
+        </th>
+        <th>{{$playerballs[$playerId]??0}}</th>
+		@if ($playerouts[$playerId]??0 != 0) 
+                <th>{{number_format($playerruns[$playerId]/$playerouts[$playerId],2)}}</th>
+				@else
 				<th>0</th>
-				<th>1</th>
-				<th>2</th>
+				@endif
+
+				@if ($playerballs[$playerId]??0 != 0) 
+                <th>{{number_format(($playerruns[$playerId]/$playerballs[$playerId])*100,2)}}</th>
+				@else
 				<th>0</th>
-				<th>{{$sixes[$data['id']]}}</th>
-				<th>{{$fours[$data['id']]['fours']}}</th>
-			</tr>
-            @endforeach
+				@endif
+        <th>{{$playerhigestruns[$playerId]??0}}</th>
+	
+        <th>{{$playerHundreds[$playerId]??0}}</th>
+	
+        <th>{{$playerfifty[$playerId]??0}}</th>
+        <th>{{$playersix[$playerId]??0}}</th>
+        <th>{{$playerfour[$playerId]??0}}</th>
+    </tr>
+@endforeach
+
+
+
            </tbody>
 	</table></div>
 	</div>
