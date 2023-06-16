@@ -164,14 +164,6 @@
                     </div>
                 </div>
                 <div class="about-table table-responsive" id="tab1default">
-                    <div class="text-right">
-                        <!-- <div class="btn-group btn-group-sm" role="group">
-						<img alt="Download as PDF" title="Download as PDF" class="pdfBtn" style="cursor:pointer;" width="32" height="32" src="/utilsv2/images/pdf.png">&nbsp;
-						<img alt="Download as CSV" title="Download as CSV" class="csvBtn" style="cursor:pointer;" width="32" height="32" src="/utilsv2/images/csvicon.png">&nbsp;
-				<img alt="Download as Excel" title="Download as Excel" class="excelBtn" style="cursor:pointer;" width="32" height="32" src="/utilsv2/images/excel.png">	
-				<img alt="Print" title="Print" class="printBtn" style="cursor:pointer;" width="32" height="32" src="/utilsv2/images/print.png">&nbsp;
-						</div> -->
-                    </div>
                     <div id="tablePlayerRankings_wrapper" class="dataTables_wrapper no-footer">
                         <table class="table sortable dataTable no-footer" id="tablePlayerRankings" role="grid">
 
@@ -186,10 +178,10 @@
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Bowling <p><a href="#"></a></p></a></th>
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">MOM #<p><a href="#"></a></p></a></th>
                                     <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Total <p><a href="#"></a></p></a></th>
-                                </tr>   
+                                </tr>
                             </thead>
 
-   
+
                             <tbody>
                                 @foreach($getresult as $key => $data)
                                 <tr role="row" class="even">
@@ -202,17 +194,18 @@
                                     </td>
                                     <td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
                                     <td style="text-align: left;font-size: smaller;">{{ collect($match_counts)->where('player_id', $data->player_id)->pluck('total_matches')->first() ?? 0 }}</td>
-                                    <td>{{  $data->Batting   }}</td>
+                                    <td>{{ $data->Batting   }}</td>
                                     <td>{{ $data->Bowling }}</td>
                                     <td>{{ collect($man_of_matchs)->where('player_id', $data->player_id)->pluck('MOM')->first() ?? 0 }}</td>
-                                    <td>{{  $data->Batting ?? 0  +  $data->Bowling ?? 0 }}</td>
+                                    <td>{{ (int)($data->Batting ?? 0) + (int)($data->Bowling ?? 0) }}</td>
+
 
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
