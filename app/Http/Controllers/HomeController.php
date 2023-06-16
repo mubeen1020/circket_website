@@ -4692,7 +4692,12 @@ public function playermatchcount(){
   ->where('isActive', 1)
   ->get();
 
-  return view ('playermatchcount', compact('teams','image_gallery','match_results'));
+  $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    'name',
+    'id'
+  );
+
+  return view ('playermatchcount', compact('teams','tournament','image_gallery','match_results'));
 }
 
 public function playermatchcount_submit(){
@@ -4710,10 +4715,13 @@ public function playermatchcount_submit(){
   $image_gallery = GalleryImages::query()
   ->where('isActive', 1)
   ->get();
+  $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    'name',
+    'id'
+  );
 
-  return view ('playermatchcount', compact('teams','image_gallery','match_results'));
+  return view ('playermatchcount', compact('teams','tournament','image_gallery','match_results'));
 }
-
 
 public function team_ranking(int $team_id, int $tournament_id)
 {
