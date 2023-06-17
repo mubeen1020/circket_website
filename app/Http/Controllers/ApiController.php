@@ -654,15 +654,28 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         $tournament_total_hundreds=['tournament_hundreds'=>$total_hundreds];
        
 
-        $tournament_fifties = DB::table('fixture_scores')
-        ->where('fixtures.tournament_id', $tournament_id)
-        ->where('fixture_scores.balltype','=','R')
-        ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
-        ->select('playerid', DB::raw('sum(runs) as fifties'))
-        ->having('fifties', '>=', 50)
-        ->having('fifties', '<', 100)
-        ->groupBy('playerid')
-        ->get();
+        // $tournament_fifties = DB::table('fixture_scores')
+        // ->where('fixtures.tournament_id', $tournament_id)
+        // ->where('fixture_scores.balltype','=','R')
+        // ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+        // ->select('playerid', DB::raw('sum(runs) as fifties'))
+        // ->having('fifties', '>=', 50)
+        // ->having('fifties', '<', 100)
+        // ->groupBy('playerid')
+        // ->get();
+        $tournament_fifties = DB::table(function ($query) use ($tournamentId) {
+                $query->select('playerid', DB::raw('SUM(runs) AS fifties'), 'fixture_id')
+                    ->from('fixture_scores')
+                    ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+                    ->where('fixtures.tournament_id', $tournamentId)
+                    ->groupBy('playerid', 'fixture_id');
+            }, 'subquery')
+            ->select('playerid', DB::raw('COUNT(*) AS fifties'))
+            ->where('fifties', '>=', 50)
+            ->where('fifties', '<', 100)
+            ->groupBy('playerid')
+            ->get();
+
     
         $total_fifties = $tournament_fifties->sum('fifties');
         $tournament_total_fifties = ['tournament_fifties' => $total_fifties];
