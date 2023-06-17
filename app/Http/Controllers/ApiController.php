@@ -612,9 +612,9 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         ->where('fixtures.tournament_id', $tournament_id)
         ->where('fixture_scores.balltype','=','R')
         ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
-        ->select('playerid', DB::raw('COUNT(*) as fifties'))
-        ->where('runs', '>=', 50)
-        ->where('runs', '<', 100)
+        ->select('playerid', DB::raw('sum(runs) as fifties'))
+        ->having('sum(runs)', '>=', 50)
+        ->having('sum(runs)', '<', 100)
         ->groupBy('playerid')
         ->get();
     
