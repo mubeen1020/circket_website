@@ -419,6 +419,7 @@ class HomeController extends Controller
     $match_results = $match_results ->where('isActive',1)->orderBy('id')->get();
     $result = [];
     $match_data = $match_results->find($id);
+    // dd($match_data->manofmatch_player_id);
     $tournamentId = $match_results->first()->tournament_id;
     $tournament = Tournament::query()->where('id', '=', $tournamentId)->get()->pluck(
       'name'

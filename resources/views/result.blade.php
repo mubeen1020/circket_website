@@ -173,7 +173,7 @@ text-align:center !important;
            <div class="row team-data" id="deleteRow3257">
                <div class="col-xs-3 col-sm-1 sp mobile-b">
                    <div class="sch-time text-center h-90">
-                       <h5><strong>Final</strong></h5>
+                       <h5><strong>{{$data['match_description']}}</strong></h5>
                        <h2>{{date('d', strtotime($data['created_at']))}}</h2>
                        <h5>{{date('M Y', strtotime($data['created_at']))}}</h5>
                    </div>

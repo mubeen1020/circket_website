@@ -176,6 +176,10 @@ margin-top: 15px;}
                          @foreach($results as $data)
 						
                        	@if($data['running_inning'] == 0)
+                         @php
+            $matchStartDate = strtotime($data['match_startdate']);
+            $dayOfWeek = date('l', $matchStartDate);
+        @endphp
            
                 </div>
                   <input type="hidden" name="upcoming_selected" value="5973">
@@ -185,10 +189,10 @@ margin-top: 15px;}
                           <div class="col-xs-4 col-sm-1 sp h-90 mobile-b" style="padding-left: 15px;text-align: center;">
                               <div class="sch-time text-center">
                               
-                              <h4>Saturday</h4>
+                              <h4>{{ $dayOfWeek }}</h4>
                               <h2>{{date('d', strtotime($data['match_startdate']))}}</h2>
                               <h5>{{date('M Y', strtotime($data['match_startdate']))}}</h5>
-                              <h5>{{ date('h:i:s a', strtotime($data['match_starttime'])) }}</h5>
+                              <h5>{{ date('h:i:s ', strtotime($data['match_starttime'])) }}</h5>
 
                               </div>
                             </div>
@@ -272,7 +276,7 @@ margin-top: 15px;}
 
                       <td>L</td>
                       <td>{{date('d M Y', strtotime($data['match_startdate']))}}</td>
-                      <td nowrap="nowrap">{{ date('h:i:s a', strtotime($data['match_starttime'])) }}</td>
+                      <td nowrap="nowrap">{{ date('h:i:s ', strtotime($data['match_starttime'])) }}</td>
                       <td>
                         <div style="display: flex;">
                         <a href="#">{{ $header_teams[$data['team_id_a']]}}</a> 
@@ -329,6 +333,10 @@ margin-top: 15px;}
                          @foreach($results as $data)
 						
                        	@if($data['running_inning'] == 3)
+                         @php
+            $matchStartDate = strtotime($data['match_startdate']);
+            $dayOfWeek = date('l', $matchStartDate);
+        @endphp
                         <input type="hidden" name="removeumpire_selected" value="5960">
                                     <div class="schedule-all">
                                     <div class="row team-data deleteRow5960" id="deleteRow5960">
@@ -337,10 +345,10 @@ margin-top: 15px;}
                                         <div class="col-xs-4 col-sm-1 sp mobile-b h-90" style="padding-right: 15px;
                                              text-align: center;">
                                                                     <div class="sch-time text-center">
-                                                                    <h4>Saturday</h4>
+                                                                    <h4>{{$dayOfWeek}}</h4>
                                                     <h2>{{date('d', strtotime($data['match_startdate']))}}</h2>
                                                     <h5>{{date('M Y', strtotime($data['match_startdate']))}}</h5>
-                                                    <h5>{{ date('h:i:s a', strtotime($data['match_starttime'])) }}</h5>
+                                                    <h5>{{ date('h:i:s ', strtotime($data['match_starttime'])) }}</h5>
                                                                     </div>
                                                                     </div>
                                                                     <div class="col-xs-8 col-sm-3 p-sm-0 mobile-b">

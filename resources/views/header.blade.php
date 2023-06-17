@@ -44,7 +44,9 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 
-
+	<link rel="shortcut icon" href="utilsv2/img/others/eoscl-logo.png" type="image/x-icon">
+			<link rel="icon" href="utilsv2/img/others/eoscl-logo.png" type="image/x-icon">
+   
 
 
     <style>
@@ -409,7 +411,7 @@ navbarSlider.addEventListener("mouseout", function() {
             <ul class="dropdown-menu"  >
               <li><a href="{{ route('result')}}">Results</a></li>
               <li><a href="{{ route('schedulesearch')}}">Schedule</a></li>
-              <li><a href="{{ route('comingsoon')}}">Calendar</a></li>
+              <li><a href="{{ url('fixturesCalendar')}}">Calendar</a></li>
             </ul>
           </li>
           <li class="dropdown">

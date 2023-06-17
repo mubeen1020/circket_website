@@ -49,7 +49,7 @@
                                                                         <th style="text-align: left;" colspan="2" class="hidden-phone">
                                                                         {{$teams_one}} innings   
                                                                         (@foreach($total_over as $over){{$over->numberofover}} @endforeach overs maximum) </th> 
-                                                                       <th style="text-align: left;" class="show-phone">Royal Tigers innings</th> 
+                                                                       <th style="text-align: left;" class="show-phone">{{$teams_one}} innings</th> 
                                                                         <th style="text-align: right;">R</th>
                                                                         <th style="text-align: right;">B</th>
                                                                         <th style="text-align: right;">4s</th> 
@@ -79,7 +79,7 @@
 																					@if ($out->out_description == "Retired Hurt")
 																						<span><a>b &nbsp;{{ $out->out_description }}</span>
 																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)")
-																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;&nbsp;{{ $out->fielder_name }}</a>)
+																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
 																					@elseif ($out->out_description == "Bowled")
 																						<span>b</span> (<a href="#"> {{ $out->bowler_name }}</a>)
 																					@endif
@@ -552,7 +552,14 @@
 							                            </tr>
 							                            <tr> 
 							                                <th>Player of the Match:</th> 
-							                                <th><a href="">Irfan Sadaat</a></th>
+							                                <th>
+															@if ( $match_data->manofmatch_player_id > 0)
+    {{$player[$match_data->manofmatch_player_id] }}
+@else
+    N/A
+@endif
+
+</th>
 							                            </tr>
 							                            <tr>															
 														<th style="padding: 0px 0px"><table><tbody><tr><th><strong>Umpires: </strong> </th></tr></tbody></table></th><th style="padding: 0px 5px"><table><tbody><tr><th style="padding: 0px 5px">1. <a style="color: inherit;" href="">Saurabh Naik</a></th></tr><tr><th style="padding: 0px 5px">2. <a style="color: inherit;" href="">Syed Muhammad Talha Anwar</a></th></tr></tbody></table></th>  
@@ -563,9 +570,9 @@
 									
 														<tr>
 															<th>
-																	<strong>Points Earned:</strong> </th><th>Royal Tigers: 6, 820 CC: 0</th>
+																	<strong>Points Earned:</strong> </th><th>{{$teams[$match_data->team_id_a]}}: {{$match_data->teamAbonusPoints}}, {{$teams[$match_data->team_id_b]}}: {{$match_data->teamBbonusPoints}}</th>
 														</tr>
-														<tr title="America/New_York"><th style="padding-left: 10px"><strong>Match Start: </strong></th><th><strong></strong> &nbsp; &nbsp; &nbsp; &nbsp;{{$match_data->match_starttime->format('h:i:s A')}}  </th></tr><tr title="America/New_York">
+														<tr title="America/New_York"><th style="padding-left: 10px"><strong>Match Start: </strong></th><th><strong></strong> &nbsp; &nbsp; &nbsp; &nbsp;{{$match_data->match_starttime->format('h:i:s ')}}  </th></tr><tr title="America/New_York">
 															<th><strong>Last Updated:  </strong></th><th> ({{$match_data-> updated_at }})
 															</th>
 														</tr>
