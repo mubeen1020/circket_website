@@ -1341,6 +1341,7 @@ function get_tournamnet_all_data(tournament_season_id) {
             const tournament_total_fifties=data[5]
             const tournament_balls=data[6]
             const tournament_teams=data[7]
+            const tournament_runout=data[8]
             
             // total balls
             const tournamentBalls=document.getElementById('tournamentballs');
@@ -1371,7 +1372,7 @@ function get_tournamnet_all_data(tournament_season_id) {
             // total runout
             const tournamentRunout=document.getElementById('tournamentrunouts');
             tournamentRunout.innerHTML = '';
-            tournamentRunout.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['runout']}`;
+            tournamentRunout.innerHTML += `${tournament_runout==undefined?0:tournament_runout[0]['total_runout']}`;
 
             // total wides
             const tournamentWides=document.getElementById('tournamentwides');
