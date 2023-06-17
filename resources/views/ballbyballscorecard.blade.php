@@ -27,7 +27,7 @@
                                                     @endif
                                                     @endforeach</span> <br>
 					                           			<p style="text-transform: lowercase;">
-					                           		  {{ $total_overs[1] }}/{{$match_total_overs}} ov
+					                           		  {{ $total_overs[1] }}/{{$match_over}} ov
 					                           			</p>
 					                           		</li>
 					                           <li><a href="">

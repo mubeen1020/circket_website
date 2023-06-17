@@ -419,6 +419,7 @@ class HomeController extends Controller
     $match_results = $match_results ->where('isActive',1)->orderBy('id')->get();
     $result = [];
     $match_data = $match_results->find($id);
+    // dd($match_data->manofmatch_player_id);
     $tournamentId = $match_results->first()->tournament_id;
     $tournament = Tournament::query()->where('id', '=', $tournamentId)->get()->pluck(
       'name'
@@ -3216,6 +3217,7 @@ $getresult = $result;
     $get_point_table_data = TournamentGroup::query()
       ->selectRaw("team_name.name as teams_name")
       ->selectRaw("team_name.id as teams_id")
+      ->selectRaw("tournament_groups.tournament_id")
       ->Join('teams as team_name', 'team_name.id', '=', 'tournament_groups.team_id');
 
 
