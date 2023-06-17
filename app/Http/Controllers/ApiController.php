@@ -581,7 +581,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
             ->selectRaw("SUM(fixture_scores.issix = 1 ) as total_sixes")
             ->selectRaw("SUM(fixture_scores.isfour = 1 ) as total_fours")
-            ->selectRaw("SUM(fixture_scores.balltype = 'RunOut(WD)' OR fixture_scores.balltype = 'RunOut(NB)') as runout")
+            ->selectRaw("SUM(fixture_scores.balltype = 'RunOut' OR fixture_scores.balltype = 'RunOut(WD)' OR fixture_scores.balltype = 'RunOut(NB)') as runout")
             ->selectRaw("SUM(fixture_scores.isout = 1 ) as total_Wicket")
             ->selectRaw("SUM(fixture_scores.balltype = 'WD') as total_wides")
             ->selectRaw("SUM(CASE WHEN fixture_scores.balltype = 'NB' OR fixture_scores.balltype = 'NBB' OR fixture_scores.balltype = 'NBP' THEN 1 ELSE 0 END) as total_noballs")
@@ -606,19 +606,6 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
             ->where('match_dismissals.dismissal_id',$match_dissmissal_name)
             ->selectRaw("COUNT(match_dismissals.id) as total_catches")
-            ->groupBy('fixtures.tournament_id')
-            ->get();
-
-            $match_dissmissal_runout= Dismissal::where('dismissals.name', '=', 'Run out')
-            ->selectRaw("dismissals.id as dissmissalname")
-            ->groupBy('dismissals.id')
-            ->get()->pluck('dissmissalname');
-
-            $tournament_runout = Fixture::where('fixtures.tournament_id', $tournament_id)
-            ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
-            ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
-            ->where('match_dismissals.dismissal_id',$match_dissmissal_runout)
-            ->selectRaw("COUNT(match_dismissals.id) as total_runout")
             ->groupBy('fixtures.tournament_id')
             ->get();
 
@@ -659,7 +646,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         ->where('fixture_scores.balltype','=','R')
         ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
         ->select('playerid', DB::raw('COUNT(*) as hundreds_count'))
-        ->having('sum(runs)', '>=', 100)
+        ->where('fixture_scores.runs', '>=', 100)
         ->groupBy('playerid')
         ->get();
         
@@ -676,11 +663,11 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         // ->having('fifties', '<', 100)
         // ->groupBy('playerid')
         // ->get();
-        $tournament_fifties = DB::table(function ($query) use ($tournamentId) {
+        $tournament_fifties = DB::table(function ($query) use ($tournament_id) {
                 $query->select('playerid', DB::raw('SUM(runs) AS fifties'), 'fixture_id')
                     ->from('fixture_scores')
                     ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
-                    ->where('fixtures.tournament_id', $tournamentId)
+                    ->where('fixtures.tournament_id', $tournament_id)
                     ->groupBy('playerid', 'fixture_id');
             }, 'subquery')
             ->select('playerid', DB::raw('COUNT(*) AS fifties'))
@@ -689,7 +676,9 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ->groupBy('playerid')
             ->get();
 
-    
+        // $tournament_fifties = DB::select("SELECT playerid, COUNT(*) AS fifties FROM ( SELECT playerid, SUM(runs) AS fifties, fixture_id FROM fixture_scores JOIN fixtures ON fixtures.id = fixture_scores.fixture_id WHERE fixtures.tournament_id = 53 GROUP BY playerid, fixture_id ) AS subquery WHERE fifties >= 50 AND fifties < 100 GROUP BY playerid");
+
+        
         $total_fifties = $tournament_fifties->sum('fifties');
         $tournament_total_fifties = ['tournament_fifties' => $total_fifties];
     
@@ -712,7 +701,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         
             
             
-        return response()->json([$tournamnetdata,$tournament_players,$tournament_cauches,$result,$tournament_total_hundreds,$tournament_total_fifties,$tournament_balls,$tournament_teams,$tournament_runout]);
+        return response()->json([$tournamnetdata,$tournament_players,$tournament_cauches,$result,$tournament_total_hundreds,$tournament_total_fifties,$tournament_balls,$tournament_teams]);
     }
     
 
