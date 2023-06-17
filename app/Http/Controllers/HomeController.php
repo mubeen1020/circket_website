@@ -3217,6 +3217,7 @@ $getresult = $result;
     $get_point_table_data = TournamentGroup::query()
       ->selectRaw("team_name.name as teams_name")
       ->selectRaw("team_name.id as teams_id")
+      ->selectRaw("tournament_groups.tournament_id")
       ->Join('teams as team_name', 'team_name.id', '=', 'tournament_groups.team_id');
 
 
