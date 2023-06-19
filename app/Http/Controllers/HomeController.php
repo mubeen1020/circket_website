@@ -132,7 +132,6 @@ class HomeController extends Controller
 
 
 
-
     //  dd($image_slider);
 
     return view('home', compact('tournament', 'tournament_season', 'match_results', 'teams', 'upcoming_match', 'ground', 'image_gallery', 'image_slider'));
@@ -154,7 +153,7 @@ class HomeController extends Controller
       'id'
     );
 
-    $tournament = Tournament::query()->get()->where('id', '=', $match_results[0]->tournament_id)->pluck(
+    $tournament = Tournament::query()->get()->where('id', '=', $match_results[0]->tournament_id)->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     )->first();
@@ -421,7 +420,7 @@ class HomeController extends Controller
     $match_data = $match_results->find($id);
     // dd($match_data->manofmatch_player_id);
     $tournamentId = $match_results->first()->tournament_id;
-    $tournament = Tournament::query()->where('id', '=', $tournamentId)->get()->pluck(
+    $tournament = Tournament::query()->where('id', '=', $tournamentId)->where('isActive', '=', 1)->where('is_web_display',1)->get()->pluck(
       'name'
     );
     $teams = Team::query()->get()->pluck(
@@ -569,7 +568,7 @@ class HomeController extends Controller
     $result = [];
     $match_data = $match_results->find($id);
     $tournamentId = $match_results->first()->tournament_id;
-    $tournament = Tournament::query()->where('id', '=', $tournamentId)->get()->pluck(
+    $tournament = Tournament::query()->where('id', '=', $tournamentId)->get()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name'
     );
     $teams = Team::query()->get()->pluck(
@@ -1406,7 +1405,7 @@ $getresult = $result;
     // dd($teams);
     $match_results = $match_results->orderBy('id')->get();;
     $results = [];
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -1488,7 +1487,7 @@ $getresult = $result;
     //         $query = DB::getQueryLog();
     //         $query = DB::getQueryLog();
     // dd($query);
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -2051,7 +2050,7 @@ $getresult = $result;
     $match_results = $match_results->orderBy('id')->get();
     // $teams = Team::pluck('name', 'id');
 
-    $tournament = Tournament::query()->where('isActive', '=', 1)->get()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->get()->pluck(
       'name',
       'id'
     );
@@ -2125,7 +2124,7 @@ $getresult = $result;
     );
 
     $results = $data->get();
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -2211,7 +2210,7 @@ $getresult = $result;
 
 
     $results = $data->get();
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -2296,7 +2295,7 @@ $getresult = $result;
 
   public function clubviewteams()
   {
-    $tournament_name = Tournament::query()->where('season_id', '=', 0)->where('is_web_display', '=', 1)->get();
+    $tournament_name = Tournament::query()->where('season_id', '=', 0)->where('is_web_display', '=', 1)->where('isActive', '=', 1)->get();
     $ground = Ground::query()->get()->pluck(
       'name',
       'id'
@@ -2324,7 +2323,7 @@ $getresult = $result;
 
 
     $results = [];
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -2383,7 +2382,7 @@ $getresult = $result;
 
     $results = $data->orderby('tournament_groups.team_id')
       ->get();
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -2429,7 +2428,7 @@ $getresult = $result;
 
     $results = $data->orderby('tournament_groups.team_id')
       ->get();
-    $tournament = Tournament::query()->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -2663,7 +2662,7 @@ $getresult = $result;
     $results = $data->orderby('tournament_groups.team_id')
       ->get();
 
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -3543,7 +3542,7 @@ $getresult = $result;
 
     $results = $data->orderby('tournament_groups.team_id')
       ->get();
-      $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+      $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
         'name',
         'id'
       );
@@ -4714,7 +4713,7 @@ public function playermatchcount(){
   ->where('isActive', 1)
   ->get();
 
-  $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+  $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
     'name',
     'id'
   );
@@ -4737,7 +4736,7 @@ public function playermatchcount_submit(){
   $image_gallery = GalleryImages::query()
   ->where('isActive', 1)
   ->get();
-  $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+  $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
     'name',
     'id'
   );
@@ -5030,7 +5029,7 @@ public function fixturesCalendar()
     );
 
     $results = $data->get();
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -5116,7 +5115,7 @@ public function fixturesCalendar_post(Request $request)
     );
 
     // $results = $data->get();
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+    $tournament = Tournament::query()->where('isActive', '=', 1)->where('is_web_display',1)->pluck(
       'name',
       'id'
     );
@@ -5133,23 +5132,11 @@ public function fixturesCalendar_post(Request $request)
 $term = $request;
     if (!empty($term->created_at)) {
       $convertedDate = Carbon::createFromFormat('m/d/Y', $term->created_at)->format('Y-m-d');
-<<<<<<< HEAD
-     
-      $data->whereRaw("DATE(match_startdate) >= Date('$convertedDate')");
-
-
-    }
-    if (!empty($term->end_at)) {
-      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->end_at)->format('Y-m-d');
-
-      $data->whereRaw("DATE(match_enddate) <= Date('$convertedDate')");
-=======
       $data->whereRaw("DATE(match_startdate) >= Date('$convertedDate')");
     }
     if (!empty($term->end_at)) {
       $convertedDate = Carbon::createFromFormat('m/d/Y', $term->end_at)->format('Y-m-d');
       $data->whereRaw("DATE(match_startdate) <= Date('$convertedDate')");
->>>>>>> origin/serve_branch
     }
 
     if (!empty($term['year'])) {

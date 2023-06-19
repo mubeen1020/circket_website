@@ -730,8 +730,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         pc.fixture_id, 
         pc.player_id, 
         pc.team_id
-      ORDER BY
-        CAST(Total AS DECIMAL(10,2)) DESC
+
       LIMIT 5") ;
 
         return response()->json($top_ranking);

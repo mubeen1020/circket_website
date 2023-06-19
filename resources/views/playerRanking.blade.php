@@ -16,21 +16,15 @@
                 <a href="{{ route('home')}}"><img src="{{ asset('utilsv2/img/others/eoscl-logo.png') }}" border="0" style='width:137px;height:100px;' class="img-responsive center-block img-circle" /></a>
             </div>
 
-            <p style="color:white;font-weigth:bold;padding:30px"><strong>EOSCL</strong> <strong>- Event Ontario Softball Circket League Batting Stats </strong>
-                The EOSCL (East Open Super Cricket League) is a cricket league that showcases the skills and talent of cricket players in the region. As part of the league, batting statistics are maintained to keep track of the players' performances and provide insights into their batting abilities.
-
-                The batting stats in the EOSCL Cricket League provide valuable information about each player's performance with the bat. These statistics highlight various aspects of a player's batting performance, including runs scored, matches played, balls faced, boundaries hit (such as fours and sixes), and notable milestones achieved, such as centuries and half-centuries.
-
-                The batting stats are collected and organized for each player participating in the league. They help assess a player's overall performance and contribution to their team. The stats also allow for comparisons between players, highlighting those who consistently perform at a high level and make significant contributions to their team's success.
-
+            <p style="color:white;font-weigth:bold;padding:30px"><strong>EOSCL</strong> <strong>- Event Ontario Softball Circket League Stats</strong>
+            Introducing the Player Rankings in the Ontario Softball Cricket League (EOSCL) – an exciting and dynamic system that evaluates players based on their performance in various aspects of the game. The rankings consider key factors such as batting, bowling, Man of the Match awards, and the overall total of these points. Let's dive into the unique content for player rankings in the EOSCL.
             </p>
 
             <ol style="color:white;font-weigth:bold;padding:30px">
                 <li>
-                    <strong>Total Runs:</strong>
+                    <strong>Batting Points:</strong>
 
-                    This represents the cumuative number of runs scored by a player throughout the league. It showcases a player's ability to accumulate runs and contribute to their team's total score.
-
+                    The batting performance of players is closely scrutinized to determine their ranking. A player's ability to score runs consistently, their average, and strike rate all contribute to their overall batting points. Those who exhibit exceptional shot-making skills, demonstrate a solid technique, and display the temperament to build innings are likely to find themselves at the top of the batting rankings.
                 </li>
                 <li>
                     <strong>Matches Played:</strong>
@@ -39,16 +33,14 @@
 
                 </li>
                 <li>
-                    <strong>Balls Faced:</strong>
+                    <strong>Bowling Points:</strong>
 
-                    This represents the number of deliveries a player has faced while batting. It provides insights into their ability to spend time at the crease and handle the opposition's bowling attack.
-
+                    The art of bowling is equally vital in determining a player's ranking. The ability to take wickets consistently, maintain an impressive economy rate, and deliver crucial breakthroughs for the team contributes to a player's bowling points. Skillful variations, accuracy, and the ability to trouble batsmen consistently are the traits that propel bowlers up the rankings ladder.
                 </li>
                 <li>
-                    <strong>Boundaries</strong>
+                    <strong>Man of the Match:</strong>
 
-                    This includes the number of fours and sixes hit by a player. It demonstrates their power-hitting ability and their capability to find the gaps in the field.
-
+                    Recognition for outstanding performances, match-winning contributions, and exceptional displays of skill are acknowledged through the Man of the Match awards. Players who consistently rise to the occasion and deliver exceptional performances are rewarded with additional points in the rankings. Their ability to influence the outcome of matches and contribute significantly to their team's success further strengthens their position in the player rankings.
                 </li>
                 <li>
                     <strong>Centuries and Half-Centuries:</strong>
@@ -56,11 +48,18 @@
                     These stats track the number of centuries (100 or more runs) and half-centuries (50 to 99 runs) scored by a player. It signifies their ability to convert good starts into substantial innings and make significant contributions to their team's success.
 
                 </li>
+
+                <li>
+                    <strong>Total Points: </strong>
+                    
+                    The sum of batting points, bowling points, and Man of the Match points determines the overall total points for each player. This comprehensive assessment provides a holistic view of a player's contribution to the team. It considers their impact with both bat and ball, as well as their ability to turn matches in their team's favor.
+ 
+                </li>
             </ol>
             <p style="color:white;font-weigth:bold;padding:30px">
-                By analyzing these batting stats, fans, coaches, and team management can identify standout performers, evaluate player form, and make informed decisions about team composition and strategy. It also provides a historical record of a player's achievements, allowing them to track their progress over time and set personal milestones.
+                With each match played in the EOSCL, the player rankings are updated to reflect the performances and contributions of individuals. The dynamic nature of the rankings ensures that players are motivated to consistently perform at their best, constantly vying for higher positions and recognition.
 
-                The EOSCL Cricket League batting stats play a crucial role in recognizing and appreciating the batting prowess of players, fostering healthy competition, and enhancing the overall cricketing experience for fans, players, and stakeholders associated with the league.
+                At the top of the player rankings, you will find the cricketing maestros who consistently demonstrate their prowess across all aspects of the game. They showcase exceptional skills, consistency, and a hunger for success. These top-ranked players serve as role models, inspiring their teammates and captivating fans with their outstanding displays on the field.
             </p>
 
         </div>
