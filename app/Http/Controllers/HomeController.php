@@ -442,14 +442,23 @@ class HomeController extends Controller
     )->first();
 
 
-    $player_runs = FixtureScore::where('fixture_id', $id)
+    // $player_runs = FixtureScore::where('fixture_id', $id)
+    // ->select("inningnumber")
+    // ->selectRaw("sum(runs) as total_runs")
+    // ->selectRaw("SUM(isfour = 1) as total_fours")
+    // ->selectRaw("SUM(issix = 1) as total_six")
+    // ->selectRaw("playerId")
+    // ->groupBy('playerId', 'inningnumber')
+    // ->orderBy('fixture_scores.id')
+    // ->get();
+    $player_runs =    FixtureScore::where('fixture_id', $id)
     ->select("inningnumber")
     ->selectRaw("sum(runs) as total_runs")
     ->selectRaw("SUM(isfour = 1) as total_fours")
     ->selectRaw("SUM(issix = 1) as total_six")
     ->selectRaw("playerId")
     ->groupBy('playerId', 'inningnumber')
-    ->orderBy('playerId')
+    ->orderByRaw("ANY_VALUE(fixture_scores.id)") // Order by fixture_scores.id using ANY_VALUE()
     ->get();
 
 
