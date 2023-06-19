@@ -44,6 +44,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 
+
 	<link rel="shortcut icon" href="utilsv2/img/others/eoscl-logo.png" type="image/x-icon">
 			<link rel="icon" href="utilsv2/img/others/eoscl-logo.png" type="image/x-icon">
    
@@ -538,7 +539,7 @@ navbarSlider.addEventListener("mouseout", function() {
     <script>
         $(document).ready(function() {
 
-
+  $(".datepicker").datepicker();
 
 
             function getCookie(name) {

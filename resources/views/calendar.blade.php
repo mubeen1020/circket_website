@@ -192,12 +192,13 @@
             <div class="series-drop">
             
             <div class="row">
+
                 
                     <div class="col-sm-2 col-xs-4" title="From Date">
-                    <input type="text" name="created_at" autocomplete="off" placeholder="From Date" value="" align="top" class="calendarBox form-control hasDatepicker" id="created_at">
+                    <input type="text" name="created_at" autocomplete="off" placeholder="From Date" value="" align="top" class="calendarBox form-control datepicker" id="created_at">
                     </div>
                     <div class="col-sm-2 col-xs-4" title="To Date">
-                    <input type="text"  name="end_at" autocomplete="off" placeholder="To Date" value="" align="top" class="calendarBox form-control hasDatepicker" id="end_at">
+                    <input type="text"  name="end_at" autocomplete="off" placeholder="To Date" value="" align="top" class="calendarBox form-control datepicker" id="end_at">
                     </div>
                     <div class="col-sm-2 col-xs-4" title="Search Dates"> 
                         <button class="btn btn-primary" id="datesSearch">Search Dates</button>
