@@ -5133,6 +5133,7 @@ public function fixturesCalendar_post(Request $request)
 $term = $request;
     if (!empty($term->created_at)) {
       $convertedDate = Carbon::createFromFormat('m/d/Y', $term->created_at)->format('Y-m-d');
+<<<<<<< HEAD
      
       $data->whereRaw("DATE(match_startdate) >= Date('$convertedDate')");
 
@@ -5142,6 +5143,13 @@ $term = $request;
       $convertedDate = Carbon::createFromFormat('m/d/Y', $term->end_at)->format('Y-m-d');
 
       $data->whereRaw("DATE(match_enddate) <= Date('$convertedDate')");
+=======
+      $data->whereRaw("DATE(match_startdate) >= Date('$convertedDate')");
+    }
+    if (!empty($term->end_at)) {
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->end_at)->format('Y-m-d');
+      $data->whereRaw("DATE(match_startdate) <= Date('$convertedDate')");
+>>>>>>> origin/serve_branch
     }
 
     if (!empty($term['year'])) {
@@ -5183,14 +5191,16 @@ $term = $request;
     );
 
 
-
+    DB::enableQueryLog();
     $results = $data->selectRaw('match_description')
       ->selectRaw('match_startdate')
       ->selectRaw('match_enddate')
       ->selectRaw('match_starttime')
       ->selectRaw('match_endtime')->get();
       // dd($results);
-
+ $query = DB::getQueryLog();
+                    $query = DB::getQueryLog();
+            // dd($query);
 
   $today = Carbon::now()->toDateString();
     $upcoming_match = Fixture::query()->where('match_startdate', '>=', $today)
