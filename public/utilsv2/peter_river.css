@@ -484,7 +484,7 @@ padding-top: 0px!important;
 	}
 
 }
-@media screen and (min-width: 280px) {
+@media screen and (max-width: 280px) {
 
 	.head{
 		margin-top: 56px;

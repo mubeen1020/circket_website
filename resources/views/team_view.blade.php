@@ -39,14 +39,14 @@
 											</p>
 											  <p>
 											
-												<span>Vice Captain</span> :
-												Gurpreet Singh</p>
 											<p>
 												<span>Player Count</span> :
 												{{$teamPlayerCount}}
 											</p>
 											<p>
-												<span>Home Ground</span> : <b><a href="">Wet n Wild</a></b>
+												@foreach($tournamentgrounds as $grounddata)
+												<span>Home Ground</span> : <b><a href="">{{$ground[$grounddata->ground_id]}}</a></b>
+												@endforeach
 											</p>
 											</div>
 									</div>
