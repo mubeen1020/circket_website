@@ -1443,10 +1443,14 @@ $getresult = $result;
     $data = Fixture::where('running_inning', '=', 3);
     $term = $request;
     if (!empty($term->created_at)) {
-      $data->whereRaw("DATE(match_startdate) >= Date('$term->created_at')");
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->created_at)->format('Y-m-d');
+
+      $data->whereRaw("DATE(match_startdate) >= Date('$convertedDate')");
     }
     if (!empty($term->end_at)) {
-      $data->whereRaw("DATE(match_enddate) <= Date('$term->end_at')");
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->end_at)->format('Y-m-d');
+
+      $data->whereRaw("DATE(match_enddate) <= Date('$convertedDate')");
     }
 
     if (!empty($term['year'])) {
@@ -2156,10 +2160,14 @@ $getresult = $result;
     $data = Fixture::query();
     $term = $request;
     if (!empty($term->created_at)) {
-      $data->whereRaw("DATE(match_startdate) >= Date('$term->created_at')");
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->created_at)->format('Y-m-d');
+
+      $data->whereRaw("DATE(match_startdate) >= Date('$convertedDate')");
     }
     if (!empty($term->end_at)) {
-      $data->whereRaw("DATE(match_enddate) <= Date('$term->end_at')");
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->end_at)->format('Y-m-d');
+
+      $data->whereRaw("DATE(match_enddate) <= Date('$convertedDate')");
     }
 
     if (!empty($term['year'])) {
@@ -2773,6 +2781,7 @@ $getresult = $result;
       ->where('fixture_scores.balltype', '=', 'R')
       ->selectRaw("COUNT(id) as max_ball ")
       ->groupBy('playerid')
+      ->orderByRaw("ANY_VALUE(fixture_scores.id)") // Order by fixture_scores.id using ANY_VALUE()
       ->get();
 
 
@@ -5123,10 +5132,16 @@ public function fixturesCalendar_post(Request $request)
 
 $term = $request;
     if (!empty($term->created_at)) {
-      $data->whereRaw("DATE(match_startdate) >= Date('$term->created_at')");
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->created_at)->format('Y-m-d');
+     
+      $data->whereRaw("DATE(match_startdate) >= Date('$convertedDate')");
+
+
     }
     if (!empty($term->end_at)) {
-      $data->whereRaw("DATE(match_enddate) <= Date('$term->end_at')");
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->end_at)->format('Y-m-d');
+
+      $data->whereRaw("DATE(match_enddate) <= Date('$convertedDate')");
     }
 
     if (!empty($term['year'])) {
