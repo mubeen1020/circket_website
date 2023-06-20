@@ -317,7 +317,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
               ->Join('tournaments', 'tournaments.id', '=', 'tournament_groups.tournament_id')
             ->Join('teams as team_name', 'team_name.id', '=', 'tournament_groups.team_id')
             ->get()->pluck('teams_name', 'teams_id');
-            dd($teamnetrr);
+            
         $match_count_team_a = Fixture::query()
         ->where('tournament_id', $tournamnet_id)
         ->where('running_inning',3)
@@ -485,48 +485,48 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ];
         }
 
-        $teamnetrr= TournamentGroup::query()
-        ->where('group_id', $group_id)
-        ->where('tournaments.id', $tournamnet_id)
-        ->selectRaw("fixtures.id as matchid")
-        ->selectRaw("team_name.id as teams_id")
-        ->Join('fixtures', 'fixtures.tournament_id', '=', 'tournament_groups.tournament_id')
-        ->Join('teams as team_name', 'team_name.id', '=', 'tournament_groups.team_id')
-        ->get()->pluck('matchid', 'teams_id');
+        // $teamnetrr= TournamentGroup::query()
+        // ->where('group_id', $group_id)
+        // ->where('tournaments.id', $tournamnet_id)
+        // ->selectRaw("fixtures.id as matchid")
+        // ->selectRaw("team_name.id as teams_id")
+        // ->Join('fixtures', 'fixtures.tournament_id', '=', 'tournament_groups.tournament_id')
+        // ->Join('teams as team_name', 'team_name.id', '=', 'tournament_groups.team_id')
+        // ->get()->pluck('matchid', 'teams_id');
 
         
-        $result2 = array();
-        foreach ($teamnetrr as $team_id => $matchid) {
+        // $result2 = array();
+        // foreach ($teamnetrr as $team_id => $matchid) {
         
-            $team_runs_scoredA = isset($teamscorerunsteamA[$team_id]) ? $teamscorerunsteamA[$team_id] : 0;
-            $team_runs_scoredB = isset($teamscorerunsteamB[$team_id]) ? $teamscorerunsteamB[$team_id] : 0;
-            $team_runs_scored = $team_runs_scoredA + $team_runs_scoredB;
+        //     $team_runs_scoredA = isset($teamscorerunsteamA[$team_id]) ? $teamscorerunsteamA[$team_id] : 0;
+        //     $team_runs_scoredB = isset($teamscorerunsteamB[$team_id]) ? $teamscorerunsteamB[$team_id] : 0;
+        //     $team_runs_scored = $team_runs_scoredA + $team_runs_scoredB;
         
           
-            $team_balls_facedA = isset($teamscoreoverfacedteamA[$team_id]) ? ($teamscoreoverfacedteamA[$team_id]) : 0;
-            $team_balls_facedB = isset($teamscoreoverfacedteamB[$team_id]) ? ($teamscoreoverfacedteamB[$team_id]) : 0;
-            $team_ball_face = ($team_balls_facedA + $team_balls_facedB)*6;
+        //     $team_balls_facedA = isset($teamscoreoverfacedteamA[$team_id]) ? ($teamscoreoverfacedteamA[$team_id]) : 0;
+        //     $team_balls_facedB = isset($teamscoreoverfacedteamB[$team_id]) ? ($teamscoreoverfacedteamB[$team_id]) : 0;
+        //     $team_ball_face = ($team_balls_facedA + $team_balls_facedB)*6;
         
           
-            $team_runs_concededA = isset($teamscoreoverfacedteamA[$team_id]) ? $teamscoreoverfacedteamA[$team_id] : 0;
-            $team_runs_concededB = isset($team_runs_concededteamB[$team_id]) ? $team_runs_concededteamB[$team_id] : 0;
-            $team_runs_conceded = $team_runs_concededA + $team_runs_concededB;
+        //     $team_runs_concededA = isset($teamscoreoverfacedteamA[$team_id]) ? $teamscoreoverfacedteamA[$team_id] : 0;
+        //     $team_runs_concededB = isset($team_runs_concededteamB[$team_id]) ? $team_runs_concededteamB[$team_id] : 0;
+        //     $team_runs_conceded = $team_runs_concededA + $team_runs_concededB;
 
 
-            $team_balls_bowledA = isset($team_balls_bowledteamA[$team_id]) ? $team_balls_bowledteamA[$team_id] : 0;
-            $team_balls_bowledB = isset($team_balls_bowledteamB[$team_id]) ? $team_balls_bowledteamB[$team_id] : 0;
-            $team_balls_bowled = ($team_balls_bowledA + $team_balls_bowledB)*6;
+        //     $team_balls_bowledA = isset($team_balls_bowledteamA[$team_id]) ? $team_balls_bowledteamA[$team_id] : 0;
+        //     $team_balls_bowledB = isset($team_balls_bowledteamB[$team_id]) ? $team_balls_bowledteamB[$team_id] : 0;
+        //     $team_balls_bowled = ($team_balls_bowledA + $team_balls_bowledB)*6;
 
-            if ($team_ball_face != 0 && $team_balls_bowled != 0) {
-                $net_run_rate =($team_runs_conceded / $team_balls_bowled)-($team_runs_scored / $team_ball_face) ;
-            } else {
-                $net_run_rate=0.00;
-            }
+        //     if ($team_ball_face != 0 && $team_balls_bowled != 0) {
+        //         $net_run_rate =($team_runs_conceded / $team_balls_bowled)-($team_runs_scored / $team_ball_face) ;
+        //     } else {
+        //         $net_run_rate=0.00;
+        //     }
         
-            $result2[] = [
-                'net_rr' => $net_run_rate,
-            ];
-        }
+        //     $result2[] = [
+        //         'net_rr' => $net_run_rate,
+        //     ];
+        // }
 
         
         return response()->json($result);
