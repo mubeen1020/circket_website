@@ -52,6 +52,7 @@
     if(count($result) > 0){
 @endphp  
                     @foreach($result as $key => $team )
+                    
                     <tr class="even"> 
                         <td>{{$key+1}}</td> 
                         <td><a href="#" target="_blank">{{$team->name}}</a></td>
