@@ -1391,16 +1391,15 @@ $getresult = $result;
 
   public function result()
   {
-    $match_results = Fixture::query();
-    $match_results->where('running_inning', '=', 3);
+    $years = DB::table('fixtures')
+      ->select(DB::raw('YEAR(created_at) as year'))
+      ->groupBy(DB::raw('YEAR(created_at)'))
+      ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
+      ->pluck('year');
+    $match_results = Fixture::query()->orderBy('id')->get();
+    $data = Fixture::where('running_inning', '=', 3);
+
     $teams = Team::query()->get()->pluck(
-      'name',
-      'id'
-    );
-    // dd($teams);
-    $match_results = $match_results->orderBy('id')->get();;
-    $results = [];
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
       'name',
       'id'
     );
@@ -1410,14 +1409,40 @@ $getresult = $result;
       'id'
     );
 
+    $results = $data->get();
+    // dd($results);
+    //         $query = DB::getQueryLog();
+    //         $query = DB::getQueryLog();
+    // dd($query);
+    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+      'name',
+      'id'
+    );
+
+    $total_runs = [];
+    $total_wicket_fixture = [];
+    $total_run_fixture = [];
+    foreach ($results as $result) {
+      $match_summary = FixtureScore::where('fixture_id', '=', $result->id)
+        ->selectRaw("SUM(CASE WHEN balltype = 'Wicket' THEN 1 ELSE 0 END) as total_wickets")
+        ->selectRaw('inningnumber, max(overnumber) as max_over')
+        ->selectRaw('SUM(runs) as total_runs')
+        ->selectRaw("inningnumber")
+        ->groupBy('inningnumber')
+        ->get();
+
+      if (count($match_summary) == 2) {
+        $total_wicket_fixture[$result->id] = [$match_summary[0]['total_wickets'], $match_summary[1]['total_wickets']];
+        $total_run_fixture[$result->id] = [$match_summary[0]['max_over'], $match_summary[1]['max_over']];
+        $total_runs[$result->id] = [$match_summary[0]['total_runs'], $match_summary[1]['total_runs']];
+      }
+    }
 
     $image_gallery = GalleryImages::query()
       ->where('isActive', '=', 1)
       ->get();
 
-
-
-    return view('result', compact('results', 'clubs', 'match_results', 'tournament', 'teams', "image_gallery"));
+    return view('result', compact('results', 'clubs', 'teams', 'match_results', 'years', 'tournament', 'total_run_fixture', 'total_runs', 'total_wicket_fixture', 'image_gallery'));
   }
 
   public function result_form_submit(Request $request)
@@ -2172,33 +2197,39 @@ $getresult = $result;
       ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
       ->pluck('year');
 
-    $match_results = Fixture::query()->orderBy('id')->get();
-    $data = Fixture::where('running_inning', '=', 0);
-
-
-    $teams = Team::query()->get()->pluck(
-      'name',
-      'id'
-    );
-
-    $clubs = Team::query()->where('isclub', '=', 1)->get()->pluck(
-      'clubname',
-      'id'
-    );
-
-    $results = $data->get();
-    $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
-      'name',
-      'id'
-    );
-    $image_gallery = GalleryImages::query()
-      ->where('isActive', '=', 1)
-      ->get();
-
-    $ground2 = Ground::query()->get()->pluck(
-      'name',
-      'id'
-    );
+      $match_results = Fixture::query()->where('isActive', 1)->orderBy('id')->get();
+      $data = Fixture::query();
+   
+  
+  
+  
+      $teams = Team::query()->get()->pluck(
+        'name',
+        'id'
+      );
+  
+      $clubs = Team::query()->where('isclub', '=', 1)->get()->pluck(
+        'clubname',
+        'id'
+      );
+  
+  
+  
+      $results = $data->get();
+      $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+        'name',
+        'id'
+      );
+  
+      $image_gallery = GalleryImages::query()
+        ->where('isActive', '=', 1)
+        ->get();
+  
+  
+      $ground2 = Ground::query()->get()->pluck(
+        'name',
+        'id'
+      );
 
     return view('schedulesearch', compact('results', 'ground2', 'ground', 'clubs', 'match_results', 'years', 'tournament', 'image_gallery'));
   }

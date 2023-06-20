@@ -25,6 +25,7 @@
                     </div>
                     <div class="carousel-content-panel content-sp" style="width: 100%">
                         <p>{{$image->description}}
+                        <a href="{{ route('newsdata') }}" class="btn btn-ban pull-right">Read more <i class="fa fa-arrow-circle-o-right"></i></a>
                             <br>
                             <br>
                             <br>
@@ -46,6 +47,7 @@
                     </div>
                     <div class="carousel-content-panel content-sp" style="width: 100%">
                         <p>{{$image->description}}
+                        <a href="{{ route('newsdata') }}" class="btn btn-ban pull-right">Read more <i class="fa fa-arrow-circle-o-right"></i></a>
                             <br>
                             <br>
                             <br>
@@ -259,7 +261,7 @@ $(document).ready(function() {
                                                      </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="#">Complete List</a>
+                                                	<a href="{{ route('batting_states')}}">Complete List</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -283,7 +285,7 @@ $(document).ready(function() {
                                                      </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="#">Complete List</a>
+                                                	<a href="{{ route('bowling_state')}}">Complete List</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -307,7 +309,7 @@ $(document).ready(function() {
                                                      </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="#">Complete List</a>
+                                                	<a href="{{ route('playerRanking')}}">Complete List</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -573,7 +575,7 @@ color:#333;
 							<div class="col-sm-6 col-xs-6">
 								<div class="view text-right">
 									<a
-										href="EOSCLCricketLeague/articles.do%3FclubId=2565.html">View
+                                    href="{{ route('articals') }}">View
 										ALL <i class="fa fa-arrow-circle-o-right"></i>
 									</a>
 								</div>
@@ -615,7 +617,7 @@ color:#333;
 										
 										<center><br><br>There are no Live matches available now <br><br><br></center><div class="complete text-center">
 											<a
-												href="#">Complete
+                                            href="{{ route('result')}}">Complete
 												list</a>
 												</div>
 										</div>
@@ -650,7 +652,7 @@ color:#333;
 													<div class="vsteam-text">
 														<h4>
 															<a class="list-score" style="color: inherit;"
-																href="{{ url('fullScorecard/' . $match_result->team_id_a) }}">L:
+																href="{{ url('fullScorecard/' . $match_result->id) }}">L:
 																{{$teams[$match_result->team_id_a]}} - vs - {{$teams[$match_result->team_id_b]}}</a>
 															<img alt="Ball by Ball" title="Ball by Ball" style="float: right;
 margin-right: 10px;
@@ -677,9 +679,10 @@ margin-right: 10px;
 
  @endforeach
 
+
 										<div class="complete text-center">
 											<a
-												href="#">Complete
+                                            href="{{ route('result')}}">Complete
 												list</a>
 										</div>
 
@@ -732,7 +735,7 @@ margin-right: 10px;
 
 										<div class="complete text-center">
 											<a
-												href="#">Complete
+												href="{{ route('schedulesearch')}}">Complete
 												list</a>
 										</div>
 
@@ -1212,6 +1215,9 @@ function get_season_group(tornament_season_id) {
             console.log(error);
         }
     });
+    get_top_scorers(tornament_season_id);
+    get_top_bowler(tornament_season_id);
+    get_top_ranking(tornament_season_id);
 }
 
 
