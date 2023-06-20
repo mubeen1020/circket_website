@@ -50,7 +50,7 @@
                                    <select name="team_name" id="team_name" class="form-control">
                                     <option  ></option>
                                @foreach($teams_only as $index => $team_only)
-                                    <option value ="{{$index}}">{{$team_only}}</option>
+                               <option <?php if(isset($_POST['team_name']) && $_POST['team_name']== $index) { echo 'selected'; } ?> value="{{$index}}">{{$team_only}}</option>
                                     @endforeach
                                         </select>
                                 </div>
@@ -91,9 +91,9 @@
 	               		 	 <div class="col-lg-7">
                                  <div class="form-in">
                                  	<select name="gender" id="gender" class="form-control" >
-                                 		<option value="">All</option>
-                                        <option value="Male" >Male</option>
-                                        <option value="Female" >Female</option>
+                                 		<option <?php if(isset($_POST['gender']) &&  $_POST['gender']=='All') { echo 'selected'; }  ?> value="">All</option>
+                                        <option <?php if(isset($_POST['gender']) &&  $_POST['gender']=='Male') { echo 'selected'; }  ?> value="Male" >Male</option>
+                                        <option <?php if(isset($_POST['gender']) &&  $_POST['gender']=='Female') { echo 'selected'; }  ?> value="Female" >Female</option>
 									</select>
                                  </div>
                              </div>
@@ -115,7 +115,7 @@
                                  	<option value=""></option>
                                     <option  <?php if(isset($_POST['battingStyle']) &&  $_POST['battingStyle']=='All') { echo 'selected'; }  ?>  value="All">All</option>
 										<option <?php if(isset($_POST['battingStyle']) &&  $_POST['battingStyle']=='Right Handed Batsman') { echo 'selected'; }  ?> value="Right Handed Batsman">Right Handed Batter</option>
-										<option value="Left Handed Batsman">Left Handed Batter</option>
+										<option <?php if(isset($_POST['battingStyle']) &&  $_POST['battingStyle']=='Left Handed Batsman') { echo 'selected'; }  ?> value="Left Handed Batsman">Left Handed Batter</option>
 									</select>
                                  </div>
                              </div>
@@ -136,15 +136,15 @@
                                  		
                                         <select name="bowlingStyle" id="bowlingStyle" class="form-control">
                                         <option value=""></option>
-	                             			<option value="All">All</option>
-											<option value="Right Arm Medium">Right Arm Medium</option>
-											<option value="Right Arm Fast">Right Arm Fast</option>
-											<option value="Right Arm Off Spin">Right Arm Off Spin</option>
-											<option value="Right Arm Leg Spin">Right Arm Leg Spin</option>
-											<option value="Left Arm Fast">Left Arm Fast</option>
-											<option value="Left Arm Medium">Left Arm Medium</option>
-											<option value="Left Arm Off Spin">Left Arm Off Spin</option>
-											<option value="Left Arm Leg Spin">Left Arm Leg Spin</option>
+	                             			<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='All') { echo 'selected'; }  ?> value="All">All</option>
+											<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='Right Arm Medium') { echo 'selected'; }  ?> value="Right Arm Medium">Right Arm Medium</option>
+											<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='Right Arm Fast') { echo 'selected'; }  ?> value="Right Arm Fast">Right Arm Fast</option>
+											<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='Right Arm Off Spin') { echo 'selected'; }  ?> value="Right Arm Off Spin">Right Arm Off Spin</option>
+											<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='Right Arm Leg Spin') { echo 'selected'; }  ?> value="Right Arm Leg Spin">Right Arm Leg Spin</option>
+											<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='Left Arm Fast') { echo 'selected'; }  ?> value="Left Arm Fast">Left Arm Fast</option>
+											<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='Left Arm Medium') { echo 'selected'; }  ?> value="Left Arm Medium">Left Arm Medium</option>
+											<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='Left Arm Off Spin') { echo 'selected'; }  ?> value="Left Arm Off Spin">Left Arm Off Spin</option>
+											<option <?php if(isset($_POST['bowlingStyle']) &&  $_POST['bowlingStyle']=='Left Arm Leg Spin') { echo 'selected'; }  ?> value="Left Arm Leg Spin">Left Arm Leg Spin</option>
 										</select>
                                  </div>
                              </div>
@@ -164,11 +164,11 @@
                				<div class="col-lg-7">
                                  <div class="form-in">
                						<select name="club" id="club" class="form-control">
-               						<option  ></option>
+                                <option  ></option>
                                @foreach($clubs as $index => $club)
-                                    <option value ="{{$index}}">{{$club}}</option>
+                                    <option <?php if(isset($_POST['club']) &&  $_POST['club']== $index) { echo 'selected'; }  ?> value="{{$index}}" >{{$club}}</option>
                                     @endforeach
-               							</select>
+               							</select>   
                                  </div>
                              </div>
                			 </div>
