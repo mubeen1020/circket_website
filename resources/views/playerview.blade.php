@@ -16,7 +16,20 @@
                 <input type="hidden" id="playerInternalClubIdList" value="[114]">
                 <input type="hidden" id="playerTeamInternalClubList" value='["114-827","114-1342"]'>
                 <div class="profile-image">
-                    <img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block" style="width: 100%;">
+                    <?php
+$imageSrc = "https://eoscl.ca/admin/public/Player/" . $playerData->playername . ".jpg";
+$altText = "Player ID: " . $playerData->playername;
+
+// Check if the image URL returns a 404 error
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
+    $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    $altText = "No Image Available";
+}
+?>
+
+<img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="img-responsive center-block" style="width: 100%;">
+
                 </div>
             </div>
             <div class="col-sm-9">

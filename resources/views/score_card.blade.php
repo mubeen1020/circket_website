@@ -63,9 +63,22 @@
                                                                     <tr> 
                                                                    <th>
                                                                    
-                                                                        	<img src="https://cricclubs.com/documentsRep/profilePics/b8e79395-ac46-4e68-b8a5-5ae31d78ee59.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	
+																			<?php
+$imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->playerId . ".jpg";
+$altText = "Player ID: " . $item->playerId;
+
+// Check if the image URL returns a 404 error
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
+    $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    $altText = "No Image Available";
+}
+?>
+
+<img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
+
                                                                         
-                                                                        	<a href=""><b>{{$player[$item->playerId]}}</b> </a>
+                                                                        	<a href="{{ route('playerview', $item->playerId) }}"><b>{{$player[$item->playerId]}}</b> </a>
                                                                         	<a style="display:none" id="btm_video_1207430" href="javascript:openVideoHTMLvs('1207430','bt', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	<div class="scorecard-out-text show-phone" style="margin-left:34px;">
 																			
@@ -167,10 +180,24 @@
   @if($item->inningnumber == 1)
     <tr> 
       <th style="width:40px;">
-        <img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
+                                                                       
+	  <?php
+$imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->bowlerid . ".jpg";
+$altText = "Player ID: " . $item->bowlerid;
+
+// Check if the image URL returns a 404 error
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
+    $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    $altText = "No Image Available";
+}
+?>
+
+<img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
+
       </th>
       <th>
-        <a href=""><b>{{$player[$item->bowlerid]}}</b></a>
+        <a href="{{ route('playerview', $item->bowlerid) }}"><b>{{$player[$item->bowlerid]}}</b></a>
         <a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');">
           <img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px">
         </a>
@@ -227,7 +254,21 @@
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
 		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
+																						                                                                       
+	  <?php
+$imageSrc = "https://eoscl.ca/admin/public/Player/" . $score->playerId . ".jpg";
+$altText = "Player ID: " . $score->playerId;
+
+// Check if the image URL returns a 404 error
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
+    $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    $altText = "No Image Available";
+}
+?>
+
+<img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="img-responsive center-block">
+
 		                                                                            	
 																						
 		                                                                            	</a>
@@ -293,9 +334,22 @@
                                                                     <tbody> 
                                                                     <tr> 
                                                                     <th><!-- <i class="fa fa-user"></i> -->
-                                                                        <img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
+																		<?php
+$imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->playerId . ".jpg";
+$altText = "Player ID: " . $item->playerId;
+
+// Check if the image URL returns a 404 error
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
+    $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    $altText = "No Image Available";
+}
+?>
+
+<img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
+
                                                                         
-                                                                          <a href=""><b> {{$player[$item->playerId]}}</b> </a>
+                                                                          <a href="{{ route('playerview', $item->playerId) }}"><b> {{$player[$item->playerId]}}</b> </a>
                                                                         	<a style="display:none" id="btm_video_3088351" href="javascript:openVideoHTMLvs('3088351','bt', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         <div class="scorecard-out-text show-phone" style="margin-left:34px">
 																
@@ -392,11 +446,24 @@
 		                                                             @if($item->inningnumber == 2)
                                                                     <tr> 
                                                                     <th style="width:40px;">
-															      	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">	                                                                    
+																	<?php
+$imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->bowlerid . ".jpg";
+$altText = "Player ID: " . $item->bowlerid;
+
+// Check if the image URL returns a 404 error
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
+    $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    $altText = "No Image Available";
+}
+?>
+
+<img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
+                                                                   
                                                                     </th>
 
                                                                         <th>
-                                                                        	<a href=""><b>{{$player[$item->bowlerid]}}</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+                                                                        	<a href="{{ route('playerview', $item->bowlerid) }}"><b>{{$player[$item->bowlerid]}}</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
                                                                         <th style="text-align: right;">
 																		{{($item->over) }}.{{6%($item->over) }}
@@ -452,8 +519,20 @@
 		                                                                    	<div class="fall-in-all">
 		                                                                        	<div class="fall-image">
 		                                                                        	<a href="">
-		                                                                            	<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block">	 
-		                                                                            	
+																						<?php
+$imageSrc = "https://eoscl.ca/admin/public/Player/" . $score->playerId . ".jpg";
+$altText = "Player ID: " . $score->playerId;
+
+// Check if the image URL returns a 404 error
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
+    $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    $altText = "No Image Available";
+}
+?>
+
+<img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="img-responsive center-block">
+     
 																						
 		                                                                            	</a>
 		                                                                            	</div>
