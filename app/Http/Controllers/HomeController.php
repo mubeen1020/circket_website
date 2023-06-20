@@ -449,9 +449,9 @@ class HomeController extends Controller
     ->selectRaw("sum(runs) as total_runs")
     ->selectRaw("SUM(isfour = 1) as total_fours")
     ->selectRaw("SUM(issix = 1) as total_six")
-    ->selectRaw("playerId")
+    ->selectRaw("playerId, MIN(fixture_scores.id) as min_id") // Use MIN(fixture_scores.id) to get the minimum value of id
     ->groupBy('playerId', 'inningnumber')
-    ->orderBy('playerId')
+    ->orderBy('min_id') // Order by the minimum id
     ->get();
 
 
@@ -2104,15 +2104,15 @@ $getresult = $result;
   {
     $match_results = Fixture::query();
     $match_results = $match_results->orderBy('id')->get();
-    // $teams = Team::pluck('name', 'id');
+    $tournament = Tournament::pluck('name', 'id');
 
-    $tournament = Tournament::query()->where('isActive', '=', 1)->get()->pluck(
-      'name',
+    $player = Player::query()->get()->pluck(
+      'fullname',
       'id'
     );
     $data = [];
-    $result = $data;
-    return view('clubteamsearch', compact('match_results', 'result', 'tournament'));
+    $results = $data;
+    return view('clubteamsearch', compact('match_results', 'results', 'tournament','player'));
   }
 
 
@@ -2120,33 +2120,40 @@ $getresult = $result;
   {
     $match_results = Fixture::query();
     $match_results = $match_results->orderBy('id')->get();
-    // $teams = Team::pluck('name', 'id');
+    $tournament = Tournament::pluck('name', 'id');
 
-
+    $player = Player::query()->get()->pluck(
+      'fullname',
+      'id'
+    );
 
     if ($request->method() !== 'POST') {
       abort(405, 'Method Not Allowed');
     }
     $term = $request->input('teamName');
 
-    $query = Team::query()->where('isclub', '=', 1)
-      ->where('iscaptain', 1)
-      ->select('teams.id', 'teams.name', 'players.fullname', 'tournament_groups.tournament_id', 'tournaments.name as tournament')
-      ->join('team_players', 'team_players.team_id', '=', 'teams.id')
-      ->join('players', 'players.id', '=', 'team_players.player_id')
-      ->join('tournament_groups', 'tournament_groups.team_id', '=', 'teams.id')
-      ->join('tournaments', 'tournaments.id', '=', 'tournament_groups.tournament_id');
-
+    $query1 = TeamPlayer::query();
     if (!empty($term)) {
-      $query->where('teams.name', 'like', '%' . $term . '%');
+      $query1->where('teams.name', 'like', '%' . $term . '%');
     }
-    $result = $query->get();
+    
+    $query1->selectRaw('team_players.team_id')
+      ->selectRaw('teams.name')
+      ->selectRaw('tournament_groups.tournament_id')
+      ->selectRaw('MAX(IF(team_players.iscaptain = 1, team_players.player_id, NULL)) AS player_id')
+      ->join('teams', 'teams.id', '=', 'team_players.team_id')
+      ->join('tournament_groups', 'tournament_groups.team_id', '=', 'team_players.team_id')
+      ->groupBy('team_players.team_id', 'tournament_groups.tournament_id');
+    
+    $results = $query1->get();
+    
+    
+ 
 
 
 
 
-
-    return view('clubteamsearch', compact('match_results', 'result',));
+    return view('clubteamsearch', compact('match_results','results','tournament','player'));
   }
 
 
