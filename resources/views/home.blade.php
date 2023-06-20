@@ -1264,8 +1264,8 @@ function get_top_scorers(tournament_season_id) {
                                 <tbody>
                                     <tr>
                                         <td style="padding-right:5px;min-width:35px">
-                                            <img src="https://eoscl.ca/admin/public/Player/${item.id}.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-                                        </td>
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.id}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
+                                            </td>
                                         <td>
                                             <a href="viewPlayer.do?playerId=1242838&amp;clubId=2565">${item.fullname}</a>
                                         </td>
@@ -1303,8 +1303,8 @@ function get_top_bowler(tournament_season_id) {
                                 <tbody>
                                     <tr>
                                         <td style="padding-right:5px;min-width:35px">
-                                            <img src="https://eoscl.ca/admin/public/Player/${item.bowlerid}.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-                                        </td>
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.bowlerid}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
+                                            </td>
                                         <td>
                                             <a href="viewPlayer.do?playerId=1242838&amp;clubId=2565">${item.fullname}</a>
                                         </td>
@@ -1438,10 +1438,10 @@ function get_top_ranking(tournament_season_id) {
                                 <tbody>
                                     <tr>
                                         <td style="padding-right:5px;min-width:35px">
-                                            <img src="https://eoscl.ca/admin/public/Player/${item.player_id}.jpg" class="img-responsive img-circle" style="width: 30px; height: 30px;">
-                                        </td>
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.player_id}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
+                                            </td>
                                         <td>
-                                            <a href="viewPlayer.do?playerId=1242838&amp;clubId=2565">${item.fullname}</a>
+                                            <a >${item.fullname}</a>
                                         </td>
                                     </tr>
                                 </tbody>

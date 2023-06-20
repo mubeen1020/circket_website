@@ -116,8 +116,24 @@
                                         	<div class="team-player-all" style="height: 340px;">
                                             	<div class="team-player-image-all">
                                                 	<div class="team-player-image">
-                                                   		<img src="https://cricclubs.com/documentsRep/profilePics/no_image.png" class="img-responsive center-block" style="width:240px; height:200px; object-fit: cover;">	
-                                                    	
+<?php
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
+$imageSrc = "https://eoscl.ca/admin/public/Player/" . $teamPlayer['player_id'] . ".jpg";
+$altText = "Player ID: " . $teamPlayer['player_id'];
+
+// Check if the image URL returns a 404 error
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
+    $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    $altText = "No Image Available";
+}
+?>
+
+<img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="img-responsive center-block" style="width:240px; height:200px; object-fit: cover;">
+
+
+
                                                     </div>
                                                     </div>
                                                 <div class="team-player-text text-center">
