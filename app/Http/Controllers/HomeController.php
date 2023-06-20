@@ -1990,7 +1990,7 @@ $getresult = $result;
     ->selectRaw('SUM(runs) as totalruns, fixture_scores.playerId')
       ->join('fixtures','fixtures.id','=','fixture_scores.fixture_id')
       ->groupBy('fixture_scores.playerId')
-      ->orderbydesc('totalruns')
+      ->orderby('totalruns')
       ->get()->pluck('totalruns', 'playerId');
 
     $variable1 = 'R';
@@ -3125,14 +3125,18 @@ $getresult = $result;
     $image_gallery = GalleryImages::query()
       ->where('isActive', 1)
       ->get();
+      $term = $request->input();
 
-    $data = TournamentPlayer::query()
+      $tournament = $term['tournament'];
+
+    
+    $data = TournamentPlayer::where('tournament_players.tournament_id', $tournament)
       ->selectRaw('fixture_scores.bowlerId as bowler_id')
       ->selectRaw('tournament_players.tournament_id')
       ->selectRaw('team_players.player_id')
       ->selectRaw('team_players.team_id')
       ->selectRaw('COUNT(DISTINCT fixtures.id) as total_matches')
-      ->selectRaw('COUNT(DISTINCT fixture_scores.overnumber) as total_overs')
+      ->selectRaw('COUNT(DISTINCT fixture_scores.id) as total_overs')
       ->selectRaw('SUM(fixture_scores.balltype = "WD") as total_wides')
       ->selectRaw('SUM(fixture_scores.balltype = "NB") as total_noball')
       ->selectRaw('SUM(fixture_scores.runs) as total_runs')
@@ -3147,7 +3151,7 @@ $getresult = $result;
       ->groupBy('fixture_scores.bowlerId','tournament_players.tournament_id');
 
 
-    $term = $request->input();
+    
     // dd($term);
     if (!empty($term['year'])) {
       $year = $term['year'];
@@ -3162,9 +3166,77 @@ $getresult = $result;
       $team = $term['teams'];
       $data->where('tournament_players.team_id', '=', $team);
     }
+    
+    $teamIds = TournamentGroup::where('tournament_id', $tournament)
+    ->select('team_id')
+    ->groupBy('team_id')
+    ->pluck('team_id');
 
+    $variable1 = 'R';
+    $variable2 = 'Wicket';
+    $bowlerballs = FixtureScore::where('fixtures.tournament_id', $tournament)
+    ->where(function ($query) use ($variable1, $variable2) {
+        $query->where('balltype', $variable1)
+            ->orWhere('balltype', $variable2);
+    })
+    ->selectRaw('COUNT(fixture_scores.id) as balls, fixture_scores.bowlerId')
+    ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+    ->groupBy('fixture_scores.bowlerId')
+    ->get()
+    ->pluck('balls', 'bowlerId');
+
+    $match_count = DB::table(function ($query) use ($teamIds, $tournament) {
+    $query->select('team_id_a AS team_id')
+        ->from('fixtures')
+        ->whereIn('team_id_a', $teamIds)
+        ->where('tournament_id', $tournament)
+        ->unionAll(
+            DB::table('fixtures')
+                ->select('team_id_b AS team_id')
+                ->whereIn('team_id_b', $teamIds)
+                ->where('tournament_id', $tournament)
+        );
+}, 'subquery')
+    ->select('team_id', DB::raw('COUNT(*) AS count'))
+    ->groupBy('team_id')
+    ->get()->pluck('count','team_id');
     $getresult = $data->orderbydesc('total_wickets')->get();
+    $inningsCount = DB::table('fixture_scores')
+      ->selectRaw('COUNT(DISTINCT fixtures.id) as count, fixture_scores.bowlerId')
+      ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+      ->where('fixtures.tournament_id', $tournament)
+      ->groupBy('fixture_scores.bowlerId')
+      ->get()->pluck('count', 'bowlerId');
 
+      $bowlerruns= FixtureScore::where('fixtures.tournament_id', $tournament)
+      ->selectRaw('SUM(fixture_scores.runs) as runs, fixture_scores.bowlerId')
+      ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+      ->groupBy('fixture_scores.bowlerId')
+      ->get()
+      ->pluck('runs', 'bowlerId');
+
+      $bowlerwickets= FixtureScore::where('fixtures.tournament_id', $tournament)
+      ->where('fixture_scores.isout',1)
+      ->where('fixture_scores.balltype','=','Wicket')
+      ->selectRaw('SUM(fixture_scores.isout) as wicket, fixture_scores.bowlerId')
+      ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+      ->groupBy('fixture_scores.bowlerId')
+      ->get()
+      ->pluck('wicket', 'bowlerId');
+
+
+    $variable1 = 'R';
+    $variable2 = 'Wicket';
+    $balls_faced = FixtureScore::where('fixtures.tournament_id', $tournament)
+    ->where(function ($query) use ($variable1, $variable2) {
+        $query->where('balltype', $variable1)
+            ->orWhere('balltype', $variable2);
+    })
+    ->selectRaw('COUNT(fixture_scores.id) as balls, fixture_scores.playerId')
+    ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+    ->groupBy('fixture_scores.playerId')
+    ->get()
+    ->pluck('balls', 'playerId');
 
     $hatricks = 0;
     foreach ($getresult as $teamPlayer) {
@@ -3198,7 +3270,7 @@ $getresult = $result;
     }
     // dd($hatricks);
 
-    return view('bowling_state', compact('tournamentdata', 'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult'));
+    return view('bowling_state', compact('tournamentdata','bowlerwickets','bowlerruns','bowlerballs','inningsCount','match_count' ,'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult'));
   }
 
 
@@ -5262,10 +5334,12 @@ public function fixturesCalendar_post(Request $request)
 
 $term = $request;
     if (!empty($term->created_at)) {
-      $data->whereRaw("DATE(match_startdate) >= Date('$term->created_at')");
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->created_at)->format('Y-m-d');
+      $data->whereRaw("DATE(match_startdate) >= Date('$convertedDate')");
     }
     if (!empty($term->end_at)) {
-      $data->whereRaw("DATE(match_enddate) <= Date('$term->end_at')");
+      $convertedDate = Carbon::createFromFormat('m/d/Y', $term->end_at)->format('Y-m-d');
+      $data->whereRaw("DATE(match_startdate) <= Date('$convertedDate')");
     }
 
     if (!empty($term['year'])) {
@@ -5307,14 +5381,16 @@ $term = $request;
     );
 
 
-
+    DB::enableQueryLog();
     $results = $data->selectRaw('match_description')
       ->selectRaw('match_startdate')
       ->selectRaw('match_enddate')
       ->selectRaw('match_starttime')
       ->selectRaw('match_endtime')->get();
       // dd($results);
-
+ $query = DB::getQueryLog();
+                    $query = DB::getQueryLog();
+            // dd($query);
 
   $today = Carbon::now()->toDateString();
     $upcoming_match = Fixture::query()->where('match_startdate', '>=', $today)
