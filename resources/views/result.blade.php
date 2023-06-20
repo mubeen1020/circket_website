@@ -23,7 +23,7 @@
                     <select name="year"  id="year" class="form-control" >
                                  		<option value=""> Select Year(s)</option>
                                          @for ($year = date('Y'); $year >= 2015; $year--)
-                                        <option value="{{ $year }}" >{{ $year }}</option>
+                                         <option <?php if(isset($_POST['year']) && $_POST['year']== $year){ echo 'selected'; } ?> value="{{$year}}">{{$year}}</option>
                                         @endfor
 									</select>
                                     </div>
@@ -46,7 +46,7 @@
                         <select name="tournament"  id="tournament" class="form-control" >
                                  		<option value=""> Select tournament(s)</option>
                                         @foreach($tournament as $tournament_id => $tournament_name)
-                                    <option value="{{ $tournament_id }}">{{ $tournament_name }}</option>
+                                        <option <?php if(isset($_POST['tournament']) && $_POST['tournament']== $tournament_id){ echo 'selected'; } ?> value="{{$tournament_id}}">{{$tournament_name}}</option>
                                        @endforeach
 									</select>
 						</div>
@@ -56,7 +56,7 @@
                                     <select name="club" id="club" class="form-control">
                                 <option value="">Select Club</option>
                                 @foreach($clubs as $index => $club)
-                                    <option value ="{{$index}}">{{$club}}</option>
+                                <option <?php if(isset($_POST['club']) && $_POST['club']== $index){ echo 'selected'; } ?> value="{{$index}}">{{$club}}</option>
                                     @endforeach
                             </select>
 							</div>
@@ -67,7 +67,7 @@
                             <select name="teams" id="teams" class="form-control">
                                 <option value="">Select team(s)</option>
                                 @foreach($teams as $team_id => $team_name)
-                                    <option value="{{ $team_id }}">{{ $team_name }}</option>
+                                <option <?php if(isset($_POST['teams']) && $_POST['teams']== $team_id){ echo 'selected'; } ?> value="{{$team_id}}">{{$team_name}}</option>
                                 @endforeach
                             </select>
 							</div>
