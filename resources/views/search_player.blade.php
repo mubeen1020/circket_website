@@ -32,33 +32,12 @@
                             </div>
                             <div class="col-lg-7">
                                 <div class="form-in">
-                                   <input type="text" id="firstName" name="fullname" class="form-control" style="width:100%;" value=""
-                                   
-									onblur="if(this.value==='%')this.value='';"
-									
-                                   >
+                                   <input type="text" id="firstName" name="fullname" class="form-control" style="width:100%;" value="<?php  if(isset($_POST['fullname'])) { echo  $_POST['fullname']; } ?>" >
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4" style="display:none">
-                    	<div class="row">
-                            <div class="col-lg-5">
-                                <div class="form-text">
-                                    <h5>Last name <span style="color: brown">**</span></h5>
-                                </div>
-                            </div>
-                            <div class="col-lg-7">
-                                <div class="form-in">
-                                   <input type="text" id="lastName" name="lastName" class="form-control" style="width:100%;" value=""
-                                   
-									onblur="if(this.value==='%')this.value='';"
-									
-                                   >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="col-lg-4">
                     	<div class="row">
                             <div class="col-lg-5">
@@ -96,7 +75,7 @@
 		                    </div>
 	               		 	 <div class="col-lg-7">
                                  <div class="form-in">
-                                 	<input type="email" name="emailId" id="emailId" value="" class="form-control" style="width:100%;" >
+                                 	<input type="email" name="emailId" id="emailId" value="<?php  if(isset($_POST['emailId'])) { echo  $_POST['emailId']; } ?>" class="form-control" style="width:100%;" >
                                  </div>
                              </div>
 	               		 </div>
@@ -134,8 +113,8 @@
                                  <div class="form-in">
                                  	<select name="battingStyle" id="battingStyle" class="form-control">
                                  	<option value=""></option>
-                                    <option value="All">All</option>
-										<option value="Right Handed Batsman">Right Handed Batter</option>
+                                    <option  <?php if(isset($_POST['battingStyle']) &&  $_POST['battingStyle']=='All') { echo 'selected'; }  ?>  value="All">All</option>
+										<option <?php if(isset($_POST['battingStyle']) &&  $_POST['battingStyle']=='Right Handed Batsman') { echo 'selected'; }  ?> value="Right Handed Batsman">Right Handed Batter</option>
 										<option value="Left Handed Batsman">Left Handed Batter</option>
 									</select>
                                  </div>
