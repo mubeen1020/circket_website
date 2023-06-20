@@ -195,10 +195,10 @@
 
                 
                     <div class="col-sm-2 col-xs-4" title="From Date">
-                    <input type="text" name="created_at" autocomplete="off" placeholder="From Date" value="" align="top" class="calendarBox form-control datepicker" id="created_at">
+                    <input type="text" name="created_at" autocomplete="off" placeholder="From Date" value="<?php  if(isset($_POST['created_at'])) { echo  $_POST['created_at']; } ?>" align="top" class="calendarBox form-control datepicker" id="created_at">
                     </div>
                     <div class="col-sm-2 col-xs-4" title="To Date">
-                    <input type="text"  name="end_at" autocomplete="off" placeholder="To Date" value="" align="top" class="calendarBox form-control datepicker" id="end_at">
+                    <input type="text"  name="end_at" autocomplete="off" placeholder="To Date" value="<?php  if(isset($_POST['end_at'])) { echo  $_POST['end_at']; } ?>" align="top" class="calendarBox form-control datepicker" id="end_at">
                     </div>
                     <div class="col-sm-2 col-xs-4" title="Search Dates"> 
                         <button class="btn btn-primary" id="datesSearch">Search Dates</button>
