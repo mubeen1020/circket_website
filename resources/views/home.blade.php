@@ -98,10 +98,10 @@
 
 					<div id="slider-container">
     <button type="button" class="slick-prev slick-arrow slick-disabled" aria-label="Previous" role="button" aria-disabled="true" style="display: block;">Previous</button>
-  <ul class="resp-tabs-list hor_1 common__slider">
+  <ul class="resp-tabs-list hor_1 common__slider" id="tournament_name_slide">
     @foreach($tournament_season as $index => $tour_name)
         @if($tour_name['type'] === 'T')
-            <li onclick="get_point_table({{$tour_name['tournament_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item {{ $index === 0 ? 'active' : '' }} hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
+            <li id='tour_tab_id_{{$tour_name["tournament_id"]}}_{{$tour_name["type"]}}'  onclick="get_point_table({{$tour_name['tournament_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item {{ $index === 0 ? 'active' : '' }} hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
                 {{$tour_name['tournamentname']}}
             </li>
         @elseif($tour_name['type'] === 'S')
@@ -119,6 +119,15 @@
 
 <script>
 $(document).ready(function() {
+
+        let first_item = '<?php echo $tournament_season[0]['tournament_id']; ?>';
+        let first_item_type = '<?php echo $tournament_season[0]['type'] ?>';
+      console.log(first_item);
+
+      console.log('first_item');
+
+      get_point_table(first_item, first_item_type)
+
     $('#slider-container .resp-tabs-list').slick({
         dots: true,
         infinite: true,
@@ -136,6 +145,8 @@ $(document).ready(function() {
        
         $(this).css('background-color', '#ccc');
     });
+
+
 });
 </script>
 
@@ -1058,6 +1069,9 @@ margin-right: 10px;
 
 
 function get_point_table(tornament_season_id, type) {
+    console.log(" I called first_item_type");
+    $('#tour_tab_id_'+tornament_season_id+'_'+type).css('background-color', '#ccc');
+
     $.ajax({
         url: "{{ url('/get_point_table/')}}/" + tornament_season_id + '/' + type,
         type: 'GET',
