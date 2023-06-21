@@ -57,7 +57,7 @@
                         <td>{{$key+1}}</td> 
                         <td><a href="#" target="_blank">{{$team->team_id}}</a></td>
                         <td><a href="#" target="_blank">{{$team->name}}</a></td>
-                        <td>{{$tournament[$team->tournament_id]}}</td>
+                        <td>{{$tournament[$team->tournament_id]??''}}</td>
                         <td>{{ isset($player[$team->player_id]) ? $player[$team->player_id] : '' }}</td>
 
                         <td></td>

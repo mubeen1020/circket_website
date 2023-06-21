@@ -449,9 +449,9 @@ class HomeController extends Controller
     ->selectRaw("sum(runs) as total_runs")
     ->selectRaw("SUM(isfour = 1) as total_fours")
     ->selectRaw("SUM(issix = 1) as total_six")
-    ->selectRaw("playerId, MIN(fixture_scores.id) as min_id") // Use MIN(fixture_scores.id) to get the minimum value of id
+    ->selectRaw("playerId, MIN(fixture_scores.id) as min_id") 
     ->groupBy('playerId', 'inningnumber')
-    ->orderBy('min_id') // Order by the minimum id
+    ->orderBy('min_id') 
     ->get();
 
 
@@ -497,8 +497,9 @@ class HomeController extends Controller
     ->selectRaw('MAX(ballnumber) as max_ball')
     ->selectRaw('COUNT(DISTINCT overnumber) as `over`')
     ->selectRaw("SUM(CASE WHEN balltype = 'Wicket' THEN 1 ELSE 0 END) AS total_wicket")
-    ->selectRaw('bowlerid')
+    ->selectRaw('bowlerid, MIN(fixture_scores.id) as min_id')
     ->groupBy('bowlerid', 'inningnumber')
+    ->orderBy('min_id') 
     ->get();
 
     $maiden_overs = FixtureScore::where('fixture_id', '=', $id)

@@ -208,9 +208,9 @@ text-align:center !important;
 				   
 	
 		                           <li><a href="">
-		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_a']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['first_inning_team_id']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
 		                           <li><a href="">
-		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_b']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['second_inning_team_id']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
 		                        
 										   <li class="lose">
                                         <span>
@@ -242,7 +242,7 @@ text-align:center !important;
              <div class="col-xs-12 col-sm-4">
                    <div class="schedule-text">
                    <h4>{{$tournament[$data['tournament_id']]}}</h4>
-                       <h3>{{ $teams[$data['team_id_a']]}}<span class="v"> v </span> {{ $teams[$data['team_id_b']]}}</h3>
+                       <h3>{{ $teams[$data['first_inning_team_id']]??''}}<span class="v"> v </span> {{ $teams[$data['second_inning_team_id']]??''}}</h3>
                        <h4>{{$data['match_result_description']}}</h4>
                         </div>
                </div>

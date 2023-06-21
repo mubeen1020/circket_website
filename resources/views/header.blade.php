@@ -480,7 +480,7 @@ navbarSlider.addEventListener("mouseout", function() {
               </li>
             </ul>
           </li>
-          <li class="topl"><a href="{{ route('comingsoon')}}"><i class="fa fa-user"></i> Log in</a></li>
+          <!-- <li class="topl"><a href="{{ route('comingsoon')}}"><i class="fa fa-user"></i> Log in</a></li> -->
           <!-- <li class="sponser"><a href="https://cricclubs.com/" target="_new"><img src="utilsv2/app/assets/images/pbcc-logo.png" class="img-responsive" style="max-width:145px; top:3px; border-radius:3px;" /></a></li> -->
         </ul>
       </div>

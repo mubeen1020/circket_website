@@ -1218,6 +1218,7 @@ function get_season_group(tornament_season_id) {
     get_top_scorers(tornament_season_id);
     get_top_bowler(tornament_season_id);
     get_top_ranking(tornament_season_id);
+    get_tournamnet_all_data(tornament_season_id);
 }
 
 

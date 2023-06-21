@@ -91,9 +91,9 @@ if (strpos($headers[0], '404') !== false) {
 																				@if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
 																					@if ($out->out_description == "Retired Hurt")
 																						<span><a>b &nbsp;{{ $out->out_description }}</span>
-																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)")
+																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
 																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-																					@elseif ($out->out_description == "Bowled")
+																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
 																						<span>b</span> (<a href="#"> {{ $out->bowler_name }}</a>)
 																					@endif
 																				@endif
@@ -358,12 +358,12 @@ if (strpos($headers[0], '404') !== false) {
                                                                         <th class="hidden-phone">
 																		@foreach ($match_description as $out)
 																				@if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
-																					@if ($out->out_description == "Retired Hurt")
-																						<span><a href="#"> b &nbsp;{{ $out->out_description }}</a></span>
-																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)")
+																				@if ($out->out_description == "Retired Hurt")
+																						<span><a>b &nbsp;{{ $out->out_description }}</span>
+																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
 																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-																					@elseif ($out->out_description == "Bowled")
-																						<span><a href="#"> b</span> {{ $out->bowler_name }}</a>
+																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
+																						<span>b</span> (<a href="#"> {{ $out->bowler_name }}</a>)
 																					@endif
 																				@endif
 																			@endforeach

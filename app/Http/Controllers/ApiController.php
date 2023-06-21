@@ -609,6 +609,18 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ->groupBy('fixtures.tournament_id')
             ->get();
 
+            $match_dissmissal_runout_name= Dismissal::where('dismissals.name', '=', 'Run out')
+            ->selectRaw("dismissals.id as dissmissalname")
+            ->get()->pluck('dissmissalname');
+
+            $tournament_runout = Fixture::where('fixtures.tournament_id', $tournament_id)
+            ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+            ->where('match_dismissals.dismissal_id',$match_dissmissal_runout_name)
+            ->selectRaw("COUNT(match_dismissals.id) as total_runout")
+            ->groupBy('fixtures.tournament_id')
+            ->get();
+
 
             $total_hat_tricks = DB::table('fixture_scores AS fs1')
             ->join('fixture_scores AS fs2', function ($join) {
@@ -699,9 +711,18 @@ public function get_group_team(int $group_id,int $tournamnet_id)
     // $query = DB::getQueryLog();
     //                 $query = DB::getQueryLog();
     //         dd($query);
+    $variable1 = 'R';
+    $variable2 = 'Wicket';
+  
+
         $tournament_balls =Fixture::where('fixtures.tournament_id', $tournament_id) 
-        ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+        ->where(function ($query) use ($variable1, $variable2) {
+            $query->where('balltype', '=', $variable1)
+              ->orWhere('balltype', '=', $variable2);
+          })
         ->selectRaw("COUNT((overnumber * 6) + ballnumber) as max_ball")
+        ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+
         ->groupBy('fixtures.tournament_id')
         ->get();
 
@@ -711,9 +732,9 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         ->groupBy('fixtures.tournament_id')
         ->get();
         
+        //   $tournament_runout;  
             
-            
-        return response()->json([$tournamnetdata,$tournament_players,$tournament_cauches,$result,$tournament_total_hundreds,$tournament_total_fifties,$tournament_balls,$tournament_teams]);
+        return response()->json([$tournamnetdata,$tournament_players,$tournament_cauches,$result,$tournament_total_hundreds,$tournament_total_fifties,$tournament_balls,$tournament_teams,$tournament_runout]);
     }
     
 

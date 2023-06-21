@@ -354,23 +354,23 @@ margin-top: 15px;}
                                                                     <div class="col-xs-8 col-sm-3 p-sm-0 mobile-b">
                                                     <div class="schedule-logo text-center h-90">
                                                         <ul class="list-inline" style="color: #fff;">
-                                                        <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1341&amp;clubId=2565">
-                                                        <img src="https://cricclubs.com/documentsRep/teamLogos/3771b13e-3281-4038-a063-75e2a277f1b0.jpg" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
+                                                        <li><a href="">
+                                                        <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_a']}}.png" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
                                                                 v 
-                                                        <li><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">
-                                                        <img src="https://cricclubs.com/documentsRep/teamLogos/61443e16-7f18-452a-a807-040ce00e712d.jpg" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
+                                                        <li><a href="">
+                                                        <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_b']}}.png" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-5">
                                                     <div class="schedule-text">
                                                     <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]}}</p>
-                                                        <h3><a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1341&amp;clubId=2565">{{ $header_teams[$data['team_id_a']]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $header_teams[$data['team_id_b']]}}</a> </h3>
+                                                        <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $header_teams[$data['team_id_b']]}}</a> </h3>
 
-                                                            <h4>L @  <a style="color: inherit;" href="/MississaugaCricketLeague/viewGround.do?groundId=8&amp;clubId=2565" target="_new">{{ $ground2[$data['ground_id']] }}</a>
+                                                            <h4>L @  <a style="color: inherit;" href="" target="_new">{{ $ground2[$data['ground_id']] }}</a>
                                             
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Umpires: 
-                                        <a style="color: inherit;" href="/MississaugaCricketLeague/viewUmpire.do?umpireUId=1717088&amp;clubId=2565">Sandeep Mehta</a>,<a style="color: inherit;" href="/MississaugaCricketLeague/viewUmpire.do?umpireUId=2224359&amp;clubId=2565">Mcl Umpire</a></h4>
+                                        <a style="color: inherit;" href="">Sandeep Mehta</a>,<a style="color: inherit;" href="/MississaugaCricketLeague/viewUmpire.do?umpireUId=2224359&amp;clubId=2565">Mcl Umpire</a></h4>
                                         
                                         <p style="color:#fff;font-size:13px"> </p>
                                         <p style="color:#fff;font-size:13px"> </p>

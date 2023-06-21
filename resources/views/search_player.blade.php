@@ -66,19 +66,24 @@
                 
 
                		
-               		<div class="col-lg-4">
+                <div class="col-lg-4">
 	               		 <div class="row">
 	               		 	<div class="col-lg-5">
 		                    	<div class="form-text">
-                                    <h5>Email<span style="color: brown">**</span></h5>
+		                    	   <h5>Club Name<span style="color: brown">**</span></h5>
                                 </div>
-		                    </div>
-	               		 	 <div class="col-lg-7">
+               				</div>
+               				<div class="col-lg-7">
                                  <div class="form-in">
-                                 	<input type="email" name="emailId" id="emailId" value="<?php  if(isset($_POST['emailId'])) { echo  $_POST['emailId']; } ?>" class="form-control" style="width:100%;" >
+               						<select name="club" id="club" class="form-control">
+                                <option  ></option>
+                               @foreach($clubs as $index => $club)
+                                    <option <?php if(isset($_POST['club']) &&  $_POST['club']== $index) { echo 'selected'; }  ?> value="{{$index}}" >{{$club}}</option>
+                                    @endforeach
+               							</select>   
                                  </div>
                              </div>
-	               		 </div>
+               			 </div>
                		</div>
                 
                 	<div class="col-lg-4">
@@ -154,25 +159,7 @@
                    </div>
 
                 <div class="row">
-                <div class="col-lg-4">
-	               		 <div class="row">
-	               		 	<div class="col-lg-5">
-		                    	<div class="form-text">
-		                    	   <h5>Club Name<span style="color: brown">**</span></h5>
-                                </div>
-               				</div>
-               				<div class="col-lg-7">
-                                 <div class="form-in">
-               						<select name="club" id="club" class="form-control">
-                                <option  ></option>
-                               @foreach($clubs as $index => $club)
-                                    <option <?php if(isset($_POST['club']) &&  $_POST['club']== $index) { echo 'selected'; }  ?> value="{{$index}}" >{{$club}}</option>
-                                    @endforeach
-               							</select>   
-                                 </div>
-                             </div>
-               			 </div>
-               		</div>
+              
                		</div>
                	<div class="row">
                	</div>
