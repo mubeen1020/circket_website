@@ -477,7 +477,7 @@ function unLockMatch(matchId,name){
 						@foreach($result as $key => $item)
 						<tr>
 						<th>{{$key+1}}</th>
-							<th style="text-align: left !important;"><img src="https://cricclubs.com/documentsRep/teamLogos/74a6a0bc-b4f2-4b75-aa83-b4046766d03f.jpg" class="left-block img-circle" style="width: 25px;height: 25px;">
+							<th style="text-align: left !important;"><img src="https://eoscl.ca/admin/public/Team/{{$item['team_id']}}.png" class="left-block img-circle" style="width: 25px;height: 25px;">
 							<a href="#">{{$item['team_name']}}</a></th>
 							<th>{{$item['total_matches']}}</th>
 							<th>{{$item['wins']}}</th>

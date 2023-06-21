@@ -200,10 +200,10 @@ margin-top: 15px;}
                               <div class="schedule-logo text-center h-90">
                                   <ul class="list-inline" style="color: #fff;">
                                   <li><a href="#">
-                                  <img src="https://cricclubs.com/documentsRep/teamLogos/654d8ff3-3e3f-4137-8f4c-13063ce902b1.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+                                  <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_a']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
                                       
                                   <li><a href="">
-                                  <img src="https://cricclubs.com/documentsRep/teamLogos/61443e16-7f18-452a-a807-040ce00e712d.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+                                  <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_b']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
                                     </ul>
                                 </div>
                             </div>

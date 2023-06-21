@@ -208,9 +208,9 @@ text-align:center !important;
 				   
 	
 		                           <li><a href="">
-		                           <img src="https://cricclubs.com/documentsRep/teamLogos/f5e11e68-50cb-4926-8cd8-711f991d9ea2.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_a']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
 		                           <li><a href="">
-		                           <img src="https://cricclubs.com/documentsRep/teamLogos/c13fab4c-3cbb-4805-9c9f-bcba623a5a39.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_b']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
 		                        
 										   <li class="lose">
                                         <span>
