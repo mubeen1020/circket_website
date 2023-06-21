@@ -81,7 +81,7 @@
 						<select name="year"  id="year" class="form-control" >
 								<option value="">All Years</option>
 								@for ($year = date('Y'); $year >= 2015; $year--)
-                                        <option value="{{ $year }}" >{{ $year }}</option>
+								<option <?php if(isset($_POST['year']) && $_POST['year']== $year){ echo 'selected'; } ?> value="{{$year}}">{{$year}}</option>
                                         @endfor
 								</select>
 						</div>
@@ -94,7 +94,7 @@
 						<select required name="tournament"  id="tournament" class="form-control" >
 							<option value="">Career - All Tournament</option>
 							@foreach($tournamentdata as $tournament_id => $tournament_name)
-                                    <option value="{{ $tournament_id }}">{{ $tournament_name }}</option>
+							<option <?php if(isset($_POST['tournament']) && $_POST['tournament']== $tournament_id){ echo 'selected'; } ?> value="{{$tournament_id}}">{{$tournament_name}}</option>
                                        @endforeach
 								</select>
 						</div>

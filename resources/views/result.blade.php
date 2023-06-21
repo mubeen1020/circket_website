@@ -23,7 +23,7 @@
                     <select name="year"  id="year" class="form-control" >
                                  		<option value=""> Select Year(s)</option>
                                          @for ($year = date('Y'); $year >= 2015; $year--)
-                                        <option value="{{ $year }}" >{{ $year }}</option>
+                                         <option <?php if(isset($_POST['year']) && $_POST['year']== $year){ echo 'selected'; } ?> value="{{$year}}">{{$year}}</option>
                                         @endfor
 									</select>
                                     </div>
@@ -46,7 +46,7 @@
                         <select name="tournament"  id="tournament" class="form-control" >
                                  		<option value=""> Select tournament(s)</option>
                                         @foreach($tournament as $tournament_id => $tournament_name)
-                                    <option value="{{ $tournament_id }}">{{ $tournament_name }}</option>
+                                        <option <?php if(isset($_POST['tournament']) && $_POST['tournament']== $tournament_id){ echo 'selected'; } ?> value="{{$tournament_id}}">{{$tournament_name}}</option>
                                        @endforeach
 									</select>
 						</div>
@@ -56,7 +56,7 @@
                                     <select name="club" id="club" class="form-control">
                                 <option value="">Select Club</option>
                                 @foreach($clubs as $index => $club)
-                                    <option value ="{{$index}}">{{$club}}</option>
+                                <option <?php if(isset($_POST['club']) && $_POST['club']== $index){ echo 'selected'; } ?> value="{{$index}}">{{$club}}</option>
                                     @endforeach
                             </select>
 							</div>
@@ -67,7 +67,7 @@
                             <select name="teams" id="teams" class="form-control">
                                 <option value="">Select team(s)</option>
                                 @foreach($teams as $team_id => $team_name)
-                                    <option value="{{ $team_id }}">{{ $team_name }}</option>
+                                <option <?php if(isset($_POST['teams']) && $_POST['teams']== $team_id){ echo 'selected'; } ?> value="{{$team_id}}">{{$team_name}}</option>
                                 @endforeach
                             </select>
 							</div>
@@ -81,10 +81,10 @@
             <div class="series-drop">
             	<div class="row">
 					<div class="col-sm-3 col-xs-4" title="From Date">
-                    	<input type="text" name="created_at" autocomplete="off" placeholder="From Date" value="" align="top" class="calendarBox form-control hasDatepicker" id="created_at">
+                    	<input type="text" name="created_at" autocomplete="off" placeholder="From Date" value="<?php  if(isset($_POST['created_at'])) { echo  $_POST['created_at']; } ?>" align="top" class="calendarBox form-control datepicker" id="created_at">
 					</div>
 					<div class="col-sm-3 col-xs-4" title="To Date">
-                    	<input type="text"  name="end_at" autocomplete="off" placeholder="To Date" value="" align="top" class="calendarBox form-control hasDatepicker" id="end_at">
+                    	<input type="text"  name="end_at" autocomplete="off" placeholder="To Date" value="<?php  if(isset($_POST['end_at'])) { echo  $_POST['end_at']; } ?>" align="top" class="calendarBox form-control datepicker" id="end_at">
 					</div>
 					<div class="col-sm-2 col-xs-4" title="Search Dates"> 
                     	<button class="btn btn-primary" id="datesSearch">Search Result</button>

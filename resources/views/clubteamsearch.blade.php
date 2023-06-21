@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-in">
-                                   <input type="text" id="teamName" name="teamName" class="form-control" required="" value="" >
+                                   <input type="text" id="teamName" name="teamName" class="form-control" required="" value="<?php  if(isset($_POST['teamName'])) { echo  $_POST['teamName']; } ?>" >
                                 </div>
                             </div>
                              <div class="col-sm-2">
