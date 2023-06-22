@@ -235,9 +235,6 @@ class ApiController extends Controller
             }
         }
 
-        // $teama_netrr = isset($point_table_res_tem_a[0]) ? $point_table_res_tem_a[$team_id] : 0;
-        // $teamb_netrr = isset($point_table_res_tem_b[$team_id]) ? $point_table_res_tem_b[$team_id] : 0;
-
         if (isset($match_count_team_b[$team_id])) {
             $team_total_matches += $match_count_team_b[$team_id];
         }
