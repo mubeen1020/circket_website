@@ -14,7 +14,9 @@
 
 										<div class="summ-image" id="teamLogo">
 
-											<img src="" class="img-responsive img-circle center-block" style="width: 120px; height: 120px;">
+										@foreach($teamid as $data)
+													<img src="https://eoscl.ca/admin/public/Team/{{$data->id}}.png" class="img-responsive img-circle center-block" style="width: 120px; height: 120px;">
+@endforeach
 
 										</div>
 									</div>

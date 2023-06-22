@@ -161,7 +161,7 @@ flex: auto;}
                                     <strong>
                                       {{$teams_one}} Players: </strong>
                                       @foreach($teams_one_player as $item)
-                                      {{$player[$item]}}
+                                      {{$player[$item]}},
                                       @endforeach
                                       </li>
                      <span class="hidden-phone" style="float: right; font-size:14px; margin-right: 10px;width: 135px;

@@ -13,9 +13,9 @@
 											<div class="col-sm-12">
 												
 												<div class="summ-image" id="teamLogo">
-
-													<img src="https://cricclubs.com/documentsRep/teamLogos/3de1d6b0-210e-490c-b111-2038ec3e0c8d.jpeg" class="img-responsive img-circle center-block" style="width: 120px; height: 120px;">
-
+@foreach($teamid as $data)
+													<img src="https://eoscl.ca/admin/public/Team/{{$data->id}}.png" class="img-responsive img-circle center-block" style="width: 120px; height: 120px;">
+@endforeach
 												</div>
 											</div>
 										</div>

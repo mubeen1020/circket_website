@@ -14,7 +14,9 @@
 												
 												<div class="summ-image" id="teamLogo">
 
-													<img src="https://cricclubs.com/documentsRep/teamLogos/3de1d6b0-210e-490c-b111-2038ec3e0c8d.jpeg" class="img-responsive img-circle center-block" style="width: 120px; height: 120px;">
+                        @foreach($teamid as $data)
+													<img src="https://eoscl.ca/admin/public/Team/{{$data->id}}.png" class="img-responsive img-circle center-block" style="width: 120px; height: 120px;">
+@endforeach
 
 												</div>
 											</div>
@@ -316,10 +318,10 @@ margin-top: 15px;}
                               <div class="schedule-logo text-center h-90">
                                   <ul class="list-inline" style="color: #fff;">
                                   <li><a href="">
-                                  <img src="https://cricclubs.com/documentsRep/teamLogos/61443e16-7f18-452a-a807-040ce00e712d.jpg" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
+                                  <img src="https://eoscl.ca/admin/public/Team/{{$data->team_id_a}}.png" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
                                         v 
                                   <li><a href="">
-                                  <img src="https://cricclubs.com/documentsRep/teamLogos/6f5eb596-2586-4481-b2aa-9f1534df25da.jpg" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
+                                  <img src="https://eoscl.ca/admin/public/Team/{{$data->team_id_b}}.png" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
                                     </ul>
                                 </div>
                             </div>

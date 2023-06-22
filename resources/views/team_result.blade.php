@@ -13,8 +13,9 @@
 											<div class="col-sm-12">
 												
 												<div class="summ-image" id="teamLogo">
-
-													<img src="https://cricclubs.com/documentsRep/teamLogos/3de1d6b0-210e-490c-b111-2038ec3e0c8d.jpeg" class="img-responsive img-circle center-block" style="width: 120px; height: 120px;">
+												@foreach($teamid as $data)
+													<img src="https://eoscl.ca/admin/public/Team/{{$data->id}}.png" class="img-responsive img-circle center-block" style="width: 120px; height: 120px;">
+@endforeach
 
 												</div>
 											</div>
@@ -320,9 +321,9 @@ function unLockMatch(matchId,name){
 		                           </li>
 				@endif
 				<li><a href="">
-		                           <img src="https://cricclubs.com/documentsRep/teamLogos/61443e16-7f18-452a-a807-040ce00e712d.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['first_inning_team_id']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
 		                           <li><a href="">
-		                           <img src="https://cricclubs.com/documentsRep/teamLogos/6f5eb596-2586-4481-b2aa-9f1534df25da.jpg" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>	
+		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['second_inning_team_id']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>	
 				@if (isset($total_runs[$data->id][0])) 
 		                          <li class="lose">
 		                          		<span>{{ $total_runs[$data->id][1] }}/{{ $total_wicket_fixture[$data->id][1] }}</span> <br> 
@@ -340,7 +341,7 @@ function unLockMatch(matchId,name){
              <div class="col-xs-12 col-sm-4">
                    <div class="schedule-text">
                    <h4>{{$tournament[$data['tournament_id']]}}</h4>
-                       <h3>{{ $header_teams[$data['team_id_a']]}}<span class="v"> v </span>  {{ $header_teams[$data['team_id_b']]}}</h3>
+                       <h3>{{ $header_teams[$data['first_inning_team_id']]}}<span class="v"> v </span>  {{ $header_teams[$data['second_inning_team_id']]}}</h3>
                        <h4>{{$data['match_result_description']}}</h4>
                         </div>
                </div>

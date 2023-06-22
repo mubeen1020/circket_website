@@ -90,7 +90,7 @@
 								<th><a href="{{ url('team-view', $data->team_id . '_' . $data->tournament_id) }}">{{$teams[$data->team_id]}}<a></th>
 								
 								<th><a href="{{ url('team-view', $data->team_id . '_' . $data->tournament_id) }}">{{$teams[$data->team_id]}}</a></th>
-								<th>{{$tournament[$data->tournament_id]??''}}</th>
+								<th>{{$data->name??''}}</th>
 							</tr>
 						@endforeach
 						</tbody>
