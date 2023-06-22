@@ -13,21 +13,7 @@
                     <div class="col-sm-6">
                        <table style="width: 100%">
 						
-						<tbody><tr class="text-right">
-						<td style="display: inline-flex;
-						" class="hidden-phone icon-fixture">
-						<img alt="Download as Excel" id="excel-download" title="Download as Excel" class="excelBtn" style="cursor:pointer; margin:5px !important;" width="32" height="32" src="/utilsv2/images/excel.png">
-						<!-- 	<button type="button" id="excel-download" title="Excel Download" class="btn btn-md hidden-phone"  
-							style="font-size:18px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button> -->	
-							<button type="button" id="list-view" title="List View" class="btn btn-md hidden-phone" style="font-size:18px;"><i class="fa fa-list" aria-hidden="true"></i></button>
-							<button type="button" id="grid-view" title="Grid View" class="btn btn-md hidden-phone" style="font-size:18px;"><i class="fa fa-th" aria-hidden="true"></i></button>
-						</td>
-						
-						
-							<td style="display: inline-block;
-						margin-left: 15px;"><div class="addthis_sharing_toolbox hidden-phone" style="height: 24px; text-align: right;"></div>
-					</td>
-						</tr>
+						<tbody>
 					</tbody></table>
                     </div>
               </div>
@@ -364,7 +350,7 @@ margin-top: 15px;}
                                                     </div>
                                                     <div class="col-xs-12 col-sm-5">
                                                     <div class="schedule-text">
-                                                    <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]}}</p>
+                                                    <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]??''}}</p>
                                                         <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $header_teams[$data['team_id_b']]}}</a> </h3>
 
                                                             <h4>L @  <a style="color: inherit;" href="" target="_new">{{ $ground2[$data['ground_id']] }}</a>

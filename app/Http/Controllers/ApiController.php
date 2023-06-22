@@ -205,61 +205,125 @@ class ApiController extends Controller
             ->pluck('max_over', 'team_id_b');
         
    
-        $result = array();
-        foreach ($get_point_table_data as $team_id => $team_name) {
-            $team_wins = isset($match_count_winning_team[$team_id]) ? $match_count_winning_team[$team_id] : 0;
-            $team_losses = isset($match_count_loss_team[$team_id]) ? $match_count_loss_team[$team_id] : 0;
-            $team_total_matches = isset($match_count_team_a[$team_id]) ? $match_count_team_a[$team_id] : 0;
+        $point_table_res_tem_a = DB::select("SELECT  sum(rate_team1-rate_team2) as team_netrr , first_inning_team_id
+        FROM (
         
-            if (isset($match_count_team_b[$team_id])) {
-                $team_total_matches += $match_count_team_b[$team_id];
-            }
-        
-            $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
-            $bonus_points_A = isset($bonusPointsSum_team_A[$team_id]) ? $bonusPointsSum_team_A[$team_id] : 0;
-            $bonus_points_B = isset($bonusPointsSum_team_B[$team_id]) ? $bonusPointsSum_team_B[$team_id] : 0;
-            $team_tie = isset($match_count_tie_team[$team_id]) ? $match_count_tie_team[$team_id] : 0;
-            $total_bonus_points = $bonus_points_A + $bonus_points_B;
-
-            $team_runs_scoredA = isset($teamscorerunsteamA[$team_id]) ? $teamscorerunsteamA[$team_id] : 0;
-            $team_runs_scoredB = isset($teamscorerunsteamB[$team_id]) ? $teamscorerunsteamB[$team_id] : 0;
-            $team_runs_scored = $team_runs_scoredA + $team_runs_scoredB;
-        
-          
-            $team_balls_facedA = isset($teamscoreoverfacedteamA[$team_id]) ? ($teamscoreoverfacedteamA[$team_id]) : 0;
-            $team_balls_facedB = isset($teamscoreoverfacedteamB[$team_id]) ? ($teamscoreoverfacedteamB[$team_id]) : 0;
-            $team_ball_face = ($team_balls_facedA + $team_balls_facedB)*6;
-        
-          
-            $team_runs_concededA = isset($teamscoreoverfacedteamA[$team_id]) ? $teamscoreoverfacedteamA[$team_id] : 0;
-            $team_runs_concededB = isset($team_runs_concededteamB[$team_id]) ? $team_runs_concededteamB[$team_id] : 0;
-            $team_runs_conceded = $team_runs_concededA + $team_runs_concededB;
-
-
-            $team_balls_bowledA = isset($team_balls_bowledteamA[$team_id]) ? $team_balls_bowledteamA[$team_id] : 0;
-            $team_balls_bowledB = isset($team_balls_bowledteamB[$team_id]) ? $team_balls_bowledteamB[$team_id] : 0;
-            $team_balls_bowled = ($team_balls_bowledA + $team_balls_bowledB)*6;
-
-            if ($team_ball_face != 0 && $team_balls_bowled != 0) {
-                $net_run_rate =($team_runs_conceded / $team_balls_bowled) -($team_runs_scored / $team_ball_face) ;
-            } else {
-                $net_run_rate=0.00;
-            }
+        SELECT
+            sum(runs) AS run_score_team2,
+            max(fixture_scores.ballnumber) AS ball_faced_team2,
+            ((max(fixture_scores.ballnumber)%6)/10) as number_bals,
             
-            $result[] = [
-                'tournament_id' => $id,
-                'team_id' => $team_id,
-                'team_name' => $team_name,
-                'total_matches' => $team_total_matches,
-                'wins' => $team_wins,
-                'losses' => $team_losses,
-                'draws' => $team_tie,
-                'players_count' => $team_players_count,
-                'teambonusPoints' => $total_bonus_points,
-                'net_rr' => $net_run_rate,
-            ];
-        }
+            fixtures.second_inning_team_id,
+            fixtures.id,
+            sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team2
+        FROM fixture_scores
+        INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+        WHERE fixtures.tournament_id = $id AND inningnumber = 2
+        GROUP BY fixtures.id
+
+
+        ) AS query1
+        INNER JOIN (
+        SELECT
+            sum(runs) AS run_score_team1,
+            max(fixture_scores.ballnumber) AS ball_faced_team1,
+            fixtures.first_inning_team_id,
+            fixtures.id,
+            sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team1
+        FROM fixture_scores
+        INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+        WHERE fixtures.tournament_id = $id AND inningnumber = 1
+        GROUP BY fixtures.id
+        ) AS query2 ON query1.id = query2.id group by first_inning_team_id");
+
+
+
+        $point_table_res_tem_b = DB::select("SELECT  sum(rate_team2-rate_team1) as team_netrr, second_inning_team_id
+        FROM (
         
+        SELECT
+            sum(runs) AS run_score_team2,
+            max(fixture_scores.ballnumber) AS ball_faced_team2,
+            ((max(fixture_scores.ballnumber)%6)/10) as number_bals,
+            
+            fixtures.first_inning_team_id,
+            fixtures.id,
+            sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team2
+        FROM fixture_scores
+        INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+        WHERE fixtures.tournament_id = $id AND inningnumber = 2
+        GROUP BY fixtures.id
+
+
+        ) AS query1
+        INNER JOIN (
+        SELECT
+            sum(runs) AS run_score_team1,
+            max(fixture_scores.ballnumber) AS ball_faced_team1,
+            fixtures.second_inning_team_id,
+            fixtures.id,
+            sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team1
+        FROM fixture_scores
+        INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+        WHERE fixtures.tournament_id = $id AND inningnumber = 1
+        GROUP BY fixtures.id
+        ) AS query2 ON query1.id = query2.id group by second_inning_team_id");
+
+
+        // dd($point_table_res_tem_b[0]);
+    
+    $result = array();
+    
+    foreach ($get_point_table_data as $team_id => $team_name) {
+        $team_netrr = 0;
+        $team_wins = isset($match_count_winning_team[$team_id]) ? $match_count_winning_team[$team_id] : 0;
+        $team_losses = isset($match_count_loss_team[$team_id]) ? $match_count_loss_team[$team_id] : 0;
+        $team_total_matches = isset($match_count_team_a[$team_id]) ? $match_count_team_a[$team_id] : 0;
+        
+        if(isset($point_table_res_tem_a[0]))
+        {
+            if($point_table_res_tem_a[0]->first_inning_team_id==$team_id)
+            {
+                $team_netrr = $point_table_res_tem_a[0]->team_netrr    ;    
+            }
+        }
+
+        if(isset($point_table_res_tem_b[0]))
+        {
+            if($point_table_res_tem_b[0]->second_inning_team_id==$team_id)
+            {
+                $team_netrr = $point_table_res_tem_b[0]->team_netrr    ;    
+            }
+        }
+
+        // $teama_netrr = isset($point_table_res_tem_a[0]) ? $point_table_res_tem_a[$team_id] : 0;
+        // $teamb_netrr = isset($point_table_res_tem_b[$team_id]) ? $point_table_res_tem_b[$team_id] : 0;
+
+        if (isset($match_count_team_b[$team_id])) {
+            $team_total_matches += $match_count_team_b[$team_id];
+        }
+    
+        $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
+        $bonus_points_A = isset($bonusPointsSum_team_A[$team_id]) ? $bonusPointsSum_team_A[$team_id] : 0;
+        $bonus_points_B = isset($bonusPointsSum_team_B[$team_id]) ? $bonusPointsSum_team_B[$team_id] : 0;
+        $team_tie = isset($match_count_tie_team[$team_id]) ? $match_count_tie_team[$team_id] : 0;
+        $total_bonus_points = $bonus_points_A ;
+    
+        // $net_run_rate=$teama_netrr+$teamb_netrr;
+       
+        $result[] = [
+            'tournament_id' => $id,
+            'team_id' => $team_id,
+            'team_name' => $team_name,
+            'total_matches' => $team_total_matches,
+            'wins' => $team_wins,
+            'losses' => $team_losses,
+            'draws' => $team_tie,
+            'players_count' => $team_players_count,
+            'teambonusPoints' => $total_bonus_points,
+            'net_rr' => $team_netrr,
+        ];
+    }
         return response()->json($result);
     }else {
         return;
@@ -309,7 +373,7 @@ public function get_group_team(int $group_id,int $tournamnet_id)
        
        
 
-        $Groups_team = TournamentGroup::query()
+$Groups_team = TournamentGroup::query()
         ->where('group_id', $group_id)
         ->where('tournaments.id', $tournamnet_id)
         ->selectRaw("team_name.name as teams_name")
@@ -429,105 +493,126 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ->selectRaw('second_inning_team_id')
             ->groupBy('second_inning_team_id')
             ->pluck('max_over', 'second_inning_team_id');
+      
+            $point_table_res_tem_a = DB::select("SELECT  sum(rate_team1-rate_team2) as team_netrr , first_inning_team_id
+            FROM (
+            
+            SELECT
+                sum(runs) AS run_score_team2,
+                max(fixture_scores.ballnumber) AS ball_faced_team2,
+                ((max(fixture_scores.ballnumber)%6)/10) as number_bals,
+                
+                fixtures.second_inning_team_id,
+                fixtures.id,
+                sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team2
+            FROM fixture_scores
+            INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+            WHERE fixtures.tournament_id = $tournamnet_id AND inningnumber = 2
+            GROUP BY fixtures.id
+    
+    
+            ) AS query1
+            INNER JOIN (
+            SELECT
+                sum(runs) AS run_score_team1,
+                max(fixture_scores.ballnumber) AS ball_faced_team1,
+                fixtures.first_inning_team_id,
+                fixtures.id,
+                sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team1
+            FROM fixture_scores
+            INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+            WHERE fixtures.tournament_id = $tournamnet_id AND inningnumber = 1
+            GROUP BY fixtures.id
+            ) AS query2 ON query1.id = query2.id group by first_inning_team_id");
+    
+    
+    
+            $point_table_res_tem_b = DB::select("SELECT  sum(rate_team2-rate_team1) as team_netrr, second_inning_team_id
+            FROM (
+            
+            SELECT
+                sum(runs) AS run_score_team2,
+                max(fixture_scores.ballnumber) AS ball_faced_team2,
+                ((max(fixture_scores.ballnumber)%6)/10) as number_bals,
+                
+                fixtures.first_inning_team_id,
+                fixtures.id,
+                sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team2
+            FROM fixture_scores
+            INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+            WHERE fixtures.tournament_id = $tournamnet_id AND inningnumber = 2
+            GROUP BY fixtures.id
+    
+    
+            ) AS query1
+            INNER JOIN (
+            SELECT
+                sum(runs) AS run_score_team1,
+                max(fixture_scores.ballnumber) AS ball_faced_team1,
+                fixtures.second_inning_team_id,
+                fixtures.id,
+                sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team1
+            FROM fixture_scores
+            INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+            WHERE fixtures.tournament_id = $tournamnet_id AND inningnumber = 1
+            GROUP BY fixtures.id
+            ) AS query2 ON query1.id = query2.id group by second_inning_team_id");
+    
+    
+            // dd($point_table_res_tem_b[0]);
         
         $result = array();
+        
         foreach ($Groups_team as $team_id => $team_name) {
+            $team_netrr = 0;
             $team_wins = isset($match_count_winning_team[$team_id]) ? $match_count_winning_team[$team_id] : 0;
             $team_losses = isset($match_count_loss_team[$team_id]) ? $match_count_loss_team[$team_id] : 0;
             $team_total_matches = isset($match_count_team_a[$team_id]) ? $match_count_team_a[$team_id] : 0;
-        
-            if (isset($match_count_team_b[$team_id])) {
-                $team_total_matches += $match_count_team_b[$team_id];
+            
+            if(isset($point_table_res_tem_a[0]))
+            {
+                if($point_table_res_tem_a[0]->first_inning_team_id==$team_id)
+                {
+                    $team_netrr = $point_table_res_tem_a[0]->team_netrr    ;    
+                }
             }
-        
-            $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
-            $bonus_points_A = isset($bonusPointsSum_team_A[$team_id]) ? $bonusPointsSum_team_A[$team_id] : 0;
-            $bonus_points_B = isset($bonusPointsSum_team_B[$team_id]) ? $bonusPointsSum_team_B[$team_id] : 0;
-            $team_tie = isset($match_count_tie_team[$team_id]) ? $match_count_tie_team[$team_id] : 0;
-            $total_bonus_points = $bonus_points_A + $bonus_points_B;
-        
-            $team_runs_scoredA = isset($teamscorerunsteamA[$team_id]) ? $teamscorerunsteamA[$team_id] : 0;
-            $team_runs_scoredB = isset($teamscorerunsteamB[$team_id]) ? $teamscorerunsteamB[$team_id] : 0;
-            $team_runs_scored = $team_runs_scoredA + $team_runs_scoredB;
-        
-          
-            $team_balls_facedA = isset($teamscoreoverfacedteamA[$team_id]) ? ($teamscoreoverfacedteamA[$team_id]) : 0;
-            $team_balls_facedB = isset($teamscoreoverfacedteamB[$team_id]) ? ($teamscoreoverfacedteamB[$team_id]) : 0;
-            $team_ball_face = ($team_balls_facedA + $team_balls_facedB)*6;
-        
-          
-            $team_runs_concededA = isset($teamscoreoverfacedteamA[$team_id]) ? $teamscoreoverfacedteamA[$team_id] : 0;
-            $team_runs_concededB = isset($team_runs_concededteamB[$team_id]) ? $team_runs_concededteamB[$team_id] : 0;
-            $team_runs_conceded = $team_runs_concededA + $team_runs_concededB;
-
-
-            $team_balls_bowledA = isset($team_balls_bowledteamA[$team_id]) ? $team_balls_bowledteamA[$team_id] : 0;
-            $team_balls_bowledB = isset($team_balls_bowledteamB[$team_id]) ? $team_balls_bowledteamB[$team_id] : 0;
-            $team_balls_bowled = ($team_balls_bowledA + $team_balls_bowledB)*6;
-
-            if ($team_ball_face != 0 && $team_balls_bowled != 0) {
-                $net_run_rate =($team_runs_conceded / ($team_balls_bowled/6))-($team_runs_scored / ($team_ball_face/6)) ;
-            } else {
-                $net_run_rate=0.00;
+    
+            if(isset($point_table_res_tem_b[0]))
+            {
+                if($point_table_res_tem_b[0]->second_inning_team_id==$team_id)
+                {
+                    $team_netrr = $point_table_res_tem_b[0]->team_netrr    ;    
+                }
             }
-        
-            $result[] = [
-                'tournament_id' => $tournamnet_id,
-                'team_id' => $team_id,
-                'team_name' => $team_name,
-                'total_matches' => $team_total_matches,
-                'wins' => $team_wins,
-                'losses' => $team_losses,
-                'draws' => $team_tie,
-                'players_count' => $team_players_count,
-                'teambonusPoints' => $total_bonus_points,
-                'net_rr' => $net_run_rate,
-            ];
+
+        if (isset($match_count_team_b[$team_id])) {
+            $team_total_matches += $match_count_team_b[$team_id];
         }
+    
+        $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
+        $bonus_points_A = isset($bonusPointsSum_team_A[$team_id]) ? $bonusPointsSum_team_A[$team_id] : 0;
+        $bonus_points_B = isset($bonusPointsSum_team_B[$team_id]) ? $bonusPointsSum_team_B[$team_id] : 0;
+        $team_tie = isset($match_count_tie_team[$team_id]) ? $match_count_tie_team[$team_id] : 0;
+        $total_bonus_points = $bonus_points_A + $bonus_points_B;
+    
+      
 
-        // $teamnetrr= TournamentGroup::query()
-        // ->where('group_id', $group_id)
-        // ->where('tournaments.id', $tournamnet_id)
-        // ->selectRaw("fixtures.id as matchid")
-        // ->selectRaw("team_name.id as teams_id")
-        // ->Join('fixtures', 'fixtures.tournament_id', '=', 'tournament_groups.tournament_id')
-        // ->Join('teams as team_name', 'team_name.id', '=', 'tournament_groups.team_id')
-        // ->get()->pluck('matchid', 'teams_id');
-
-        
-        // $result2 = array();
-        // foreach ($teamnetrr as $team_id => $matchid) {
-        
-        //     $team_runs_scoredA = isset($teamscorerunsteamA[$team_id]) ? $teamscorerunsteamA[$team_id] : 0;
-        //     $team_runs_scoredB = isset($teamscorerunsteamB[$team_id]) ? $teamscorerunsteamB[$team_id] : 0;
-        //     $team_runs_scored = $team_runs_scoredA + $team_runs_scoredB;
-        
-          
-        //     $team_balls_facedA = isset($teamscoreoverfacedteamA[$team_id]) ? ($teamscoreoverfacedteamA[$team_id]) : 0;
-        //     $team_balls_facedB = isset($teamscoreoverfacedteamB[$team_id]) ? ($teamscoreoverfacedteamB[$team_id]) : 0;
-        //     $team_ball_face = ($team_balls_facedA + $team_balls_facedB)*6;
-        
-          
-        //     $team_runs_concededA = isset($teamscoreoverfacedteamA[$team_id]) ? $teamscoreoverfacedteamA[$team_id] : 0;
-        //     $team_runs_concededB = isset($team_runs_concededteamB[$team_id]) ? $team_runs_concededteamB[$team_id] : 0;
-        //     $team_runs_conceded = $team_runs_concededA + $team_runs_concededB;
-
-
-        //     $team_balls_bowledA = isset($team_balls_bowledteamA[$team_id]) ? $team_balls_bowledteamA[$team_id] : 0;
-        //     $team_balls_bowledB = isset($team_balls_bowledteamB[$team_id]) ? $team_balls_bowledteamB[$team_id] : 0;
-        //     $team_balls_bowled = ($team_balls_bowledA + $team_balls_bowledB)*6;
-
-        //     if ($team_ball_face != 0 && $team_balls_bowled != 0) {
-        //         $net_run_rate =($team_runs_conceded / $team_balls_bowled)-($team_runs_scored / $team_ball_face) ;
-        //     } else {
-        //         $net_run_rate=0.00;
-        //     }
-        
-        //     $result2[] = [
-        //         'net_rr' => $net_run_rate,
-        //     ];
-        // }
-
+       
+       
+    
+        $result[] = [
+            'tournament_id' => $tournamnet_id,
+            'team_id' => $team_id,
+            'team_name' => $team_name,
+            'total_matches' => $team_total_matches,
+            'wins' => $team_wins,
+            'losses' => $team_losses,
+            'draws' => $team_tie,
+            'players_count' => $team_players_count,
+            'teambonusPoints' => $total_bonus_points,
+            'net_rr' => $team_netrr,
+        ];
+    }
         
         return response()->json($result);
     }
@@ -549,23 +634,12 @@ public function get_group_team(int $group_id,int $tournamnet_id)
     
     public function get_top_bowler(int $tournament_id)
     {
-        // $top_scorers = Fixture::where('tournament_id', $tournament_id)
-        //     ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
-        //     ->join('match_dismissals', 'match_dismissals.fixture_id', '=', 'fixture_scores.fixture_id')
-        //     ->join('players', 'players.id', '=', 'fixture_scores.bowlerid')
-        //     ->whereIn('match_dismissals.dismissal_id', [2, 3, 4, 6, 7, 8])
-        //     ->where('fixture_scores.isout', '=', 1)
-        //     ->selectRaw('players.fullname, SUM(fixture_scores.isout) as total_wickets, fixture_scores.bowlerid')
-        //     ->groupBy('fixture_scores.bowlerid', 'fixture_scores.isout') 
-        //     ->orderbyDesc('total_wickets')
-        //     ->take(5)
-        //     ->get();
-
 
         $top_scorers=Fixture::where('tournament_id', $tournament_id)
+        ->where('fixture_scores.balltype', '=', 'Wicket')
+        ->selectRaw('players.fullname, SUM(fixture_scores.isout = 1) as total_wickets, fixture_scores.bowlerid')
         ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
         ->join('players', 'players.id', '=', 'fixture_scores.bowlerid')
-        ->selectRaw('players.fullname, SUM(fixture_scores.isout = 1) as total_wickets, fixture_scores.bowlerid')
         ->groupBy('fixture_scores.bowlerid', 'fixture_scores.isout') 
         ->orderbyDesc('total_wickets')
         ->take(5)
@@ -579,8 +653,8 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         DB::enableQueryLog();
         $tournamnetdata = Fixture::where('fixtures.tournament_id', $tournament_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
-            ->selectRaw("SUM(fixture_scores.issix = 1 ) as total_sixes")
             ->selectRaw("SUM(fixture_scores.isfour = 1 ) as total_fours")
+            ->selectRaw("SUM(fixture_scores.issix = 1 ) as total_sixes")
             ->selectRaw("SUM(fixture_scores.balltype = 'RunOut' OR fixture_scores.balltype = 'RunOut(WD)' OR fixture_scores.balltype = 'RunOut(NB)') as runout")
             ->selectRaw("SUM(fixture_scores.isout = 1 ) as total_Wicket")
             ->selectRaw("SUM(fixture_scores.balltype = 'WD') as total_wides")
@@ -653,15 +727,6 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         
         $result = ['hatricks' => $total_hat_tricks_count];
         
-        // $tournament_hundreds = DB::table('fixture_scores')
-        // ->where('fixtures.tournament_id', $tournament_id)
-        // ->where('fixture_scores.balltype','=','R')
-        // ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
-        // ->select('playerid', DB::raw('COUNT(*) as hundreds_count'))
-        // ->where('fixture_scores.runs', '>=', 100)
-        // ->groupBy('playerid')
-        // ->get();
-
         $tournament_hundreds = DB::table(function ($query) use ($tournament_id) {
             $query->select('playerid', DB::raw('SUM(runs) AS hundred'), 'fixture_id')
                 ->from('fixture_scores')
@@ -669,24 +734,17 @@ public function get_group_team(int $group_id,int $tournamnet_id)
                 ->where('fixtures.tournament_id', $tournament_id)
                 ->groupBy('playerid', 'fixture_id');
         }, 'subquery')
-        ->select('playerId', DB::raw('COUNT(*) AS hundred'))
+        ->select('playerid', DB::raw('COUNT(*) AS hundreds_count'))
         ->where('hundred', '>=', 100)
-        ->groupBy('playerId')
+        ->groupBy('playerid')
         ->get();
         
         $total_hundreds = $tournament_hundreds->sum('hundreds_count');
-        $tournament_total_hundreds=['tournament_hundreds'=>$total_hundreds];
+        $tournament_total_hundreds = ['tournament_hundreds' => $total_hundreds];
+        
        
 
-        // $tournament_fifties = DB::table('fixture_scores')
-        // ->where('fixtures.tournament_id', $tournament_id)
-        // ->where('fixture_scores.balltype','=','R')
-        // ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
-        // ->select('playerId', DB::raw('sum(runs) as fifties'))
-        // ->having('fifties', '>=', 50)
-        // ->having('fifties', '<', 100)
-        // ->groupBy('playerId')
-        // ->get();
+      
         $tournament_fifties = DB::table(function ($query) use ($tournament_id) {
                 $query->select('playerId', DB::raw('SUM(runs) AS fifties'), 'fixture_id')
                     ->from('fixture_scores')
@@ -700,7 +758,6 @@ public function get_group_team(int $group_id,int $tournamnet_id)
             ->groupBy('playerId')
             ->get();
 
-        // $tournament_fifties = DB::select("SELECT playerid, COUNT(*) AS fifties FROM ( SELECT playerid, SUM(runs) AS fifties, fixture_id FROM fixture_scores JOIN fixtures ON fixtures.id = fixture_scores.fixture_id WHERE fixtures.tournament_id = 53 GROUP BY playerid, fixture_id ) AS subquery WHERE fifties >= 50 AND fifties < 100 GROUP BY playerid");
 
         
         $total_fifties = $tournament_fifties->sum('fifties');
@@ -722,7 +779,6 @@ public function get_group_team(int $group_id,int $tournamnet_id)
           })
         ->selectRaw("COUNT((overnumber * 6) + ballnumber) as max_ball")
         ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
-
         ->groupBy('fixtures.tournament_id')
         ->get();
 
@@ -732,7 +788,6 @@ public function get_group_team(int $group_id,int $tournamnet_id)
         ->groupBy('fixtures.tournament_id')
         ->get();
         
-        //   $tournament_runout;  
             
         return response()->json([$tournamnetdata,$tournament_players,$tournament_cauches,$result,$tournament_total_hundreds,$tournament_total_fifties,$tournament_balls,$tournament_teams,$tournament_runout]);
     }

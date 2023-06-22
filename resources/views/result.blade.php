@@ -241,7 +241,11 @@ text-align:center !important;
                </div>
              <div class="col-xs-12 col-sm-4">
                    <div class="schedule-text">
-                   <h4>{{$tournament[$data['tournament_id']]}}</h4>
+                   @if(isset($tournament[$data['tournament_id']]))
+    <h4>{{$tournament[$data['tournament_id']]}}</h4>
+@else
+    <h4>Tournament Not Found</h4>
+@endif
                        <h3>{{ $teams[$data['first_inning_team_id']]??''}}<span class="v"> v </span> {{ $teams[$data['second_inning_team_id']]??''}}</h3>
                        <h4>{{$data['match_result_description']}}</h4>
                         </div>

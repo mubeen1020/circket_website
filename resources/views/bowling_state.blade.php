@@ -163,10 +163,15 @@
 								<td>{{$bowlerruns[$data->bowler_id]??0}}</td>
 								<td>{{$bowlerwickets[$data->bowler_id]??0}}</td>
 								@if ($data->total_overs != 0 && isset($bowlerballs[$data->bowler_id]) && $bowlerballs[$data->bowler_id] != 0)
-    <td>{{ number_format($bowlerruns[$data->bowler_id] / round($bowlerballs[$data->bowler_id] / 6), 2) }}</td>
+    @php
+        $bowlerOvers = round($bowlerballs[$data->bowler_id] / 6);
+        $bowlerEconomy = $bowlerOvers != 0 ? number_format($bowlerruns[$data->bowler_id] / $bowlerOvers, 2) : 0;
+    @endphp
+    <td>{{ $bowlerEconomy }}</td>
 @else
     <td>0</td>
 @endif
+
 
 				@if (isset($bowlerwickets[$data->bowler_id]) && $bowlerwickets[$data->bowler_id] != 0)
 						<td>{{ number_format($bowlerruns[$data->bowler_id] / $bowlerwickets[$data->bowler_id], 2) }}</td>

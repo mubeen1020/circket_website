@@ -25,9 +25,12 @@
 							<div class="dropdown">
 							<select name="tournament"  id="tournament" class="form-control" >
                                  		<option value=""> Select tournament(s)</option>
-                                        @foreach($tournament as $tournament_id => $tournament_name)
-										<option <?php if(isset($_POST['tournament']) && $_POST['tournament']== $tournament_id){ echo 'selected'; } ?> value="{{$tournament_id}}">{{$tournament_name}}</option>
-                                       @endforeach
+										 @if(!empty($tournamentname))
+										@foreach($tournamentname as $tournament_id => $tournament_name)
+											<option <?php if(isset($_POST['tournament']) && $_POST['tournament']== $tournament_id){ echo 'selected'; } ?> value="{{$tournament_id}}">{{$tournament_name}}</option>
+										@endforeach
+										@endif
+
 									</select>
 							</div>
 							
@@ -65,11 +68,6 @@
 										
 									
 								: activate to sort column ascending" style="width: 169px;">Home Team
-								</th><th class="spa sorting" tabindex="0" aria-controls="tablePlayerRankings" rowspan="1" colspan="1" aria-label="Home Division
-									
-										
-									
-								: activate to sort column ascending" style="width: 115px;">Home Division
 								</th><th class="spa sorting" tabindex="0" aria-controls="tablePlayerRankings" rowspan="1" colspan="1" aria-label="Team Name
 									
 										
@@ -83,17 +81,19 @@
 								</th></tr>
 						</thead>
 						<tbody>
-
+              @foreach($result as $key => $data)
 							<tr role="row" class="odd">
-								<th class="sorting_1">1</th>
-								<th align="left" title="Aayan Mirza"><i class="fa fa-user"></i> <b><a href="viewPlayer.do?playerId=1475892&amp;clubId=2565"> Aayan Mirza</a></b></th>
-								<th>1</th>
-								<th>Mississauga Qalandars Cricket Club</th>
-								<th>Mississauga Qalandars</th>
-								<th>2023 MCL50 - Super 6</th>
-								<th>Mississauga Qalandars</th>
-								<th>2023 MCL50 - Super 6</th>
-							</tr></tbody>
+								<th class="sorting_1">{{$key+1}}</th>
+								<th align="left" title="Aayan Mirza"><i class="fa fa-user"></i> <b><a href="{{ route('playerview', $data->player_id) }}"> {{$player[$data->player_id]}}</a></b></th>
+								<th>{{ $match_count[$data->team_id]??0 }} </th>
+								<th>{{$data->clubname}}</th>
+								<th><a href="{{ url('team-view', $data->team_id . '_' . $data->tournament_id) }}">{{$teams[$data->team_id]}}<a></th>
+								
+								<th><a href="{{ url('team-view', $data->team_id . '_' . $data->tournament_id) }}">{{$teams[$data->team_id]}}</a></th>
+								<th>{{$tournament[$data->tournament_id]??''}}</th>
+							</tr>
+						@endforeach
+						</tbody>
 					</table></div>
             </div>
 					</div>

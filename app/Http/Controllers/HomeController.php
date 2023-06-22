@@ -100,15 +100,18 @@ class HomeController extends Controller
 
     $ground = Ground::query();
     $ground = $ground->orderBy('id')->get();
-    $match_results = Fixture::query();
-    $match_results->where('running_inning', '=', 3);
-    $match_results->where('isActive', 1)->orderBy('id')->limit(10);
-    $match_results = $match_results->get();
+    $match_results = Fixture::query()
+    ->where('running_inning', '=', 3)
+    ->where('isActive', 1)
+    ->orderByDesc('id')
+    ->limit(10)
+    ->get();
+
     $today = Carbon::now()->toDateString();
     $upcoming_match = Fixture::query()->where('match_startdate', '>=', $today)
       ->where('isActive', 1)
       ->where('running_inning', '=', 0)
-      ->orderBy('id')
+      ->orderByDesc('id')
       ->limit(10)
       ->get()
       ->filter(function ($fixture) use ($today) {
@@ -2015,8 +2018,8 @@ $getresult = $result;
     $player_runs= FixtureScore::where('fixtures.tournament_id',$tournament)
     ->selectRaw('SUM(runs) as totalruns, fixture_scores.playerId')
       ->join('fixtures','fixtures.id','=','fixture_scores.fixture_id')
+      ->orderBy('totalruns', 'desc')
       ->groupBy('fixture_scores.playerId')
-      ->orderby('totalruns')
       ->get()->pluck('totalruns', 'playerId');
 
     $variable1 = 'R';
@@ -4960,10 +4963,44 @@ public function playermatchcount(){
     'id'
   );
 
-  return view ('playermatchcount', compact('teams','tournament','image_gallery','match_results'));
+  $tournamentname = Tournament::query()->where('isActive', '=', 1)->pluck(
+    'name',
+    'id'
+  );
+  $playermatch=TournamentPlayer::query()
+  ->selectRaw('tournament_players.tournament_id')
+  ->selectRaw('tournament_players.team_id')
+  ->selectRaw('tournament_players.player_id')
+  ->selectRaw('teams.clubname')
+  ->join('teams','teams.id','tournament_players.team_id')
+  ->get();
+  $result=$playermatch;
+  $teamIds = [];
+  $tournamentid = [];
+foreach ($result as $item) {
+    $teamIds[] = $item->team_id;
+    $tournamentid[] = $item->tournament_id;
+}
+  $match_count = DB::table(function ($query) use ($teamIds, $tournamentid) {
+    $query->select('team_id_a AS team_id')
+        ->from('fixtures')
+        ->whereIn('team_id_a', $teamIds)
+        ->where('tournament_id', $tournamentid)
+        ->unionAll(
+            DB::table('fixtures')
+                ->select('team_id_b AS team_id')
+                ->whereIn('team_id_b', $teamIds)
+                ->where('tournament_id', $tournamentid)
+        );
+}, 'subquery')
+    ->select('team_id', DB::raw('COUNT(*) AS count'))
+    ->groupBy('team_id')
+    ->get()->pluck('count','team_id');
+
+  return view ('playermatchcount', compact('teams','tournament','tournamentname','image_gallery','match_results','result','player','match_count'));
 }
 
-public function playermatchcount_submit(){
+public function playermatchcount_submit(Request $request){
   $teams = Team::query()->get()->pluck(
     'name',
     'id'
@@ -4978,12 +5015,51 @@ public function playermatchcount_submit(){
   $image_gallery = GalleryImages::query()
   ->where('isActive', 1)
   ->get();
-  $tournament = Tournament::query()->where('isActive', '=', 1)->pluck(
+  $tournamentname = Tournament::query()->where('isActive', '=', 1)->pluck(
     'name',
     'id'
   );
+  // dd($tournament);
 
-  return view ('playermatchcount', compact('teams','tournament','image_gallery','match_results'));
+  $playermatch=TournamentPlayer::query()
+  ->selectRaw('tournament_players.tournament_id')
+  ->selectRaw('tournament_players.team_id')
+  ->selectRaw('tournament_players.player_id')
+  ->selectRaw('teams.clubname')
+  ->join('teams','teams.id','tournament_players.team_id');
+  
+
+  $term = $request;
+  if (!empty($term['tournament'])) {
+    $tournament = $term['tournament'];
+    $playermatch->where('tournament_players.tournament_id', '=', $tournament);
+  }
+
+$result=$playermatch->get();
+  $teamIds = [];
+  $tournamentid = [];
+foreach ($result as $item) {
+    $teamIds[] = $item->team_id;
+    $tournamentid[] = $item->tournament_id;
+}
+  $match_count = DB::table(function ($query) use ($teamIds, $tournamentid) {
+    $query->select('team_id_a AS team_id')
+        ->from('fixtures')
+        ->whereIn('team_id_a', $teamIds)
+        ->where('tournament_id', $tournamentid)
+        ->unionAll(
+            DB::table('fixtures')
+                ->select('team_id_b AS team_id')
+                ->whereIn('team_id_b', $teamIds)
+                ->where('tournament_id', $tournamentid)
+        );
+}, 'subquery')
+    ->select('team_id', DB::raw('COUNT(*) AS count'))
+    ->groupBy('team_id')
+    ->get()->pluck('count','team_id');
+
+    
+  return view ('playermatchcount', compact('teams','tournamentname','tournament','image_gallery','match_results','result','player','match_count'));
 }
 
 public function team_ranking(int $team_id, int $tournament_id)

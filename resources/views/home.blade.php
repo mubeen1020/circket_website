@@ -1118,7 +1118,8 @@ function get_point_table(tornament_season_id, type) {
                             <th>${item.losses}</th>
                             <th>${item.draws}</th>
                             <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th>
-                            <th>${item.net_rr.toFixed(3)}</th>
+                          <th>${Number(item.net_rr).toFixed(2)}</th>
+
 
                         </tr>
                     `;
@@ -1218,7 +1219,6 @@ function get_season_group(tornament_season_id) {
     get_top_scorers(tornament_season_id);
     get_top_bowler(tornament_season_id);
     get_top_ranking(tornament_season_id);
-    get_tournamnet_all_data(tornament_season_id);
 }
 
 
@@ -1260,7 +1260,8 @@ function get_group_team(group_id, tournamnet_id) {
                         <th>${item.losses}</th>
                         <th>${item.draws}</th>
                         <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
-                        <th>${item.net_rr.toFixed(3)}</th>
+                        <th>${Number(item.net_rr).toFixed(2)}</th>
+
                     </tr>
                 `;
             });
@@ -1315,7 +1316,7 @@ function get_top_bowler(tournament_season_id) {
         dataType: 'json',
         success: function(data) {
             const scores = document.getElementById('topbowler');
-            scores.innerHTML = ''; // Clear the previous data before appending new data
+            scores.innerHTML = ''; 
             data.forEach(item => {
                 scores.innerHTML += `
                     <tr>
@@ -1347,13 +1348,12 @@ function get_top_bowler(tournament_season_id) {
 }
 
 function get_tournamnet_all_data(tournament_season_id) {
+   
     $.ajax({
         url: "{{ url('/tournamnet_all_data/')}}/" + tournament_season_id,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
-            console.log(data,"=>============>=>")
-           
             const tournamnetdata=data[0]
             const tournament_players=data[1]
             const tournament_cauches=data[2]
@@ -1363,78 +1363,121 @@ function get_tournamnet_all_data(tournament_season_id) {
             const tournament_balls=data[6]
             const tournament_teams=data[7]
             const tournament_runout=data[8]
-            
-            // total balls
+
             const tournamentBalls=document.getElementById('tournamentballs');
             tournamentBalls.innerHTML = '';
-            tournamentBalls.innerHTML += `${tournament_balls==undefined?0:tournament_balls[0]['max_ball']}`;
-
-
-            // total runs
             const tournamentRuns=document.getElementById('tournamentruns');
             tournamentRuns.innerHTML = '';
-            tournamentRuns.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_runs']}`;
-
-            // total six
             const tournamentSix=document.getElementById('tournamnetsix');
             tournamentSix.innerHTML = '';
-            tournamentSix.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_sixes']}`;
-
-            // total four
             const tournamentFour=document.getElementById('tournamnetfour');
             tournamentFour.innerHTML = '';
-            tournamentFour.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_fours']}`;
-
-            // total wickets
             const tournamentWickets=document.getElementById('tournamentwickets');
             tournamentWickets.innerHTML = '';
-            tournamentWickets.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_Wicket']}`;
-
-            // total runout
             const tournamentRunout=document.getElementById('tournamentrunouts');
             tournamentRunout.innerHTML = '';
-            tournamentRunout.innerHTML += `${tournament_runout==undefined?0:tournament_runout[0]['total_runout']}`;
-
-            // total wides
             const tournamentWides=document.getElementById('tournamentwides');
             tournamentWides.innerHTML = '';
-            tournamentWides.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_wides']}`;
-
-            // total noballs
             const tournamentNoballs=document.getElementById('tournamentnoballs');
             tournamentNoballs.innerHTML = '';
-            tournamentNoballs.innerHTML += `${tournamnetdata==undefined?0:tournamnetdata[0]['total_noballs']}`;
-
-            // total players
             const tournamentPlayer=document.getElementById('tournamentplayers');
             tournamentPlayer.innerHTML = '';
-            tournamentPlayer.innerHTML += `${tournament_players==undefined?0:tournament_players[0]['total_players']}`;
-
-            // total cauches total_catches
             const tournamentCauches=document.getElementById('tournamentcauche');
             tournamentCauches.innerHTML = '';
-            tournamentCauches.innerHTML += `${tournament_cauches==undefined?0:tournament_cauches[0]['total_catches']}`;
-
-            // total hatricks
             const tournamentHatricks=document.getElementById('tournamenthatrics');
             tournamentHatricks.innerHTML = '';
-            tournamentHatricks.innerHTML += `${total_hat_tricks==undefined?0:total_hat_tricks['hatricks']}`;
-
-            // total hundreds
             const tournamentHundreds=document.getElementById('tournamenthundred');
             tournamentHundreds.innerHTML = '';
-            tournamentHundreds.innerHTML += `${tournament_total_hundreds==undefined?0:tournament_total_hundreds['tournament_hundreds']}`;
-      
-      
-            // total fifties
             const tournamentFifties=document.getElementById('tournamentfifty');
             tournamentFifties.innerHTML = '';
-            tournamentFifties.innerHTML += `${tournament_total_fifties==undefined?0:tournament_total_fifties['tournament_fifties']}`;
-        
-            // total teams
             const tournamentTeams=document.getElementById('tournamentteams');
             tournamentTeams.innerHTML = '';
-            tournamentTeams.innerHTML += `${tournament_teams==undefined?0:tournament_teams[0]['totalteams']}`;
+            
+            // total balls
+            try {
+  tournamentBalls.innerHTML += `${tournament_balls == undefined ? 0 : tournament_balls[0]['max_ball']}`;
+} catch (error) {
+ 
+}
+
+try {
+  tournamentRuns.innerHTML += `${tournamnetdata == undefined ? 0 : tournamnetdata[0]['total_runs']}`;
+} catch (error) {
+ 
+}
+
+try {
+  tournamentSix.innerHTML += `${tournamnetdata == undefined ? 0 : tournamnetdata[0]['total_sixes']}`;
+} catch (error) {
+ 
+}
+
+try {
+  tournamentFour.innerHTML += `${tournamnetdata == undefined ? 0 : tournamnetdata[0]['total_fours']}`;
+} catch (error) {
+ 
+}
+
+try {
+  tournamentWickets.innerHTML += `${tournamnetdata == undefined ? 0 : tournamnetdata[0]['total_Wicket']}`;
+} catch (error) {
+ 
+}
+
+try {
+  tournamentRunout.innerHTML += `${tournament_runout == undefined ? 0 : tournament_runout[0]['total_runout']}`;
+} catch (error) {
+  
+}
+
+try {
+  tournamentWides.innerHTML += `${tournamnetdata == undefined ? 0 : tournamnetdata[0]['total_wides']}`;
+} catch (error) {
+ 
+}
+
+try {
+  tournamentNoballs.innerHTML += `${tournamnetdata == undefined ? 0 : tournamnetdata[0]['total_noballs']}`;
+} catch (error) {
+ 
+}
+
+try {
+  tournamentPlayer.innerHTML += `${tournament_players == undefined ? 0 : tournament_players[0]['total_players']}`;
+} catch (error) {
+  
+}
+
+try {
+  tournamentCauches.innerHTML += `${tournament_cauches == undefined ? 0 : tournament_cauches[0]['total_catches']}`;
+} catch (error) {
+
+}
+
+try {
+  tournamentHatricks.innerHTML += `${total_hat_tricks == undefined ? 0 : total_hat_tricks['hatricks']}`;
+} catch (error) {
+  
+}
+
+try {
+  tournamentHundreds.innerHTML += `${tournament_total_hundreds == undefined ? 0 : tournament_total_hundreds['tournament_hundreds']}`;
+} catch (error) {
+  
+}
+
+try {
+  tournamentFifties.innerHTML += `${tournament_total_fifties == undefined ? 0 : tournament_total_fifties['tournament_fifties']}`;
+} catch (error) {
+  
+}
+
+try {
+  tournamentTeams.innerHTML += `${tournament_teams == undefined ? 0 : tournament_teams[0]['totalteams']}`;
+} catch (error) {
+  
+}
+
         },
         error: function(error) {
             console.log(error);
