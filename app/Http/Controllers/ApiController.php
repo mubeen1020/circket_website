@@ -203,74 +203,13 @@ class ApiController extends Controller
             ->selectRaw('team_id_b')
             ->groupBy('team_id_b')
             ->pluck('max_over', 'team_id_b');
-        
-   
-        $point_table_res_tem_a = DB::select("SELECT  sum(rate_team1-rate_team2) as team_netrr , first_inning_team_id
-        FROM (
-        
-        SELECT
-            sum(runs) AS run_score_team2,
-            max(fixture_scores.ballnumber) AS ball_faced_team2,
-            ((max(fixture_scores.ballnumber)%6)/10) as number_bals,
-            
-            fixtures.second_inning_team_id,
-            fixtures.id,
-            sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team2
-        FROM fixture_scores
-        INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
-        WHERE fixtures.tournament_id = $id AND inningnumber = 2
-        GROUP BY fixtures.id
+    
+    $net_run_rate_result = $this->calculateNetRunRate($id);
+
+    $point_table_res_tem_a = $net_run_rate_result['point_table_res_tem_a'];
+    $point_table_res_tem_b = $net_run_rate_result['point_table_res_tem_b'];
 
 
-        ) AS query1
-        INNER JOIN (
-        SELECT
-            sum(runs) AS run_score_team1,
-            max(fixture_scores.ballnumber) AS ball_faced_team1,
-            fixtures.first_inning_team_id,
-            fixtures.id,
-            sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team1
-        FROM fixture_scores
-        INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
-        WHERE fixtures.tournament_id = $id AND inningnumber = 1
-        GROUP BY fixtures.id
-        ) AS query2 ON query1.id = query2.id group by first_inning_team_id");
-
-
-
-        $point_table_res_tem_b = DB::select("SELECT  sum(rate_team2-rate_team1) as team_netrr, second_inning_team_id
-        FROM (
-        
-        SELECT
-            sum(runs) AS run_score_team2,
-            max(fixture_scores.ballnumber) AS ball_faced_team2,
-            ((max(fixture_scores.ballnumber)%6)/10) as number_bals,
-            
-            fixtures.first_inning_team_id,
-            fixtures.id,
-            sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team2
-        FROM fixture_scores
-        INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
-        WHERE fixtures.tournament_id = $id AND inningnumber = 2
-        GROUP BY fixtures.id
-
-
-        ) AS query1
-        INNER JOIN (
-        SELECT
-            sum(runs) AS run_score_team1,
-            max(fixture_scores.ballnumber) AS ball_faced_team1,
-            fixtures.second_inning_team_id,
-            fixtures.id,
-            sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team1
-        FROM fixture_scores
-        INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
-        WHERE fixtures.tournament_id = $id AND inningnumber = 1
-        GROUP BY fixtures.id
-        ) AS query2 ON query1.id = query2.id group by second_inning_team_id");
-
-
-        // dd($point_table_res_tem_b[0]);
     
     $result = array();
     
@@ -826,5 +765,73 @@ $Groups_team = TournamentGroup::query()
     }
     
 
-    
+  public function calculateNetRunRate($id)
+{
+    $point_table_res_tem_a = DB::select("
+        SELECT sum(rate_team1-rate_team2) as team_netrr, first_inning_team_id
+        FROM (
+            SELECT
+                sum(runs) AS run_score_team2,
+                max(fixture_scores.ballnumber) AS ball_faced_team2,
+                ((max(fixture_scores.ballnumber)%6)/10) as number_bals,
+                fixtures.second_inning_team_id,
+                fixtures.id,
+                sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team2
+            FROM fixture_scores
+            INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+            WHERE fixtures.tournament_id = $id AND inningnumber = 2
+            GROUP BY fixtures.id
+        ) AS query1
+        INNER JOIN (
+            SELECT
+                sum(runs) AS run_score_team1,
+                max(fixture_scores.ballnumber) AS ball_faced_team1,
+                fixtures.first_inning_team_id,
+                fixtures.id,
+                sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team1
+            FROM fixture_scores
+            INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+            WHERE fixtures.tournament_id = $id AND inningnumber = 1
+            GROUP BY fixtures.id
+        ) AS query2 ON query1.id = query2.id
+        GROUP BY first_inning_team_id");
+
+    $point_table_res_tem_b = DB::select("
+        SELECT sum(rate_team2-rate_team1) as team_netrr, second_inning_team_id
+        FROM (
+            SELECT
+                sum(runs) AS run_score_team2,
+                max(fixture_scores.ballnumber) AS ball_faced_team2,
+                ((max(fixture_scores.ballnumber)%6)/10) as number_bals,
+                fixtures.first_inning_team_id,
+                fixtures.id,
+                sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team2
+            FROM fixture_scores
+            INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+            WHERE fixtures.tournament_id = $id AND inningnumber = 2
+            GROUP BY fixtures.id
+        ) AS query1
+        INNER JOIN (
+            SELECT
+                sum(runs) AS run_score_team1,
+                max(fixture_scores.ballnumber) AS ball_faced_team1,
+                fixtures.second_inning_team_id,
+                fixtures.id,
+                sum(runs)/(round(max(fixture_scores.ballnumber)/6)+((max(fixture_scores.ballnumber)%6)/10)) AS rate_team1
+            FROM fixture_scores
+            INNER JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+            WHERE fixtures.tournament_id = $id AND inningnumber = 1
+            GROUP BY fixtures.id
+        ) AS query2 ON query1.id = query2.id
+        GROUP BY second_inning_team_id");
+
+    // Additional code or processing logic if required
+
+    // Return the result
+    return [
+        'point_table_res_tem_a' => $point_table_res_tem_a,
+        'point_table_res_tem_b' => $point_table_res_tem_b,
+    ];
+}
+  
  }
