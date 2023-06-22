@@ -8,7 +8,7 @@
 					<div class="col-lg-6">
 						<div class="border-heading">
 							<h5>
-								<a href="/MississaugaCricketLeague/viewLeague.do?league=132&amp;clubId=2565"><font color="white">2023 MCL50 - Super 6</font></a>
+								<a href="/MississaugaCricketLeague/viewLeague.do?league=132&amp;clubId=2565"><font color="white">Player Match Count</font></a>
 								</h5>
 						</div>
 					</div>
