@@ -608,7 +608,7 @@ if (strpos($headers[0], '404') !== false) {
 							                            <tr> 
 							                                <th>Series:</th> 
                                                             <th>
-                                                            {{$tournament[0]}}
+                                                            {{$tournament[0]??''}}
                                                             </th>
 
 							                            </tr> 
