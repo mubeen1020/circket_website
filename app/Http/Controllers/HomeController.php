@@ -3472,6 +3472,7 @@ $getresult = $result;
         $match_count_winning->where('tournament_id', $tournament);
     }
     $match_count_winning->selectRaw("COUNT(id)");
+    $match_count_winning->where('running_inning', 3);
     $match_count_winning->selectRaw("winning_team_id");
     $match_count_winning->groupby('winning_team_id');
     $match_count_winning_team=$match_count_winning->get()->pluck('COUNT(id)', 'winning_team_id');
@@ -3488,6 +3489,7 @@ $getresult = $result;
     }
     $match_count_loss->selectRaw("COUNT(id)");
     $match_count_loss->selectRaw("lossing_team_id");
+    $match_count_loss->where('running_inning', 3);
     $match_count_loss->groupby('lossing_team_id');
     $match_count_loss_team=$match_count_loss->get()->pluck('COUNT(id)', 'lossing_team_id');
 
