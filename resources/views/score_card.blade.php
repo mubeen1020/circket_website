@@ -50,7 +50,7 @@
                                                                         {{$teams_one}} innings   
                                                                         (@foreach($total_over as $over){{$over->numberofover}} @endforeach overs maximum) </th> 
                                                                        <th style="text-align: left;" class="show-phone">{{$teams_one}} innings</th> 
-                                                                        <th style="text-align: right;">R</th>
+																	   <th style="text-align: right;">R</th>
                                                                         <th style="text-align: right;">B</th>
                                                                         <th style="text-align: right;">4s</th> 
                                                                         <th style="text-align: right;">6s</th>
@@ -61,9 +61,8 @@
                                                                     @if($item->inningnumber==1)
                                                                     <tbody> 
                                                                     <tr> 
-                                                                   <th>
-                                                                   
-																			<?php
+																		<th>
+																		<?php
 $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->playerId . ".jpg";
 $altText = "Player ID: " . $item->playerId;
 
@@ -76,14 +75,23 @@ if (strpos($headers[0], '404') !== false) {
 ?>
 
 <img src="<?php echo $imageSrc; ?>" alt="<?php echo $altText; ?>" class="left-block img-circle" style="width:23px; height:23px;margin-right:8px">
-
                                                                         
-                                                                        	<a href="{{ route('playerview', $item->playerId) }}"><b>{{$player[$item->playerId]}}</b> </a>
-                                                                        	<a style="display:none" id="btm_video_1207430" href="javascript:openVideoHTMLvs('1207430','bt', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
-                                                                        	<div class="scorecard-out-text show-phone" style="margin-left:34px;">
-																			
-
-																			<a style="display:none" id="bthowOutPH_video_1207430" href="javascript:openVideoHTMLvs('1207430','out', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+<a href="{{ route('playerview', $item->playerId) }}"><b>{{$player[$item->playerId]}}</b> </a>
+                                                                        	<a style="display:none" id="btm_video_1126359" href="javascript:openVideoHTMLvs('1126359','bt', 'Pangalia Kunwarajeet Singh');"><img alt="Watch Ball Video" title="Watch Ball Video" width="20px" height="20px" src="/utilsv2/images/youtube.png"></a>
+                                                                        	<br/>
+																			<br/>
+																			<div class="scorecard-out-text show-phone" style="font-size: 2px;width:0px">
+																			@foreach ($match_description as $out)
+																				@if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
+																					@if ($out->out_description == "Retired Hurt")
+																						<span><a>b &nbsp;{{ $out->out_description }}</span>
+																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
+																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
+																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
+																					<span><a>b</span> </a>(<a href="#"> {{ $out->bowler_name }}</a>)
+																					@endif
+																				@endif
+																			@endforeach
                                                                         	</div>
                                                                         </th> 
                                                                         <th class="hidden-phone">
@@ -94,7 +102,7 @@ if (strpos($headers[0], '404') !== false) {
 																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
 																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
 																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
-																						<span>b</span> (<a href="#"> {{ $out->bowler_name }}</a>)
+																					<span><a>b</span> </a>(<a href="#"> {{ $out->bowler_name }}</a>)
 																					@endif
 																				@endif
 																			@endforeach
@@ -110,14 +118,22 @@ if (strpos($headers[0], '404') !== false) {
                                                                     @endif
                                                                     @endforeach
                                                                     <tr> 
-                                                                        <th>Extras<div class="scorecard-out-text show-phone"></div></th> 
-                                                                        <th class="hidden-phone">
+                                                                        <th>Extras<div class="scorecard-out-text show-phone">
 																		@foreach($extra_runs as $item)
 		@if($item->inningnumber == 1)
 			( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
 		
 																		</th>
                                                                         <th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)}}</b></th>
+																		@endif
+	@endforeach
+																		</div></th> 
+                                                                        <th class="hidden-phone">
+																		@foreach($extra_runs as $item)
+		@if($item->inningnumber == 1)
+			( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
+		
+																		</th>
 																		@endif
 	@endforeach
                                                                         <th></th> 
@@ -130,9 +146,20 @@ if (strpos($headers[0], '404') !== false) {
                                                                     <tr> 
 																	@foreach($totalData as $item)
 		                                                             @if($item->inningnumber == 1)
-                                                                        <th>Total<div class="scorecard-out-text show-phone">(6 wickets, 12.0 overs)</div></th> 
-                                                                        <th class="hidden-phone">({{$item->total_wicket}} wickets, {{round(($item->max_ball)/6) }}.{{($item->max_ball)%6 }}
+																	 @if($item->max_ball%6==0)
+                                                                        <th>Total<div class="scorecard-out-text show-phone">({{$item->total_wicket}} wickets, {{(($item->max_over)) }}.{{($item->max_ball)%6 }})</div></th> 
+																		@else
+																		<th>Total<div class="scorecard-out-text show-phone">({{$item->total_wicket}} wickets, {{(($item->max_over)-1) }}.{{($item->max_ball)%6 }})</div></th> 
+																		@endif
+																		@if($item->max_ball%6==0)
+																		
+																		<th class="hidden-phone">({{$item->total_wicket}} wickets, {{$item->max_over }}.{{($item->max_ball)%6 }}
+ overs )</th>@else
+ 										
+ <th class="hidden-phone">({{$item->total_wicket}} wickets, {{$item->max_over-1 }}.{{($item->max_ball)%6 }}
  overs )</th>
+ @endif
+
                                                                         <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
 																		@endif
 																		@endforeach
@@ -202,7 +229,11 @@ if (strpos($headers[0], '404') !== false) {
           <img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px">
         </a>
       </th> 
-      <th style="text-align: right;">{{ floor($item->over) }}.{{ 6 % ($item->over) }}</th>
+	  @if(($item->max_ball)%6  == 0)
+      <th style="text-align: right;">{{ floor($item->over) }}.{{  ($item->max_ball)%6 }}</th>
+	  @else
+	  <th style="text-align: right;">{{ ($item->over) -1}}.{{  ($item->max_ball)%6 }}</th>
+	  @endif
       <th style="text-align: right;">
         {{$maiden_overs[$item->bowlerid] ?? 0}}
       </th>
@@ -351,6 +382,22 @@ if (strpos($headers[0], '404') !== false) {
                                                                         
                                                                           <a href="{{ route('playerview', $item->playerId) }}"><b> {{$player[$item->playerId]}}</b> </a>
                                                                         	<a style="display:none" id="btm_video_3088351" href="javascript:openVideoHTMLvs('3088351','bt', 'Rohit Arora');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
+																			<br/>
+																			<br/>
+																			<div class="scorecard-out-text show-phone" style="font-size: 2px;width:0px">
+																			@foreach ($match_description as $out)
+																				@if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
+																					@if ($out->out_description == "Retired Hurt")
+																						<span>b &nbsp;{{ $out->out_description }}</span>
+																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
+																						<span><a>b&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
+																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
+																						<span><a>b</span> </a>(<a href="#"> {{ $out->bowler_name }}</a>)
+																					@endif
+																				@endif
+																			@endforeach
+                                                                        	</div>
+
                                                                         <div class="scorecard-out-text show-phone" style="margin-left:34px">
 																
                                                                         	</div>
@@ -363,7 +410,7 @@ if (strpos($headers[0], '404') !== false) {
 																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
 																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
 																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
-																						<span>b</span> (<a href="#"> {{ $out->bowler_name }}</a>)
+																					<span><a>b</span> </a>(<a href="#"> {{ $out->bowler_name }}</a>)
 																					@endif
 																				@endif
 																			@endforeach
@@ -377,7 +424,14 @@ if (strpos($headers[0], '404') !== false) {
                                                                     @endif
                                                                     @endforeach
                                                                     <tr> 
-                                                                        <th>Extras<div class="scorecard-out-text show-phone">(b 0 lb 0 w 7 nb 0)</div></th> 
+                                                                        <th>Extras<div class="scorecard-out-text show-phone">											@foreach($extra_runs as $item)
+												@if($item->inningnumber == 2)
+													( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
+												
+																												</th>
+																												<th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)}}</b></th>
+																												@endif
+											@endforeach</div></th> 
                                                                         <th class="hidden-phone">
 																		
 																												@foreach($extra_runs as $item)
@@ -385,7 +439,6 @@ if (strpos($headers[0], '404') !== false) {
 													( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
 												
 																												</th>
-																												<th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)}}</b></th>
 																												@endif
 											@endforeach
                                                                         <th></th> 
@@ -397,9 +450,21 @@ if (strpos($headers[0], '404') !== false) {
                                                                     <tr> 
 																	@foreach($totalData as $item)
 		                                                             @if($item->inningnumber == 2)
-                                                                        <th>Total<div class="scorecard-out-text show-phone">(6 wickets, 12.0 overs)</div></th> 
-                                                                        <th class="hidden-phone">({{$item->total_wicket}} wickets, {{ round(($item->max_ball)/6) }}.{{($item->max_ball)%6 }}
+																	 @if($item->max_ball%6==0)
+                                                                        <th>Total<div class="scorecard-out-text show-phone">({{$item->total_wicket}} wickets, {{(($item->max_over)) }}.{{($item->max_ball)%6 }})</div></th> 
+																		@else
+																		<th>Total<div class="scorecard-out-text show-phone">({{$item->total_wicket}} wickets, {{(($item->max_over)-1) }}.{{($item->max_ball)%6 }})</div></th> 
+																		@endif
+                                                                        
+																		@if($item->max_ball%6==0)
+																		
+																		<th class="hidden-phone">({{$item->total_wicket}} wickets, {{$item->max_over }}.{{($item->max_ball)%6 }}
+ overs )</th>@else
+ 										
+ <th class="hidden-phone">({{$item->total_wicket}} wickets, {{$item->max_over-1 }}.{{($item->max_ball)%6 }}
  overs )</th>
+ @endif
+
                                                                         <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
 																		@endif
 																		@endforeach
@@ -465,9 +530,11 @@ if (strpos($headers[0], '404') !== false) {
                                                                         <th>
                                                                         	<a href="{{ route('playerview', $item->bowlerid) }}"><b>{{$player[$item->bowlerid]}}</b></a><a style="display:none" id="bwl_video_3054417" href="javascript:openVideoHTMLvs('3054417','bwl', 'Rohit Miglani');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         </th> 
-                                                                        <th style="text-align: right;">
-																		{{($item->over) }}.{{6%($item->over) }}
-																	</th>
+                                                                        @if(($item->max_ball)%6  == 0)
+      <th style="text-align: right;">{{ floor($item->over) }}.{{  ($item->max_ball)%6 }}</th>
+	  @else
+	  <th style="text-align: right;">{{ ($item->over) -1}}.{{  ($item->max_ball)%6 }}</th>
+	  @endif
                                                                           <th style="text-align: right;">
 																		  {{$maiden_overs[$item->bowlerid] ?? 0}}
 																		</th>

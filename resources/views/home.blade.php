@@ -219,7 +219,7 @@ $(document).ready(function() {
                                                         <th>Lost</th>
                                                         <th>N/R</th>
                                                         <th>Pts</th> 
-                                                        <th class="hidden-phone">Net RR</th>
+                                                        <th >Net RR</th>
                                                         </tr> 
                                                     </thead> 
                                                     <tbody id="point_table"> 
@@ -229,7 +229,7 @@ $(document).ready(function() {
 					          	                    </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="#">More Details</a>
+                                                	<a href="{{ route('playerRanking')}}">More Details</a>
                                                 </div>
                                             </div>
                                             </div>
@@ -1127,10 +1127,9 @@ function get_point_table(tornament_season_id, type) {
             }
         },
     });
-
+    get_season_group(tornament_season_id);
     get_top_scorers(tornament_season_id);
     get_top_bowler(tornament_season_id);
-    get_season_group(tornament_season_id);
     get_season_tournament(tornament_season_id);
     get_tournamnet_all_data(tornament_season_id);
     get_top_ranking(tornament_season_id);
@@ -1138,6 +1137,7 @@ function get_point_table(tornament_season_id, type) {
 
 
 function get_season_tournament(season_id) {
+    // get_season_group(season_id);
     $.ajax({
         url: "{{ url('/tournament_name/')}}/" + season_id,
         type: 'GET',
@@ -1202,7 +1202,6 @@ function get_season_group(tornament_season_id) {
                         groups.innerHTML += `
                             <a href="#92tabGroup${index+1}" data-toggle="tab" class="selected" onclick="get_group_team(${item.group_id}, ${tornament_season_id})">${item.groupname}</a>
                         `;
-                        // Call the function for the first group
                         get_group_team(item.group_id, tornament_season_id);
                     } else {
                         groups.innerHTML += `

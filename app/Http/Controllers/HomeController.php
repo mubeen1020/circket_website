@@ -172,6 +172,13 @@ class HomeController extends Controller
       'id'
     )->first();
 
+    $teams_oneid = Team::query()->get()->where('id', '=', $match_results[0]->first_inning_team_id)->pluck(
+      'id'
+    )->first();
+    $teams_twoid = Team::query()->get()->where('id', '=', $match_results[0]->second_inning_team_id)->pluck(
+      'id'
+    )->first();
+
 
     $teams_two_player = TeamPlayer::query()
     ->select('player_id', DB::raw('MIN(id) as id'))
@@ -179,11 +186,11 @@ class HomeController extends Controller
     ->groupBy('player_id')
     ->pluck('player_id', 'id');
 
-$teams_one_player = TeamPlayer::query()
-->select('player_id', DB::raw('MIN(id) as id'))
-    ->where('team_id', $match_results[0]->first_inning_team_id)
-    ->groupBy('player_id')
-    ->pluck('player_id', 'id');
+    $teams_one_player = TeamPlayer::query()
+    ->select('player_id', DB::raw('MIN(id) as id'))
+        ->where('team_id', $match_results[0]->first_inning_team_id)
+        ->groupBy('player_id')
+        ->pluck('player_id', 'id');
 
 
 
@@ -223,7 +230,7 @@ $teams_one_player = TeamPlayer::query()
 
 
     $innings = FixtureScore::where('fixture_id', '=', $id)
-      ->selectRaw('inningnumber, max(overnumber) as max_over')
+      ->selectRaw('inningnumber, max(overnumber) as max_over,max(ballnumber) as max_ball')
       ->groupBy('inningnumber')
       ->get();
 
@@ -316,7 +323,7 @@ $teams_one_player = TeamPlayer::query()
 
 
 
-    return view('ballbyballscorecard', compact('player_balls','team_one_run_rate','runnerbowler1','runnerbowler2','match_over','matchnotouts1','matchnotouts2' ,'team_two_run_rate', 'teams_one', 'match_total_overs', 'match_data', 'teams_two', 'match_detail', 'match_results', 'teams', 'player', 'total_run', 'total_wickets', 'total_overs', 'tournament', 'teams_two_player', 'teams_one_player', 'image_gallery'));
+    return view('ballbyballscorecard', compact('player_balls','innings','team_one_runs','team_two_runs','team_one_run_rate','runnerbowler1','runnerbowler2','match_over','matchnotouts1','matchnotouts2' ,'team_two_run_rate', 'teams_one','teams_oneid','teams_twoid', 'match_total_overs', 'match_data', 'teams_two', 'match_detail', 'match_results', 'teams', 'player', 'total_run', 'total_wickets', 'total_overs', 'tournament', 'teams_two_player', 'teams_one_player', 'image_gallery'));
   }
 
 
@@ -450,15 +457,15 @@ $teams_one_player = TeamPlayer::query()
 
 
     $player_runs = FixtureScore::where('fixture_id', $id)
-    ->select("inningnumber")
-    ->selectRaw("sum(runs) as total_runs")
+    ->select('inningnumber')
+    ->selectRaw("CASE WHEN balltype = 'R' OR balltype = 'NBP' THEN SUM(runs) ELSE 0 END as total_runs")
     ->selectRaw("SUM(isfour = 1) as total_fours")
     ->selectRaw("SUM(issix = 1) as total_six")
     ->selectRaw("playerId, MIN(fixture_scores.id) as min_id") 
     ->groupBy('playerId', 'inningnumber')
-    ->orderBy('min_id') 
+    ->orderBy('min_id')
+    ->distinct()
     ->get();
-
 
     $variable1 = 'R';
     $variable2 = 'Wicket';
@@ -490,6 +497,7 @@ $teams_one_player = TeamPlayer::query()
 
     $totalData=FixtureScore::where('fixture_id', '=', $id)
     ->selectRaw('inningnumber')
+    ->selectRaw('max(overnumber) as max_over ')
     ->selectRaw('max(ballnumber) as max_ball ')
     ->selectRaw("SUM(CASE WHEN isout = 1 THEN 1 ELSE 0 END) AS total_wicket")
     ->selectRaw("SUM(runs) AS total_runs")
@@ -898,6 +906,8 @@ $teams_one_player = TeamPlayer::query()
       ->get();
       $hatricks ;
     foreach($team_bowlingdata as $bowlerData){
+    
+
       $total_hat_tricks = DB::table('fixture_scores AS fs1')
       ->join('fixture_scores AS fs2', function ($join) {
           $join->on('fs2.fixture_id', '=', 'fs1.fixture_id')
@@ -918,12 +928,15 @@ $teams_one_player = TeamPlayer::query()
               ->where('fs4.bowlerid', '=', DB::raw('fs1.bowlerid'));
       })
       ->join('fixtures', 'fixtures.id', '=', 'fs1.fixture_id')
+      ->where('fixtures.tournament_id', $tournament_id)
       ->where('fs1.bowlerId', $bowlerData->bowler_id)
       ->where('fs1.isout', '=', 1)
       ->whereNull('fs4.id')
       ->select(DB::raw('COUNT(*) as total_hat_tricks'))
       ->pluck('total_hat_tricks')
       ->toArray();
+  
+ 
   
   $hatricks = $total_hat_tricks;
   
@@ -3987,7 +4000,7 @@ $getresult = $result;
 
   public function playerRanking_submit(Request $request)
   {
-    $teamid = Team::where('id', '=', $team_id)->select('id')->get();
+    // $teamid = Team::where('id', '=', $team_id)->select('id')->get();
     $tournamentdata = Tournament::query()
     ->where('isActive', '=', 1)
     ->where('is_web_display' , '=' , 1)
@@ -4193,7 +4206,7 @@ $man_of_matchs =  DB::select($man_of_matchs_query);
 
     // dd($totalMatchesArray);
 
-return view('playerRanking', compact('fours', 'teamid','balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_counts', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years' , 'man_of_matchs'));
+return view('playerRanking', compact('fours','balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_counts', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years' , 'man_of_matchs'));
   }
 
   public function show_point_table(int $tournament_id)
