@@ -148,13 +148,15 @@ th { min-width:30px !important; padding: 10px 5px !important; }
             <table>
                 <tbody>
                     <tr>
-                        <td><img src="https://cricclubs.com/documentsRep/teamLogos/624fee3a-e918-4e39-ab90-ff1b1c07e5d2.jpg" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                        <td><img src="https://eoscl.ca/admin/public/Team/{{$playerteam[$playerId]}}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
                         <td>&nbsp;{{$header_teams[$playerteam[$playerId]]}}</td>
                     </tr>
                 </tbody>
             </table>
         </th>
-        <th>{{$playermatch[$playerId]}}</th>
+		@foreach($teamid as $data)
+        <th>{{$playermatch[$data->id]}}</th>
+		@endforeach
         <th>{{ isset($matchcount[$playerId]) ? $matchcount[$playerId] : 0 }}</th>
         <th>1</th>
         <th>

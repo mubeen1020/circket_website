@@ -833,7 +833,7 @@ margin-right: 10px;
 				</div> -->
 				<div class="facebook">
 					<div class="border-heading sp">
-						<h5>Facebook</h5>
+						<h5>Instagram</h5>
 					</div>
 					<iframe src="http://instagram.com/p/qbq6fIJMVZ/embed" target="_top" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 				</div>
@@ -1127,7 +1127,7 @@ function get_point_table(tornament_season_id, type) {
             }
         },
     });
-    get_season_group(tornament_season_id);
+    // get_season_group(tornament_season_id);
     get_top_scorers(tornament_season_id);
     get_top_bowler(tornament_season_id);
     get_season_tournament(tornament_season_id);

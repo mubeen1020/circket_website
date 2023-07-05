@@ -77,13 +77,13 @@ if (strpos($headers[0], '404') !== false) {
             </div>
         </div>
     </div>
-@endforeach
+
 
 
 									<div class="col-sm-5">
 										<div class="matches-runs-wickets">
 											<ul class="list-inline">
-												<li>Matches<br> <span>{{$player_match}}</span></li>
+												<li>Matches<br> <span>{{$player_match[$teamdata->playerteam]??0}}</span></li>
 												<li>Runs<br> <span>
                                                     @foreach($player_runs as $runs)
                                                     {{$runs->playerruns}}
@@ -95,7 +95,15 @@ if (strpos($headers[0], '404') !== false) {
                                                     @endforeach
                                                 </span></li>
 											</ul>
-										</div>										
+										</div>	
+                   @php
+                   $playermatch=$player_match[$teamdata->playerteam]??0;
+                   $playerballs=$player_balls[$playerData->playername]??0;
+                   $higestruns=$higest_score[$playerData->playername]??0;
+                   $fifty=$player_total_fifties[$playerData->playername]??0;
+                   $hundred=$player_hundreds[$playerData->playername]??0;
+                   @endphp
+                    @endforeach									
 									</div>
 									<div class="addthis_sharing_toolbox hidden-phone" style="height: 24px; text-align: right;"></div>
 								</div>
@@ -106,6 +114,7 @@ if (strpos($headers[0], '404') !== false) {
 			</div>
 		</div>
 
+ 
 
         <div class="profile-in-all">
 		<div class="container p-sm-0">
@@ -135,7 +144,6 @@ if (strpos($headers[0], '404') !== false) {
 															<tr>
 																<th>Mat</th>
 																<th>Inns</th>
-																<th>NO</th>
 																<th>Runs</th>
 																<th>Balls</th>
 																<th>Ave</th>
@@ -149,27 +157,25 @@ if (strpos($headers[0], '404') !== false) {
 														</thead>
 														<tbody>
 															<tr>
-																<th>{{$player_match}}</th>
+																<th>{{$playermatch}}</th>
 																@if(isset($player_innings->innings))
     <th>{{$player_innings->innings}}</th>
 @else
     <th>N/A</th> <!-- or any appropriate fallback value -->
 @endif
 
-																<th>1</th>
+																
 																<th>@foreach($player_runs as $runs)
                                                     {{$runs->playerruns}}
                                                 @endforeach</th>
 																<th><a class="linkStyle" href="#"><strong>
-                                                                @foreach($player_balls as $ball)
-                                                    {{$ball->max_ball}}
-                                                @endforeach    
+                                                          {{$playerballs}}   
                                                                  </strong></a></th>
 																<th>{{$player_average}}</th>
 																<th>{{$player_strike_rate}}</th>
-																<th>59.46</th>
-																<th>{{$total_hundreds}}</th>
-																<th>{{$player_fifties}}</th>
+																<th>{{$higestruns}}</th>
+																<th>{{$hundred}}</th>
+																<th>{{$fifty}}</th>
 																<th>
                                                                 @foreach($player_four as $four)
                                                     {{$four->total_four}}
@@ -224,7 +230,7 @@ if (strpos($headers[0], '404') !== false) {
                                                                 @foreach($bower_over as $over)
 																<th>
                                                                 
-                                                   {{$bowler_balls}}
+                                                   {{$bowler_balls/6}}
                                                    
                                                                 </th>
 																<th>{{$over->bowler_runs}}</th>

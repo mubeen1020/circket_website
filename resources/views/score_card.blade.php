@@ -67,8 +67,13 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->playerId . ".jpg";
 $altText = "Player ID: " . $item->playerId;
 
 // Check if the image URL returns a 404 error
-$headers = get_headers($imageSrc);
-if (strpos($headers[0], '404') !== false) {
+$curl = curl_init($imageSrc);
+curl_setopt($curl, CURLOPT_NOBODY, true);
+curl_exec($curl);
+$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($responseCode == '404') {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -213,8 +218,13 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->bowlerid . ".jpg";
 $altText = "Player ID: " . $item->bowlerid;
 
 // Check if the image URL returns a 404 error
-$headers = get_headers($imageSrc);
-if (strpos($headers[0], '404') !== false) {
+$curl = curl_init($imageSrc);
+curl_setopt($curl, CURLOPT_NOBODY, true);
+curl_exec($curl);
+$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($responseCode == '404') {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -238,7 +248,7 @@ if (strpos($headers[0], '404') !== false) {
         {{$maiden_overs[$item->bowlerid] ?? 0}}
       </th>
       <th style="text-align: right;">{{$item->total_runs}}</th>
-      <th style="text-align: right;">{{$item->total_wicket}}</th> 
+      <th style="text-align: right;">{{$bowler_wickets[$item->bowlerid]??0}}</th> 
       <th style="text-align: right;">{{ number_format(($item->total_runs)/$item->over, 2) }}</th>
     </tr> 
   @endif
@@ -291,8 +301,13 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $score->playerId . ".jpg";
 $altText = "Player ID: " . $score->playerId;
 
 // Check if the image URL returns a 404 error
-$headers = get_headers($imageSrc);
-if (strpos($headers[0], '404') !== false) {
+$curl = curl_init($imageSrc);
+curl_setopt($curl, CURLOPT_NOBODY, true);
+curl_exec($curl);
+$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($responseCode == '404') {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -317,7 +332,7 @@ if (strpos($headers[0], '404') !== false) {
 																							
 																						, 
 		                                                                                
-		                                                                                Over {{round($score['ballnumber']/6)}}.{{$score['ballnumber']%6}}</h5>
+		                                                                                 Over {{($score['overnumber'])}}.{{($score['ballnumber']%6)+1}}</h5>
 		                                                                                
 		                                                                            </div>
 		                                                                           </div>
@@ -370,8 +385,13 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->playerId . ".jpg";
 $altText = "Player ID: " . $item->playerId;
 
 // Check if the image URL returns a 404 error
-$headers = get_headers($imageSrc);
-if (strpos($headers[0], '404') !== false) {
+$curl = curl_init($imageSrc);
+curl_setopt($curl, CURLOPT_NOBODY, true);
+curl_exec($curl);
+$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($responseCode == '404') {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -516,8 +536,13 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->bowlerid . ".jpg";
 $altText = "Player ID: " . $item->bowlerid;
 
 // Check if the image URL returns a 404 error
-$headers = get_headers($imageSrc);
-if (strpos($headers[0], '404') !== false) {
+$curl = curl_init($imageSrc);
+curl_setopt($curl, CURLOPT_NOBODY, true);
+curl_exec($curl);
+$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($responseCode == '404') {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -539,7 +564,7 @@ if (strpos($headers[0], '404') !== false) {
 																		  {{$maiden_overs[$item->bowlerid] ?? 0}}
 																		</th>
                                                                           		<th style="text-align: right;">{{$item->total_runs}}</th>
-                                                                        <th style="text-align: right;">{{$item->total_wicket}}</th> 
+                                                                        <th style="text-align: right;">{{$bowler_wickets[$item->bowlerid]??0}}</th> 
                                                                         </th>
                                                                         <th style="text-align: right;">{{ number_format(($item->total_runs)/$item->over, 2) }}
 </th>
@@ -591,8 +616,13 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $score->playerId . ".jpg";
 $altText = "Player ID: " . $score->playerId;
 
 // Check if the image URL returns a 404 error
-$headers = get_headers($imageSrc);
-if (strpos($headers[0], '404') !== false) {
+$curl = curl_init($imageSrc);
+curl_setopt($curl, CURLOPT_NOBODY, true);
+curl_exec($curl);
+$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($responseCode == '404') {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -616,7 +646,7 @@ if (strpos($headers[0], '404') !== false) {
 																							
 																						, 
 		                                                                                
-		                                                                                 Over {{round($score['ballnumber']/6)}}.{{$score['ballnumber']%6}}</h5>
+		                                                                                 Over {{($score['overnumber'])}}.{{($score['ballnumber']%6)+1}}</h5>
 		                                                                                
 		                                                                            </div>
 		                                                                           </div>

@@ -152,7 +152,9 @@ th { min-width:30px !important; padding: 10px 5px !important; }
 					</tr>
 				</tbody></table>
 				</th>
-				<th>{{$playermatch[$playerId]}}</th>
+				@foreach($teamid as $data)
+        <th>{{$playermatch[$data->id]}}</th>
+		@endforeach
 
 				<th>{{ isset($matchcount[$playerId]) ? $matchcount[$playerId] : 0 }}</th>
 
