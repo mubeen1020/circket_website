@@ -332,7 +332,7 @@ if ($responseCode == '404') {
 																							
 																						, 
 		                                                                                
-		                                                                                 Over {{($score['overnumber'])}}.{{($score['ballnumber']%6)+1}}</h5>
+		                                                                                 Over {{($score['overnumber'])-1}}.{{($score['ballnumber']%6)+1}}</h5>
 		                                                                                
 		                                                                            </div>
 		                                                                           </div>

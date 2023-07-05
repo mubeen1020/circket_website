@@ -229,7 +229,7 @@ $(document).ready(function() {
 					          	                    </tbody>
                                                 </table>
                                                 <div class="about-complete text-center">
-                                                	<a href="{{ route('playerRanking')}}">More Details</a>
+                                                	<a href="{{ route('pointtable')}}">More Details</a>
                                                 </div>
                                             </div>
                                             </div>
@@ -1127,7 +1127,7 @@ function get_point_table(tornament_season_id, type) {
             }
         },
     });
-    // get_season_group(tornament_season_id);
+    get_season_group(tornament_season_id);
     get_top_scorers(tornament_season_id);
     get_top_bowler(tornament_season_id);
     get_season_tournament(tornament_season_id);

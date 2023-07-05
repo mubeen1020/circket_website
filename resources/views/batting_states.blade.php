@@ -165,34 +165,35 @@
                        </tr> 
                     </thead>
 						<tbody>
-				@foreach($getresult as $key => $data)
+				@foreach($results as $key => $data)
+
 							<tr role="row" class="even">
 								<td class="sorting_1">{{$key+1}}</td>
 								<td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
 									<div>
 										<div class="player-img" style="background-image: url('pic.jpg');"></div>
-										<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->player_id]}}</a><br></div>
+										<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data['player_id']]}}</a><br></div>
 								</td>
-						<td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
+						<td style="text-align: left;font-size: smaller;">{{$teams[$data['team_id']]}}</td>
 								
-						        <td>{{ $match_count[$data->team_id]??0 }} </td>
-								<td>{{$inningsCount[$data->player_id]??0}}</td>
-								<td>{{$balls_faced[$data->player_id]??0}}</td>
-								<td> {{$player_runs[$data->player_id]??0}}</td>
-								<td>{{$fours[$data->player_id]??0}}</td>
-								<td>{{$sixes[$data->player_id]??0}}</td>
-								<td>{{$fifty[$data->player_id]??0}}</td>
-								<td>{{$hundreds[$data->player_id]??0}}</td>
-								<td>{{$higest_score[$data->player_id]??0}}</td>
+						        <td>{{ $match_count[$data['team_id']]??0 }} </td>
+								<td>{{$inningsCount[$data['player_id']]??0}}</td>
+								<td>{{$balls_faced[$data['player_id']]??0}}</td>
+								<td> {{$player_runs[$data['player_id']]??0}}</td>
+								<td>{{$fours[$data['player_id']]??0}}</td>
+								<td>{{$sixes[$data['player_id']]??0}}</td>
+								<td>{{$fifty[$data['player_id']]??0}}</td>
+								<td>{{$hundreds[$data['player_id']]??0}}</td>
+								<td>{{$higest_score[$data['player_id']]??0}}</td>
 								
-								@if(isset($balls_faced[$data->player_id]) && $balls_faced[$data->player_id] > 0)
-                    <td>{{ number_format(($player_runs[$data->player_id] / $balls_faced[$data->player_id]) * 100, 2) }}</td>
+								@if(isset($balls_faced[$data['player_id']]) && $balls_faced[$data['player_id']] > 0)
+                    <td>{{ number_format(($player_runs[$data['player_id']] / $balls_faced[$data['player_id']]) * 100, 2) }}</td>
 							@else
 								<td>0</td>
 							@endif
 							
-				@if(isset($playerouts[$data->player_id]) && isset($player_runs[$data->player_id]) && $playerouts[$data->player_id] > 0)
-    <td>{{ number_format(($player_runs[$data->player_id] / $playerouts[$data->player_id]) , 2) }}</td>
+				@if(isset($playerouts[$data['player_id']]) && isset($player_runs[$data['player_id']]) && $playerouts[$data['player_id']] > 0)
+    <td>{{ number_format(($player_runs[$data['player_id']] / $playerouts[$data['player_id']]) , 2) }}</td>
 @else
     <td>0</td>
 @endif

@@ -148,65 +148,67 @@
                        </tr> 
                     </thead>
 						<tbody>
-				@foreach($getresult as $key => $data)
-							<tr role="row" class="even">
-								<td class="sorting_1">{{$key+1}}</td>
-								<td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
-									<div>
-										<div class="player-img" style="background-image: url('pic.jpg');"></div>
-										<a href="" >{{$player[$data['bowler_id']]}}</a><br></div>
-								</td>
-						<td style="text-align: left;font-size: smaller;">{{$header_teams[$data['team_id']]}}</td>
-								<td>{{$match_count[$data->team_id]??0}}</td>
-								<td>{{$inningsCount[$data->bowler_id]??0}}</td>
-								<td>{{ isset($bowlerballs[$data->bowler_id]) ? round($bowlerballs[$data->bowler_id] / 6) : 0 }}</td>
-								<td>{{$bowlerruns[$data->bowler_id]??0}}</td>
-								<td>{{$bowlerwickets[$data->bowler_id]??0}}</td>
-								@if ($data->total_overs != 0 && isset($bowlerballs[$data->bowler_id]) && $bowlerballs[$data->bowler_id] != 0)
-    @php
-        $bowlerOvers = round($bowlerballs[$data->bowler_id] / 6);
-        $bowlerEconomy = $bowlerOvers != 0 ? number_format($bowlerruns[$data->bowler_id] / $bowlerOvers, 2) : 0;
-    @endphp
-    <td>{{ $bowlerEconomy }}</td>
-@else
-    <td>0</td>
-@endif
+						@foreach($results as $key => $data)
+    <tr role="row" class="even">
+        <td class="sorting_1">{{$key+1}}</td>
+        <td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
+            <div>
+                <div class="player-img" style="background-image: url('pic.jpg');"></div>
+                <a href="">{{$player[$data['bowler_id']]}}</a><br>
+            </div>
+        </td>
+        <td style="text-align: left;font-size: smaller;">{{$header_teams[$data['team_id']]}}</td>
+        <td>{{$match_count[$data['team_id']] ?? 0}}</td>
+        <td>{{$inningsCount[$data['bowler_id']] ?? 0}}</td>
+        <td>{{ isset($bowlerballs[$data['bowler_id']]) ? round($bowlerballs[$data['bowler_id']] / 6) : 0 }}</td>
+        <td>{{$bowlerruns[$data['bowler_id']] ?? 0}}</td>
+        <td>{{$bowlerwickets[$data['bowler_id']] ?? 0}}</td>
+        @if ($data['total_overs'] != 0 && isset($bowlerballs[$data['bowler_id']]) && $bowlerballs[$data['bowler_id']] != 0)
+            @php
+                $bowlerOvers = round($bowlerballs[$data['bowler_id']] / 6);
+                $bowlerEconomy = $bowlerOvers != 0 ? number_format($bowlerruns[$data['bowler_id']] / $bowlerOvers, 2) : 0;
+            @endphp
+            <td>{{ $bowlerEconomy }}</td>
+        @else
+            <td>0</td>
+        @endif
 
+        @if (isset($bowlerwickets[$data['bowler_id']]) && $bowlerwickets[$data['bowler_id']] != 0)
+            <td>{{ number_format($bowlerruns[$data['bowler_id']] / $bowlerwickets[$data['bowler_id']], 2) }}</td>
+        @else
+            <td>0</td>
+        @endif
 
-				@if (isset($bowlerwickets[$data->bowler_id]) && $bowlerwickets[$data->bowler_id] != 0)
-						<td>{{ number_format($bowlerruns[$data->bowler_id] / $bowlerwickets[$data->bowler_id], 2) }}</td>
-					@else
-						<td>0</td>
-					@endif
-				@if (isset($bowlerwickets[$data->bowler_id]) && $bowlerwickets[$data->bowler_id] != 0)
-					<td>{{ number_format(round($bowlerballs[$data->bowler_id] / 6) / $bowlerwickets[$data->bowler_id], 2) }}</td>
-				@else
-					<td>0</td>
-				@endif
+        @if (isset($bowlerwickets[$data['bowler_id']]) && $bowlerwickets[$data['bowler_id']] != 0)
+            <td>{{ number_format(round($bowlerballs[$data['bowler_id']] / 6) / $bowlerwickets[$data['bowler_id']], 2) }}</td>
+        @else
+            <td>0</td>
+        @endif
 
-								<td>
-                                <?php
-				$hat_tricks = 0;
-				$current_overs = 0;
-				$current_wickets = 0;
-				if ($data->bowling_details) {
-					foreach($data->bowling_details as $detail) {
-					if ($detail->isout) {
-						$current_wickets++;
-						if ($current_wickets >= 3) {
-						$hat_tricks++;
-						$current_wickets = 0;
-						$current_overs = 0;
-						}
-					}
-					$current_overs = $detail->overnumber;
-					}
-				}
-				echo $hat_tricks;
-				?>
-                                </td>
-							</tr>
-						@endforeach
+        <td>
+            <?php
+                $hat_tricks = 0;
+                $current_overs = 0;
+                $current_wickets = 0;
+                if (isset($data->bowling_details)) {
+                    foreach($data->bowling_details as $detail) {
+                        if ($detail->isout) {
+                            $current_wickets++;
+                            if ($current_wickets >= 3) {
+                                $hat_tricks++;
+                                $current_wickets = 0;
+                                $current_overs = 0;
+                            }
+                        }
+                        $current_overs = $detail->overnumber;
+                    }
+                }
+                echo $hat_tricks;
+            ?>
+        </td>
+    </tr>
+@endforeach
+
 						</tbody>
 					</table><div class="dataTables_info" id="webrecordtable_info" role="status" aria-live="polite">Showing 1 to 200 of 200 entries</div><div class="dataTables_paginate paging_simple_numbers" id="webrecordtable_paginate"><a class="paginate_button previous disabled" aria-controls="webrecordtable" data-dt-idx="0" tabindex="-1" id="webrecordtable_previous">Previous</a><span><a class="paginate_button current" aria-controls="webrecordtable" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="webrecordtable" data-dt-idx="2" tabindex="-1" id="webrecordtable_next">Next</a></div></div>
 				

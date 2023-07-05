@@ -2010,9 +2010,9 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
     $balls_faced = collect();
     $sixes = collect();
     $fours = [];
-    $results = array();
+    $results = [];
 
-    return view('batting_states', compact('fours','results', 'balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_count_player', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years'));
+    return view('batting_states', compact('fours', 'balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_count_player', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years', 'results'));
   }
   public function batting_states_submit(Request $request)
   {
@@ -2177,35 +2177,35 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
       ->groupBy('playerId')
       ->get()->pluck('hundred', 'playerId');
           
+
+    $results = array();
+    foreach ($getresult as $teamPlayer) {
+      $higest_score_query = FixtureScore::where('playerId', $teamPlayer->player_id)
+        ->selectRaw('SUM(runs) as total_runs, fixture_id')
+        ->where('fixtures.tournament_id',$tournament)
+        ->join('fixtures','fixtures.id','=','fixture_scores.fixture_id')
+        ->groupBy('fixture_id')
+        ->orderByDesc('total_runs')
+        ->limit(1);
+        $higest_score[$teamPlayer->player_id] = $higest_score_query->value('total_runs');
         
-      $results = array();
-      foreach ($getresult as $teamPlayer) {
-        $higest_score_query = FixtureScore::where('playerId', $teamPlayer->player_id)
-          ->selectRaw('SUM(runs) as total_runs, fixture_id')
-          ->where('fixtures.tournament_id',$tournament)
-          ->join('fixtures','fixtures.id','=','fixture_scores.fixture_id')
-          ->groupBy('fixture_id')
-          ->orderByDesc('total_runs')
-          ->limit(1);
-          $higest_score[$teamPlayer->player_id] = $higest_score_query->value('total_runs');
-          
-          if ($player_runs->has($teamPlayer->player_id)) {
-  
-        $results[] = [
-          'player_id' => $teamPlayer->player_id,
-          'team_id' => $teamPlayer->team_id,
-          'player_runs_keys' =>$player_runs[$teamPlayer->player_id],
-        ];
-        }
+        if ($player_runs->has($teamPlayer->player_id)) {
+
+      $results[] = [
+        'player_id' => $teamPlayer->player_id,
+        'team_id' => $teamPlayer->team_id,
+        'player_runs_keys' =>$player_runs[$teamPlayer->player_id],
+      ];
       }
-  
-  $player_runs_keys = array_column($results, 'player_runs_keys');
-  array_multisort($player_runs_keys, SORT_DESC, $results);
-  
-      // dd($results);
-  
-     
-      return view('batting_states', compact('fours', 'higest_score', 'fifty', 'hundreds', 'balls_faced', 'sixes', 'tournamentdata', 'balls_faced', 'player_runs', 'match_count', 'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult','inningsCount','playerouts', 'results'));
+    }
+
+$player_runs_keys = array_column($results, 'player_runs_keys');
+array_multisort($player_runs_keys, SORT_DESC, $results);
+
+    // dd($results);
+
+   
+    return view('batting_states', compact('fours', 'higest_score', 'fifty', 'hundreds', 'balls_faced', 'sixes', 'tournamentdata', 'balls_faced', 'player_runs', 'match_count', 'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult','inningsCount','playerouts', 'results'));
   }
 
 
@@ -3287,10 +3287,9 @@ $higest_score=[];
       ->orderBy(DB::raw('YEAR(created_at)'), 'desc')
       ->pluck('year');
     $getresult = [];
-    $results = array();
 
 
-    return view('bowling_state', compact('player','results', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years'));
+    return view('bowling_state', compact('player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years'));
   }
 
   public function bowling_state_submit(Request $request)
@@ -3471,7 +3470,6 @@ $higest_score=[];
         ->pluck('total_hat_tricks')
         ->toArray();
       $hatricks = $total_hat_tricks;
-      if ($bowlerwickets->has($teamPlayer->bowler_id)) {
       $results[] = [
         'bowler_id' => $teamPlayer->bowler_id,
         'tournament_id' => $teamPlayer->tournament_id,
@@ -3485,7 +3483,6 @@ $higest_score=[];
         'total_runs' => $teamPlayer->total_runs,
         'player_wickets_keys' =>$bowlerwickets[$teamPlayer->bowler_id],
       ];
-    }
       
     }
 
@@ -3493,7 +3490,9 @@ $higest_score=[];
 $player_wickets_keys = array_column($results, 'player_wickets_keys');
 array_multisort($player_wickets_keys, SORT_DESC, $results);
 
-    return view('bowling_state', compact('tournamentdata','results','bowlerwickets','bowlerruns','bowlerballs','inningsCount','match_count' ,'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult'));
+    // dd($hatricks);
+
+    return view('bowling_state', compact('tournamentdata','bowlerwickets','bowlerruns','bowlerballs','inningsCount','match_count' ,'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult','results'));
   }
 
 
@@ -3718,9 +3717,6 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
     $point_table_res_tem_a = $net_run_rate_result['point_table_res_tem_a'];
     $point_table_res_tem_b = $net_run_rate_result['point_table_res_tem_b'];
 
-
-
-
     // dd($term);
     if (!empty($term['year'])) {
       $year = $term['year'];
@@ -3754,6 +3750,7 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
 
       $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
 
+      
       if(count($point_table_res_tem_a)>0)
       {
           foreach($point_table_res_tem_a as $netrr_team)
@@ -3777,6 +3774,7 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
           }
       }
 
+
       $result[] = [
         'team_id' => $team_id,
         'team_name' => $team_name,
@@ -3789,6 +3787,10 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
         'net_rr' => $team_netrr,
       ];
     }
+
+
+    $wins = array_column($result, 'wins');
+    array_multisort($wins, SORT_DESC, $result);
 
 
     return view('pointtable', compact('result', 'tournamentdata', 'years', 'match_results', 'teams', "tournament_name", "grounds", "umpire_matchoffcial"));

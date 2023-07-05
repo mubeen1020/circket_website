@@ -119,20 +119,33 @@
 	
 						
 						
-						@foreach($result as $key => $item)
-						<tr>
-						<th>{{$key+1}}</th>
-							<th style="text-align: left !important;"><img src="https://eoscl.ca/admin/public/Team/{{$item['team_id']}}.png" class="left-block img-circle" style="width: 25px;height: 25px;">
-							<a href="#">{{$item['team_name']}}</a></th>
-							<th>{{$item['total_matches']}}</th>
-							<th>{{$item['wins']}}</th>
-							<th>{{$item['losses']}}</th>
-							<th>{{$item['draws']}}</th>
-							<th>{{$item['teambonusPoints']}}</th>
-							<th>{{ number_format($item['net_rr'], 3) }}</th>
+					@php
+// Sort the $result array based on net run rate and points in descending order
+usort($result, function($a, $b) {
+    if ($a['net_rr'] == $b['net_rr']) {
+        // If net run rates are equal, compare points in descending order
+        return $b['teambonusPoints'] <=> $a['teambonusPoints'];
+    }
+    // Sort by net run rate in descending order
+    return $b['net_rr'] <=> $a['net_rr'];
+});
+@endphp
 
-							</tr>
-						@endforeach
+@foreach($result as $key => $item)
+    <tr>
+        <th>{{ $key + 1 }}</th>
+        <th style="text-align: left !important;"><img src="https://eoscl.ca/admin/public/Team/{{ $item['team_id'] }}.png" class="left-block img-circle" style="width: 25px;height: 25px;">
+        <a href="#">{{ $item['team_name'] }}</a></th>
+        <th>{{ $item['total_matches'] }}</th>
+        <th>{{ $item['wins'] }}</th>
+        <th>{{ $item['losses'] }}</th>
+        <th>{{ $item['draws'] }}</th>
+        <th>{{ $item['teambonusPoints'] }}</th>
+        <th>{{ number_format($item['net_rr'], 2) }}</th>
+    </tr>
+@endforeach
+
+
 						</tbody>
 				</table>
 				</div>
