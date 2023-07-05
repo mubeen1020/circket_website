@@ -120,13 +120,10 @@
 						
 						
 					@php
-// Sort the $result array based on net run rate and points in descending order
 usort($result, function($a, $b) {
     if ($a['net_rr'] == $b['net_rr']) {
-        // If net run rates are equal, compare points in descending order
         return $b['teambonusPoints'] <=> $a['teambonusPoints'];
     }
-    // Sort by net run rate in descending order
     return $b['net_rr'] <=> $a['net_rr'];
 });
 @endphp

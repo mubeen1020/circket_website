@@ -67,13 +67,8 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->playerId . ".jpg";
 $altText = "Player ID: " . $item->playerId;
 
 // Check if the image URL returns a 404 error
-$curl = curl_init($imageSrc);
-curl_setopt($curl, CURLOPT_NOBODY, true);
-curl_exec($curl);
-$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-curl_close($curl);
-
-if ($responseCode == '404') {
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -112,7 +107,7 @@ if ($responseCode == '404') {
 																				@endif
 																			@endforeach
                                                                         	</th>
-                                                                        <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
+																			<th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
                                                                         <th style="text-align: right;">{{$player_balls[$item->playerId]??0}}</th> 
                                                                         <th style="text-align: right;">{{$item->total_fours}}<a style="display:none" id="btfour_video_1207430" href="javascript:openVideoHTMLvs('1207430','four', 'Noman Siddiqui');"><img alt="Watch Ball Video" title="Watch Ball Video" src="/utilsv2/images/youtube.png" width="20px" height="20px"></a>
                                                                         	</th>
@@ -218,13 +213,8 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->bowlerid . ".jpg";
 $altText = "Player ID: " . $item->bowlerid;
 
 // Check if the image URL returns a 404 error
-$curl = curl_init($imageSrc);
-curl_setopt($curl, CURLOPT_NOBODY, true);
-curl_exec($curl);
-$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-curl_close($curl);
-
-if ($responseCode == '404') {
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -301,13 +291,8 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $score->playerId . ".jpg";
 $altText = "Player ID: " . $score->playerId;
 
 // Check if the image URL returns a 404 error
-$curl = curl_init($imageSrc);
-curl_setopt($curl, CURLOPT_NOBODY, true);
-curl_exec($curl);
-$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-curl_close($curl);
-
-if ($responseCode == '404') {
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -385,13 +370,8 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->playerId . ".jpg";
 $altText = "Player ID: " . $item->playerId;
 
 // Check if the image URL returns a 404 error
-$curl = curl_init($imageSrc);
-curl_setopt($curl, CURLOPT_NOBODY, true);
-curl_exec($curl);
-$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-curl_close($curl);
-
-if ($responseCode == '404') {
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -435,7 +415,7 @@ if ($responseCode == '404') {
 																				@endif
 																			@endforeach
                                                                         	</th>
-                                                                            <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
+   																			 <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
                                                                             <th style="text-align: right;">{{$player_balls[$item->playerId]?? 0}}  </th>
                                                                             <th style="text-align: right;">{{$item->total_fours}}</th> 
                                                                         <th style="text-align: right;">{{$item->total_six}}</th>
@@ -536,13 +516,8 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $item->bowlerid . ".jpg";
 $altText = "Player ID: " . $item->bowlerid;
 
 // Check if the image URL returns a 404 error
-$curl = curl_init($imageSrc);
-curl_setopt($curl, CURLOPT_NOBODY, true);
-curl_exec($curl);
-$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-curl_close($curl);
-
-if ($responseCode == '404') {
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
@@ -616,13 +591,8 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $score->playerId . ".jpg";
 $altText = "Player ID: " . $score->playerId;
 
 // Check if the image URL returns a 404 error
-$curl = curl_init($imageSrc);
-curl_setopt($curl, CURLOPT_NOBODY, true);
-curl_exec($curl);
-$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-curl_close($curl);
-
-if ($responseCode == '404') {
+$headers = get_headers($imageSrc);
+if (strpos($headers[0], '404') !== false) {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }

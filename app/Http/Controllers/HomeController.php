@@ -458,14 +458,16 @@ class HomeController extends Controller
 
     $player_runs = FixtureScore::where('fixture_id', $id)
     ->select('inningnumber')
-    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'NBP' OR balltype = 'Wicket' THEN runs ELSE 0 END) as total_runs")
+    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket'  THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as total_runs")
     ->selectRaw("SUM(isfour = 1) as total_fours")
     ->selectRaw("SUM(issix = 1) as total_six")
-    ->selectRaw("playerId, MIN(fixture_scores.id) as min_id") 
+    ->selectRaw("playerId, MIN(fixture_scores.id) as min_id")
     ->groupBy('playerId', 'inningnumber')
     ->orderBy('min_id')
     ->distinct('playerId')
     ->get();
+
+
 
 
     $variable1 = 'R';
