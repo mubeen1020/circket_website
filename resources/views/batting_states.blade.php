@@ -180,11 +180,11 @@
 								<td>{{$inningsCount[$data['player_id']]??0}}</td>
 								<td>{{$balls_faced[$data['player_id']]??0}}</td>
 								<td> {{$player_runs[$data['player_id']]??0}}</td>
-								<td>{{$fours[$data['player_id']]??0}}</td>
-								<td>{{$sixes[$data['player_id']]??0}}</td>
-								<td>{{$fifty[$data['player_id']]??0}}</td>
-								<td>{{$hundreds[$data['player_id']]??0}}</td>
-								<td>{{$higest_score[$data['player_id']]??0}}</td>
+								<td>{{$fours[$data['player_id']][0]??0}}</td>
+								<td>{{$sixes[$data['player_id']][0]??0}}</td>
+								<td>{{$fifty[$data['player_id']][0]??0}}</td>
+								<td>{{$hundreds[$data['player_id']][0]??0}}</td>
+								<td>{{$higest_score[$data['player_id']][0]??0}}</td>
 								
 								@if(isset($balls_faced[$data['player_id']]) && $balls_faced[$data['player_id']] > 0)
                     <td>{{ number_format(($player_runs[$data['player_id']] / $balls_faced[$data['player_id']]) * 100, 2) }}</td>

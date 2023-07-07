@@ -50,7 +50,7 @@
                     @foreach($umpire_matchoffcial as $key => $umpire)
                     <tr> 
                         <th align="left">{{$key+1}}</th>
-							<th align="left"><a href="/MississaugaCricketLeague/viewUmpire.do?umpireId=23366&amp;clubId=2565">{{$umpire->name}}</a></th>
+							<th align="left"><a href="#">{{$umpire->name}}</a></th>
 							<th align="left">
                             @if($umpire->is_certified == 1)
                             <img alt="Verified" title="Not Verified" src="https://cdn-icons-png.flaticon.com/512/7595/7595571.png" style="width: 30px;height: 30px;margin: 0px;">
@@ -62,7 +62,7 @@
                         </th>
 							<th>Umpire &amp; Scorer</th>
 							<th align="left"> &nbsp;{{$umpire->level}}</th>
-							<th align="left"><a href="/MississaugaCricketLeague/login.do?clubId=2565">{{$umpire->contact}}</a></th>
+							<th align="left"><a href="#">{{$umpire->contact}}</a></th>
 							<th align="left"><a href="/MississaugaCricketLeague/login.do?clubId=2565">{{$umpire->address}}</a></th>
 							</tr>
                             @endforeach

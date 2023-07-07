@@ -3455,6 +3455,7 @@ $higest_score=[];
     ->pluck('balls', 'playerId');
 
     $hatricks = 0;
+
     $results = array();
     foreach ($getresult as $teamPlayer) {
       $total_hat_tricks = DB::table('fixture_scores AS fs1')
@@ -4630,7 +4631,7 @@ return view('playerRanking', compact('fours','balls_faced', 'sixes', 'balls_face
   $player_runs = collect();
   $balls_faced = collect();
   $sixes = collect();
-  $fours = [];
+  // $fours = [];
   $hundreds = [];
   $fifty = [];
   $higest_score = [];
@@ -4662,10 +4663,19 @@ return view('playerRanking', compact('fours','balls_faced', 'sixes', 'balls_face
       ->where('issix', 1)
       ->count();
 
-    $fours[$teamPlayer->player_id]['fours'] = FixtureScore::where('fixture_id', $teamPlayer->id)
-      ->where('playerId', $teamPlayer->player_id)
-      ->where('isfour', 1)
-      ->count();
+    // $fours[$teamPlayer->player_id]['fours'] = FixtureScore::where('fixture_id', $teamPlayer->id)
+    //   ->where('playerId', $teamPlayer->player_id)
+    //   ->where('isfour', 1)
+    //   ->count();
+
+    $fours= FixtureScore::where('fixtures.tournament_id', $tournament_id)
+    ->where('isfour', 1)
+    ->where('playerId', $teamPlayer->player_id)
+    ->selectRaw('COUNT(*) as four, fixture_scores.playerId')
+    ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+    ->groupBy('fixture_scores.playerId')
+    ->get()
+    ->pluck('four', 'playerId');
 
     $hundreds[$teamPlayer->player_id] = FixtureScore::where('playerid', $teamPlayer->player_id)
       ->where('fixture_scores.balltype', '=', 'R')
@@ -4691,8 +4701,29 @@ return view('playerRanking', compact('fours','balls_faced', 'sixes', 'balls_face
     $higest_score[$teamPlayer->player_id] = $higest_score_query->value('total_runs');
   }
 
+$results = array();
+      foreach ($getresult as $teamPlayer) {
+        $higest_score_query = FixtureScore::where('playerId', $teamPlayer->player_id)
+          ->selectRaw('SUM(runs) as total_runs, fixture_id')
+          ->where('fixtures.tournament_id',$tournament_id)
+          ->join('fixtures','fixtures.id','=','fixture_scores.fixture_id')
+          ->groupBy('fixture_id')
+          ->orderByDesc('total_runs')
+          ->limit(1);
+          $higest_score[$teamPlayer->player_id] = $higest_score_query->value('total_runs');
+          
+          if ($player_runs->has($teamPlayer->player_id)) {
+  
+        $results[] = [
+          'player_id' => $teamPlayer->player_id,
+          'team_id' => $teamPlayer->team_id,
+          'player_runs_keys' =>$player_runs[$teamPlayer->player_id],
+        ];
+        }
+      }
 
-  return view('batting_states', compact('fours', 'higest_score', 'fifty', 'hundreds', 'balls_faced', 'sixes', 'tournamentdata', 'balls_faced', 'player_runs', 'match_count_player', 'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult'));
+      // dd($fours);
+  return view('batting_states', compact('fours','results', 'higest_score', 'fifty', 'hundreds', 'balls_faced', 'sixes', 'tournamentdata', 'balls_faced', 'player_runs', 'match_count_player', 'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult'));
 
     ////////////////////////////////////////
   }
@@ -4723,6 +4754,21 @@ return view('playerRanking', compact('fours','balls_faced', 'sixes', 'balls_face
     ->where('is_web_display' , '=' , 1)
     ->get()
     ->pluck('name', 'id');
+
+    $match_dissmissal_runout_name= Dismissal::where('dismissals.name', '=', 'Run out')
+    ->selectRaw("dismissals.id as dissmissalname")
+    ->get()->pluck('dissmissalname');
+
+    $bowlerwickets= FixtureScore::where('fixtures.tournament_id', $tournament_id)
+      ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_runout_name)
+      ->where('fixture_scores.isout',1)
+      ->where('fixture_scores.balltype','=','Wicket')
+      ->selectRaw('SUM(fixture_scores.isout) as wicket, fixture_scores.bowlerId')
+      ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+      ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+      ->groupBy('fixture_scores.bowlerId')
+      ->get()
+      ->pluck('wicket', 'bowlerId');
 
 
   $image_gallery = GalleryImages::query()
@@ -4791,9 +4837,74 @@ return view('playerRanking', compact('fours','balls_faced', 'sixes', 'balls_face
       ->toArray();
     $hatricks = $total_hat_tricks;
   }
+  $results = array();
+    foreach ($getresult as $teamPlayer) {
+      $total_hat_tricks = DB::table('fixture_scores AS fs1')
+        ->join('fixture_scores AS fs2', function ($join) {
+          $join->on('fs2.fixture_id', '=', 'fs1.fixture_id')
+            ->where('fs2.id', '=', DB::raw('(fs1.id + 1)'))
+            ->where('fs2.isout', '=', 1)
+            ->where('fs2.bowlerid', '=', DB::raw('fs1.bowlerid'));
+        })
+        ->join('fixture_scores AS fs3', function ($join) {
+          $join->on('fs3.fixture_id', '=', 'fs1.fixture_id')
+            ->where('fs3.id', '=', DB::raw('(fs1.id + 2)'))
+            ->where('fs3.isout', '=', 1)
+            ->where('fs3.bowlerid', '=', DB::raw('fs1.bowlerid'));
+        })
+        ->leftJoin('fixture_scores AS fs4', function ($join) {
+          $join->on('fs4.fixture_id', '=', 'fs1.fixture_id')
+            ->where('fs4.id', '=', DB::raw('(fs1.id + 3)'))
+            ->where('fs4.isout', '=', 1)
+            ->where('fs4.bowlerid', '=', DB::raw('fs1.bowlerid'));
+        })
+        ->join('fixtures', 'fixtures.id', '=', 'fs1.fixture_id')
+        ->where('fs1.bowlerId', $teamPlayer->bowler_id)
+        ->where('fs1.isout', '=', 1)
+        ->whereNull('fs4.id')
+        ->select(DB::raw('COUNT(*) as total_hat_tricks'))
+        ->pluck('total_hat_tricks')
+        ->toArray();
+      $hatricks = $total_hat_tricks;
+      if ($bowlerwickets->has($teamPlayer->bowler_id)) {
+      $results[] = [
+        'bowler_id' => $teamPlayer->bowler_id,
+        'tournament_id' => $teamPlayer->tournament_id,
+        'player_id' => $teamPlayer->player_id,
+        'team_id' => $teamPlayer->team_id,
+        'bowler_id' => $teamPlayer->bowler_id,
+        'total_matches' => $teamPlayer->total_matches,
+        'total_overs' => $teamPlayer->total_overs,
+        'total_wides' => $teamPlayer->total_wides,
+        'total_noball' => $teamPlayer->total_noball,
+        'total_runs' => $teamPlayer->total_runs,
+        'player_wickets_keys' =>$bowlerwickets[$teamPlayer->bowler_id],
+      ];
+    }
+  }
+        $bowlerruns= FixtureScore::where('fixtures.tournament_id', $tournament_id)
+      ->selectRaw('SUM(fixture_scores.runs) as runs, fixture_scores.bowlerId')
+      ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+      ->groupBy('fixture_scores.bowlerId')
+      ->get()
+      ->pluck('runs', 'bowlerId');
+
+    $variable1 = 'R';
+    $variable2 = 'Wicket';
+
+    $bowlerballs = FixtureScore::where('fixtures.tournament_id', $tournament_id)
+    ->where(function ($query) use ($variable1, $variable2) {
+        $query->where('balltype', $variable1)
+            ->orWhere('balltype', $variable2);
+    })
+    ->selectRaw('COUNT(fixture_scores.id) as balls, fixture_scores.bowlerId')
+    ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
+    ->groupBy('fixture_scores.bowlerId')
+    ->get()
+    ->pluck('balls', 'bowlerId');
   // dd($hatricks);
 
-  return view('bowling_state', compact('tournamentdata', 'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult'));
+  return view('bowling_state', compact('tournamentdata','bowlerruns','bowlerballs', 'bowlerwickets','results', 'player', 'teams', 'match_results', 'image_gallery', 'years', 'getresult'));
     
 
   }
