@@ -16,7 +16,7 @@
 									@if (isset($name[0]->name))
 									<font color="white">{{ $name[0]->name }}</font>
                             @else
-                            <font color="white">EVENT ONTARIO SOFTBALL CIRCKET CLUBS</font>
+                            <font color="white">CLUBS</font>
                             @endif
 										
 									</a>
