@@ -3963,11 +3963,10 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
       ->first();
 
 
-      $match_dissmissal_stumped = Dismissal::where('dismissals.name', '=', 'Stumped')
-      ->first();
+    $match_dissmissal_stumped = Dismissal::where('dismissals.name', '=', 'Stumped')->first();
 
-      $dismissalIdcatch = $match_dissmissal_caught->id;
-      $dismissalIdstump = $match_dissmissal_stumped->id ;
+    $dismissalIdcatch = $match_dissmissal_caught->id;
+    $dismissalIdstump = $match_dissmissal_stumped->id;
 
     $getresult = [];
 
@@ -3982,7 +3981,6 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
 
     $data = Fixture::query();
     $term = $request->input();
-    // dd($term);
    
     $data->selectRaw('tournament_players.player_id')
       ->selectRaw('tournament_players.team_id')
@@ -4014,7 +4012,13 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
               $data->whereRaw("YEAR(fixtures.match_startdate) = $year");
     }
 
+    if (!empty($term['teams'])) {
+      $team_id = $term['teams'];
+            $data->where('tournament_players.team_id', '=', $team_id);
 
+
+    }
+    
     if (!empty($term['tournament'])) {
       $tournament = $term['tournament'];
       $tournament = (int)$tournament;
@@ -4034,7 +4038,8 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
     ->groupby('tournament_players.player_id','tournament_players.team_id')
     ->get();
 
-          $teamIds = TournamentGroup::where('tournament_id', $tournament)
+    
+    $teamIds = TournamentGroup::where('tournament_id', $tournament)
       ->select('team_id')
       ->groupBy('team_id')
       ->pluck('team_id');
