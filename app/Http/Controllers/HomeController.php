@@ -2280,14 +2280,11 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
       ->selectRaw('MAX(IF(team_players.iscaptain = 1, team_players.player_id, NULL)) AS player_id')
       ->join('teams', 'teams.id', '=', 'team_players.team_id')
       ->join('tournament_groups', 'tournament_groups.team_id', '=', 'team_players.team_id')
+      ->join('tournaments', 'tournaments.id', '=', 'tournament_groups.tournament_id')
       ->groupBy('team_players.team_id', 'tournament_groups.tournament_id');
     
     $results = $query1->get();
     
-    
- 
-
-
 
 
     return view('clubteamsearch', compact('match_results','results','tournament','player'));
@@ -2983,7 +2980,7 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
       $query->select('team_id_a AS team_id')
           ->from('fixtures')
           ->whereIn('team_id_a', $teamIds)
-          ->where('running_inning', 3)
+          ->whereIN('running_inning',[ 3,1,2])
           ->unionAll(
               DB::table('fixtures')
                   ->select('team_id_b AS team_id')
@@ -3254,8 +3251,22 @@ $higest_score=[];
     $bowler_inning_wicket->labels = (array_keys($player_inning_wickets));
     $bowler_inning_wicket->dataset = (array_values($player_inning_wickets));
 
+    $inningcount_bat = Fixture::where('fixture_scores.playerId', $playerid)
+      ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+      ->groupBy('fixture_scores.playerId')
+      ->selectRaw('COUNT(DISTINCT(fixture_scores.fixture_id)) as matches_played,fixture_scores.playerId  as playerId')
+      ->pluck('matches_played');
+    
+    $inningcount_bowl = Fixture::where('fixture_scores.bowlerid', $playerid)
+      ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+      ->groupBy('fixture_scores.bowlerid')
+      ->selectRaw('COUNT(DISTINCT(fixture_scores.fixture_id)) as matches_played,fixture_scores.bowlerid  as bowlerid')
+      ->pluck('matches_played');
 
-    return view('playerview', compact("bowler_economy",'higest_score', "bowler_balls", "bowler_strike_rate", "player_cauches", "bower_over", 'player_four', 'match_results', 'teams', 'player_team', "tournament_name", "grounds", "player_data", "teams", "player", "player_club", "player_match", "player_runs", "player_wicket", "player_total_fifties", "player_hundreds", "player_balls", "player_average", "player_strike_rate", "player_innings", "player_six", "player_matchbowler", "chart", 'bowler_inning_wicket', 'bowler_wicket_chart', 'batsman_wicket_chart','playerouts'));
+      // dd($inningcount);
+
+
+    return view('playerview', compact("bowler_economy",'higest_score', "bowler_balls", "bowler_strike_rate", "player_cauches", "bower_over", 'player_four', 'match_results', 'teams', 'player_team', "tournament_name", "grounds", "player_data", "teams", "player", "player_club", "player_match", "player_runs", "player_wicket", "player_total_fifties", "player_hundreds", "player_balls", "player_average", "player_strike_rate", "player_innings", "player_six", "player_matchbowler", "chart", 'bowler_inning_wicket', 'bowler_wicket_chart', 'batsman_wicket_chart','playerouts','inningcount_bat','inningcount_bowl'));
   }
 
 
