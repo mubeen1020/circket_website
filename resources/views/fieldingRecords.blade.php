@@ -189,14 +189,14 @@
                                     <td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
                                         <div>
                                             <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                                            <a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->bowler_id]}}</a><br>
+                                            <a> {{$data->player_name}}</a><br>
                                         </div>
                                     </td>
-                                    <td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
-                                    <td>{{  $data->total_matches   }}</td>
-                                    <td>{{ $data->catch }}</td>
-                                    <td>{{ $data->stump }}</td>
-                                    <td> {{ $data->catch + $data->stump  }} </td>
+                                    <td style="text-align: left;font-size: smaller;">{{$team_players_list[$data->player_id]}}</td>
+                                    <td>{{$match_count[$data->team_id]}}</td>
+                                    <td>{{$catchs_data[$data->player_id] ?? 0}}</td>
+                                    <td>{{$stump_data[$data->player_id] ?? 0}}</td>
+                                    <td> {{ (int)($stump_data[$data->player_id] ?? 0) + (int)($catchs_data[$data->player_id] ?? 0) }} </td>
 
                                 </tr>
                                 @endforeach
