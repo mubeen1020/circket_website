@@ -25,7 +25,7 @@
 									<div class="col-sm-10">
 										<div class="team-text-in text-left">
 											<h4 style="margin-top: 0px;">{{$teamData[0]->name}}
-												(<a href="">{{$tournament[$tournamentData]}}</a>)
+												(<a href="">{{$tournament[$tournamentData]??''}}</a>)
 												</h4>
 											<!--  <p><span>Team Code </span>      :   <span style="text-transform: uppercase">kbu</span></p>-->
 
@@ -153,8 +153,11 @@ th { min-width:30px !important; padding: 10px 5px !important; }
 				</tbody></table>
 				</th>
 				@foreach($teamid as $data)
+    @if(isset($playermatch[$data->id]))
         <th>{{$playermatch[$data->id]}}</th>
-		@endforeach
+    @endif
+@endforeach
+
 
 				<th>{{ isset($matchcount[$playerId]) ? $matchcount[$playerId] : 0 }}</th>
 

@@ -50,22 +50,26 @@
                     </thead> 
                     <tbody>
                     @php
-    if(count($results) > 0){
-@endphp  
-                    @foreach($results as $key => $team )
-                    <tr class="even"> 
-                        <td>{{$key+1}}</td> 
-                        <td><a href="#" target="_blank">{{$team->team_id}}</a></td>
-                        <td><a href="{{ url('team-view', $team->team_id . '_' . $team->tournament_id) }}" target="_blank">{{$team->name}}</a></td>
-                        <td>{{$tournament[$team->tournament_id]??''}}</td>
-                        <td>{{ isset($player[$team->player_id]) ? $player[$team->player_id] : '' }}</td>
-
-                        <td></td>
-                    </tr>
-                   @endforeach
-                   @php
+if ($results && count($results) > 0) {
+@endphp
+@foreach ($results as $key => $team)
+    @if ($team->tournament_id)
+        <tr class="even">
+            <td>{{ $key+1 }}</td>
+            <td><a href="#" target="_blank">{{ $team->team_id }}</a></td>
+            <td><a href="{{ url('team-view', [$team->team_id, $team->tournament_id]) }}" target="_blank">{{ $team->name }}</a></td>
+            <td>{{ $tournament[$team->tournament_id] ?? '' }}</td>
+            <td>{{ $player[$team->player_id] ?? '' }}</td>
+            <td></td>
+        </tr>
+    @endif
+@endforeach
+@php
 }
 @endphp
+
+
+
                     </tbody>
                 </table>
             </div>

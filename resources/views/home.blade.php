@@ -1288,7 +1288,7 @@ function get_top_scorers(tournament_season_id) {
                                             <img src="https://eoscl.ca/admin/public/Player/${item.id}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
                                             </td>
                                         <td>
-                                            <a href="/playerview/${item.id}">${item.fullname}</a>
+                                            <a href="{{ url('/playerview/${item.id}')}}">${item.fullname}</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1327,7 +1327,7 @@ function get_top_bowler(tournament_season_id) {
                                             <img src="https://eoscl.ca/admin/public/Player/${item.bowlerid}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
                                             </td>
                                         <td>
-                                            <a href="/playerview/${item.bowlerid}">${item.fullname}</a>
+                                            <a href="{{ url('/playerview/${item.bowlerid}')}}">${item.fullname}</a>
                                         </td>
                                     </tr>
                                 </tbody>
