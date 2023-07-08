@@ -23,7 +23,7 @@
 									<div class="col-sm-10">
 										<div class="team-text-in text-left">
 											<h4 style="margin-top: 0px;">{{$teamData[0]->name}}
-												(<a href="">{{$tournament[$tournamentData]}}</a>)
+												(<a href="">{{$tournament[$tournamentData]??''}}</a>)
 												</h4>
 											<!--  <p><span>Team Code </span>      :   <span style="text-transform: uppercase">kbu</span></p>-->
 
@@ -123,8 +123,13 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $teamPlayer['player_id'] .
 $altText = "Player ID: " . $teamPlayer['player_id'];
 
 // Check if the image URL returns a 404 error
-$headers = get_headers($imageSrc);
-if (strpos($headers[0], '404') !== false) {
+$curl = curl_init($imageSrc);
+curl_setopt($curl, CURLOPT_NOBODY, true);
+curl_exec($curl);
+$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($responseCode == '404') {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
     $altText = "No Image Available";
 }
