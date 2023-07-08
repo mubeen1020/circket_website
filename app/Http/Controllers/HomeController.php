@@ -5158,9 +5158,9 @@ $match_counts_query .= "
 // dd($man_of_matchs_query);
 
 $man_of_matchs =  DB::select($man_of_matchs_query);
-$teamid = Team::where('id', '=', $team_id)->select('id')->get();
+// $teamid = Team::where('id', '=', $team_id)->select('id')->get();
 
-    return view('playerRanking', compact('fours', 'teamid','balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_counts', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years' , 'man_of_matchs'));
+    return view('playerRanking', compact('fours', 'balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_counts', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years' , 'man_of_matchs'));
  
 
 
