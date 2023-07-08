@@ -5463,6 +5463,120 @@ $match_counts =  DB::select($match_counts_query);
 $man_of_matchs =  DB::select($man_of_matchs_query);
 
   // dd($totalMatchesArray);
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////// new work 
+
+      $getresult=[];
+      // dd($team_id);
+        $match_counts_query =  "
+  SELECT playerId AS player_id, COUNT(DISTINCT fixture_id) AS total_matches
+  FROM `fixture_scores`
+  JOIN fixtures ON fixture_scores.fixture_id = fixtures.id
+  WHERE
+  fixtures.isActive  = 1
+  ";
+
+          
+
+            $match_counts_query .= " AND fixtures.tournament_id = $tournament_id";
+          
+
+            $match_counts_query .= " AND (fixtures.team_id_a = $team_id or fixtures.team_id_b = $team_id)";
+
+
+  $match_counts_query .= "
+  GROUP BY playerId
+  UNION ALL
+  SELECT bowlerId AS player_id, COUNT(DISTINCT fixture_id) AS total_matches
+  FROM `fixture_scores`
+  JOIN fixtures ON fixture_scores.fixture_id = fixtures.id 
+  WHERE
+  fixtures.isActive  = 1
+  ";
+
+            $match_counts_query .= " AND fixtures.tournament_id = $tournament_id";
+          
+
+            $match_counts_query .= " AND (fixtures.team_id_a = $team_id or fixtures.team_id_b = $team_id)";
+
+  $match_counts_query .= "
+      GROUP BY bowlerId "; 
+
+//  dd($match_counts_query);
+
+ $match_counts =  DB::select($match_counts_query);
+
+
+// dd($match_counts);
+
+      /////////////////////////
+
+      $query = "
+      SELECT 
+          tournament_id, 
+          fixture_id, 
+          player_id, 
+          team_id, 
+          COALESCE(SUM(CASE WHEN player_type = 'batsmen' THEN points END), '') AS 'Batting',
+          COALESCE(SUM(CASE WHEN player_type = 'Bowler' THEN points END), '') AS 'Bowling'
+      FROM 
+          players_contain_points
+      WHERE 
+          player_type IN ('batsmen', 'Bowler') ";
+        
+
+          $query .= " AND tournament_id = $tournament_id";
+
+          $query .= " AND team_id = $team_id";
+        
+      $query .= " GROUP BY 
+          tournament_id, 
+          fixture_id, 
+          player_id, 
+          team_id  ";
+
+          // dd($query);
+          $results = DB::select($query);
+          $getresult = $results;
+
+          // dd($getresult);
+
+
+          /////////////////////////////////////////////////////////
+
+
+          $man_of_matchs_query =" SELECT fixtures.id, fixtures.tournament_id, fixtures.manofmatch_player_id , COUNT(DISTINCT fixtures.manofmatch_player_id) as MOM
+          FROM fixtures
+          JOIN players_contain_points ON fixtures.manofmatch_player_id = players_contain_points.player_id
+          WHERE
+          fixtures.isActive  = 1
+          ";
+          
+
+                    $man_of_matchs_query .= " AND fixtures.tournament_id = $tournament_id";
+
+                    $man_of_matchs_query .= " AND players_contain_points.team_id = $team_id";
+          
+          $man_of_matchs_query .= "
+          GROUP BY fixtures.id, fixtures.tournament_id, fixtures.manofmatch_player_id ";
+          
+          $man_of_matchs =  DB::select($man_of_matchs_query);
+
+    // dd($totalMatchesArray);
+    /////////////////////// end
+
+
   return view('team_ranking', compact('fours', 'teamid','balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_counts', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years' , 'man_of_matchs',  'teamData' , 'tournament' , 'tournamentData' , 'team_resultData' , 'teamPlayerCount', 'team_id_data' , 'tournament_ids'));
 
   ////////////////////////////
