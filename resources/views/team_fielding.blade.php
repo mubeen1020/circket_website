@@ -177,14 +177,31 @@
 													<td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
 														<div>
 															<div class="player-img" style="background-image: url('pic.jpg');"></div>
-															<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->bowler_id]}}</a><br>
+															<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->player_id]}}</a><br>
 														</div>
 													</td>
 													<td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
-													<td>{{ $data->total_matches   }}</td>
-													<td>{{ $data->catch }}</td>
-													<td>{{ $data->stump }}</td>
-													<td> {{ $data->catch + $data->stump  }} </td>
+													<td>{{  $match_count[$data->team_id]??0    }}</td>
+													<td>{{ $catchs_data[$data->player_id]??0 }}</td>
+													<td>{{ $stump_data[$data->player_id]??0 }}</td>
+													<td>
+				@if(isset($stump_data[$data->player_id]) && isset($catchs_data[$data->player_id]) )
+
+													 {{ $stump_data[$data->player_id] + $catchs_data[$data->player_id]  }}
+
+				@elseif(isset($stump_data[$data->player_id]))
+
+													 {{ $stump_data[$data->player_id] }}
+
+ 				@elseif(isset($catchs_data[$data->player_id]))
+
+													 {{ $catchs_data[$data->player_id] }}
+				@else
+				0
+				@endif
+													 
+
+													  </td>
 
 												</tr>
 												@endforeach
