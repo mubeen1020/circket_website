@@ -57,7 +57,7 @@ if ($results && count($results) > 0) {
         <tr class="even">
             <td>{{ $key+1 }}</td>
             <td><a href="#" target="_blank">{{ $team->team_id }}</a></td>
-            <td><a href="{{ url('team-view', [$team->team_id, $team->tournament_id]) }}" target="_blank">{{ $team->name }}</a></td>
+            <td><a href="{{ url('team-view/' . $team->team_id . '_' . $team->tournament_id) }}" target="_blank">{{ $team->name }}</a></td>
             <td>{{ $tournament[$team->tournament_id] ?? '' }}</td>
             <td>{{ $player[$team->player_id] ?? '' }}</td>
             <td></td>

@@ -83,21 +83,30 @@ if (strpos($headers[0], '404') !== false) {
 									<div class="col-sm-5">
 										<div class="matches-runs-wickets">
 											<ul class="list-inline">
-												<li>Matches<br> <span>{{$player_match[$teamdata->playerteam]??0}}</span></li>
+                      
+												<li>Matches<br> <span>{{$player_match[$player_team_id[0]]??0}}</span></li>
+                     
 												<li>Runs<br> <span>
+                          @if(count($player_runs)>0)
                                                     @foreach($player_runs as $runs)
-                                                    {{$runs->playerruns}}
+                                                    {{$runs->playerruns??0}}
                                                 @endforeach
+                                                @else
+                                                0
+                                                @endif
                                                 </span></li>
 												<li>Wickets<br> <span>
+                        @if(count($player_wicket)>0)
                                                     @foreach($player_wicket as $wickets)
-                                                   {{$wickets->playerwickets}}
+                                                   {{$wickets->playerwickets??0}}
                                                     @endforeach
+                                                    @else
+                                                0
+                                                @endif
                                                 </span></li>
 											</ul>
 										</div>	
                    @php
-                   $playermatch=$player_match[$teamdata->playerteam]??0;
                    $playerballs=$player_balls[$playerData->playername]??0;
                    $higestruns=$higest_score[$playerData->playername]??0;
                    $fifty=$player_total_fifties[$playerData->playername]??0;
@@ -155,18 +164,30 @@ if (strpos($headers[0], '404') !== false) {
 														</thead>
 														<tbody>
 															<tr>
-                              @foreach($player_team as $teamdata)
-                              <th>  {{$player_match[$teamdata->playerteam]??0}}</th>
-                             @endforeach
+                           
+                              <th>  {{$player_match[$player_team_id[0]]??0}}</th>
+                         
 
-    <th>{{$inningcount_bat[0]??0}}</th>
+    <th>{{$batsman_inning_length??0}}</th>
 
 																
-																<th>@foreach($player_runs as $runs)
+																<th>  @if(count($player_runs)>0)
+                                                    @foreach($player_runs as $runs)
                                                     {{$runs->playerruns??0}}
-                                                @endforeach</th>
+                                                @endforeach
+                                                @else
+                                                0
+                                                @endif</th>
 																<th><a class="linkStyle" href="#"><strong>
-                                                          {{$playerballs}}   
+                                @if(count($player_balls)>0)
+                                @foreach($player_balls as $teamdata)
+                               {{$teamdata->balls??0}}
+                             @endforeach
+                                                @else
+                                                0
+                                                @endif
+                               
+                                                           
                                                                  </strong></a></th>
 																<th>{{$player_average??0}}</th>
 																<th>{{$player_strike_rate??0}}</th>
@@ -174,13 +195,24 @@ if (strpos($headers[0], '404') !== false) {
 																<th>{{$hundred??0}}</th>
 																<th>{{$fifty??0}}</th>
 																<th>
-                                                                @foreach($player_four as $four)
+                                @if(count($player_four)>0)
+                                @foreach($player_four as $four)
                                                     {{$four->total_four??0}}
                                                 @endforeach  
+                                                @else
+                                                0
+                                                @endif
+                                                               
                                                                </th>
-																<th> @foreach($player_six as $six)
+																<th> 
+                                @if(count($player_six)>0)
+                                @foreach($player_six as $six)
                                                     {{$six->total_sixes??0}}
-                                                @endforeach  </th>
+                                                @endforeach  
+                                                @else
+                                                0
+                                                @endif  
+                                 </th>
 																
 															</tr>
 															<tr id="battingGrouping2565_OneDay" style="display: none;">
@@ -217,30 +249,85 @@ if (strpos($headers[0], '404') !== false) {
 														</thead>
 														<tbody>
 															<tr>
-                              @foreach($player_team as $teamdata)
-                              <th>  {{$player_match[$teamdata->playerteam]??0}}</th>
-                             @endforeach
-    <th>{{$inningcount_bowl[0]??0}}</th>
+                           
+                              <th>  {{$player_match[$player_team_id[0]]??0}}</th>
+                            
+    <th>{{$bowler_inning_length??0}}</th>                   
+																<th>
+                                @if(count($bower_over)>0)
+                                @foreach($bower_over as $over)
+                                {{$over->max_over??0}}
+                                @endforeach  
+                                                @else
+                                                0
+                                                @endif  
+                                
+                               </th>
+																<th>
+                                @if(count($bower_over)>0)
+                                @foreach($bower_over as $over)
+                                  {{$over->bowler_runs??0}}
+                                  @endforeach
+                                                @else
+                                                0
+                                                @endif 
 
-                                                                @foreach($bower_over as $over)
-																<th>
+                               
+                                </th>
                                                                 
-                                                   {{$bowler_balls/6??0}}
-                                                   
-                                                                </th>
-																<th>{{$over->bowler_runs??0}}</th>
-                                                                
-																<th><a class="linkStyle" href="#"><strong>@foreach($player_wicket as $wickets)
+																<th><a class="linkStyle" href="#"><strong>
+                                @if(count($player_wicket)>0)
+                                @foreach($player_wicket as $wickets)
                                                    {{$wickets->playerwickets??0}}
-                                                    @endforeach</strong></a></th>
-																<th>{{$bowler_economy??0}}</th>
-																<th>{{$bowler_strike_rate??0}}</th>
-																<th>{{$over->total_wides??0}}</th>
-                                                                @endforeach
+                                                    @endforeach
+                                                @else
+                                                0
+                                                @endif 
+                                 
+                                                  </strong></a></th>
 																<th>
-                                                                    @foreach($player_cauches as $catch)
+                                @if(count($bower_over)>0)
+                                @foreach($bower_over as $over)
+                                {{ number_format($over->bowler_runs/$over->max_over, 2) ?? 0 }}
+                                  @endforeach 
+                                                @else
+                                                0
+                                                @endif 
+
+                              
+                                </th>
+																<th>
+                                @if(count($bower_over)>0)
+                                @foreach($bower_over as $over)
+                                {{ number_format(($over->max_over / $wickets->playerwickets) * 100, 2) ?? 0 }}
+                                  @endforeach 
+                                                @else
+                                                0
+                                                @endif 
+
+                               
+                                </th>
+																<th>
+                                @if(count($bower_over)>0)
+                                @foreach($bower_over as $over)
+                                  {{$over->total_wides??0}}
+                                  @endforeach 
+                                                @else
+                                                0
+                                                @endif 
+
+                               
+                                </th>
+                                                              
+																<th>
+                                @if(count($player_cauches)>0)
+                                @foreach($player_cauches as $catch)
                                                                         {{$catch->total_catches??0}}
                                                                     @endforeach
+                                                @else
+                                                0
+                                                @endif 
+                                                                    
                                                                 </th>
 															</tr>
 															<tr id="bowlingGrouping2565_OneDay" style="display: none;">
