@@ -122,22 +122,20 @@ if (strpos($headers[0], '404') !== false) {
 				<div class="all-tab-table profile-player">
 					<div class="score-tab">
 						<div id="parentHorizontalTab" style="display: block; width: 100%; margin: 0px;">
-							<ul class="resp-tabs-list hor_1">
-								<li class="resp-tab-item hor_1 resp-tab-active" aria-controls="hor_1_tab_item-0" role="tab" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">Event Ontario Softball Circket
-</li>
-								</ul>
+							
 							<div class="resp-tabs-container hor_1" style="border-color: rgb(193, 193, 193);">
-								<h2 class="resp-accordion hor_1 resp-tab-active" role="tab" aria-controls="hor_1_tab_item-0" style="background: none; border-color: rgb(193, 193, 193);"><span class="resp-arrow"></span>Event Ontario Softball Circket
-</h2><div class="profile-players resp-tab-content hor_1 resp-tab-content-active" aria-labelledby="hor_1_tab_item-0" style="display:block">
+								<div class="" >
 									<div class="match-summary-tab sp">
-										<div id="parentHorizontalTab" style="display: block; width: 100%; margin: 0px;">
-											<ul class="stat-tabs-list resp-tabs-list hor_2 b-stats">
-												<li class="resp-tab-item hor_2 resp-tab-active" aria-controls="hor_2_tab_item-0" role="tab" onclick="showTable('battingTable')" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">BATTING STATISTICS</li>
-												<li class="resp-tab-item hor_2" aria-controls="hor_2_tab_item-1" role="tab" style="background-color: rgb(245, 245, 245);" onclick="showTable('bowlingTable')" >Bowling STATISTICS</li>
-											</ul>
-											<div class="resp-tabs-container hor_2" style="border-color: rgb(193, 193, 193);">
+										<div  style="display: block; width: 100%; margin: 0px;">
+											<!-- <ul class="stat-tabs-list  hor_2 b-stats">
+												<li class="hor_2"  style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
+													<button onclick="showTable_custom('batting_data')">BATTING STATISTICS</button></li>
+												<li class="hor_211"  style="background-color: rgb(245, 245, 245);"  > <button onclick="showTable_custom('bowling_data')"> Bowling STATISTICS</button></li>
+											</ul> -->
+		<div class="data_div resp-tabs-container hor_2" id="batting_data" style="border-color: rgb(193, 193, 193);">
 												
-												<h2 class="resp-accordion hor_2 resp-tab-active" role="tab" aria-controls="hor_2_tab_item-0" style="background: none; border-color: rgb(193, 193, 193);"><span class="resp-arrow"></span>BATTING STATISTICS</h2>
+												<h2>BATTING STATISTICS </h2>
+
                                                 <div  class="about-table table-responsive resp-tab-content hor_2 resp-tab-content-active"  aria-labelledby="hor_2_tab_item-0" style="display:block">
 													<table  class="table">
 														<thead>
@@ -158,11 +156,8 @@ if (strpos($headers[0], '404') !== false) {
 														<tbody>
 															<tr>
 																<th>{{$playermatch}}</th>
-																@if(isset($player_innings->innings))
-    <th>{{$player_innings->innings}}</th>
-@else
-    <th>N/A</th> <!-- or any appropriate fallback value -->
-@endif
+
+    <th>{{$inningcount_bat[0]}}</th>
 
 																
 																<th>@foreach($player_runs as $runs)
@@ -201,9 +196,9 @@ if (strpos($headers[0], '404') !== false) {
 														</tbody>
 													</table>
 												</div>
-												<h2 class="resp-accordion hor_2" role="tab" aria-controls="hor_2_tab_item-1" style="background-color: rgb(245, 245, 245); border-color: rgb(193, 193, 193);"><span class="resp-arrow"></span>Bowling STATISTICS</h2>
-                                                <div  class="about-table table-responsive resp-tab-content hor_2"  aria-labelledby="hor_2_tab_item-1" style="border-color: rgb(193, 193, 193);">
-													
+
+												<h2>BOWLING STATISTICS</h2>
+<div  class="about-table table-responsive resp-tab-content hor_2 resp-tab-content-active"  aria-labelledby="hor_2_tab_item-0" style="display:block">													
 													<table class="table">
 														<thead>
 															<tr>
@@ -220,12 +215,9 @@ if (strpos($headers[0], '404') !== false) {
 														</thead>
 														<tbody>
 															<tr>
-																<th>{{$player_matchbowler}}</th>
-																@if(isset($player_innings->innings))
-    <th>{{$player_innings->innings}}</th>
-@else
-    <th>N/A</th> <!-- or any appropriate fallback value -->
-@endif
+																<th>{{$player_match[$teamdata->playerteam]??0}}</th>
+																
+    <th>{{$inningcount_bowl[0]}}</th>
 
                                                                 @foreach($bower_over as $over)
 																<th>
@@ -369,8 +361,16 @@ if (strpos($headers[0], '404') !== false) {
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
+	function showTable_custom(show_div)
+		{
+			console.log(' in here')
+			$('.data_div').hide();
+			$('#'+show_div).show();
+		}
+
 	$( document ).ready(function() {
 
+		
 
   const data_batsman_wicket_chart = @json($batsman_wicket_chart); // Assuming you pass the object from Laravel to JavaScript
 
