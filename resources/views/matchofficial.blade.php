@@ -63,7 +63,7 @@
 							<th>Umpire &amp; Scorer</th>
 							<th align="left"> &nbsp;{{$umpire->level}}</th>
 							<th align="left"><a href="#">{{$umpire->contact}}</a></th>
-							<th align="left"><a href="/MississaugaCricketLeague/login.do?clubId=2565">{{$umpire->address}}</a></th>
+							<th align="left"><a href="#">{{$umpire->address}}</a></th>
 							</tr>
                             @endforeach
                     </tbody>

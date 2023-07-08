@@ -94,7 +94,7 @@
 										<tbody>
 											<tr>
 												<td style="padding-right: 5px;"><img src="https://cricclubs.com/documentsRep/teamLogos/68b4bd29-e486-4066-a74f-c5173df3e8ec.jpg" class="left-block img-circle" style="width: 25px;height: 25px;"></td>
-												<td><a href="/MississaugaCricketLeague/viewTeam.do?teamId=1165&amp;league=118&amp;clubId=2565">{{$data->name}}</a></td>
+												<td><a href="#">{{$data->name}}</a></td>
 											</tr>
 										</tbody>
 									</table>

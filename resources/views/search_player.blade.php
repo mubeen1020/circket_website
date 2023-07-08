@@ -4,7 +4,6 @@
     <div class="holder point">
     	<div class="container">
         	<div class="point-table-all border">
-        	<!-- <form action="https://www.mississaugacricketleague.ca/MississaugaCricketLeague/searchPlayer.do" method="post" id="searchPlayer"> -->
 
             <form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('searchplayer-form-submit')}}">
                 @csrf

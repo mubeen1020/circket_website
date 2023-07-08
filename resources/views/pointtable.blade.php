@@ -8,7 +8,7 @@
             	<div class="row">
             	<div class="col-sm-6">
                     	<div class="border-heading">
-                            <h5 style="text-align: left;"><a href="/MississaugaCricketLeague/viewLeague.do?league=132&amp;clubId=2565"><font color="white">Point Table</font></a></h5>
+                            <h5 style="text-align: left;"><a href="#"><font color="white">Point Table</font></a></h5>
                         </div>
                     </div>
                      <div class="exportOptions-panel" style="float:right ;position: relative; left: -20px;">

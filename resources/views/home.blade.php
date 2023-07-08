@@ -1504,7 +1504,7 @@ function get_top_ranking(tournament_season_id) {
                                             <img src="https://eoscl.ca/admin/public/Player/${item.player_id}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
                                             </td>
                                         <td>
-                                            <a href="/playerview/${item.player_id}">${item.fullname}</a>
+                                            <a href="{{ url('/playerview/${item.player_id}')}}">${item.fullname}</a>
                                         </td>
                                     </tr>
                                 </tbody>
