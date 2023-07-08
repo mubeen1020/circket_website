@@ -455,10 +455,10 @@ class HomeController extends Controller
       'id'
     )->first();
 
-
+  
     $player_runs = FixtureScore::where('fixture_id', $id)
     ->select('inningnumber')
-    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket'  THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as total_runs")
+    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket' OR balltype='RunOut'  THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as total_runs")
     ->selectRaw("SUM(isfour = 1) as total_fours")
     ->selectRaw("SUM(issix = 1) as total_six")
     ->selectRaw("playerId, MIN(fixture_scores.id) as min_id")
@@ -468,17 +468,20 @@ class HomeController extends Controller
     ->get();
 
 
-
+//  dd($player_runs);
+   
 
     $variable1 = 'R';
     $variable2 = 'Wicket';
-    $variable3 = 'BYES';
+    $variable3 = 'RunOut';
+    $variable4 = 'BYES';
     
     $player_balls = FixtureScore::where('fixture_id', '=', $id)
-      ->where(function ($query) use ($variable1, $variable2,$variable3) {
+      ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
         $query->where('balltype', '=', $variable1)
           ->orWhere('balltype', '=', $variable2)
-          ->orWhere('balltype', '=', $variable3);
+          ->orWhere('balltype', '=', $variable3)
+          ->orWhere('balltype', '=', $variable4);
       })->selectRaw("count(id) as balls")
       ->selectRaw("playerId")->groupBy('playerId')
       ->get()->pluck('balls', 'playerId');
@@ -491,14 +494,17 @@ class HomeController extends Controller
     $total_over = Fixture::where('id', '=', $id)
    ->select('numberofover')
     ->get();
-
+    DB::enableQueryLog();
     $extra_runs = FixtureScore::where('fixture_id', '=', $id)
     ->selectRaw('inningnumber')
     ->selectRaw("SUM(CASE WHEN balltype IN ('NB', 'NBB', 'NBP') THEN runs ELSE 0 END) AS noball_total_runs")
-    ->selectRaw("SUM(CASE WHEN balltype = 'WD' THEN runs ELSE 0 END) AS wideball_total_runs")
+    ->selectRaw("SUM(CASE  WHEN balltype IN ('WBB', 'WD') THEN runs ELSE 0 END) AS wideball_total_runs")
     ->selectRaw("SUM(CASE WHEN balltype = 'BYES' THEN runs ELSE 0 END) AS byes_total_runs")
     ->groupBy('inningnumber')
     ->get();
+    //  $query = DB::getQueryLog();
+    //                 $query = DB::getQueryLog();
+    //         dd($query);
 
     $totalData=FixtureScore::where('fixture_id', '=', $id)
     ->selectRaw('inningnumber')
@@ -510,11 +516,11 @@ class HomeController extends Controller
     ->get();
 
 
-    DB::enableQueryLog();
+    
     $bowler_data = FixtureScore::where('fixture_id', '=', $id)
     ->select('inningnumber')
     ->selectRaw('SUM(runs) as total_runs')
-    ->selectRaw("COUNT(CASE WHEN balltype = 'Wicket' OR balltype = 'R' THEN id ELSE NULL END) AS max_ball")
+    ->selectRaw("COUNT(CASE WHEN balltype = 'Wicket' OR balltype = 'R' OR balltype = 'RunOut' THEN id ELSE NULL END) AS max_ball")
     ->selectRaw('COUNT(DISTINCT overnumber) as `over`')
     ->selectRaw("SUM(CASE WHEN balltype = 'Wicket' THEN 1 ELSE 0 END) AS total_wicket")
     ->selectRaw('bowlerid, MIN(id) as min_id')
@@ -522,9 +528,7 @@ class HomeController extends Controller
     ->orderBy('min_id')
     ->get();
 
-    // $query = DB::getQueryLog();
-    //                 $query = DB::getQueryLog();
-    //         dd($query);
+   
 
     
 
@@ -634,12 +638,17 @@ class HomeController extends Controller
       ->groupBy('inningnumber')
       ->get();
 
-    $variable1 = 'R';
-    $variable2 = 'Wicket';
-    $player_balls = FixtureScore::where('fixture_id', '=', $id)
-      ->where(function ($query) use ($variable1, $variable2) {
-        $query->where('balltype', '=', $variable1)
-          ->orWhere('balltype', '=', $variable2);
+      $variable1 = 'R';
+      $variable2 = 'Wicket';
+      $variable3 = 'RunOut';
+      $variable4 = 'BYES';
+      
+      $player_balls = FixtureScore::where('fixture_id', '=', $id)
+        ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
+          $query->where('balltype', '=', $variable1)
+            ->orWhere('balltype', '=', $variable2)
+            ->orWhere('balltype', '=', $variable3)
+            ->orWhere('balltype', '=', $variable4);
       })->selectRaw("count(id) as balls")
       ->selectRaw("playerId")->groupBy('playerId')
       ->get()->pluck('balls', 'playerId');;
@@ -2994,19 +3003,22 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
 
     $player_runs = FixtureScore::where('playerid', $playerid)
       // ->selectRaw('SUM(runs) as playerruns')
-      ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'NBP' OR balltype = 'Wicket' THEN runs ELSE 0 END) as playerruns")
+      ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket' OR balltype='RunOut'  THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as playerruns")
       ->groupBy('playerid')
       ->get();
 
 
       $variable1 = 'R';
-      $variable2 = 'Wicket';
-      $variable3 = 'BYES';
-      
-      $player_balls = FixtureScore::where(function ($query) use ($variable1, $variable2,$variable3) {
-          $query->where('balltype', '=', $variable1)
-            ->orWhere('balltype', '=', $variable2)
-            ->orWhere('balltype', '=', $variable3);
+    $variable2 = 'Wicket';
+    $variable3 = 'RunOut';
+    $variable4 = 'BYES';
+    
+    $player_balls = FixtureScore::query()
+      ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
+        $query->where('balltype', '=', $variable1)
+          ->orWhere('balltype', '=', $variable2)
+          ->orWhere('balltype', '=', $variable3)
+          ->orWhere('balltype', '=', $variable4);
         })->selectRaw("count(id) as balls")
         ->selectRaw("playerId")->groupBy('playerId')
         ->get()->pluck('balls', 'playerId');
@@ -3035,12 +3047,21 @@ $higest_score=[];
     //   ->get();
 
 
-
-    $player_wicket = FixtureScore::where('bowlerid', $playerid)
-      ->where('balltype', '=', 'Wicket')
-      ->selectRaw('SUM(isout) as playerwickets')
-      ->groupBy('bowlerid')
-      ->get();
+    $match_dissmissal_runout_name= Dismissal::where('dismissals.name', '=', 'Run out')
+    ->selectRaw("dismissals.id as dissmissalname")
+    ->get()->pluck('dissmissalname');
+    $player_wicket= FixtureScore::where('bowlerid', $playerid)
+    ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+    ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_runout_name)
+    ->selectRaw("COUNT(match_dismissals.id) AS playerwickets")
+    ->selectRaw('fixture_scores.bowlerid')
+    ->groupBy('fixture_scores.bowlerid')
+    ->get();
+    // $player_wicket = FixtureScore::where('bowlerid', $playerid)
+    //   ->where('balltype', '=', 'Wicket')
+    //   ->selectRaw('SUM(isout) as playerwickets')
+    //   ->groupBy('bowlerid')
+    //   ->get();
 
     $player_total_fifties =   $player_total_fifties = DB::table(function ($query) {
       $query->select('playerId', DB::raw('SUM(runs) AS fifties'), 'fixture_id')

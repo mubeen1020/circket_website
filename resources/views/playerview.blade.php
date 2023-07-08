@@ -45,7 +45,7 @@ if (strpos($headers[0], '404') !== false) {
                         <p>
                             Club Names :
                             <strong>
-                                <a href="/MississaugaCricketLeague/viewInternalClub.do?internalClubId=114&amp;clubId=2565">
+                                <a href="#">
                              @foreach($player_club as $teamclub)
                              {{$teamclub->playerclub}}&nbsp;,
                              @endforeach
@@ -55,7 +55,7 @@ if (strpos($headers[0], '404') !== false) {
                         <p>
                             Current Team :
                             <strong>
-                                <a style="color: #fff;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">
+                                <a style="color: #fff;" href="#">
                             @foreach($player_team as $teamdata)
                                 {{$teams[$teamdata->playerteam]}}&nbsp;,
                             @endforeach
@@ -155,34 +155,36 @@ if (strpos($headers[0], '404') !== false) {
 														</thead>
 														<tbody>
 															<tr>
-																<th>{{$playermatch}}</th>
+                              @foreach($player_team as $teamdata)
+                              <th>  {{$player_match[$teamdata->playerteam]??0}}</th>
+                             @endforeach
 
-    <th>{{$inningcount_bat[0]}}</th>
+    <th>{{$inningcount_bat[0]??0}}</th>
 
 																
 																<th>@foreach($player_runs as $runs)
-                                                    {{$runs->playerruns}}
+                                                    {{$runs->playerruns??0}}
                                                 @endforeach</th>
 																<th><a class="linkStyle" href="#"><strong>
                                                           {{$playerballs}}   
                                                                  </strong></a></th>
-																<th>{{$player_average}}</th>
-																<th>{{$player_strike_rate}}</th>
+																<th>{{$player_average??0}}</th>
+																<th>{{$player_strike_rate??0}}</th>
 																<th>{{$higestruns}}</th>
-																<th>{{$hundred}}</th>
-																<th>{{$fifty}}</th>
+																<th>{{$hundred??0}}</th>
+																<th>{{$fifty??0}}</th>
 																<th>
                                                                 @foreach($player_four as $four)
-                                                    {{$four->total_four}}
+                                                    {{$four->total_four??0}}
                                                 @endforeach  
                                                                </th>
 																<th> @foreach($player_six as $six)
-                                                    {{$six->total_sixes}}
+                                                    {{$six->total_sixes??0}}
                                                 @endforeach  </th>
 																
 															</tr>
 															<tr id="battingGrouping2565_OneDay" style="display: none;">
-																<td colspan="5">View statistics by : <select style="width: 150px; min-height: 25px; margin-bottom: 0px" id="groupingBattingSelection2565_OneDay" onchange="switchGrouping(2565,this.value,'OneDay' ,'https://cricclubs.com/MississaugaCricketLeague');">
+																<td colspan="5">View statistics by : <select style="width: 150px; min-height: 25px; margin-bottom: 0px" id="groupingBattingSelection2565_OneDay" >
 																		<option value="Series" selected="">Series</option>
 																		<option value="Year">Year</option>
 																</select>
@@ -215,33 +217,34 @@ if (strpos($headers[0], '404') !== false) {
 														</thead>
 														<tbody>
 															<tr>
-																<th>{{$player_match[$teamdata->playerteam]??0}}</th>
-																
-    <th>{{$inningcount_bowl[0]}}</th>
+                              @foreach($player_team as $teamdata)
+                              <th>  {{$player_match[$teamdata->playerteam]??0}}</th>
+                             @endforeach
+    <th>{{$inningcount_bowl[0]??0}}</th>
 
                                                                 @foreach($bower_over as $over)
 																<th>
                                                                 
-                                                   {{$bowler_balls/6}}
+                                                   {{$bowler_balls/6??0}}
                                                    
                                                                 </th>
-																<th>{{$over->bowler_runs}}</th>
+																<th>{{$over->bowler_runs??0}}</th>
                                                                 
 																<th><a class="linkStyle" href="#"><strong>@foreach($player_wicket as $wickets)
-                                                   {{$wickets->playerwickets}}
+                                                   {{$wickets->playerwickets??0}}
                                                     @endforeach</strong></a></th>
-																<th>{{$bowler_economy}}</th>
-																<th>{{$bowler_strike_rate}}</th>
-																<th>{{$over->total_wides}}</th>
+																<th>{{$bowler_economy??0}}</th>
+																<th>{{$bowler_strike_rate??0}}</th>
+																<th>{{$over->total_wides??0}}</th>
                                                                 @endforeach
 																<th>
                                                                     @foreach($player_cauches as $catch)
-                                                                        {{$catch->total_catches}}
+                                                                        {{$catch->total_catches??0}}
                                                                     @endforeach
                                                                 </th>
 															</tr>
 															<tr id="bowlingGrouping2565_OneDay" style="display: none;">
-																<td colspan="5">View statistics by : <select style="width: 150px; min-height: 25px; margin-bottom: 0px" id="groupingBowlingSelection2565_OneDay" onchange="switchBowlingGrouping(2565,this.value,'OneDay' ,'https://cricclubs.com/MississaugaCricketLeague');">
+																<td colspan="5">View statistics by : <select style="width: 150px; min-height: 25px; margin-bottom: 0px" id="groupingBowlingSelection2565_OneDay" >
 																		<option value="Series" selected="">Series</option>
 																		<option value="Year">Year</option>
 																</select>

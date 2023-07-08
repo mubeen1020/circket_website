@@ -8,7 +8,7 @@
 					<div class="col-lg-6">
 						<div class="border-heading">
 							<h5>
-								<a href="/MississaugaCricketLeague/viewLeague.do?league=132&amp;clubId=2565"><font color="white">Player Match Count</font></a>
+								<a href="#"><font color="white">Player Match Count</font></a>
 								</h5>
 						</div>
 					</div>

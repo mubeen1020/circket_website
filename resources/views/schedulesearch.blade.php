@@ -351,12 +351,12 @@ margin-top: 15px;}
                                                     <div class="col-xs-12 col-sm-5">
                                                     <div class="schedule-text">
                                                     <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]??''}}</p>
-                                                        <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="/MississaugaCricketLeague/viewTeam.do?teamId=1342&amp;clubId=2565">{{ $header_teams[$data['team_id_b']]}}</a> </h3>
+                                                        <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="#">{{ $header_teams[$data['team_id_b']]}}</a> </h3>
 
                                                             <h4>L @  <a style="color: inherit;" href="" target="_new">{{ $ground2[$data['ground_id']] }}</a>
                                             
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Umpires: 
-                                        <a style="color: inherit;" href="">Sandeep Mehta</a>,<a style="color: inherit;" href="/MississaugaCricketLeague/viewUmpire.do?umpireUId=2224359&amp;clubId=2565">Mcl Umpire</a></h4>
+                                        <a style="color: inherit;" href="">Sandeep Mehta</a>,<a style="color: inherit;" href="#">Mcl Umpire</a></h4>
                                         
                                         <p style="color:#fff;font-size:13px"> </p>
                                         <p style="color:#fff;font-size:13px"> </p>
