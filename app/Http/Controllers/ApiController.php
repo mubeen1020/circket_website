@@ -79,8 +79,6 @@ class ApiController extends Controller
             ->Join('tournaments as tournament', 'tournament.id', '=', 'fixtures.tournament_id')
             ->Join('grounds as ground', 'ground.id', '=', 'fixtures.ground_id')
             ->whereDate('match_startdate', $today)
-            // ->whereTime('match_starttime', '<=', $localTime)
-            // ->whereTime('match_endtime', '>=', $localTime)
             ->orderBy('fixture_id')
             ->get();
     
@@ -132,7 +130,6 @@ class ApiController extends Controller
             $point_table_res_tem_a = $net_run_rate_result['point_table_res_tem_a'];
             $point_table_res_tem_b = $net_run_rate_result['point_table_res_tem_b'];
     
-            // dd($point_table_res_tem_b);
         
         $result = array();
         
@@ -146,7 +143,6 @@ class ApiController extends Controller
       {
           foreach($point_table_res_tem_a as $netrr_team)
           {
-              // dd($netrr_team);
               if( $netrr_team->first_inning_team_id==$team_id)
               {
                   $team_netrr += $netrr_team->team_netrr    ;    
@@ -215,7 +211,6 @@ class ApiController extends Controller
     public function get_season_group(int $tournament_id)
     {
 
-        // sub query in laravel
         $get_season = TournamentGroup::whereIn('tournament_id', function($query) use ($tournament_id) {
                 $query->select('id')
                       ->from('tournaments')
@@ -359,8 +354,6 @@ $Groups_team = TournamentGroup::query()
             ->pluck('max_over', 'second_inning_team_id');
       
             $net_run_rate_result = $this->calculateNetRunRate($tournamnet_id);
-            // dd($net_run_rate_result);
-            // app()->call([ApiController::class, 'otherMethod']);
         
             $point_table_res_tem_a = $net_run_rate_result['point_table_res_tem_a'];
             $point_table_res_tem_b = $net_run_rate_result['point_table_res_tem_b'];
@@ -377,7 +370,6 @@ $Groups_team = TournamentGroup::query()
             {
                 foreach($point_table_res_tem_a as $netrr_team)
                 {
-                    // dd($netrr_team);
                     if( $netrr_team->first_inning_team_id==$team_id)
                     {
                         $team_netrr += $netrr_team->team_netrr    ;    
@@ -699,9 +691,6 @@ $Groups_team = TournamentGroup::query()
         ) AS query2 ON query1.id = query2.id
         GROUP BY second_inning_team_id");
 
-    // Additional code or processing logic if required
-
-    // Return the result
     return [
         'point_table_res_tem_a' => $point_table_res_tem_a,
         'point_table_res_tem_b' => $point_table_res_tem_b,

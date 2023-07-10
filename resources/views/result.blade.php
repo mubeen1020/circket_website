@@ -197,12 +197,24 @@ text-align:center !important;
                                         </span>
                                         <br>
                                         <p>
-                                            @if (isset($total_run_fixture[$data->id][0]))
-                                                {{ $total_run_fixture[$data->id][0] }}
-                                            @else
-                                                N/A
-                                            @endif
-                                            /{{ $data['numberofover'] }}
+                                        @if (isset($total_over_fixture[$data->id][0]))
+    @php
+        $totalBalls = isset($total_ball_fixture[$data->id][0]) ? $total_ball_fixture[$data->id][0] : 0;
+        $overs = floor($totalBalls / 6);
+        $ballsInCurrentOver = $totalBalls % 6;
+    @endphp
+    <th class="hidden-phone">
+        @if ($ballsInCurrentOver == 0)
+            {{ $total_over_fixture[$data->id][0] }}.{{ $ballsInCurrentOver }}
+        @else
+            {{ $total_over_fixture[$data->id][0] - 1 }}.{{ $ballsInCurrentOver }} overs
+        @endif
+    </th>
+@else
+    N/A
+@endif
+/{{ $data['numberofover'] }}
+
                                         </p>
                                     </li>
 				   
@@ -228,12 +240,24 @@ text-align:center !important;
                                         </span>
                                         <br>
                                         <p>
-                                            @if (isset($total_run_fixture[$data->id][1]))
-                                                {{ $total_run_fixture[$data->id][1] }}
-                                            @else
-                                                N/A
-                                            @endif
-                                            /{{ $data['numberofover'] }}
+                                        @if (isset($total_over_fixture[$data->id][1]))
+    @php
+        $totalBalls = isset($total_ball_fixture[$data->id][1]) ? $total_ball_fixture[$data->id][1] : 0;
+        $overs = floor($totalBalls / 6);
+        $ballsInCurrentOver = $totalBalls % 6;
+    @endphp
+    <th class="hidden-phone">
+        @if ($ballsInCurrentOver == 0)
+            {{ $total_over_fixture[$data->id][1] }}.{{ $ballsInCurrentOver }}
+        @else
+            {{ $total_over_fixture[$data->id][1] - 1 }}.{{ $ballsInCurrentOver }} overs
+        @endif
+    </th>
+@else
+    N/A
+@endif
+/{{ $data['numberofover'] }}
+
                                         </p>
                                     </li>
 	                      	 </ul>	

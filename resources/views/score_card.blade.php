@@ -81,31 +81,59 @@ if (strpos($headers[0], '404') !== false) {
                                                                         	<br/>
 																			<br/>
 																			<div class="scorecard-out-text show-phone" style="font-size: 2px;width:0px">
-																			@foreach ($match_description as $out)
-																				@if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
-																					@if ($out->out_description == "Retired Hurt")
-																						<span><a>b &nbsp;{{ $out->out_description }}</span>
-																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
-																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
-																					<span><a>b</span> </a>(<a href="#"> {{ $out->bowler_name }}</a>)
-																					@endif
-																				@endif
-																			@endforeach
+	@php
+    $isOut = false; // Flag to check if the player is out
+@endphp
+
+@foreach ($match_description as $out)
+    @if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
+        @php
+            $isOut = true; // Set the flag to true if the player is out
+        @endphp
+
+        @if ($out->out_description == "Retired Hurt")
+            <span><a>b &nbsp;{{ $out->out_description }}</a></span>
+        @elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
+            <span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
+        @elseif ($out->out_description == "Bowled" || $out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+            <span><a>b</a></span> (<a href="#">{{ $out->bowler_name }}</a>)
+        @endif
+    @endif
+@endforeach
+
+@if (!$isOut)
+    <span><a>Not out</a></span>
+@endif
+
+
                                                                         	</div>
                                                                         </th> 
                                                                         <th class="hidden-phone">
-																		@foreach ($match_description as $out)
-																				@if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
-																					@if ($out->out_description == "Retired Hurt")
-																						<span><a>b &nbsp;{{ $out->out_description }}</span>
-																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
-																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
-																					<span><a>b</span> </a>(<a href="#"> {{ $out->bowler_name }}</a>)
-																					@endif
-																				@endif
-																			@endforeach
+@php
+    $isOut = false; // Flag to check if the player is out
+@endphp
+
+@foreach ($match_description as $out)
+    @if ($out->inningnumber == 1 && $out->batsman_id == $item->playerId)
+        @php
+            $isOut = true; // Set the flag to true if the player is out
+        @endphp
+
+        @if ($out->out_description == "Retired Hurt")
+            <span><a>b &nbsp;{{ $out->out_description }}</a></span>
+        @elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
+            <span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
+        @elseif ($out->out_description == "Bowled" || $out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+            <span><a>b</a></span> (<a href="#">{{ $out->bowler_name }}</a>)
+        @endif
+    @endif
+@endforeach
+
+@if (!$isOut)
+    <span><a>Not out</a></span>
+@endif
+
+
                                                                         	</th>
 																			<th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
                                                                         <th style="text-align: right;">{{$player_balls[$item->playerId]??0}}</th> 
@@ -121,17 +149,17 @@ if (strpos($headers[0], '404') !== false) {
                                                                         <th>Extras<div class="scorecard-out-text show-phone">
 																		@foreach($extra_runs as $item)
 		@if($item->inningnumber == 1)
-			( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
+			( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs+$item->nbp_total_runs}})
 		
 																		</th>
-                                                                        <th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)}}</b></th>
+                                                                        <th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)+($item->nbp_total_runs)}}</b></th>
 																		@endif
 	@endforeach
 																		</div></th> 
                                                                         <th class="hidden-phone">
 																		@foreach($extra_runs as $item)
 		@if($item->inningnumber == 1)
-			( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
+			( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs+$item->nbp_total_runs}})
 		
 																		</th>
 																		@endif
@@ -385,17 +413,29 @@ if (strpos($headers[0], '404') !== false) {
 																			<br/>
 																			<br/>
 																			<div class="scorecard-out-text show-phone" style="font-size: 2px;width:0px">
-																			@foreach ($match_description as $out)
-																				@if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
-																					@if ($out->out_description == "Retired Hurt")
-																						<span>b &nbsp;{{ $out->out_description }}</span>
-																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
-																						<span><a>b&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
-																						<span><a>b</span> </a>(<a href="#"> {{ $out->bowler_name }}</a>)
-																					@endif
-																				@endif
-																			@endforeach
+																	@php
+    $isOut = false; // Flag to check if the player is out
+@endphp
+
+@foreach ($match_description as $out)
+    @if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
+        @php
+            $isOut = true; // Set the flag to true if the player is out
+        @endphp
+
+        @if ($out->out_description == "Retired Hurt")
+            <span><a>b &nbsp;{{ $out->out_description }}</a></span>
+        @elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
+            <span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
+        @elseif ($out->out_description == "Bowled" || $out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+            <span><a>b</a></span> (<a href="#">{{ $out->bowler_name }}</a>)
+        @endif
+    @endif
+@endforeach
+
+@if (!$isOut)
+    <span><a>Not out</a></span>
+@endif
                                                                         	</div>
 
                                                                         <div class="scorecard-out-text show-phone" style="margin-left:34px">
@@ -403,17 +443,30 @@ if (strpos($headers[0], '404') !== false) {
                                                                         	</div>
                                                                         </th> 
                                                                         <th class="hidden-phone">
-																		@foreach ($match_description as $out)
-																				@if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
-																				@if ($out->out_description == "Retired Hurt")
-																						<span><a>b &nbsp;{{ $out->out_description }}</span>
-																					@elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
-																						<span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-																					@elseif ($out->out_description == "Bowled" ||$out->out_description == "LBW"||$out->out_description == "Hit the ball twice"||$out->out_description == "Hit wicket" )
-																					<span><a>b</span> </a>(<a href="#"> {{ $out->bowler_name }}</a>)
-																					@endif
-																				@endif
-																			@endforeach
+																@php
+    $isOut = false; // Flag to check if the player is out
+@endphp
+
+@foreach ($match_description as $out)
+    @if ($out->inningnumber == 2 && $out->batsman_id == $item->playerId)
+        @php
+            $isOut = true; // Set the flag to true if the player is out
+        @endphp
+
+        @if ($out->out_description == "Retired Hurt")
+            <span><a>b &nbsp;{{ $out->out_description }}</a></span>
+        @elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
+            <span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
+        @elseif ($out->out_description == "Bowled" || $out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+            <span><a>b</a></span> (<a href="#">{{ $out->bowler_name }}</a>)
+        @endif
+    @endif
+@endforeach
+
+@if (!$isOut)
+    <span><a>Not out</a></span>
+@endif
+                                                                        	</div>
                                                                         	</th>
    																			 <th style="text-align: right;"><b>{{$item->total_runs}}</b></th>
                                                                             <th style="text-align: right;">{{$player_balls[$item->playerId]?? 0}}  </th>
@@ -426,17 +479,17 @@ if (strpos($headers[0], '404') !== false) {
                                                                     <tr> 
                                                                         <th>Extras<div class="scorecard-out-text show-phone">											@foreach($extra_runs as $item)
 												@if($item->inningnumber == 2)
-													( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
-												
-																												</th>
-																												<th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)}}</b></th>
+													( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs+$item->nbp_total_runs}})
+		
+		</th>
+		<th style="text-align: right;"><b>{{($item->byes_total_runs) +($item->wideball_total_runs) + ($item->noball_total_runs)+($item->nbp_total_runs)}}</b></th>
 																												@endif
 											@endforeach</div></th> 
                                                                         <th class="hidden-phone">
 																		
 																												@foreach($extra_runs as $item)
 												@if($item->inningnumber == 2)
-													( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{ $item->noball_total_runs }})
+													( lb {{ $item->byes_total_runs }} w {{ $item->wideball_total_runs }} nb {{$item->noball_total_runs+$item->nbp_total_runs }})
 												
 																												</th>
 																												@endif
