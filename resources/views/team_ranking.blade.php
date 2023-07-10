@@ -151,33 +151,32 @@
 								<script type="text/javascript" src="/utilsv2/js/pdf-excel-plugin/buttons.html5.min.js"></script>
 								<script type="text/javascript" src="/utilsv2/js/pdf-excel-plugin/buttons.print.min.js"></script>
 
-                                <div class="about-table table-responsive" id="tab1default">
+                                <div class="about-table table-responsive" >
                     <div id="tablePlayerRankings_wrapper" class="dataTables_wrapper no-footer">
-                        <table class="table sortable dataTable no-footer" id="tablePlayerRankings" role="grid">
+                        <table class="table sortable dataTable no-footer"  role="grid">
 
-                            <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 30px;">#<p><a href="#"></a></p>
-                                    </th>
-                                    <th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Player : activate to sort column ascending" style="width: 80px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">Player<p><a href="#"></a></p></a></th>
-                                    <th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Team : activate to sort column ascending" style="width: 80px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">Team<p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Matches <p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Batting <p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Bowling <p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">MOM #<p><a href="#"></a></p></a></th>
-                                    <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Total <p><a href="#"></a></p></a></th>
-                                </tr>
-                            </thead>
+                        <thead> 
+                        <tr role="row">
+                        <th class="sorting_asc" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 30px;">#<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
+                        <th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Player : activate to sort column ascending" style="width: 208px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">Player<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Team : activate to sort column ascending" style="width: 210px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">Team<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Mat <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Inns: activate to sort column ascending" style="width: 31px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">Batting<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Overs: activate to sort column ascending" style="width: 41px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">Bowling <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Runs: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">MOM #</p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Wkts: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">Total<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                       </tr> 
+                    </thead>
 
 
                             <tbody>
                                 @foreach($getresult as $key => $data)
-                                <tr role="row" class="even">
+                                <tr role="row" class="even" style="background-color:#1d252d;color:white">
                                     <td class="sorting_1">{{$key+1}}</td>
                                     <td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
                                         <div>
                                             <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                                            <a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->player_id]}}</a><br>
+                                            <a href="viewPlayer.do?playerId=1375981&amp;clubId=2565" style="color:white"> {{$player[$data->player_id]}}</a><br>
                                         </div>
                                     </td>
                                     <td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>

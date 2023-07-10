@@ -157,37 +157,50 @@ th { min-width:30px !important; padding: 10px 5px !important; }
         <th>{{$playermatch[$data->id]}}</th>
     @endif
 @endforeach
+@php
+                   $player_balls=round(($playerballs[$playerId]?? 0)/6)??0;
+				   $player_runs=$playerruns[$playerId]??0;
+				   $player_outs=$playerouts[$playerId]??0;
+                   @endphp
 
 
 				<th>{{ isset($matchcount[$playerId]) ? $matchcount[$playerId] : 0 }}</th>
 
-				<th>{{($playerballs[$playerId] ?? 0)}}</th>
+				<th>{{round(($playerballs[$playerId]?? 0)/6)}}</th>
 
 
 				<th>
                 			<b><a class="linkStyle" href="">{{ isset($playerruns[$playerId]) ? $playerruns[$playerId] : 0 }}
                </a></b>
 				</th>
-				<th>{{$playerouts[$playerId]??0}}</th>
+				<th>{{$player_outs??0}}</th>
+				@if ($player_outs != 0) 
+                <th>{{number_format($player_runs/$player_outs??0,2)}}</th>
+				@else
+				<th>0</th>
+				@endif
+				@if (($player_balls??0) != 0) 
+                <th>{{number_format($player_runs/$player_balls??0,2)}}</th>
+				@else
+				<th>0</th>
+				@endif
 			
-				@if ($playerouts[$playerId]??0 != 0) 
-                <th>{{number_format($playerruns[$playerId]/$playerouts[$playerId],2)}}</th>
-				@else
-				<th>0</th>
-				@endif
-				@if ($playerballs[$playerId]??0 != 0) 
-                <th>{{number_format($playerruns[$playerId]/$playerballs[$playerId],2)}}</th>
-				@else
-				<th>0</th>
-				@endif
 				
-				@if (isset($playerballs[$playerId]) && isset($playerouts[$playerId]) && $playerballs[$playerId] != 0)
-    <th>{{ number_format($playerouts[$playerId] / $playerballs[$playerId], 2) }}</th>
+				@if (isset($player_balls) && isset($player_outs) && $player_outs != 0)
+    <th>{{ number_format($player_balls / $player_outs, 2) }}</th>
 @else
     <th>0</th>
 @endif
 
-				<th></th>
+
+
+    <th>
+        {{ isset($hatricks[$playerId][0]) ? $hatricks[$playerId][0] : 0 }}
+    </th>
+
+
+
+
 				<th>{{$playerwide[$playerId]??0}}</th>
 				<th>{{$playernoball[$playerId]??0}}</th>
 			</tr>

@@ -152,50 +152,47 @@
 								<script type="text/javascript" src="/utilsv2/js/pdf-excel-plugin/buttons.print.min.js"></script>
 
 
-								<div class="table-responsive about-table">
-
-									<div id="webrecordtable_wrapper" class="dataTables_wrapper no-footer">
-										<div id="webrecordtable_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="webrecordtable"></label></div>
-										<table class="table table-striped table-active2 playersData sortable dataTable no-footer" role="grid" aria-describedby="webrecordtable_info">
-
-											<thead>
-												<tr role="row">
-													<th class="sorting_asc" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 30px;">#<p><a href="#"></a></p>
+								<div class="about-table table-responsive" >
+                    <div id="tablePlayerRankings_wrapper" class="dataTables_wrapper no-footer">
+                        <table class="table sortable dataTable no-footer"  role="grid">
+    <thead> 
+												<tr role="row" >
+													<th class="sorting_asc" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 30px;">#<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p>
 													</th>
-													<th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Player : activate to sort column ascending" style="width: 80px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">Player<p><a href="#"></a></p></a></th>
-													<th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Team : activate to sort column ascending" style="width: 80px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">Team<p><a href="#"></a></p></a></th>
-													<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Matches <p><a href="#"></a></p></a></th>
-													<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Catches <p><a href="#"></a></p></a></th>
-													<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Stumpings <p><a href="#"></a></p></a></th>
-													<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Total <p><a href="#"></a></p></a></th>
+													<th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Player : activate to sort column ascending" style="width: 80px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">Player<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+													<th class="width sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Team : activate to sort column ascending" style="width: 80px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">Team<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+													<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Matches <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+													<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Catches <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+													<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Stumpings <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+													<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Total <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
 												</tr>
 											</thead>
 											<tbody>
 												@foreach($getresult as $key => $data)
-												<tr role="row" class="even">
+												<tr role="row" class="odd" style="background-color:#1d252d;color:white">
 													<td class="sorting_1">{{$key+1}}</td>
 													<td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
 														<div>
 															<div class="player-img" style="background-image: url('pic.jpg');"></div>
-															<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->player_id]}}</a><br>
+															<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565" style="color:white"> {{$player[$data->player_id]}}</a><br>
 														</div>
 													</td>
 													<td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
 													<td>{{  $match_count[$data->team_id]??0    }}</td>
-													<td>{{ $catchs_data[$data->player_id]??0 }}</td>
+													<td>{{ $player_cauches[$data->player_id]??0 }}</td>
 													<td>{{ $stump_data[$data->player_id]??0 }}</td>
 													<td>
-				@if(isset($stump_data[$data->player_id]) && isset($catchs_data[$data->player_id]) )
+				@if(isset($stump_data[$data->player_id]) && isset($player_cauches[$data->player_id]) )
 
-													 {{ $stump_data[$data->player_id] + $catchs_data[$data->player_id]  }}
+													 {{ $stump_data[$data->player_id] + $player_cauches[$data->player_id]  }}
 
 				@elseif(isset($stump_data[$data->player_id]))
 
 													 {{ $stump_data[$data->player_id] }}
 
- 				@elseif(isset($catchs_data[$data->player_id]))
+ 				@elseif(isset($player_cauches[$data->player_id]))
 
-													 {{ $catchs_data[$data->player_id] }}
+													 {{ $player_cauches[$data->player_id] }}
 				@else
 				0
 				@endif

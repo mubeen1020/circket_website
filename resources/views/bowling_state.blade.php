@@ -186,25 +186,7 @@
         @endif
 
         <td>
-            <?php
-                $hat_tricks = 0;
-                $current_overs = 0;
-                $current_wickets = 0;
-                if (isset($data->bowling_details)) {
-                    foreach($data->bowling_details as $detail) {
-                        if ($detail->isout) {
-                            $current_wickets++;
-                            if ($current_wickets >= 3) {
-                                $hat_tricks++;
-                                $current_wickets = 0;
-                                $current_overs = 0;
-                            }
-                        }
-                        $current_overs = $detail->overnumber;
-                    }
-                }
-                echo $hat_tricks;
-            ?>
+        {{ isset($hatricks[$data['bowler_id']][0]) ? $hatricks[$data['bowler_id']][0] : 0 }}
         </td>
     </tr>
 @endforeach

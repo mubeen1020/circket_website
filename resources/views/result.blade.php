@@ -207,7 +207,7 @@ text-align:center !important;
         @if ($ballsInCurrentOver == 0)
             {{ $total_over_fixture[$data->id][0] }}.{{ $ballsInCurrentOver }}
         @else
-            {{ $total_over_fixture[$data->id][0] - 1 }}.{{ $ballsInCurrentOver }} overs
+            {{ $total_over_fixture[$data->id][0] - 1 }}.{{ $ballsInCurrentOver }} 
         @endif
     </th>
 @else
@@ -250,7 +250,7 @@ text-align:center !important;
         @if ($ballsInCurrentOver == 0)
             {{ $total_over_fixture[$data->id][1] }}.{{ $ballsInCurrentOver }}
         @else
-            {{ $total_over_fixture[$data->id][1] - 1 }}.{{ $ballsInCurrentOver }} overs
+            {{ $total_over_fixture[$data->id][1] - 1 }}.{{ $ballsInCurrentOver }} 
         @endif
     </th>
 @else
