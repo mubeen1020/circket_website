@@ -299,8 +299,10 @@ if (strpos($headers[0], '404') !== false) {
 																<th>
                                 @if(count($bower_over)>0)
                                 @foreach($bower_over as $over)
+                                @foreach($player_wicket as $wickets)
                                 {{ number_format(($over->max_over / $wickets->playerwickets) * 100, 2) ?? 0 }}
                                   @endforeach 
+                                  @endforeach
                                                 @else
                                                 0
                                                 @endif 

@@ -189,7 +189,7 @@
                                     <td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
                                         <div>
                                             <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                                            <a> {{$data->player_name}}</a><br>
+                                            <a href="{{ route('playerview', $data->player_id) }}"> {{$data->player_name}}</a><br>
                                         </div>
                                     </td>
                                     <td style="text-align: left;font-size: smaller;">{{$team_players_list[$data->player_id]}}</td>

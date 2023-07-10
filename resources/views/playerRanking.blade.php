@@ -187,7 +187,7 @@
                                     <td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
                                         <div>
                                             <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                                            <a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data->player_id]}}</a><br>
+                                            <a href="{{ route('playerview', $data->player_id) }}"> {{$player[$data->player_id]}}</a><br>
                                         </div>
                                     </td>
                                     <td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>

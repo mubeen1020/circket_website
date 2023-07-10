@@ -154,7 +154,7 @@
         <td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
             <div>
                 <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                <a href="">{{$player[$data['bowler_id']]}}</a><br>
+                <a href="{{ route('playerview', $data['bowler_id']) }}">{{$player[$data['bowler_id']]}}</a><br>
             </div>
         </td>
         <td style="text-align: left;font-size: smaller;">{{$header_teams[$data['team_id']]}}</td>

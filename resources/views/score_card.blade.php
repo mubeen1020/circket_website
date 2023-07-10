@@ -95,8 +95,13 @@ if (strpos($headers[0], '404') !== false) {
             <span><a>b &nbsp;{{ $out->out_description }}</a></span>
         @elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
             <span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-        @elseif ($out->out_description == "Bowled" || $out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+        @elseif ($out->out_description == "Bowled" )
             <span><a>b</a></span> (<a href="#">{{ $out->bowler_name }}</a>)
+
+			  @elseif ($out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+            <span><a>b</a></span> (<a href="#">{{$out->out_description}}&nbsp;&nbsp;&{{ $out->bowler_name }}</a>)
+			@else
+			<span><a>b &nbsp;{{ $out->out_description }}</a></span>
         @endif
     @endif
 @endforeach
@@ -123,8 +128,13 @@ if (strpos($headers[0], '404') !== false) {
             <span><a>b &nbsp;{{ $out->out_description }}</a></span>
         @elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
             <span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-        @elseif ($out->out_description == "Bowled" || $out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+        @elseif ($out->out_description == "Bowled" )
             <span><a>b</a></span> (<a href="#">{{ $out->bowler_name }}</a>)
+
+			@elseif ($out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+            <span><a>b</a></span> (<a href="#">{{$out->out_description}}&nbsp;&nbsp;{{ $out->bowler_name }}</a>)
+			@else
+			<span><a>b &nbsp;{{ $out->out_description }}</a></span>
         @endif
     @endif
 @endforeach
@@ -427,8 +437,13 @@ if (strpos($headers[0], '404') !== false) {
             <span><a>b &nbsp;{{ $out->out_description }}</a></span>
         @elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
             <span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-        @elseif ($out->out_description == "Bowled" || $out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+        @elseif ($out->out_description == "Bowled" )
             <span><a>b</a></span> (<a href="#">{{ $out->bowler_name }}</a>)
+
+			@elseif ($out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+            <span><a>b</a></span> (<a href="#">{{$out->out_description}}&nbsp;&nbsp;{{ $out->bowler_name }}</a>)
+			@else
+			<span><a>b &nbsp;{{ $out->out_description }}</a></span>
         @endif
     @endif
 @endforeach
@@ -457,8 +472,13 @@ if (strpos($headers[0], '404') !== false) {
             <span><a>b &nbsp;{{ $out->out_description }}</a></span>
         @elseif ($out->out_description == "Run out" || $out->out_description == "Caught" || $out->out_description == "Run Out (NB)" || $out->out_description == "Run Out (WD)" || $out->out_description == "Stumped")
             <span><a>b&nbsp;&nbsp;{{ $out->bowler_name }}</a></span> &nbsp;(<a href="#">{{ $out->out_description }}&nbsp;by&nbsp;{{ $out->fielder_name }}</a>)
-        @elseif ($out->out_description == "Bowled" || $out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+        @elseif ($out->out_description == "Bowled" )
             <span><a>b</a></span> (<a href="#">{{ $out->bowler_name }}</a>)
+
+			@elseif ($out->out_description == "LBW" || $out->out_description == "Hit the ball twice" || $out->out_description == "Hit wicket")
+            <span><a>b</a></span> (<a href="#">{{$out->out_description}}&nbsp;&nbsp;{{ $out->bowler_name }}</a>)
+			@else
+			<span><a>b &nbsp;{{ $out->out_description }}</a></span>
         @endif
     @endif
 @endforeach
@@ -714,7 +734,7 @@ if (strpos($headers[0], '404') !== false) {
 							                            <div class="exportOptions-panel" style="float:right">
 							                            <div style="text-align: right;padding-left: 10px;">
       															
-												    		<a href="{{ route('downloadCSV', $match_results[0]->id) }}"><img alt="Download as Excel" title="Download as Excel" class="excelBtn" style="cursor:pointer;" src="/utilsv2/images/excel.png" width="32" height="32"></a>
+												    		<!-- <a href="{{ route('downloadCSV', $match_results[0]->id) }}"><img alt="Download as Excel" title="Download as Excel" class="excelBtn" style="cursor:pointer;" src="/utilsv2/images/excel.png" width="32" height="32"></a> -->
 												    	</div><br>
 							                        </div>
 							                        <font size="1"></font><table class="table"> 

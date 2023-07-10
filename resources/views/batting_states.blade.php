@@ -172,7 +172,7 @@
 								<td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
 									<div>
 										<div class="player-img" style="background-image: url('pic.jpg');"></div>
-										<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565"> {{$player[$data['player_id']]}}</a><br></div>
+										<a href="{{ route('playerview', $data['player_id']) }}"> {{$player[$data['player_id']]}}</a><br></div>
 								</td>
 						<td style="text-align: left;font-size: smaller;">{{$teams[$data['team_id']]}}</td>
 								
@@ -180,11 +180,11 @@
 								<td>{{$inningsCount[$data['player_id']]??0}}</td>
 								<td>{{$balls_faced[$data['player_id']]??0}}</td>
 								<td> {{$player_runs[$data['player_id']]??0}}</td>
-								<td>{{$fours[$data['player_id']][0]??0}}</td>
-								<td>{{$sixes[$data['player_id']][0]??0}}</td>
-								<td>{{$fifty[$data['player_id']][0]??0}}</td>
-								<td>{{$hundreds[$data['player_id']][0]??0}}</td>
-								<td>{{$higest_score[$data['player_id']][0]??0}}</td>
+								<td>{{$fours[$data['player_id']]??0}}</td>
+								<td>{{$sixes[$data['player_id']]??0}}</td>
+								<td>{{$fifty[$data['player_id']]??0}}</td>
+								<td>{{$hundreds[$data['player_id']]??0}}</td>
+								<td>{{$higest_score[$data['player_id']]??0}}</td>
 								
 								@if(isset($balls_faced[$data['player_id']]) && $balls_faced[$data['player_id']] > 0)
                     <td>{{ number_format(($player_runs[$data['player_id']] / $balls_faced[$data['player_id']]) * 100, 2) }}</td>

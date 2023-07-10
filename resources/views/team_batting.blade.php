@@ -176,7 +176,7 @@ th { min-width:30px !important; padding: 10px 5px !important; }
 				@else
 				<th>0</th>
 				@endif
-        <th>{{$playerhigestruns[$playerId]??0}}</th>
+        <th>{{$higest_score[$playerId]??0}}</th>
 	
         <th>{{$playerHundreds[$playerId]??0}}</th>
 	
