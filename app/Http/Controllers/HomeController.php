@@ -439,6 +439,7 @@ class HomeController extends Controller
     $variable3 = 'RunOut';
     $variable4 = 'BYES';
     
+ 
     $player_balls = FixtureScore::where('fixture_id', '=', $id)
       ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
         $query->where('balltype', '=', $variable1)

@@ -143,7 +143,7 @@ th { min-width:30px !important; padding: 10px 5px !important; }
     <tr role="row" class="odd">
         <th class="sorting_1">{{ $playerId }}</th>
 		
-        <th align="left" title="Abubaker Kalair"><i class="fa fa-user"></i> <b><a href="#">{{ $playerName }}</a></b></th>
+        <th align="left" title="{{ $playerName }}"><i class="fa fa-user"></i> <b><a href="#">{{ $playerName }}</a></b></th>
         <th>
             <table>
                 <tbody>
