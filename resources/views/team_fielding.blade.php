@@ -76,7 +76,7 @@
 							<li><a href="#umpiringSchedule" role="tab" data-toggle="tab" onclick="loadView('teamUmpiringSchedule');">Umpiring</a></li>
 							<li><a href="{{ url('team_batting', $team_id_data . '_' . $tournament_ids)  }}">Batting</a></li>
 							<li><a href="{{ url('team_bowling', $team_id_data . '_' . $tournament_ids)  }}">Bowling</a></li>
-							<li><a href="{{ url('team_fielding', $team_id_data . '_' . $tournament_ids)  }}">Fielding</a></li>
+							<li class="active"><a href="{{ url('team_fielding', $team_id_data . '_' . $tournament_ids)  }}">Fielding</a></li>
 							<li><a href="{{ url('team_ranking', $team_id_data . '_' . $tournament_ids)  }}">Ranking</a></li>
 						</ul>
 					</div>
@@ -179,20 +179,20 @@
 													</td>
 													<td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
 													<td>{{  $match_count[$data->team_id]??0    }}</td>
-													<td>{{ $player_cauches[$data->player_id]??0 }}</td>
+													<td>{{ $catchs_data[$data->player_id]??0 }}</td>
 													<td>{{ $stump_data[$data->player_id]??0 }}</td>
 													<td>
-				@if(isset($stump_data[$data->player_id]) && isset($player_cauches[$data->player_id]) )
+				@if(isset($stump_data[$data->player_id]) && isset($catchs_data[$data->player_id]) )
 
-													 {{ $stump_data[$data->player_id] + $player_cauches[$data->player_id]  }}
+													 {{ $stump_data[$data->player_id] + $catchs_data[$data->player_id]  }}
 
 				@elseif(isset($stump_data[$data->player_id]))
 
 													 {{ $stump_data[$data->player_id] }}
 
- 				@elseif(isset($player_cauches[$data->player_id]))
+ 				@elseif(isset($catchs_data[$data->player_id]))
 
-													 {{ $player_cauches[$data->player_id] }}
+													 {{ $catchs_data[$data->player_id] }}
 				@else
 				0
 				@endif

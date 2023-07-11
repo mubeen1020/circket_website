@@ -26,6 +26,7 @@ use App\Models\Sponsor;
 use App\Models\Umpire;
 use App\Models\Dismissal;
 use App\Models\Rulesandregulation;
+use App\Models\MatchDismissal;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -388,6 +389,7 @@ class HomeController extends Controller
 
   public function fullScorecard(int $id)
   {
+
     $ground = Ground::query();
     $ground = $ground->orderBy('id')->get();
     $ground = Ground::query()->get()->pluck(
@@ -431,7 +433,6 @@ class HomeController extends Controller
     ->orderBy('min_id')
     ->distinct('playerId')
     ->get();
-
 
     $variable1 = 'R';
     $variable2 = 'Wicket';
@@ -870,13 +871,13 @@ class HomeController extends Controller
                 ->from('fixtures')
                 ->whereIn('team_id_a', $team_ids)
                 ->where('tournament_id', $tournament_id)
-                ->where('running_inning', 3)
+                ->whereIn('running_inning', [ 3,1,2])
                 ->unionAll(
                     DB::table('fixtures')
                         ->select('team_id_b AS team_id')
                         ->whereIn('team_id_b', $team_ids)
                         ->where('tournament_id', $tournament_id)
-                        ->where('running_inning', 3)
+                        ->whereIn('running_inning', [ 3,1,2])
                 );
         }, 'subquery')
             ->select('team_id', DB::raw('COUNT(*) AS count'))
@@ -1014,28 +1015,26 @@ class HomeController extends Controller
     
     $data->where('tournament_players.team_id', '=', $team_id);
     $data->where('tournament_players.tournament_id', '=', $tournament_id);
+    $match_dismissal_name = Dismissal::where('name', 'Caught')
+    ->pluck('id');
+
+  
+    $catchs_data =MatchDismissal::query()
+    ->where('match_dismissals.dismissal_id', $match_dismissal_name)
+    ->where('fixtures.tournament_id', $tournament_id)
+    ->selectRaw("COUNT(match_dismissals.id) as total_catches,outbyplayer_id")
+    ->join('fixtures', 'fixtures.id', '=', 'match_dismissals.fixture_id')
+    ->groupBy('match_dismissals.outbyplayer_id')
+    ->get()->pluck('total_catches', 'outbyplayer_id');
 
 
-
-      $catch_query = DB::table('match_dismissals')
-      ->select('outplayer_id', DB::raw('COUNT(match_dismissals.id) as catch_count'))
+      $stump_data = MatchDismissal::query()
+      ->where('match_dismissals.dismissal_id', $dismissalIdstump)
+      ->where('fixtures.tournament_id', $tournament_id)
+      ->selectRaw("COUNT(match_dismissals.id) as total_catches,outbyplayer_id")
       ->join('fixtures', 'fixtures.id', '=', 'match_dismissals.fixture_id')
-      ->join('tournaments', 'tournaments.id', '=', 'fixtures.tournament_id')
-      ->where('dismissal_id', $dismissalIdcatch)
-      ->groupBy('outplayer_id', 'dismissal_id');
-
-      $stump_query = DB::table('match_dismissals')
-        ->select('outplayer_id', DB::raw('COUNT(match_dismissals.id) as catch_count'))
-        ->join('fixtures', 'fixtures.id', '=', 'match_dismissals.fixture_id')
-        ->join('tournaments', 'tournaments.id', '=', 'fixtures.tournament_id')
-        ->where('dismissal_id', $dismissalIdstump)
-        ->groupBy('outplayer_id', 'dismissal_id');
-
-
-        $catch_query->where('tournaments.id', $tournament_id);
-        $stump_query->where('tournaments.id', $tournament_id);
-      $catchs_data = $catch_query->pluck('catch_count', 'outplayer_id');
-      $stump_data = $stump_query->pluck('catch_count', 'outplayer_id');
+      ->groupBy('match_dismissals.outbyplayer_id')
+      ->get()->pluck('total_catches', 'outbyplayer_id');
 
 
 $getresult = $data->get();
@@ -2661,6 +2660,7 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
       ->get();
 
 
+
       $variable1 = 'R';
     $variable2 = 'Wicket';
     $variable3 = 'RunOut';
@@ -2854,11 +2854,10 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
       ->selectRaw("dismissals.id as dissmissalname")
       ->get()->pluck('dissmissalname');
 
-    $player_cauches = FixtureScore::where('match_dismissals.outbyplayer_id', $playerid)
-      ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+    $player_cauches = MatchDismissal::where('match_dismissals.outbyplayer_id', $playerid)
       ->where('match_dismissals.dismissal_id', $match_dissmissal_name)
       ->selectRaw("COUNT(match_dismissals.id) as total_catches")
-      ->groupBy('fixture_scores.bowlerid')
+      ->groupBy('match_dismissals.outbyplayer_id')
       ->get();
 
 
