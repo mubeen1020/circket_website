@@ -1002,7 +1002,7 @@ class HomeController extends Controller
       ->first();
 
       $dismissalIdcatch = $match_dissmissal_caught->id;
-      $dismissalIdstump = $match_dissmissal_stumped->id ;
+     
 
 
     $getresult = [];
@@ -1017,7 +1017,7 @@ class HomeController extends Controller
     $data->where('tournament_players.tournament_id', '=', $tournament_id);
     $match_dismissal_name = Dismissal::where('name', 'Caught')
     ->pluck('id');
-
+    $dismissalIdstump = $match_dissmissal_stumped->id ;
   
     $catchs_data =MatchDismissal::query()
     ->where('match_dismissals.dismissal_id', $match_dismissal_name)
@@ -1034,7 +1034,7 @@ class HomeController extends Controller
       ->selectRaw("COUNT(match_dismissals.id) as total_catches,outbyplayer_id")
       ->join('fixtures', 'fixtures.id', '=', 'match_dismissals.fixture_id')
       ->groupBy('match_dismissals.outbyplayer_id')
-      ->get()->pluck('total_catches', 'outbyplayer_id');
+      ->get()->pluck('total_stump', 'outbyplayer_id');
 
 
 $getresult = $data->get();
@@ -3684,20 +3684,22 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
       ->join('players', 'players.id', '=', 'tournament_players.player_id');
     
 
+      $match_dismissal_name = Dismissal::where('name', 'Caught')
+      ->pluck('id');
+      $dismissalIdstump = $match_dissmissal_stumped->id ;
+    
 
-    $catch_query = DB::table('match_dismissals')
-    ->select('outplayer_id', DB::raw('COUNT(match_dismissals.id) as catch_count'))
+    $catch_query = MatchDismissal::query()
+    ->where('match_dismissals.dismissal_id', $match_dismissal_name)
+    ->selectRaw("COUNT(match_dismissals.id) as catch_count,outbyplayer_id")
     ->join('fixtures', 'fixtures.id', '=', 'match_dismissals.fixture_id')
-    ->join('tournaments', 'tournaments.id', '=', 'fixtures.tournament_id')
-    ->where('dismissal_id', $dismissalIdcatch)
-    ->groupBy('outplayer_id', 'dismissal_id');
+    ->groupBy('match_dismissals.outbyplayer_id');
 
-    $stump_query = DB::table('match_dismissals')
-      ->select('outplayer_id', DB::raw('COUNT(match_dismissals.id) as catch_count'))
-      ->join('fixtures', 'fixtures.id', '=', 'match_dismissals.fixture_id')
-      ->join('tournaments', 'tournaments.id', '=', 'fixtures.tournament_id')
-      ->where('dismissal_id', $dismissalIdstump)
-      ->groupBy('outplayer_id', 'dismissal_id');
+    $stump_query = MatchDismissal::query()
+    ->where('match_dismissals.dismissal_id', $dismissalIdstump)
+    ->selectRaw("COUNT(match_dismissals.id) as stump,outbyplayer_id")
+    ->join('fixtures', 'fixtures.id', '=', 'match_dismissals.fixture_id')
+    ->groupBy('match_dismissals.outbyplayer_id');  
 
 
     if(!empty($term['year'])) {
@@ -3717,15 +3719,15 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
     if (!empty($term['tournament'])) {
       $tournament = $term['tournament'];
       $tournament = (int)$tournament;
-      $catch_query->where('tournaments.id', $tournament);
-      $stump_query->where('tournaments.id', $tournament);
+      $catch_query->where('fixtures.tournament_id', $tournament);
+      $stump_query->where('fixtures.tournament_id', $tournament);
       $data->where('fixtures.tournament_id', '=', $tournament);
       // $query_caught .= " AND tournaments.id = $tournament";
     }
 
 
-    $catchs_data = $catch_query->pluck('catch_count', 'outplayer_id');
-    $stump_data = $stump_query->pluck('catch_count', 'outplayer_id');
+    $catchs_data = $catch_query->pluck('catch_count', 'outbyplayer_id');
+    $stump_data = $stump_query->pluck('stump', 'outbyplayer_id');
 
 
     $getresult = $data
@@ -3757,6 +3759,10 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
       ->groupBy('team_id')
       ->get()->pluck('count','team_id');
       // dd($match_count);
+
+      if (!isset($stump_data)) {
+        $stump_data = [];
+    }
 
     return view('fieldingRecords', compact('getresult', 'years','tournamentdata','team_players_list', 'catchs_data','stump_data', 'match_count' ));
   }
@@ -4691,6 +4697,8 @@ $results = array();
       tournament_players.team_id;");
       
           $getresult = $results;
+
+         
 
   
     return view('fieldingRecords', compact('fours', 'balls_faced', 'sixes', 'balls_faced', 'player_runs', 'match_count_player', 'player', 'getresult', 'teams', 'tournamentdata', 'match_results',  'image_gallery', 'years'));

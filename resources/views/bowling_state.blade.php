@@ -151,7 +151,7 @@
 						@foreach($results as $key => $data)
     <tr role="row" class="even">
         <td class="sorting_1">{{$key+1}}</td>
-        <td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
+        <td align="left" title="{{$player[$data['bowler_id']]}}" style="text-align: left;width: 90px;">
             <div>
                 <div class="player-img" style="background-image: url('pic.jpg');"></div>
                 <a href="{{ route('playerview', $data['bowler_id']) }}">{{$player[$data['bowler_id']]}}</a><br>

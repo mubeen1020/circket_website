@@ -95,14 +95,14 @@ class ApiController extends Controller
             ->get()->pluck('teams_name', 'teams_id');
     
         $match_count_team_a = Fixture::where('tournament_id', '=', $id)
-            ->where('running_inning',3)
+           ->whereIN('running_inning',[1,2,3])
             ->selectRaw("COUNT(id)")
             ->selectRaw("team_id_a")
             ->groupby('team_id_a')
             ->get()->pluck('COUNT(id)', 'team_id_a');
     
         $match_count_team_b = Fixture::where('tournament_id', '=', $id)
-            ->where('running_inning',3)
+           ->whereIN('running_inning',[1,2,3])
             ->selectRaw("COUNT(id)")
             ->selectRaw("team_id_b")
             ->groupby('team_id_b')
@@ -243,7 +243,7 @@ $Groups_team = TournamentGroup::query()
             
         $match_count_team_a = Fixture::query()
         ->where('tournament_id', $tournamnet_id)
-        ->where('running_inning',3)
+        ->whereIN('running_inning',[1,2,3])
             ->selectRaw("COUNT(id)")
             ->selectRaw("team_id_a")
             ->groupby('team_id_a')
@@ -251,7 +251,7 @@ $Groups_team = TournamentGroup::query()
     
         $match_count_team_b = Fixture::query()
         ->where('tournament_id', $tournamnet_id)
-        ->where('running_inning',3)
+        ->whereIN('running_inning',[1,2,3])
             ->selectRaw("COUNT(id)")
             ->selectRaw("team_id_b")
             ->groupby('team_id_b')
