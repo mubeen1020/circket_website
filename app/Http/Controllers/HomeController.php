@@ -307,7 +307,7 @@ class HomeController extends Controller
 
 
 
-  public function fullScorecard_chart(int $id)
+public function fullScorecard_chart(int $id)
   {
     $match_results = Fixture::query();
     $match_results->where('id', '=', $id);
@@ -349,10 +349,114 @@ class HomeController extends Controller
       'name',
     )->first();
 
+    $cumulativeScores_ining1 = DB::table('fixture_scores')
+    ->orderBy('overnumber')
+    ->where('fixture_id', $id)
+    ->where('inningnumber', 1)
+    ->select('overnumber', DB::raw('SUM(runs) as over_run'))
+    ->groupBy('overnumber')
+    ->get()
+    ->reduce(function ($carry, $score) {
+        $cumulativeScore = isset($carry[count($carry) - 1]) ? $carry[count($carry) - 1] + $score->over_run : $score->over_run;
+        $carry[] = $cumulativeScore;
+        return $carry;
+    }, []);
 
-    return view('fullScorecard_chart', compact('match_results', 'teams_one', 'teams_two', 'sum_inning_one', 'sum_inning_two', 'id', 'over'));
+    $cumulativeScores_ining2 = DB::table('fixture_scores')
+    ->orderBy('overnumber')
+    ->where('fixture_id', $id)
+    ->where('inningnumber', 2)
+    ->select('overnumber', DB::raw('SUM(runs) as over_run'))
+    ->groupBy('overnumber')
+    ->get()
+    ->reduce(function ($carry, $score) {
+        $cumulativeScore = isset($carry[count($carry) - 1]) ? $carry[count($carry) - 1] + $score->over_run : $score->over_run;
+        $carry[] = $cumulativeScore;
+        return $carry;
+    }, []);
+
+
+    $ran_batsman_1 = FixtureScore::where('fixture_id', $id)
+    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket' OR balltype='RunOut' OR balltype = 'AddRun' THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as total_runs")
+    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'BYES' OR balltype = 'Wicket' OR balltype='RunOut' THEN 1 ELSE 0 END) as balls")
+    ->selectRaw('batsman.fullname')
+    ->where('inningnumber', '=', 1)
+    ->leftJoin('players as batsman', 'batsman.id', '=', 'fixture_scores.playerId')
+    ->groupBy('playerId')
+    ->get();
+
+
+    $ran_batsman_2 = FixtureScore::where('fixture_id', $id)
+    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket' OR balltype='RunOut' OR balltype = 'AddRun' THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as total_runs, batsman.fullname")
+    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'BYES' OR balltype = 'Wicket' OR balltype='RunOut' THEN 1 ELSE 0 END) as balls")
+    ->where('inningnumber', '=', 2)
+    ->leftJoin('players as batsman', 'batsman.id', '=', 'fixture_scores.playerId')
+    ->groupBy('playerId')
+    ->get();
+
+
+    $ran_type_1 = DB::table('fixture_scores')
+    ->select(DB::raw('SUM(runs) as total_runs, runs'))
+    ->where('fixture_id', '=', $id)
+    ->where('inningnumber', '=', 1)
+    ->groupBy('runs')
+    ->orderBy('runs')
+    ->get();
+
+    $ran_type_2 = DB::table('fixture_scores')
+    ->select(DB::raw('SUM(runs) as total_runs, runs'))
+    ->where('fixture_id', '=', $id)
+    ->where('inningnumber', '=', 2)
+    ->groupBy('runs')
+    ->orderBy('runs')
+    ->get();
+
+
+    $ran_bowler_1 = FixtureScore::where('fixture_id', $id)
+    ->selectRaw("SUM(runs) as total_runs")
+    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'BYES' OR balltype = 'Wicket' OR balltype='RunOut' THEN 1 ELSE 0 END) as balls")
+    ->selectRaw('bowler.fullname')
+    ->where('inningnumber', '=', 1)
+    ->leftJoin('players as bowler', 'bowler.id', '=', 'fixture_scores.bowlerid')
+    ->groupBy('bowlerid')
+    ->get();
+    // dd($ran_bowler_1);
+
+    $ran_bowler_2 = FixtureScore::where('fixture_id', $id)
+    ->selectRaw("SUM(RUNS) as total_runs")
+    ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'BYES' OR balltype = 'Wicket' OR balltype='RunOut' THEN 1 ELSE 0 END) as balls")
+    ->selectRaw('bowler.fullname')
+    ->where('inningnumber', '=', 2)
+    ->leftJoin('players as bowler', 'bowler.id', '=', 'fixture_scores.bowlerid')
+    ->groupBy('bowlerid')
+    ->get();
+
+
+    $extra_runs_1 = FixtureScore::where('fixture_id', '=', $id)
+    ->selectRaw('inningnumber')
+    ->selectRaw("SUM(CASE WHEN balltype IN ('NBP', 'NB', 'NBB','Run Out (WD)','Run Out (NB)') THEN runs ELSE 0 END) AS NoBalls")
+    // ->selectRaw("SUM(CASE WHEN balltype = 'NBP' THEN 1 ELSE 0 END) AS nbp_total_runs")
+    ->selectRaw("SUM(CASE  WHEN balltype IN ('WBB', 'WD') THEN runs ELSE 0 END) AS Wide")
+    ->selectRaw("SUM(CASE WHEN balltype = 'BYES' THEN runs ELSE 0 END) AS Byes")
+    ->where('inningnumber','=',1)
+    ->groupBy('inningnumber')
+    ->get();
+
+    // dd($extra_runs_1);
+
+    $extra_runs_2 = FixtureScore::where('fixture_id', '=', $id)
+    ->selectRaw('inningnumber')
+    ->selectRaw("SUM(CASE WHEN balltype IN ('NBP', 'NB', 'NBB','Run Out (WD)','Run Out (NB)') THEN runs ELSE 0 END) AS NoBalls")
+    // ->selectRaw("SUM(CASE WHEN balltype = 'NBP' THEN 1 ELSE 0 END) AS nbp_total_runs")
+    ->selectRaw("SUM(CASE  WHEN balltype IN ('WBB', 'WD') THEN runs ELSE 0 END) AS Wide")
+    ->selectRaw("SUM(CASE WHEN balltype = 'BYES' THEN runs ELSE 0 END) AS Byes")
+    ->where('inningnumber','=',2)
+    ->groupBy('inningnumber')
+    ->get();
+
+
+    return view('fullScorecard_chart', compact('match_results','cumulativeScores_ining2','cumulativeScores_ining1', 'teams_one', 'teams_two', 'sum_inning_one', 'sum_inning_two', 'id', 'over', 'ran_type_1', 'ran_type_2','ran_batsman_1','ran_batsman_2','ran_bowler_2','ran_bowler_1','extra_runs_2','extra_runs_1'));
   }
-
 
   public function fullScorecard_overbyover(int $id)
   {
