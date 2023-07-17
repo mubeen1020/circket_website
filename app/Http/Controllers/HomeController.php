@@ -541,15 +541,14 @@ public function fullScorecard_chart(int $id)
     $variable1 = 'R';
     $variable2 = 'Wicket';
     $variable3 = 'RunOut';
-    $variable4 = 'BYES';
+    
     
  
     $player_balls = FixtureScore::where('fixture_id', '=', $id)
-      ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
+      ->where(function ($query) use ($variable1, $variable2,$variable3) {
         $query->where('balltype', '=', $variable1)
           ->orWhere('balltype', '=', $variable2)
-          ->orWhere('balltype', '=', $variable3)
-          ->orWhere('balltype', '=', $variable4);
+          ->orWhere('balltype', '=', $variable3);
       })->selectRaw("count(id) as balls")
       ->selectRaw("playerId")->groupBy('playerId')
       ->get()->pluck('balls', 'playerId');
@@ -698,14 +697,14 @@ public function fullScorecard_chart(int $id)
       $variable1 = 'R';
       $variable2 = 'Wicket';
       $variable3 = 'RunOut';
-      $variable4 = 'BYES';
+      
       
       $player_balls = FixtureScore::where('fixture_id', '=', $id)
-        ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
+        ->where(function ($query) use ($variable1, $variable2,$variable3) {
           $query->where('balltype', '=', $variable1)
             ->orWhere('balltype', '=', $variable2)
             ->orWhere('balltype', '=', $variable3)
-            ->orWhere('balltype', '=', $variable4);
+;
       })->selectRaw("count(id) as balls")
       ->selectRaw("playerId")->groupBy('playerId')
       ->get()->pluck('balls', 'playerId');;
@@ -1701,14 +1700,14 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
        $variable1 = 'R';
        $variable2 = 'Wicket';
        $variable3 = 'RunOut';
-       $variable4 = 'BYES';
+       
        
        $playerballs = FixtureScore::where('fixtures.tournament_id', $tournament_id)
-         ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
+         ->where(function ($query) use ($variable1, $variable2,$variable3) {
            $query->where('balltype', '=', $variable1)
              ->orWhere('balltype', '=', $variable2)
              ->orWhere('balltype', '=', $variable3)
-             ->orWhere('balltype', '=', $variable4);
+  ;
      })
      ->selectRaw('COUNT(fixture_scores.id) as balls, fixture_scores.playerId')
      ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
@@ -1919,14 +1918,14 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
       $variable1 = 'R';
       $variable2 = 'Wicket';
       $variable3 = 'RunOut';
-      $variable4 = 'BYES';
+      
       
       $balls_faced = FixtureScore::where('fixtures.tournament_id', $tournament)
-        ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
+        ->where(function ($query) use ($variable1, $variable2,$variable3) {
           $query->where('balltype', '=', $variable1)
             ->orWhere('balltype', '=', $variable2)
             ->orWhere('balltype', '=', $variable3)
-            ->orWhere('balltype', '=', $variable4);
+;
     })
     ->selectRaw('COUNT(fixture_scores.id) as balls, fixture_scores.playerId')
     ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
@@ -2682,6 +2681,16 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
 
   public function playerview(int $playerid)
   {
+
+   
+    $isrun_querys_array = DB::table('fixture_scores')
+    ->select('playerId','inningnumber', DB::raw("CAST(SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket' OR balltype = 'RunOut' THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) AS UNSIGNED) as total_runs"))
+    ->where('fixture_id', 427)
+    ->groupBy('playerId','inningnumber')
+    ->get();
+
+dd($isrun_querys_array);
+
     $match_results = Fixture::query();
     $match_results = $match_results->orderBy('id')->get();
     $teams = Team::query()->get()->pluck(
@@ -2769,14 +2778,13 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
       $variable1 = 'R';
     $variable2 = 'Wicket';
     $variable3 = 'RunOut';
-    $variable4 = 'BYES';
+    
     
     $player_balls = FixtureScore::where('playerid', $playerid)
-      ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
+      ->where(function ($query) use ($variable1, $variable2,$variable3) {
         $query->where('balltype', '=', $variable1)
           ->orWhere('balltype', '=', $variable2)
-          ->orWhere('balltype', '=', $variable3)
-          ->orWhere('balltype', '=', $variable4);
+          ->orWhere('balltype', '=', $variable3);
         })->selectRaw("count(id) as balls")
         ->selectRaw("playerId")->groupBy('playerId')
         ->get();

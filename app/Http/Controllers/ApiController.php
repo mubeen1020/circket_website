@@ -605,13 +605,13 @@ $Groups_team = TournamentGroup::query()
         pc.player_type IN ('batsmen', 'Bowler')
         AND pc.tournament_id = $tournament_id
       GROUP BY 
-        p.fullname,
         pc.tournament_id, 
         pc.fixture_id, 
         pc.player_id, 
         pc.team_id
       ORDER BY
-        COALESCE(SUM(CASE WHEN pc.player_type IN ('batsmen', 'Bowler') THEN pc.points END), 0) DESC      LIMIT 5") ;
+        COALESCE(SUM(CASE WHEN pc.player_type IN ('batsmen', 'Bowler') THEN pc.points END), 0) DESC      LIMIT 50") ;
+        // dd($top_ranking);
         return response()->json($top_ranking);
     }
     
@@ -631,10 +631,12 @@ $Groups_team = TournamentGroup::query()
             SELECT
                 first_inning_team_id AS team_id,
                 SUM(fixture_scores.runs) AS total_runs_scored,
-                CONCAT(
-                    FLOOR(MAX(DISTINCT fixture_scores.ballnumber) / 6), '.',
-                    MAX(DISTINCT fixture_scores.ballnumber) % 6
-                ) AS over_faced,
+                 CASE WHEN MAX(DISTINCT fixture_scores.ballnumber) % 6 = 0
+            THEN CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber)), '.',
+                MAX(DISTINCT fixture_scores.ballnumber) % 6)
+            ELSE CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber - 1)), '.',
+                MAX(DISTINCT fixture_scores.ballnumber) % 6)
+        END AS over_faced,
                 0 AS total_runs_conceded,
                 0 AS over_bowled
             FROM
@@ -652,10 +654,12 @@ $Groups_team = TournamentGroup::query()
             SELECT
                 second_inning_team_id AS team_id,
                 SUM(fixture_scores.runs) AS total_runs_scored,
-                CONCAT(
-                    FLOOR(MAX(DISTINCT fixture_scores.ballnumber) / 6), '.',
-                    MAX(DISTINCT fixture_scores.ballnumber) % 6
-                ) AS over_faced,
+                 CASE WHEN MAX(DISTINCT fixture_scores.ballnumber) % 6 = 0
+            THEN CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber)), '.',
+                MAX(DISTINCT fixture_scores.ballnumber) % 6)
+            ELSE CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber - 1)), '.',
+                MAX(DISTINCT fixture_scores.ballnumber) % 6)
+        END AS over_faced,
                 0 AS total_runs_conceded,
                 0 AS over_bowled
             FROM
@@ -675,10 +679,12 @@ $Groups_team = TournamentGroup::query()
                 0 AS total_runs_scored,
                 0 AS over_faced,
                 SUM(fixture_scores.runs) AS total_runs_conceded,
-                CONCAT(
-                    FLOOR(MAX(DISTINCT fixture_scores.ballnumber) / 6), '.',
-                    MAX(DISTINCT fixture_scores.ballnumber) % 6
-                ) AS over_bowled
+                 CASE WHEN MAX(DISTINCT fixture_scores.ballnumber) % 6 = 0
+            THEN CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber)), '.',
+                MAX(DISTINCT fixture_scores.ballnumber) % 6)
+            ELSE CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber - 1)), '.',
+                MAX(DISTINCT fixture_scores.ballnumber) % 6)
+        END AS over_bowled
             FROM
                 fixtures
             INNER JOIN
@@ -696,10 +702,12 @@ $Groups_team = TournamentGroup::query()
                 0 AS total_runs_scored,
                 0 AS over_faced,
                 SUM(fixture_scores.runs) AS total_runs_conceded,
-                CONCAT(
-                    FLOOR(MAX(DISTINCT fixture_scores.ballnumber) / 6), '.',
-                    MAX(DISTINCT fixture_scores.ballnumber) % 6
-                ) AS over_bowled
+                 CASE WHEN MAX(DISTINCT fixture_scores.ballnumber) % 6 = 0
+            THEN CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber)), '.',
+                MAX(DISTINCT fixture_scores.ballnumber) % 6)
+            ELSE CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber - 1)), '.',
+                MAX(DISTINCT fixture_scores.ballnumber) % 6)
+        END AS over_bowled
             FROM
                 fixtures
             INNER JOIN

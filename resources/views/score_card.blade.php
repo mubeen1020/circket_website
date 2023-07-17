@@ -355,7 +355,7 @@ if (strpos($headers[0], '404') !== false) {
 																							
 																						, 
 		                                                                                
-		                                                                                 Over {{($score['overnumber'])-1}}.{{($score['ballnumber']%6)+1}}</h5>
+		                                                                                 Over {{($score['overnumber'])-1}}.{{($score['ballnumber']%6)}}</h5>
 		                                                                                
 		                                                                            </div>
 		                                                                           </div>
@@ -689,7 +689,7 @@ if (strpos($headers[0], '404') !== false) {
 																							
 																						, 
 		                                                                                
-		                                                                                 Over {{($score['overnumber'])}}.{{($score['ballnumber']%6)+1}}</h5>
+		                                                                                 Over {{($score['overnumber'])}}.{{($score['ballnumber']%6)}}</h5>
 		                                                                                
 		                                                                            </div>
 		                                                                           </div>
