@@ -1308,6 +1308,45 @@ function get_top_scorers(tournament_season_id) {
 }
 
 
+function get_top_ranking(tournament_season_id) {
+    $.ajax({
+        url: "{{ url('/get_top_ranking/')}}"+'/' + tournament_season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const scores = document.getElementById('topranking');
+            scores.innerHTML = ''; // Clear the previous data before appending new data
+            data.forEach(item => {
+                scores.innerHTML += `
+                    <tr>
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding-right:5px;min-width:35px">
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.player_id}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
+                                        </td>
+                                        <td>
+                                        <a href="{{ url('/playerview/${item.player_id}') }}">${item.playername}</a>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th> 
+                        <th class="ls">
+                            <a style="font-size: 17px;" class="linkStyle" href="">${item.total_points}</a>
+                        </th>
+                    </tr>
+                `;
+            });
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
 function get_top_bowler(tournament_season_id) {
     $.ajax({
         url: "{{ url('/get_top_bowler/')}}/" + tournament_season_id,
@@ -1484,44 +1523,6 @@ try {
     });
 }
 
-
-function get_top_ranking(tournament_season_id) {
-    $.ajax({
-        url: "{{ url('/get_top_ranking/')}}/" + tournament_season_id,
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            const scores = document.getElementById('topranking');
-            scores.innerHTML = ''; // Clear the previous data before appending new data
-            data.forEach(item => {
-                scores.innerHTML += `
-                    <tr>
-                        <th>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td style="padding-right:5px;min-width:35px">
-                                            <img src="https://eoscl.ca/admin/public/Player/${item.player_id}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
-                                            </td>
-                                        <td>
-                                            <a href="{{ url('/playerview/${item.player_id}')}}">${item.fullname}</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </th> 
-                        <th class="ls">
-                            <a style="font-size: 17px;" class="linkStyle" href="">${item.Total}</a>
-                        </th>
-                    </tr>
-                `;
-            });
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
 
 
 
