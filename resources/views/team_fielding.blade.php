@@ -171,7 +171,7 @@
 												@foreach($getresult as $key => $data)
 												<tr role="row" class="odd" style="background-color:#1d252d;color:white">
 													<td class="sorting_1">{{$key+1}}</td>
-													<td align="left" title="Rajwant Singh" style="text-align: left;width: 90px;">
+													<td align="left" title="{{$player[$data->player_id]}}" style="text-align: left;width: 90px;">
 														<div>
 															<div class="player-img" style="background-image: url('pic.jpg');"></div>
 															<a href="viewPlayer.do?playerId=1375981&amp;clubId=2565" style="color:white"> {{$player[$data->player_id]}}</a><br>

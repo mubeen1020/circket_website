@@ -127,10 +127,8 @@ class ApiController extends Controller
             ->pluck('tie', 'team_id_a', 'team_id_b');
         
             $net_run_rate_result = $this->calculateNetRunRate($id);
-        
-            $point_table_netrr_tem = $net_run_rate_result['point_table_netrr_tem'];
-    
-        
+            $point_table_net_rr = $net_run_rate_result['point_table_net_rr'];
+            
         $result = array();
         
         foreach ($get_point_table_data as $team_id => $team_name) {
@@ -139,13 +137,13 @@ class ApiController extends Controller
             $team_losses = isset($match_count_loss_team[$team_id]) ? $match_count_loss_team[$team_id] : 0;
             $team_total_matches = isset($match_count_team_a[$team_id]) ? $match_count_team_a[$team_id] : 0;
             
-            if(count($point_table_netrr_tem)>0)
+            if(count($point_table_net_rr)>0)
       {
-          foreach($point_table_netrr_tem as $netrr_team)
+          foreach($point_table_net_rr as $netrr_team)
           {
               if( $netrr_team->team_id==$team_id)
               {
-                  $team_netrr += $netrr_team->netrr    ;    
+                  $team_netrr += $netrr_team->net_rr    ;    
               }
           }
       }
@@ -344,9 +342,12 @@ $Groups_team = TournamentGroup::query()
             ->pluck('max_over', 'second_inning_team_id');
       
             $net_run_rate_result = $this->calculateNetRunRate($tournamnet_id);
+            $point_table_net_rr = $net_run_rate_result['point_table_net_rr'];
+          
+    
         
-            $point_table_netrr_tem = $net_run_rate_result['point_table_netrr_tem'];
-        
+
+            
         $result = array();
         
         foreach ($Groups_team as $team_id => $team_name) {
@@ -355,18 +356,19 @@ $Groups_team = TournamentGroup::query()
             $team_losses = isset($match_count_loss_team[$team_id]) ? $match_count_loss_team[$team_id] : 0;
             $team_total_matches = isset($match_count_team_a[$team_id]) ? $match_count_team_a[$team_id] : 0;
             
-            if(count($point_table_netrr_tem)>0)
-            {
-                foreach($point_table_netrr_tem as $netrr_team)
-                {
-                    if( $netrr_team->team_id==$team_id)
-                    {
-                        $team_netrr += $netrr_team->net_rr    ;    
-                    }
-                }
-            }
+            if(count($point_table_net_rr)>0)
+      {
+          foreach($point_table_net_rr as $netrr_team)
+          {
+              if( $netrr_team->team_id==$team_id)
+              {
+                  $team_netrr += $netrr_team->net_rr    ;    
+              }
+          }
+      }
       
            
+
         if (isset($match_count_team_b[$team_id])) {
             $team_total_matches += $match_count_team_b[$team_id];
         }
@@ -621,7 +623,7 @@ public function get_top_ranking(int $tournament_id)
 
   public function calculateNetRunRate($id)
 {
-    $point_table_netrr_tem = DB::select("
+    $point_table_net_rr = DB::select("
     SELECT (total_runs_scored/over_bowled)- (total_runs_conceded/over_faced) as net_rr, team_id
     FROM (
         SELECT
@@ -644,9 +646,9 @@ public function get_top_ranking(int $tournament_id)
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
-            JOIN tournaments On tournaments.id=$id
-            WHERE tournaments.id = 51
-                AND inningnumber = 1
+            JOIN tournaments On tournaments.id=fixtures.tournament_id
+            WHERE tournaments.id = $id
+                AND inningnumber = 1 AND running_inning = 3
             GROUP BY
                 first_inning_team_id
     
@@ -665,9 +667,9 @@ public function get_top_ranking(int $tournament_id)
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
-            JOIN tournaments On tournaments.id=$id
-            WHERE tournaments.id = 51
-                AND inningnumber = 1
+            JOIN tournaments On tournaments.id=fixtures.tournament_id
+            WHERE tournaments.id = $id
+                AND inningnumber = 1 AND running_inning = 3
             GROUP BY
                 second_inning_team_id
     
@@ -686,9 +688,9 @@ public function get_top_ranking(int $tournament_id)
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
-                JOIN tournaments On tournaments.id=$id
-                WHERE tournaments.id = 51
-                AND inningnumber = 2
+                JOIN tournaments On tournaments.id=fixtures.tournament_id
+                WHERE tournaments.id = $id
+                AND inningnumber = 2 AND running_inning = 3
             GROUP BY
                 first_inning_team_id
     
@@ -707,9 +709,9 @@ public function get_top_ranking(int $tournament_id)
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
-                JOIN tournaments On tournaments.id=$id
-                WHERE tournaments.id = 51
-                AND inningnumber = 2
+                JOIN tournaments On tournaments.id=fixtures.tournament_id
+                WHERE tournaments.id = $id
+                AND inningnumber = 2 AND running_inning = 3
             GROUP BY
                 second_inning_team_id
         ) AS subquery
@@ -717,8 +719,10 @@ public function get_top_ranking(int $tournament_id)
             team_id
     ) AS q1;");
 
+    
+
     return [
-        'point_table_netrr_tem' => $point_table_netrr_tem,
+        'point_table_net_rr' => $point_table_net_rr,
     ];
 }
   

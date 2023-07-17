@@ -1,7 +1,7 @@
 @extends('default')
 @section('content')
 
-<div class="container1 p-sm-01">
+<div class="container1 p-sm-01" style="margin-left: 10px;">
     <div class="profile-in-container1">
        
       <div class="show-phone">
@@ -23,138 +23,157 @@
            </div>
                        
     <div class="match-content1">
-        <div class="row">
+        <div class="row" style="background-color: #ffff;">
         
-                        
-                        <div class="col-sm-6">
-                                                <div class="stat-image-all">
+                       
+                        <div class="col-md-12" style="width: 135%;">
+                                                <div class="stat-image-all">                                                   
                                                     <div class="border-heading">
-                                                        <h5>BATTING: RUNS PER Over</h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px;">BATTING: RUNS PER OVER</h3>
                                                     </div>
+                                                    
 
 
 
                                                             <div class="col-lg-8">
-                                                    <canvas id="userChart" class="rounded shadow"></canvas>
+                                                    <canvas id="userChart" class="rounded shadow" style="padding-left: 100px;"></canvas>
                                                     </div>
 
                                             </div>
                         </div>
+                        
                         
                         
             </div>
-            <div class="row">
+
+            <div class="row" style="background-color: #ffff; padding-top: 30px;" >
         
                         
-                        <div class="col-sm-6">
+                        <div class="col-md-12" style="width: 135%;">
+                        
                                                 <div class="stat-image-all">
                                                     <div class="border-heading">
-                                                        <h5>BATTING: RUNS PER INNINGS</h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px;">BATTING: RUNS PER INNINGS</h3>
                                                     </div>
 
 
 
                                                             <div class="col-lg-8">
-                                                    <canvas id="chartline_worm" class="rounded shadow"></canvas>
+                                                    <canvas id="chartline_worm" class="rounded shadow" style="padding-left: 200px;"></canvas>
                                                     </div>
 
                                             </div>
+                        
                         </div>
                         
                         
+                        
             </div> <!--- row end -->
-            <div class="row">
+            <div class="row" style="background-color: #ffff; padding-top: 30px;">
         
                         
-                        <div class="col-sm-6">
+                        <div class="col-md-12" style="width: 135%;">
+                        
                                                 <div class="stat-image-all">
                                                     <div class="border-heading">
-                                                        <h5>Type of Runs</h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px;">Type of Runs</h3>
                                                     </div>
 
 
 
                                                             <div class="col-lg-8">
-                                                    <canvas id="charttype_of_run" class="rounded shadow"></canvas>
+                                                    <canvas id="charttype_of_run" class="rounded shadow" style="height: 50%; padding-left: 200px;"></canvas>
                                                     </div>
 
                                             </div>
+                                   
                         </div>
                         
                         
             </div><!--- row end -->
-            <div class="row">
-                <div class="col-sm-6" style="height: 100%;">
+            <div class="row" style="background-color: #ffff; padding-top: 30px;">
+                <div class="col-sm-6" style="height: 80%;">
+                
+
                                                 <div class="stat-image-all">
                                                     <div class="border-heading">
-                                                        <h5>batsman </h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px; text-align: center;">Batsman Run</h3>
                                                     </div>
 
 
 
-                                            <div class="col-lg-8" style="height: 100%;">
+                                            <div class="col-lg-8" style="height: 90%;">
                                                     <canvas id="chartt_player_1" class="rounded shadow"></canvas>
                                                     </div>
 
                                             </div>
+                
+
                         </div>
-                <div class="col-sm-6" style="height: 100%;">
+                <div class="col-sm-6" style="height: 80%;">
+                
                                                 <div class="stat-image-all">
                                                     <div class="border-heading">
-                                                        <h5>Type of Runs</h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px; text-align: center;">Batsman Runs</h3>
                                                     </div>
 
 
 
-                                                <div class="col-lg-8" style="height: 100%;">
+                                                <div class="col-lg-8" style="height: 90%;">
                                                     <canvas id="chartt_player_2" class="rounded shadow"></canvas>
                                                     </div>
 
                                             </div>
+                                            
+                
                         </div>            
             </div><!--- row end -->
 
-            <div class="row">
-                <div class="col-sm-6" style="height: 100%;">
+            <div class="row" style="background-color: #ffff; padding-top: 30px;">
+                <div class="col-sm-6" style="height: 80%;">
+                
                                                 <div class="stat-image-all">
                                                     <div class="border-heading">
-                                                        <h5>Bowler </h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px; text-align: center;">Bowler </h3>
                                                     </div>
 
 
 
-                                            <div class="col-lg-8" style="height: 100%;">
+                                            <div class="col-lg-8" style="height: 90%;">
                                                     <canvas id="chartt_bowler_1" class="rounded shadow"></canvas>
                                                     </div>
 
                                             </div>
+                
                         </div>
-                <div class="col-sm-6" style="height: 100%;">
+                <div class="col-sm-6" style="height: 80%;">
+                
                                                 <div class="stat-image-all">
                                                     <div class="border-heading">
-                                                        <h5>Bowler</h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px; text-align: center;">Bowler</h3>
                                                     </div>
 
 
 
-                                                <div class="col-lg-8" style="height: 100%;">
+                                                <div class="col-lg-8" style="height: 90%;">
                                                     <canvas id="chartt_bowler_2" class="rounded shadow"></canvas>
                                                     </div>
 
                                             </div>
+                          
                         </div>            
             </div><!--- row end -->
 
-            <div class="row">
+            <div class="row" style="background-color: #ffff; padding-top: 30px;">
                 <div class="col-sm-6" style="height: 100%;">
                                                 <div class="stat-image-all">
                                                     <div class="border-heading">
-                                                        <h5>Extra </h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px; text-align: center;">Extra </h3>
                                                     </div>
 
 
 
-                                            <div class="col-lg-8" style="height: 100%;">
+                                            <div class="col-lg-8" style="height: 100%; padding-left: 100px;">
                                                     <canvas id="chartt_extra_pie_1" class="rounded shadow"></canvas>
                                                     </div>
 
@@ -164,12 +183,12 @@
                                         <div class="col-sm-6" style="height: 100%;">
                                                 <div class="stat-image-all">
                                                     <div class="border-heading">
-                                                        <h5>Extra </h5>
+                                                        <h3 style="font-weight: bolder; background-color: #dfdede; padding: 10px; text-align: center;">Extra </h3>
                                                     </div>
 
 
 
-                                            <div class="col-lg-8" style="height: 100%;">
+                                            <div class="col-lg-8" style="height: 100%; padding-left: 100px">
                                                     <canvas id="chartt_extra_pie_2" class="rounded shadow"></canvas>
                                                     </div>
 

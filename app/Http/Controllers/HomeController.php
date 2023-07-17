@@ -543,6 +543,7 @@ public function fullScorecard_chart(int $id)
     $variable3 = 'RunOut';
     $variable4 = 'BYES';
     
+ 
     $player_balls = FixtureScore::where('fixture_id', '=', $id)
       ->where(function ($query) use ($variable1, $variable2,$variable3,$variable4) {
         $query->where('balltype', '=', $variable1)
@@ -3516,8 +3517,8 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
     // dd($net_run_rate_result);
     // app()->call([ApiController::class, 'otherMethod']);
 
-    $point_table_res_tem_a = $net_run_rate_result['point_table_res_tem_a'];
-    $point_table_res_tem_b = $net_run_rate_result['point_table_res_tem_b'];
+    $point_table_net_rr = $net_run_rate_result['point_table_net_rr'];
+   
 
 
 
@@ -3555,28 +3556,19 @@ array_multisort($player_wickets_keys, SORT_DESC, $results);
 
       $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
 
-      if(count($point_table_res_tem_a)>0)
+      if(count($point_table_net_rr)>0)
       {
-          foreach($point_table_res_tem_a as $netrr_team)
+          foreach($point_table_net_rr as $netrr_team)
           {
               // dd($netrr_team);
-              if( $netrr_team->first_inning_team_id==$team_id)
+              if( $netrr_team->team_id==$team_id)
               {
-                  $team_netrr += $netrr_team->team_netrr    ;    
+                  $team_netrr += $netrr_team->net_rr    ;    
               }
           }
       }
 
-      if(count($point_table_res_tem_b)>0)
-      {
-          foreach($point_table_res_tem_b as $netrr_team)
-          {
-              if($netrr_team->second_inning_team_id==$team_id)
-              {
-                  $team_netrr += $netrr_team->team_netrr    ;    
-              }
-          }
-      }
+    
 
       $result[] = [
         'team_id' => $team_id,
