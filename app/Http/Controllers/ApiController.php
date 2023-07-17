@@ -128,10 +128,6 @@ class ApiController extends Controller
         
             $net_run_rate_result = $this->calculateNetRunRate($id);
             $point_table_net_rr = $net_run_rate_result['point_table_net_rr'];
-          
-    
-        
-
             
         $result = array();
         
@@ -420,6 +416,42 @@ $Groups_team = TournamentGroup::query()
         return response()->json($top_scorers);
     }
     
+
+public function get_top_ranking(int $tournament_id)
+{
+    $top_ranking = DB::select("
+        SELECT 
+            SUM(players_contain_points.points) + COALESCE(motm_points.playermompoints, 0) AS total_points,
+            players_contain_points.player_id,
+            players.fullname AS playername
+        FROM
+            players_contain_points
+            JOIN players ON players.id = players_contain_points.player_id
+            LEFT JOIN (
+                SELECT
+                    SUM(5) AS playermompoints,
+                    manofmatch_player_id
+                FROM
+                    fixtures
+                WHERE
+                    tournament_id = $tournament_id
+                GROUP BY
+                    manofmatch_player_id
+            ) AS motm_points ON motm_points.manofmatch_player_id = players_contain_points.player_id
+        WHERE
+            players_contain_points.tournament_id = $tournament_id
+        GROUP BY
+            players_contain_points.player_id, players.fullname, motm_points.playermompoints
+        ORDER BY
+            total_points DESC
+        LIMIT 5
+    ");
+    
+    return response()->json($top_ranking);
+}
+
+
+
     public function get_top_bowler(int $tournament_id)
     {
         $match_dissmissal_runout_name= Dismissal::where('dismissals.name', '=', 'Run out')
@@ -585,35 +617,8 @@ $Groups_team = TournamentGroup::query()
     }
     
 
-    public function get_top_ranking(int $tournament_id)
-    {
-       error_log($tournament_id);
-        $top_ranking = DB::select("SELECT 
-        p.fullname,
-        pc.tournament_id, 
-        pc.fixture_id, 
-        pc.player_id, 
-        pc.team_id, 
-        COALESCE(SUM(CASE WHEN pc.player_type = 'batsmen' THEN pc.points END), '') AS 'Batting',
-        COALESCE(SUM(CASE WHEN pc.player_type = 'Bowler' THEN pc.points END), '') AS 'Bowling',
-        COALESCE(SUM(CASE WHEN pc.player_type IN ('batsmen', 'Bowler') THEN pc.points END), '') AS 'Total'
-      FROM 
-        players_contain_points AS pc
-      JOIN 
-        players AS p ON p.id = pc.player_id
-      WHERE 
-        pc.player_type IN ('batsmen', 'Bowler')
-        AND pc.tournament_id = $tournament_id
-      GROUP BY 
-        pc.tournament_id, 
-        pc.fixture_id, 
-        pc.player_id, 
-        pc.team_id
-      ORDER BY
-        COALESCE(SUM(CASE WHEN pc.player_type IN ('batsmen', 'Bowler') THEN pc.points END), 0) DESC      LIMIT 50") ;
-        // dd($top_ranking);
-        return response()->json($top_ranking);
-    }
+   
+    
     
 
   public function calculateNetRunRate($id)

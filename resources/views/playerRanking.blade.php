@@ -181,25 +181,34 @@
                     </thead>
 
                             <tbody>
-                                @foreach($getresult as $key => $data)
-                                <tr role="row" class="even">
-                                    <td class="sorting_1">{{$key+1}}</td>
-                                    <td align="left" title="{{$player[$data->player_id]}}" style="text-align: left;width: 90px;">
-                                        <div>
-                                            <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                                            <a href="{{ route('playerview', $data->player_id) }}"> {{$player[$data->player_id]}}</a><br>
-                                        </div>
-                                    </td>
-                                    <td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
-                                    <td style="text-align: left;font-size: smaller;">{{ collect($match_counts)->where('player_id', $data->player_id)->pluck('total_matches')->first() ?? 0 }}</td>
-                                    <td>{{ $data->Batting   }}</td>
-                                    <td>{{ $data->Bowling }}</td>
-                                    <td>{{ collect($man_of_matchs)->where('player_id', $data->player_id)->pluck('MOM')->first() ?? 0 }}</td>
-                                    <td>{{ (int)($data->Batting ?? 0) + (int)($data->Bowling ?? 0) }}</td>
+                            @foreach ($Player_Rank_Data as $key => $data)
+    <tr role="row" class="even">
+        <td class="sorting_1">{{ $key + 1 }}</td>
+        <td align="left" title="Rajwant Singh" style="text-align: left; width: 90px;">
+            <div>
+                <div class="player-img" style="background-image: url('pic.jpg');"></div>
+                @if (isset($player[$data->player_id]))
+                    <a href="{{ route('playerview', $data->player_id) }}">{{ $player[$data->player_id] }}</a><br>
+                @else
+                    Player Not Found
+                @endif
+            </div>
+        </td>
+        <td style="text-align: left; font-size: smaller;">
+            @if (isset($teams[$data->team_id]))
+                {{ $teams[$data->team_id] }}
+            @else
+                Team Not Found
+            @endif
+        </td>
+        <td style="text-align: left; font-size: smaller;">{{$playermatch[$data->team_id]??0}}</td>
+        <td>{{$Player_Batting_totalPoints[$data->player_id]??0}}</td>
+        <td>{{$Player_Bowling_totalPoints[$data->player_id]??0}}</td>
+        <td>{{$Player_MOTM_Points[$data->player_id]??0}}</td>
+        <td>{{ ($Player_totalPoints[$data->player_id] ?? 0) + ($Player_MOTM_Points[$data->player_id] ?? 0) }}</td>
+    </tr>
+@endforeach
 
-
-                                </tr>
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
