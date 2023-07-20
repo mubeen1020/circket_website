@@ -45,6 +45,20 @@
 
                     </div>
 
+                    <div class="col-lg-3 col-sm-6 ">
+                    	<div class="dropdown">
+						<select name="group"  id="group" class="form-control" >
+							<option value="">Career - All Groups</option>
+							@foreach($groupdata as $group_id => $group_name)
+							<option <?php if(isset($_POST['group']) && $_POST['group']== $group_id){ echo 'selected'; } ?> value="{{$group_id}}">{{$group_name}}</option>
+                                       @endforeach
+								</select>
+								
+								</div>
+						
+
+                    </div>
+
 					<div class="col-sm-2 col-xs-6">
 					<div class="form-group">
 						<div >
@@ -155,4 +169,197 @@ usort($result, function($a, $b) {
             </div>
             
             </div>
+
+
+<script type="text/javascript">
+function get_point_table(tornament_season_id, type) {
+    console.log(" I called first_item_type");
+    $('#tour_tab_id_'+tornament_season_id+'_'+type).css('background-color', '#ccc');
+
+    $.ajax({
+        url: "{{ url('/get_point_table/')}}/" + tornament_season_id + '/' + type,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            var match_count = data[0];
+            var team_name = data[1];
+            var point_table_data = document.getElementById('point_table');
+            point_table_data.innerHTML = '';
+
+            if (data.length === 0) {
+                point_table_data.innerHTML = '<tr><td colspan="7">Empty list</td></tr>';
+            } else {
+                data.sort((a, b) => {
+                // Sort by teambonusPoints in descending order
+                if (a.teambonusPoints > b.teambonusPoints) return -1;
+                if (a.teambonusPoints < b.teambonusPoints) return 1;
+                // If teambonusPoints are equal, sort by net_rr in descending order
+                if (a.teambonusPoints === b.teambonusPoints) {
+                    if (a.net_rr > b.net_rr) return -1;
+                    if (a.net_rr < b.net_rr) return 1;
+                }
+                return 0;
+            });
+                data.forEach((item, index) => {
+                    point_table_data.innerHTML += `
+                        <tr>
+                            <th>${index + 1}</th>
+                            <th>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td><img src="https://eoscl.ca/admin/public/Team/${item.team_id}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                                            <td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </th>
+                            <th><a href="#">${item.total_matches}</a></th>
+                            <th>${item.wins}</th>
+                            <th>${item.losses}</th>
+                            <th>${item.draws}</th>
+                            <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th>
+                          <th>${Number(item.net_rr).toFixed(2)}</th>
+
+
+                        </tr>
+                    `;
+                });
+            }
+        },
+    });
+    get_season_group(tornament_season_id);
+    get_season_tournament(tornament_season_id);
+}
+
+
+function get_season_tournament(season_id) {
+    $.ajax({
+        url: "{{ url('/tournament_name/')}}/" + season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const tournaments = document.getElementById('tournamentname');
+            tournaments.innerHTML = '';
+
+            if (data.length === 0) {
+                tournaments.innerHTML = `
+                 
+                `;
+            } else {
+                data.forEach((item, index) => {
+                    if (index === 0) {
+                        tournaments.innerHTML += `
+                            <li style="display: flex; flex-direction: row; list-style-type: none;">
+                                <a href="#92tabGroup1" data-toggle="tab" onclick="get_season_group(${item.tournamentID})" style="padding: 10px; background-color: #f1f1f1; border: 1px solid #ccc; border-bottom: none; cursor: pointer;" class="selected-tournament">
+                                    ${item.tournamentname}
+                                </a>
+                            </li>
+                        `;
+                        // Call the function for the first tournament
+                        get_season_group(item.tournamentID);
+                    } else {
+                        tournaments.innerHTML += `
+                            <li style="display: flex; flex-direction: row; list-style-type: none;">
+                                <a href="#92tabGroup1" data-toggle="tab" onclick="get_season_group(${item.tournamentID})" style="padding: 10px; background-color: #f1f1f1; border: 1px solid #ccc; border-bottom: none; cursor: pointer;">
+                                    ${item.tournamentname}
+                                </a>
+                            </li>
+                        `;
+                    }
+                });
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+
+
+function get_season_group(tornament_season_id) {
+    get_tournamnet_all_data(tornament_season_id);
+    $.ajax({
+        url: "{{ url('/get_season_group/')}}/" + tornament_season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const groups = document.getElementById('groupname');
+            groups.innerHTML = '';
+
+            if (data.length === 0) {
+                groups.innerHTML = `
+                    <a href="#92tabGroup1" data-toggle="tab">All</a>
+                `;
+            } else {
+                data.forEach((item, index) => {
+                    if (index === 0) {
+                        groups.innerHTML += `
+                            <a href="#92tabGroup${index+1}" data-toggle="tab" class="selected" onclick="get_group_team(${item.group_id}, ${tornament_season_id})">${item.groupname}</a>
+                        `;
+                        get_group_team(item.group_id, tornament_season_id);
+                    } else {
+                        groups.innerHTML += `
+                            <a href="#92tabGroup${index+1}" data-toggle="tab" onclick="get_group_team(${item.group_id}, ${tornament_season_id})">${item.groupname}</a>
+                        `;
+                    }
+                });
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+
+function get_group_team(group_id, tournamnet_id) {
+    $.ajax({
+        url: "{{ url('/get_group_team/')}}/" + group_id + '/' + tournamnet_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            const point_table_data = document.getElementById('point_table');
+            point_table_data.innerHTML = '';
+            data.sort((a, b) => {
+                // Sort by teambonusPoints in descending order
+                if (a.teambonusPoints > b.teambonusPoints) return -1;
+                if (a.teambonusPoints < b.teambonusPoints) return 1;
+                // If teambonusPoints are equal, sort by net_rr in descending order
+                if (a.teambonusPoints === b.teambonusPoints) {
+                    if (a.net_rr > b.net_rr) return -1;
+                    if (a.net_rr < b.net_rr) return 1;
+                }
+                return 0;
+            });
+            data.forEach((item, index) => {
+                point_table_data.innerHTML += `
+                    <tr>	
+                        <th>${index + 1}</th> 
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="https://eoscl.ca/admin/public/Team/${item.team_id}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                                        <td>&nbsp; <a href="{{ url('team-view/${item.team_id}_${item.tournament_id}') }}">${item.team_name}</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th>
+                        <th><a ">${item.total_matches}</a></th>
+                        <th>${item.wins}</th> 
+                        <th>${item.losses}</th>
+                        <th>${item.draws}</th>
+                        <th style="font-weight: bold;padding-right: 15px; text-align: left;"><a href="#"><span title="">${item.teambonusPoints}</span></a></th> 
+                        <th>${Number(item.net_rr).toFixed(2)}</th>
+
+                    </tr>
+                `;
+            });
+        }
+    });
+}
+
+</script>
 @stop

@@ -42,15 +42,11 @@
                             @endif
 
                         </ul>
-                        <ul class="list-inline">
-                            <li class="width1"><a href="#">Series Type</a></li>
-                            <li class="width2">:</li>
-                            <li><a href="#">Ten10</a></li>
-                        </ul>
+                      
                         <ul class="list-inline">
                             <li class="width1"><a href="#">Max Overs</a></li>
                             <li class="width2">:</li>
-                            <li><a href="#">10</a></li>
+                            <li><a href="#">{{$tournamentdata??0}}</a></li>
                         </ul>
 
                     </div>
@@ -75,7 +71,7 @@
                         <ul class="list-inline">
                             <li class="width1"><a href="#">More Info</a></li>
                             <li class="width2">:</li>
-                            <li><a href="#"></a></li>
+                            <li><a href="{{ route('newsdata') }}">News</a></li>
                         </ul>
                     </div>
                 </div>

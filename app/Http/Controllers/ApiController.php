@@ -419,6 +419,11 @@ $Groups_team = TournamentGroup::query()
 
 public function get_top_ranking(int $tournament_id)
 {
+    $points = DB::table('players_points_types')
+    ->where('code', 'MOTM')
+    ->pluck('points')
+    ->first(); 
+
     $top_ranking = DB::select("
         SELECT 
             SUM(players_contain_points.points) + COALESCE(motm_points.playermompoints, 0) AS total_points,
@@ -429,7 +434,7 @@ public function get_top_ranking(int $tournament_id)
             JOIN players ON players.id = players_contain_points.player_id
             LEFT JOIN (
                 SELECT
-                    SUM(5) AS playermompoints,
+                    SUM($points) AS playermompoints,
                     manofmatch_player_id
                 FROM
                     fixtures
@@ -457,8 +462,12 @@ public function get_top_ranking(int $tournament_id)
         $match_dissmissal_runout_name= Dismissal::where('dismissals.name', '=', 'Run out')
         ->selectRaw("dismissals.id as dissmissalname")
         ->get()->pluck('dissmissalname');
+        $match_dissmissal_Retired_name= Dismissal::where('dismissals.name', '=', 'Retired')
+        ->selectRaw("dismissals.id as dissmissalname")
+        ->get()->pluck('dissmissalname');
         $top_scorers=Fixture::where('tournament_id', $tournament_id)
         ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_runout_name)
+        ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_Retired_name)
         ->where('fixture_scores.balltype', '=', 'Wicket')
         ->selectRaw('players.fullname, SUM(fixture_scores.isout = 1) as total_wickets, fixture_scores.bowlerid')
         ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')

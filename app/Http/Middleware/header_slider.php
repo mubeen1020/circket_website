@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use App\Models\Tournament;
 use App\Models\Rulesandregulation;
+use App\Models\Season;
 
 class header_slider
 {
@@ -30,8 +31,9 @@ class header_slider
          
          $rulesandregulations =Rulesandregulation::query()
          ->get();
-
+         $season_name = Season::query()->where('isActive', '=', 1)->get();
           view()->share('header_sponsor_gallery', $sponsor_gallery);
+          view()->share('header_season_name', $season_name);
           view()->share('header_tournament_name', $tournament_name);
           view()->share('header_teams', $teams);
           view()->share('headerrulesandregulations', $rulesandregulations);

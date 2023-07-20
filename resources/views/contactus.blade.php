@@ -31,51 +31,27 @@
 		</tr>
 		<tr>
 			<td style="width:23px">1</td>
-			<td style="width:135px">Naeem</td>
-			<td style="width:288px">president@EventOntarioSoftballCircket.ca</td>
+			<td style="width:135px">Meraj mubaahir</td>
+			<td style="width:288px">meraj.mubashir@gmail.com</td>
 			<td style="width:147px">President</td>
 		</tr>
 		<tr>
 			<td style="width:23px">2</td>
-			<td style="width:135px">Mubashir</td>
-			<td style="width:288px">Mubashir@hotmail.com</td>
+			<td style="width:135px">Haroon shaikh Asad </td>
+			<td style="width:288px">Haroonasad83@gmail.com</td>
 			<td style="width:147px">Vice President</td>
 		</tr>
 		<tr>
 			<td style="width:23px">3</td>
-			<td style="width:135px">Mearaj</td>
-			<td style="width:288px">Mearaj@gmail.com</td>
+			<td style="width:135px">Eoscl inquiry </td>
+			<td style="width:288px">Register@eoscl.com</td>
 			<td style="width:147px">Treasurer</td>
-		</tr>
-		<tr>
-			<td style="width:23px">4</td>
-			<td style="width:135px">Ishaq</td>
-			<td style="width:288px">info@EventOntarioSoftballCircket.ca</td>
-			<td style="width:147px">Secretary</td>
-		</tr>
-		<tr>
-			<td style="width:23px">5</td>
-			<td style="width:135px">RIZWAN CHEEMA</td>
-			<td style="width:288px">rizwancheema99@hotmail.com</td>
-			<td style="width:147px">Director at Large (Coach)</td>
-		</tr>
-		<tr>
-			<td style="width:23px">6</td>
-			<td style="width:135px">Operations&nbsp;</td>
-			<td style="width:288px">Operations@EventOntarioSoftballCircket.ca&nbsp;</td>
-			<td style="width:147px">League Admin Assistant</td>
-		</tr>
-		<tr>
-			<td style="width:23px">7</td>
-			<td style="width:135px">ASFAND YAR</td>
-			<td style="width:288px">asfandyar90@hotmail.com</td>
-			<td style="width:147px">Umpire Coordinator</td>
 		</tr>
 	</tbody>
 </table>
 &nbsp;
 
-<table border="1" cellpadding="1" cellspacing="1" style="width:500px">
+<!-- <table border="1" cellpadding="1" cellspacing="1" style="width:500px">
 	<caption>Contact DRC at info@EventOntarioSoftballCircket.ca</caption>
 	<thead>
 		<tr>
@@ -109,7 +85,7 @@
 			<td>ZAHOOR BUTT</td>
 		</tr>
 	</tbody>
-</table>
+</table> -->
 </div>
 		</div>
 	</div>

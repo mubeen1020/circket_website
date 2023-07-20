@@ -449,6 +449,24 @@ navbarSlider.addEventListener("mouseout", function() {
             
             </ul>
           </li>
+
+          <li class="dropdown">
+            <a href="{{ route('comingsoon')}}" class="dropdown-toggle" data-toggle="dropdown">Season Sponsors</a>
+            <ul class="dropdown-menu"  >
+           @php $count = 0; @endphp
+@foreach($header_season_name as $tname)
+  @if($count < 4)
+    <li><a href="{{ url('seasonresponsers/' . $tname->id) }}">{{ $tname->name }}</a></li>
+    @php $count++; @endphp
+  @endif
+@endforeach
+
+            
+            
+            
+            </ul>
+          </li>
+
           <li class="dropdown">
             <a href="{{ route('comingsoon') }}" class="dropdown-toggle" data-toggle="dropdown">League</a>
             <ul class="dropdown-menu">

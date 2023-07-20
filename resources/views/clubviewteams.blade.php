@@ -5,7 +5,7 @@
 	<div class="container p-0-sm">
 		<div class="point-table-all about-table">
 			<div class="series-drop">
-				<form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('clubviewteams_submit')}}">
+				<form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{url('viewteams_submit')}}">
 					@csrf
 					<div class="row">
 						<div class="col-sm-6">
@@ -16,7 +16,7 @@
 									@if (isset($name[0]->name))
 									<font color="white">{{ $name[0]->name }}</font>
                             @else
-                            <font color="white">CLUBS</font>
+                            <font color="white">TEAMS</font>
                             @endif
 										
 									</a>
@@ -32,23 +32,23 @@
 					</div>
 					<div class="row">
 
-						<div class="col-sm-3">
+						<!-- <div class="col-sm-3">
 							<div class="dropdown">
 								<select name="year" id="year" class="form-control">
 									<option value=""> Select Year(s)</option>
 									@for ($year = date('Y'); $year >= 2015; $year--)
-									<option <?php if(isset($_POST['year']) && $_POST['year']== $year){ echo 'selected'; } ?> value="{{$year}}">{{$year}}</option>
+									<option value="{{ $year }}">{{ $year }}</option>
 									@endfor
 								</select>
 							</div>
-						</div>
+						</div> -->
 
 						<div class="col-sm-3">
 							<div class="dropdown">
 								<select name="tournament" id="tournament" class="form-control">
 									<option value=""> Select tournament(s)</option>
 									@foreach($tournament as $tournament_id => $tournament_name)
-									<option <?php if(isset($_POST['tournament']) && $_POST['tournament']== $tournament_id){ echo 'selected'; } ?> value="{{$tournament_id}}">{{$tournament_name}}</option>
+									<option   <?php if(isset($_POST['tournament']) && $_POST['tournament']== $tournament_id){ echo 'selected'; } ?> value="{{ $tournament_id }}">{{ $tournament_name }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -65,7 +65,7 @@
 			</div>
 
 			<div class="button-pool text-left" style="margin-top: 0px!important;">
-				
+			
 				<div class="about-table table-responsive" id="tab1default">
 					<table class="table" id="anyid">
 						<thead>
@@ -80,31 +80,40 @@
 						</thead>
 						<tbody>
 							@php
-							if(count($results) > 0){
+							if(count($TournamentGroupData) > 0){
 							@endphp
 
-							@foreach($results as $key => $data)
+							@foreach($TournamentGroupData as $key => $data)
 
 
 							<tr id="row1165">
 								<th>{{$key+1}}</th>
-								<th nowrap="nowrap"><a href="">{{$data->clubname}}</a></th>
+								<th nowrap="nowrap"><a href="">{{$Teamdata[$data->team_id]??'N/A'}}</a></th>
 								<th nowrap="nowrap">
 									<table>
 										<tbody>
 											<tr>
-												<td style="padding-right: 5px;"><img src="https://cricclubs.com/documentsRep/teamLogos/68b4bd29-e486-4066-a74f-c5173df3e8ec.jpg" class="left-block img-circle" style="width: 25px;height: 25px;"></td>
-												<td><a href="#">{{$data->name}}</a></td>
+												<td style="padding-right: 5px;"><img src="https://eoscl.ca/admin/public/Team/{{$data->team_id}}.png" class="left-block img-circle" style="width: 25px;height: 25px;"></td>
+												<td><a href="#">{{$teamsname[$data->team_id]??''}}</a></td>
 											</tr>
 										</tbody>
 									</table>
 								</th>
-								<th><a href="">{{$data->fullname}}</a></th>
+								<th><a href="">
+									
+								@if(isset($TeamPlayerData[$data->team_id]) && $TeamPlayerData[$data->team_id] > 0)
+    {{ $playername[$TeamPlayerData[$data->team_id]] ?? 'N/A' }}
+	@else
+	N/A
+@endif
+
+							
+							</a></th>
 								<th>
-									<a href="">{{$data->tournamentname}}</a>
+									<a href="">{{$tournamentname[$data->tournament_id]??''}}</a>
 								</th>
 								<th>
-									<a href="">Malton - Paul Coffey Arena (Turf &amp; Matting)</a>
+									<a href="">{{$ground[$tournamentgrounds]??''}}</a>
 								</th>
 							</tr>
 

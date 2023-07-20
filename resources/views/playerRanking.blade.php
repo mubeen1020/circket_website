@@ -181,33 +181,44 @@
                     </thead>
 
                             <tbody>
-                            @foreach ($Player_Rank_Data as $key => $data)
-    <tr role="row" class="even">
-        <td class="sorting_1">{{ $key + 1 }}</td>
-        <td align="left" title="Rajwant Singh" style="text-align: left; width: 90px;">
-            <div>
-                <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                @if (isset($player[$data->player_id]))
-                    <a href="{{ route('playerview', $data->player_id) }}">{{ $player[$data->player_id] }}</a><br>
+                            @php
+    $serialNumber = 1;
+@endphp
+
+@foreach ($results as $key => $data)
+    @if ($data['player_id'] ?? 0 > 0)
+        <tr role="row" class="even">
+            <td class="sorting_1">{{ $serialNumber }}</td>
+            <td align="left" title="{{ $player[$data['player_id']] ?? '' }}" style="text-align: left; width: 90px;">
+                <div>
+                    <div class="player-img" style="background-image: url('pic.jpg');"></div>
+                    @if (isset($player[$data['player_id']]))
+                        <a href="{{ route('playerview', $data['player_id']) }}">{{ $player[$data['player_id']] }}</a><br>
+                    @else
+                        Player Not Found
+                    @endif
+                </div>
+            </td>
+            <td style="text-align: left; font-size: smaller;">
+                @if (isset($teams[$data['team_id']]))
+                    {{ $teams[$data['team_id']] }}
                 @else
-                    Player Not Found
+                    Team Not Found
                 @endif
-            </div>
-        </td>
-        <td style="text-align: left; font-size: smaller;">
-            @if (isset($teams[$data->team_id]))
-                {{ $teams[$data->team_id] }}
-            @else
-                Team Not Found
-            @endif
-        </td>
-        <td style="text-align: left; font-size: smaller;">{{$playermatch[$data->team_id]??0}}</td>
-        <td>{{$Player_Batting_totalPoints[$data->player_id]??0}}</td>
-        <td>{{$Player_Bowling_totalPoints[$data->player_id]??0}}</td>
-        <td>{{$Player_MOTM_Points[$data->player_id]??0}}</td>
-        <td>{{ ($Player_totalPoints[$data->player_id] ?? 0) + ($Player_MOTM_Points[$data->player_id] ?? 0) }}</td>
-    </tr>
+            </td>
+            <td style="text-align: left; font-size: smaller;">{{ $data['playermatch'] ?? 0 }}</td>
+            <td>{{ $data['Player_Batting_totalPoints'] ?? 0 }}</td>
+            <td>{{ $data['Player_Bowling_totalPoints'] ?? 0 }}</td>
+            <td>{{ $data['Player_MOTM_Points'] ?? 0 }}</td>
+            <td>{{ $data['total_point'] ?? 0 }}</td>
+        </tr>
+        @php
+            $serialNumber++;
+        @endphp
+    @endif
 @endforeach
+
+
 
                             </tbody>
                         </table>

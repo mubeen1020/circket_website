@@ -73,7 +73,6 @@
 												Info</a></li>
 										<li ><a href="{{ url('team_result', $team_id_data. '_' .$tournament_ids)  }}">Results</a></li>
 										<li><a href="{{ url('team_schedule', $team_id_data. '_' . $tournament_ids)  }}">Schedule</a></li>
-										<li><a href="#umpiringSchedule" role="tab" data-toggle="tab" onclick="loadView('teamUmpiringSchedule');">Umpiring</a></li>
 										<li><a href="{{ url('team_batting', $team_id_data. '_' . $tournament_ids)  }}">Batting</a></li>
 										<li><a href="{{ url('team_bowling', $team_id_data. '_' . $tournament_ids)  }}">Bowling</a></li>
 										<li><a href="{{ url('team_fielding', $team_id_data. '_' . $tournament_ids)  }}">Fielding</a></li>

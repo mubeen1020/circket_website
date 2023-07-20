@@ -73,11 +73,10 @@
 									Info</a></li>
 							<li><a href="{{ url('team_result', $team_id_data . '_' . $tournament_ids)  }}">Results</a></li>
 							<li><a href="{{ url('team_schedule', $team_id_data . '_' . $tournament_ids)  }}">Schedule</a></li>
-							<li><a href="#umpiringSchedule" role="tab" data-toggle="tab" onclick="loadView('teamUmpiringSchedule');">Umpiring</a></li>
 							<li><a href="{{ url('team_batting', $team_id_data . '_' . $tournament_ids)  }}">Batting</a></li>
 							<li><a href="{{ url('team_bowling', $team_id_data . '_' . $tournament_ids)  }}">Bowling</a></li>
 							<li><a href="{{ url('team_fielding', $team_id_data . '_' . $tournament_ids)  }}">Fielding</a></li>
-							<li><a href="{{ url('team_ranking', $team_id_data . '_' . $tournament_ids)  }}">Ranking</a></li>
+							<li class='active'> <a href="{{ url('team_ranking', $team_id_data . '_' . $tournament_ids)  }}">Ranking</a></li>
 						</ul>
 					</div>
 					<div class="panel-body">
@@ -169,26 +168,46 @@
                     </thead>
 
 
-                            <tbody>
-                                @foreach($getresult as $key => $data)
-                                <tr role="row" class="even" style="background-color:#1d252d;color:white">
-                                    <td class="sorting_1">{{$key+1}}</td>
-                                    <td align="left" title="{{$player[$data->player_id]}}" style="text-align: left;width: 90px;">
-                                        <div>
-                                            <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                                            <a href="viewPlayer.do?playerId=1375981&amp;clubId=2565" style="color:white"> {{$player[$data->player_id]}}</a><br>
-                                        </div>
-                                    </td>
-                                    <td style="text-align: left;font-size: smaller;">{{$teams[$data->team_id]}}</td>
-                                    <td style="text-align: left;font-size: smaller;">{{ collect($match_counts)->where('player_id', $data->player_id)->pluck('total_matches')->first() ?? 0 }}</td>
-                                    <td>{{ $data->Batting   }}</td>
-                                    <td>{{ $data->Bowling }}</td>
-                                    <td>{{ collect($man_of_matchs)->where('player_id', $data->player_id)->pluck('MOM')->first() ?? 0 }}</td>
-                                    <td>{{ (int)($data->Batting ?? 0) + (int)($data->Bowling ?? 0) }}</td>
+					<tbody>
+                            @php
+    $serialNumber = 1;
+@endphp
+
+@foreach ($results as $key => $data)
+    @if ($data['player_id'] ?? 0 > 0)
+        <tr role="row" class="even" style="background-color:#1d252d;color:white">
+            <td class="sorting_1">{{ $serialNumber }}</td>
+            <td align="left" title="{{ $player[$data['player_id']] ?? '' }}" style="text-align: left; width: 90px;">
+                <div>
+                    <div class="player-img" style="background-image: url('pic.jpg');"></div>
+                    @if (isset($player[$data['player_id']]))
+                        <a href="{{ route('playerview', $data['player_id']) }}">{{ $player[$data['player_id']] }}</a><br>
+                    @else
+                        Player Not Found
+                    @endif
+                </div>
+            </td>
+            <td style="text-align: left; font-size: smaller;">
+                @if (isset($teams[$data['team_id']]))
+                    {{ $teams[$data['team_id']] }}
+                @else
+                    Team Not Found
+                @endif
+            </td>
+            <td style="text-align: left; font-size: smaller;">{{ $data['playermatch'] ?? 0 }}</td>
+            <td>{{ $data['Player_Batting_totalPoints'] ?? 0 }}</td>
+            <td>{{ $data['Player_Bowling_totalPoints'] ?? 0 }}</td>
+            <td>{{ $data['Player_MOTM_Points'] ?? 0 }}</td>
+            <td>{{ $data['total_point'] ?? 0 }}</td>
+        </tr>
+        @php
+            $serialNumber++;
+        @endphp
+    @endif
+@endforeach
 
 
-                                </tr>
-                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
