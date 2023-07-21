@@ -8,7 +8,7 @@
 					<div class="col-sm-11">
 						<div class="border-heading">
 							<h5>EOSCL SEASON 
-								- RESPOSERS
+								- SPONSORS
 								</h5>
 
 								</div>

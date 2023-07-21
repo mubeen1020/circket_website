@@ -95,6 +95,7 @@ class ApiController extends Controller
             ->get()->pluck('teams_name', 'teams_id');
     
         $match_count_team_a = Fixture::where('tournament_id', '=', $id)
+        ->where('fixtures.isActive', '=', 1)
            ->whereIN('running_inning',[1,2,3])
             ->selectRaw("COUNT(id)")
             ->selectRaw("team_id_a")
@@ -102,6 +103,7 @@ class ApiController extends Controller
             ->get()->pluck('COUNT(id)', 'team_id_a');
     
         $match_count_team_b = Fixture::where('tournament_id', '=', $id)
+        ->where('fixtures.isActive', '=', 1)
            ->whereIN('running_inning',[1,2,3])
             ->selectRaw("COUNT(id)")
             ->selectRaw("team_id_b")
@@ -109,22 +111,32 @@ class ApiController extends Controller
             ->get()->pluck('COUNT(id)', 'team_id_b');
     
         $match_count_winning_team = Fixture::where('tournament_id', '=', $id)
+        ->where('fixtures.isActive', '=', 1)
             ->selectRaw("COUNT(id)")
             ->selectRaw("winning_team_id")
             ->groupby('winning_team_id')
             ->get()->pluck('COUNT(id)', 'winning_team_id');
     
         $match_count_loss_team = Fixture::where('tournament_id', '=', $id)
+        ->where('fixtures.isActive', '=', 1)
             ->selectRaw("COUNT(id)")
             ->selectRaw("lossing_team_id")
             ->groupby('lossing_team_id')
             ->get()->pluck('COUNT(id)', 'lossing_team_id');
             
-        $match_count_tie_team = Fixture::where('tournament_id', $id)
+            $match_count_tie_team_b = Fixture::where('tournament_id', $id)
+            ->where('fixtures.isActive', '=', 1)
             ->where('is_tie_match', 1)
-            ->selectRaw('team_id_a, team_id_b, COUNT(is_tie_match) as tie')
-            ->groupBy('team_id_a', 'team_id_b')
-            ->pluck('tie', 'team_id_a', 'team_id_b');
+            ->selectRaw('team_id_b, COUNT(is_tie_match) as tie')
+            ->groupBy('team_id_b')
+            ->pluck('tie', 'team_id_b');
+
+            $match_count_tie_team_a = Fixture::where('tournament_id', $id)
+            ->where('fixtures.isActive', '=', 1)
+            ->where('is_tie_match', 1)
+            ->selectRaw('team_id_a, COUNT(is_tie_match) as tie')
+            ->groupBy('team_id_a')
+            ->pluck('tie', 'team_id_a');
         
             $net_run_rate_result = $this->calculateNetRunRate($id);
             $point_table_net_rr = $net_run_rate_result['point_table_net_rr'];
@@ -156,7 +168,9 @@ class ApiController extends Controller
         $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
         $bonus_points_A = isset($bonusPointsSum_team_A[$team_id]) ? $bonusPointsSum_team_A[$team_id] : 0;
         $bonus_points_B = isset($bonusPointsSum_team_B[$team_id]) ? $bonusPointsSum_team_B[$team_id] : 0;
-        $team_tie = isset($match_count_tie_team[$team_id]) ? $match_count_tie_team[$team_id] : 0;
+        $team_tie__A = isset($match_count_tie_team_a[$team_id]) ? $match_count_tie_team_a[$team_id] : 0;
+        $team_tie__B = isset($match_count_tie_team_b[$team_id]) ? $match_count_tie_team_b[$team_id] : 0;
+        $team_tie = $team_tie__A+$team_tie__B;
         $total_bonus_points = $bonus_points_A + $bonus_points_B;
     
         $result[] = [
@@ -230,6 +244,7 @@ $Groups_team = TournamentGroup::query()
             ->get()->pluck('teams_name', 'teams_id');
             
         $match_count_team_a = Fixture::query()
+        ->where('fixtures.isActive', '=', 1)
         ->where('tournament_id', $tournamnet_id)
         ->whereIN('running_inning',[1,2,3])
             ->selectRaw("COUNT(id)")
@@ -238,6 +253,7 @@ $Groups_team = TournamentGroup::query()
             ->get()->pluck('COUNT(id)', 'team_id_a');
     
         $match_count_team_b = Fixture::query()
+        ->where('fixtures.isActive', '=', 1)
         ->where('tournament_id', $tournamnet_id)
         ->whereIN('running_inning',[1,2,3])
             ->selectRaw("COUNT(id)")
@@ -246,6 +262,7 @@ $Groups_team = TournamentGroup::query()
             ->get()->pluck('COUNT(id)', 'team_id_b');
     
         $match_count_winning_team = Fixture::query()
+        ->where('fixtures.isActive', '=', 1)
         ->where('tournament_id', $tournamnet_id)
             ->selectRaw("COUNT(id)")
             ->selectRaw("winning_team_id")
@@ -253,6 +270,7 @@ $Groups_team = TournamentGroup::query()
             ->get()->pluck('COUNT(id)', 'winning_team_id');
     
         $match_count_loss_team = Fixture::query()
+        ->where('fixtures.isActive', '=', 1)
         ->where('tournament_id', $tournamnet_id)
             ->selectRaw("COUNT(id)")
             ->selectRaw("lossing_team_id")
@@ -260,25 +278,35 @@ $Groups_team = TournamentGroup::query()
             ->get()->pluck('COUNT(id)', 'lossing_team_id');
 
             $bonusPointsSum_team_A = Fixture::where('tournament_id', $tournamnet_id)
+            ->where('fixtures.isActive', '=', 1)
             ->selectRaw('SUM(teamAbonusPoints) as totalBonusPoints')
             ->selectRaw('team_id_a')
             ->groupBy('team_id_a')
             ->pluck('totalBonusPoints', 'team_id_a');    
         
             $bonusPointsSum_team_B = Fixture::where('tournament_id', $tournamnet_id)
+            ->where('fixtures.isActive', '=', 1)
             ->selectRaw('SUM(teamBbonusPoints) as totalBonusPoints')
             ->selectRaw('team_id_b')
             ->groupBy('team_id_b')
             ->pluck('totalBonusPoints', 'team_id_b');
     
-            $match_count_tie_team = Fixture::where('tournament_id', $tournamnet_id)
+            $match_count_tie_team_b = Fixture::where('tournament_id', $tournamnet_id)
+            ->where('fixtures.isActive', '=', 1)
             ->where('is_tie_match', 1)
-            ->selectRaw('team_id_a, team_id_b, COUNT(is_tie_match) as tie')
-            ->groupBy('team_id_a', 'team_id_b')
-            ->pluck('tie', 'team_id_a', 'team_id_b');
+            ->selectRaw('team_id_b, COUNT(is_tie_match) as tie')
+            ->groupBy('team_id_b')
+            ->pluck('tie', 'team_id_b');
+
+            $match_count_tie_team_a = Fixture::where('tournament_id', $tournamnet_id)
+            ->where('is_tie_match', 1)
+            ->selectRaw('team_id_a, COUNT(is_tie_match) as tie')
+            ->groupBy('team_id_a')
+            ->pluck('tie', 'team_id_a');
 
             $teamscorerunsteamA = Fixture::where('tournament_id', $tournamnet_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->where('fixtures.isActive', '=', 1)
             ->where('fixture_scores.inningnumber', 1)
             ->selectRaw('SUM(fixture_scores.runs) as total_runs')
             ->selectRaw('first_inning_team_id')
@@ -287,6 +315,7 @@ $Groups_team = TournamentGroup::query()
         
             $teasecond_inning_team_idmscorerunsteamB = Fixture::where('tournament_id', $tournamnet_id)
                 ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+                ->where('fixtures.isActive', '=', 1)
                 ->where('fixture_scores.inningnumber', 2)
                 ->selectRaw('SUM(fixture_scores.runs) as total_runs')
                 ->selectRaw('second_inning_team_id')
@@ -295,6 +324,7 @@ $Groups_team = TournamentGroup::query()
             
             $teamscoreoverfacedteamA = Fixture::where('tournament_id', $tournamnet_id)
                 ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+                ->where('fixtures.isActive', '=', 1)
                 ->where('fixture_scores.inningnumber', 1)
                 ->selectRaw('MAX(fixture_scores.ballnumber) as max_over')
                 ->selectRaw('first_inning_team_id')
@@ -303,6 +333,7 @@ $Groups_team = TournamentGroup::query()
             
             $teamscoreoverfacedteamB = Fixture::where('tournament_id', $tournamnet_id)
                 ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+                ->where('fixtures.isActive', '=', 1)
                 ->where('fixture_scores.inningnumber', 2)
                 ->selectRaw('MAX(fixture_scores.ballnumber) as max_over')
                 ->selectRaw('second_inning_team_id')
@@ -311,6 +342,7 @@ $Groups_team = TournamentGroup::query()
 
             $team_runs_concededteamA = Fixture::where('tournament_id', $tournamnet_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->where('fixtures.isActive', '=', 1)
             ->where('fixture_scores.inningnumber', 1)
             ->selectRaw('SUM(fixture_scores.runs) as total_runs')
             ->selectRaw('second_inning_team_id')
@@ -319,6 +351,7 @@ $Groups_team = TournamentGroup::query()
 
             $team_runs_concededteamB = Fixture::where('tournament_id', $tournamnet_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->where('fixtures.isActive', '=', 1)
             ->where('fixture_scores.inningnumber', 2)
             ->selectRaw('SUM(fixture_scores.runs) as total_runs')
             ->selectRaw('first_inning_team_id')
@@ -327,6 +360,7 @@ $Groups_team = TournamentGroup::query()
 
             $team_balls_bowledteamA = Fixture::where('tournament_id', $tournamnet_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->where('fixtures.isActive', '=', 1)
             ->where('fixture_scores.inningnumber', 2)
             ->selectRaw('MAX(fixture_scores.ballnumber) as max_over')
             ->selectRaw('first_inning_team_id')
@@ -335,6 +369,7 @@ $Groups_team = TournamentGroup::query()
 
             $team_balls_bowledteamB = Fixture::where('tournament_id', $tournamnet_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->where('fixtures.isActive', '=', 1)
             ->where('fixture_scores.inningnumber', 1)
             ->selectRaw('MAX(fixture_scores.ballnumber) as max_over')
             ->selectRaw('second_inning_team_id')
@@ -376,7 +411,9 @@ $Groups_team = TournamentGroup::query()
         $team_players_count = isset($team_players[$team_id]) ? $team_players[$team_id] : 0;
         $bonus_points_A = isset($bonusPointsSum_team_A[$team_id]) ? $bonusPointsSum_team_A[$team_id] : 0;
         $bonus_points_B = isset($bonusPointsSum_team_B[$team_id]) ? $bonusPointsSum_team_B[$team_id] : 0;
-        $team_tie = isset($match_count_tie_team[$team_id]) ? $match_count_tie_team[$team_id] : 0;
+        $team_tie__A = isset($match_count_tie_team_a[$team_id]) ? $match_count_tie_team_a[$team_id] : 0;
+        $team_tie__B = isset($match_count_tie_team_b[$team_id]) ? $match_count_tie_team_b[$team_id] : 0;
+        $team_tie = $team_tie__A+$team_tie__B;
         $total_bonus_points = $bonus_points_A + $bonus_points_B;
     
       
@@ -406,6 +443,7 @@ $Groups_team = TournamentGroup::query()
         $top_scorers = Fixture::where('tournament_id', $tournament_id)
         ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
         ->join('players', 'players.id', '=', 'fixture_scores.playerid')
+        ->where('fixtures.isActive', '=', 1)
         ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket' OR balltype='RunOut'  THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as total_runs")
         ->selectRaw('players.fullname ,players.id')
         ->groupBy('fixture_scores.playerid')
@@ -466,6 +504,7 @@ public function get_top_ranking(int $tournament_id)
         ->selectRaw("dismissals.id as dissmissalname")
         ->get()->pluck('dissmissalname');
         $top_scorers=Fixture::where('tournament_id', $tournament_id)
+        ->where('fixtures.isActive', '=', 1)
         ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_runout_name)
         ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_Retired_name)
         ->where('fixture_scores.balltype', '=', 'Wicket')
@@ -486,6 +525,7 @@ public function get_top_ranking(int $tournament_id)
         DB::enableQueryLog();
         $tournamnetdata = Fixture::where('fixtures.tournament_id', $tournament_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+            ->where('fixtures.isActive', '=', 1)
             ->selectRaw("SUM(fixture_scores.isfour = 1 ) as total_fours")
             ->selectRaw("SUM(fixture_scores.issix = 1 ) as total_sixes")
             ->selectRaw("SUM(fixture_scores.balltype = 'RunOut' OR fixture_scores.balltype = 'RunOut(WD)' OR fixture_scores.balltype = 'RunOut(NB)') as runout")
@@ -499,6 +539,7 @@ public function get_top_ranking(int $tournament_id)
             $tournament_players =Fixture::where('fixtures.tournament_id', $tournament_id) 
             ->join('tournament_groups', 'tournament_groups.tournament_id', '=', 'fixtures.tournament_id')
             ->join('tournament_players', 'tournament_players.tournament_id', '=', 'tournament_groups.tournament_id') 
+            ->where('fixtures.isActive', '=', 1)
             ->selectRaw("COUNT(DISTINCT tournament_players.player_id) as total_players")   
             ->groupBy('fixtures.tournament_id')
             ->get();
@@ -511,6 +552,7 @@ public function get_top_ranking(int $tournament_id)
             $tournament_cauches = Fixture::where('fixtures.tournament_id', $tournament_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
             ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+            ->where('fixtures.isActive', '=', 1)
             ->where('match_dismissals.dismissal_id',$match_dissmissal_name)
             ->selectRaw("COUNT(match_dismissals.id) as total_catches")
             ->groupBy('fixtures.tournament_id')
@@ -523,6 +565,7 @@ public function get_top_ranking(int $tournament_id)
             $tournament_runout = Fixture::where('fixtures.tournament_id', $tournament_id)
             ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
             ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+            ->where('fixtures.isActive', '=', 1)
             ->where('match_dismissals.dismissal_id',$match_dissmissal_runout_name)
             ->selectRaw("COUNT(match_dismissals.id) as total_runout")
             ->groupBy('fixtures.tournament_id')
@@ -550,6 +593,7 @@ public function get_top_ranking(int $tournament_id)
             })
             ->join('fixtures', 'fixtures.id', '=', 'fs1.fixture_id')
             ->where('fixtures.tournament_id', $tournament_id)
+            ->where('fixtures.isActive', '=', 1)
             ->where('fs1.isout', '=', 1)
             ->whereNull('fs4.id')
             ->select(DB::raw('COUNT(*) as total_hat_tricks'))
@@ -565,6 +609,7 @@ public function get_top_ranking(int $tournament_id)
                 ->from('fixture_scores')
                 ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
                 ->where('fixtures.tournament_id', $tournament_id)
+                ->where('fixtures.isActive', '=', 1)
                 ->groupBy('playerid', 'fixture_id');
         }, 'subquery')
         ->select('playerid', DB::raw('COUNT(*) AS hundreds_count'))
@@ -583,6 +628,7 @@ public function get_top_ranking(int $tournament_id)
                     ->from('fixture_scores')
                     ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
                     ->where('fixtures.tournament_id', $tournament_id)
+                    ->where('fixtures.isActive', '=', 1)
                     ->groupBy('playerId', 'fixture_id');
             }, 'subquery')
             ->select('playerId', DB::raw('COUNT(*) AS fifties'))
@@ -612,10 +658,12 @@ public function get_top_ranking(int $tournament_id)
           })
         ->selectRaw("COUNT((overnumber * 6) + ballnumber) as max_ball")
         ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+        ->where('fixtures.isActive', '=', 1)
         ->groupBy('fixtures.tournament_id')
         ->get();
 
         $tournament_teams = Fixture::where('fixtures.tournament_id', $tournament_id)
+        ->where('fixtures.isActive', '=', 1)
         ->join('tournament_groups', 'tournament_groups.tournament_id', '=', 'fixtures.tournament_id')
         ->selectRaw("COUNT(DISTINCT tournament_groups.team_id) as totalteams")
         ->groupBy('fixtures.tournament_id')
@@ -659,7 +707,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
             JOIN tournaments On tournaments.id=fixtures.tournament_id
             WHERE tournaments.id = $id
-                AND inningnumber = 1 AND running_inning = 3
+                AND inningnumber = 1 AND running_inning = 3 AND fixtures.isActive = 1
             GROUP BY
                 first_inning_team_id
     
@@ -682,7 +730,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
             JOIN tournaments On tournaments.id=fixtures.tournament_id
             WHERE tournaments.id = $id
-                AND inningnumber = 1 AND running_inning = 3
+                AND inningnumber = 1 AND running_inning = 3 AND fixtures.isActive = 1
             GROUP BY
                 second_inning_team_id
     
@@ -705,7 +753,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
                 JOIN tournaments On tournaments.id=fixtures.tournament_id
                 WHERE tournaments.id = $id
-                AND inningnumber = 2 AND running_inning = 3
+                AND inningnumber = 2 AND running_inning = 3 AND fixtures.isActive = 1
             GROUP BY
                 first_inning_team_id
     
@@ -728,7 +776,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
                 JOIN tournaments On tournaments.id=fixtures.tournament_id
                 WHERE tournaments.id = $id
-                AND inningnumber = 2 AND running_inning = 3
+                AND inningnumber = 2 AND running_inning = 3 AND fixtures.isActive = 1
             GROUP BY
                 second_inning_team_id
         ) AS subquery

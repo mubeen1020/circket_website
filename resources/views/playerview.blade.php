@@ -254,9 +254,9 @@ if (strpos($headers[0], '404') !== false) {
                             
     <th>{{$bowler_inning_length??0}}</th>                   
 																<th>
-                                @if(count($bower_over)>0)
-                                @foreach($bower_over as $over)
-                                {{$over->max_over??0}}
+                                @if(count($bowlerballs)>0)
+                                @foreach($bowlerballs as $over1)
+                                {{(round($over1->over/6))??0}}
                                 @endforeach  
                                                 @else
                                                 0

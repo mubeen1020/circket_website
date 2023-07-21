@@ -144,7 +144,7 @@
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Ave: activate to sort column ascending" style="width: 45px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">Econ<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
 						<th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Inns: activate to sort column ascending" style="width: 31px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">Avg<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Overs: activate to sort column ascending" style="width: 41px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">SR<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
-                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Runs: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">Hat-Ricks</p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Runs: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">Hatt-Ricks</p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                        </tr> 
                     </thead>
 						<tbody>
@@ -160,7 +160,7 @@
         <td style="text-align: left;font-size: smaller;">{{$header_teams[$data['team_id']]}}</td>
         <td>{{$match_count[$data['team_id']] ?? 0}}</td>
         <td>{{$inningsCount[$data['bowler_id']] ?? 0}}</td>
-        <td>{{ isset($bowlerballs[$data['bowler_id']]) ? round($bowlerballs[$data['bowler_id']] / 6) : 0 }}</td>
+        <td>{{ isset($bowlerballs[$data['bowler_id']]) ? round($bowlerballs[$data['bowler_id']] /6) : 0 }}</td>
         <td>{{$bowlerruns[$data['bowler_id']] ?? 0}}</td>
         <td>{{$bowlerwickets[$data['bowler_id']] ?? 0}}</td>
         @if ($data['total_overs'] != 0 && isset($bowlerballs[$data['bowler_id']]) && $bowlerballs[$data['bowler_id']] != 0)

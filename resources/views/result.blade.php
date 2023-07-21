@@ -181,7 +181,14 @@ text-align:center !important;
                <div class="col-xs-9 col-sm-4 p-sm-0 mobile-b">
                    <div class="schedule-logo text-center h-90">
                    <ul class="list-inline">
-				   <li class="lose">
+                   
+  @if (isset($total_runs[$data->id][0]) && $total_runs[$data->id][0] < (isset($total_runs[$data->id][1]) ? $total_runs[$data->id][1] : 0))
+  <li style="color:lightgray">
+  @else
+  <li   style="opacity:50">
+  @endif
+  
+				   
                                         <span>
                                             @if (isset($total_runs[$data->id][0]))
                                                 {{ $total_runs[$data->id][0] }}
@@ -211,7 +218,7 @@ text-align:center !important;
         @endif
     </th>
 @else
-    N/A
+  
 @endif
 /{{ $data['numberofover'] }}
 
@@ -223,8 +230,12 @@ text-align:center !important;
 		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['first_inning_team_id']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
 		                           <li><a href="">
 		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['second_inning_team_id']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
-		                        
-										   <li class="lose">
+                                   <li
+                                   @if (isset($total_runs[$data->id][0]) && $total_runs[$data->id][0] > (isset($total_runs[$data->id][1]) ? $total_runs[$data->id][1] : 0))
+  <li style="color:lightgray">
+  @else
+  <li style="opacity:50">
+  @endif
                                         <span>
                                             @if (isset($total_runs[$data->id][1]))
                                                 {{ $total_runs[$data->id][1] }}

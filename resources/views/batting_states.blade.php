@@ -192,8 +192,8 @@
 								<td>0</td>
 							@endif
 							
-				@if(isset($playerouts[$data['player_id']]) && isset($player_runs[$data['player_id']]) && $playerouts[$data['player_id']] > 0)
-    <td>{{ number_format(($player_runs[$data['player_id']] / $playerouts[$data['player_id']]) , 2) }}</td>
+				@if(isset($inningsCount[$data['player_id']]) && isset($player_runs[$data['player_id']]) && $inningsCount[$data['player_id']] > 0)
+    <td>{{ number_format(($player_runs[$data['player_id']] / $inningsCount[$data['player_id']]) , 2) }}</td>
 @else
     <td>0</td>
 @endif

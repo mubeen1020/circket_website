@@ -132,8 +132,8 @@
 											 $sum_run = 0;  @endphp
 											
 											<tr style="text-align: center;">
-													<td>{{$scores[0]['overnumber']}} </td>												
-													<td class="text-left">{{$player[$scores[0]['bowlerId']]}}<br>
+													<td>{{$scores2[0]['overnumber']??''}} </td>												
+													<td class="text-left">{{$player[$scores2[0]['bowlerId']??'']??''}}<br>
 														<ul class="overballsec">
 											@foreach($scores as $score)
 											@if($score->inningnumber==2)

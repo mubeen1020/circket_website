@@ -39,10 +39,7 @@
 												@endforeach
 
 											</p>
-											  <p>
-											
-												<span>Vice Captain</span> :
-												Gurpreet Singh</p>
+											 
 											<p>
 												<span>Player Count</span> :
 												{{$teamPlayerCount}}

@@ -267,7 +267,7 @@
                                                     class="img-responsive immobile center-block img-circle" />
                                                    
                                                 <font class="logo-name headname" size="5" style="color: white; font-size: 2rem;font-weigth:bold !important;">
-                                                    Event Ontario Softball Circket</font>
+                                                    Event Ontario Softball Cricket</font>
                                            
                                                 </a>
                                                    

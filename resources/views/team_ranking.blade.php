@@ -39,11 +39,7 @@
 										@endforeach
 
 									</p>
-									<p>
-
-										<span>Vice Captain</span> :
-										Gurpreet Singh
-									</p>
+									
 									<p>
 										<span>Player Count</span> :
 										{{$teamPlayerCount}}
@@ -176,12 +172,12 @@
 @foreach ($results as $key => $data)
     @if ($data['player_id'] ?? 0 > 0)
         <tr role="row" class="even" style="background-color:#1d252d;color:white">
-            <td class="sorting_1">{{ $serialNumber }}</td>
+            <td class="sorting_1">{{ $data['player_id'] }}</td>
             <td align="left" title="{{ $player[$data['player_id']] ?? '' }}" style="text-align: left; width: 90px;">
                 <div>
                     <div class="player-img" style="background-image: url('pic.jpg');"></div>
                     @if (isset($player[$data['player_id']]))
-                        <a href="{{ route('playerview', $data['player_id']) }}">{{ $player[$data['player_id']] }}</a><br>
+                        <a href="{{ route('playerview', $data['player_id']) }}" style="color:white;font-weigth:bold">{{ $player[$data['player_id']] }}</a><br>
                     @else
                         Player Not Found
                     @endif

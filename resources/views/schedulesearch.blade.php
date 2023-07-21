@@ -202,10 +202,10 @@ margin-top: 15px;}
        ""
     @endif
                             </p>
-                                  <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]}}</a> 
-                    <span class="v">v</span>  <a style="color: inherit;" href="">{{ $header_teams[$data['team_id_b']]}}</a> 
+                                  <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]??''}}</a> 
+                    <span class="v">v</span>  <a style="color: inherit;" href="">{{ $header_teams[$data['team_id_b']]??''}}</a> 
                     </h3>
-                      <h4>L @  <a style="color: inherit;" href="" target="_new">{{ $ground2[$data['ground_id']] }}</a>
+                      <h4>L @  <a style="color: inherit;" href="" target="_new">{{ $ground2[$data['ground_id']] ??''}}</a>
                     
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Umpires:
                   </h4>
@@ -249,50 +249,11 @@ margin-top: 15px;}
                     </thead>
                   
                     <tbody>
-                    @php
-    if(count($results) > 0){
-@endphp
-
-                         @foreach($results as $key => $data)
-						
-                       	@if($data['running_inning'] == 0)
-                    <tr id="deleteRow5973" role="row" class="odd">
-                      
-                     <td class="sorting_1">{{$key+1}}</td>
-
-                      <td>L</td>
-                      <td>{{date('d M Y', strtotime($data['match_startdate']))}}</td>
-                      <td nowrap="nowrap">{{ date('h:i:s ', strtotime($data['match_starttime'])) }}</td>
-                      <td>
-                        <div style="display: flex;">
-                        <a href="#">{{ $header_teams[$data['team_id_a']]}}</a> 
-                       <a target="new" href="#"><img alt="Print Roster" title="Print Roster" width="12px" height="12px" src="/utilsv2/images/roster2.png"></a>
-                       </div>
-                        </td>
-                      <td>
-                        <div style="display: flex;">
-                        <a href="#">{{ $header_teams[$data['team_id_b']]}}</a>
-                        <a target="new" href="#"><img alt="Print Roster" title="Print Roster" width="12px" height="12px" src="/utilsv2/images/roster2.png"></a>
-                        </div>
-                        </td>
-                      <td>
-                        <a href="#" target="_new">{{ $ground2[$data['ground_id']] }}</a>
-                        </td>
-                      <td></td>
-                      <td></td>
-                      <td> </td>
-
-                      </tr>
-                      @endif
-       							@endforeach
-        
+                   
     
 
  
- @php
-}
-@endphp
-                    </tbody></table></div>
+            </tbody></table></div>
               </div>
           
           <!-- Table View for Upcomming Matches Ends -->
@@ -303,7 +264,7 @@ margin-top: 15px;}
           <div class="row">
           <div class="col-sm-9 col-xs-9">
           <div class="button-pool text-left" styel="display: inline-block">
-               <span class="btn btn-earth"> PAST MATCHES </span>
+               <!-- <span class="btn btn-earth"> PAST MATCHES </span> -->
           </div>
           </div>
 
@@ -312,64 +273,12 @@ margin-top: 15px;}
                 <div class="col-sm-3 col-xs-3 admins-drop text-right">
                                 </div>
                                 </div>
-                                @php
-    if(count($results) > 0){
-@endphp
-
-                         @foreach($results as $data)
-						
-                       	@if($data['running_inning'] == 3)
-                         @php
-            $matchStartDate = strtotime($data['match_startdate']);
-            $dayOfWeek = date('l', $matchStartDate);
-        @endphp
+                           
                         <input type="hidden" name="removeumpire_selected" value="5960">
                                     <div class="schedule-all">
                                     <div class="row team-data deleteRow5960" id="deleteRow5960">
 
                          
-                                        <div class="col-xs-4 col-sm-1 sp mobile-b h-90" style="padding-right: 15px;
-                                             text-align: center;">
-                                                                    <div class="sch-time text-center">
-                                                                    <h4>{{$dayOfWeek}}</h4>
-                                                    <h2>{{date('d', strtotime($data['match_startdate']))}}</h2>
-                                                    <h5>{{date('M Y', strtotime($data['match_startdate']))}}</h5>
-                                                    <h5>{{ date('h:i:s ', strtotime($data['match_starttime'])) }}</h5>
-                                                                    </div>
-                                                                    </div>
-                                                                    <div class="col-xs-8 col-sm-3 p-sm-0 mobile-b">
-                                                    <div class="schedule-logo text-center h-90">
-                                                        <ul class="list-inline" style="color: #fff;">
-                                                        <li><a href="">
-                                                        <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_a']}}.png" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
-                                                                v 
-                                                        <li><a href="">
-                                                        <img src="https://eoscl.ca/admin/public/Team/{{$data['team_id_b']}}.png" class="img-responsive img-circle" style="width: 80px;height: 80px;"></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-5">
-                                                    <div class="schedule-text">
-                                                    <p style="color: #fff; margin-bottom: 3px;">{{$tournament[$data['tournament_id']]??''}}</p>
-                                                        <h3><a style="color: inherit;" href="">{{ $header_teams[$data['team_id_a']]}}</a> <span class="v"> v </span>  <a style="color: inherit;" href="#">{{ $header_teams[$data['team_id_b']]}}</a> </h3>
-
-                                                            <h4>L @  <a style="color: inherit;" href="" target="_new">{{ $ground2[$data['ground_id']] }}</a>
-                                            
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Umpires: 
-                                        <a style="color: inherit;" href="">Sandeep Mehta</a>,<a style="color: inherit;" href="#">Mcl Umpire</a></h4>
-                                        
-                                        <p style="color:#fff;font-size:13px"> </p>
-                                        <p style="color:#fff;font-size:13px"> </p>
-                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-3 ball-score">
-                                                        <div class="score-share text-center hidden-phone">
-                                                        </div>
-                                                        <div class="score-share text-center" style="display: inline-block;">
-                                                        <ul class="list-inline">
-                                                            <li><a href="{{ url('fullScorecard/' . $data['id']) }}" class="btn btn-sc"><i class="fa fa-calendar-check-o"></i>  Scorecard</a></li>
-                                                            </ul>
-                                </div>
                
                                 </div>
                                 
@@ -377,16 +286,7 @@ margin-top: 15px;}
                                  
     
                     </div>
-                    @endif
-       							@endforeach
-        
-    
-
- 
- @php
-}
-@endphp
-        
+             
           </div>
  
            
@@ -408,49 +308,7 @@ margin-top: 15px;}
                   <tr role="row"><th nowrap="nowrap" class="sorting_asc" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 0px;">#</th><th nowrap="nowrap" class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Match Type: activate to sort column ascending" style="width: 0px;">Match Type</th><th class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 0px;">Date</th><th class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" style="width: 0px;">Time</th><th class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Team 1 (Home): activate to sort column ascending" style="width: 0px;">Team 1 (Home)</th><th class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Team 2: activate to sort column ascending" style="width: 0px;">Team 2</th><th class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Ground: activate to sort column ascending" style="width: 0px;">Ground</th><th class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Umpire1: activate to sort column ascending" style="width: 0px;">Umpire1</th><th class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Umpire2: activate to sort column ascending" style="width: 0px;">Umpire2</th><th class="sorting" tabindex="0" aria-controls="schedule-table" rowspan="1" colspan="1" aria-label="Scorecard: activate to sort column ascending" style="width: 0px;">Scorecard</th></tr>
                   </thead>
                   <tbody>
-                  @php
-    if(count($results) > 0){
-@endphp
-
-                         @foreach($results as $key => $data)
-						
-                       	@if($data['running_inning'] == 3)
-                    <tr id="deleteRow5973" role="row" class="odd">
-                      
-                     <td class="sorting_1">{{$key+1}}</td>
-
-                      <td>L</td>
-                      <td>{{date('d M Y', strtotime($data['match_startdate']))}}</td>
-                      <td nowrap="nowrap">{{ date('h:i:s a', strtotime($data['match_starttime'])) }}</td>
-                      <td>
-                        <div style="display: flex;">
-                        <a href="#">{{ $header_teams[$data['team_id_a']]}}</a> 
-                       <a target="new" href="#"><img alt="Print Roster" title="Print Roster" width="12px" height="12px" src="/utilsv2/images/roster2.png"></a>
-                       </div>
-                        </td>
-                      <td>
-                        <div style="display: flex;">
-                        <a href="#">{{ $header_teams[$data['team_id_b']]}}</a>
-                        <a target="new" href="#"><img alt="Print Roster" title="Print Roster" width="12px" height="12px" src="/utilsv2/images/roster2.png"></a>
-                        </div>
-                        </td>
-                      <td>
-                        <a href="#" target="_new">Danville North</a>
-                        </td>
-                      <td></td>
-                      <td></td>
-                      <td> </td>
-
-                      </tr>
-                      @endif
-       							@endforeach
-        
-    
-
- 
- @php
-}
-@endphp</tbody></table></div>
+                </tbody></table></div>
               
             </div>
           

@@ -39,7 +39,7 @@
 			<td style="width:23px">2</td>
 			<td style="width:135px">Haroon shaikh Asad </td>
 			<td style="width:288px">Haroonasad83@gmail.com</td>
-			<td style="width:147px">Vice President</td>
+			<td style="width:147px">Lead umpire</td>
 		</tr>
 		<tr>
 			<td style="width:23px">3</td>

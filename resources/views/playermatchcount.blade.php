@@ -84,7 +84,7 @@
               @foreach($result as $key => $data)
 							<tr role="row" class="odd">
 								<th class="sorting_1">{{$key+1}}</th>
-								<th align="left" title="Aayan Mirza"><i class="fa fa-user"></i> <b><a href="{{ route('playerview', $data->player_id) }}"> {{$player[$data->player_id]}}</a></b></th>
+								<th align="left" title="{{$player[$data->player_id]}}"><i class="fa fa-user"></i> <b><a href="{{ route('playerview', $data->player_id) }}"> {{$player[$data->player_id]}}</a></b></th>
 								<th>{{ $match_count[$data->team_id]??0 }} </th>
 								<th>{{$data->clubname}}</th>
 								<th><a href="{{ url('team-view', $data->team_id . '_' . $data->tournament_id) }}">{{$teams[$data->team_id]}}<a></th>
