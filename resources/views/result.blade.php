@@ -81,10 +81,10 @@
             <div class="series-drop">
             	<div class="row">
 					<div class="col-sm-3 col-xs-4" title="From Date">
-                    	<input type="text" name="created_at" autocomplete="off" placeholder="From Date" value="<?php  if(isset($_POST['created_at'])) { echo  $_POST['created_at']; } ?>" align="top" class="calendarBox form-control datepicker" id="created_at">
+                    	<input type="text" name="created_at" id="created_at" autocomplete="off" placeholder="From Date" value="<?php  if(isset($_POST['created_at'])) { echo  $_POST['created_at']; } ?>" align="top" class="calendarBox form-control datepicker" id="created_at">
 					</div>
 					<div class="col-sm-3 col-xs-4" title="To Date">
-                    	<input type="text"  name="end_at" autocomplete="off" placeholder="To Date" value="<?php  if(isset($_POST['end_at'])) { echo  $_POST['end_at']; } ?>" align="top" class="calendarBox form-control datepicker" id="end_at">
+                    	<input type="text"  name="end_at" id="end_at" autocomplete="off" placeholder="To Date" value="<?php  if(isset($_POST['end_at'])) { echo  $_POST['end_at']; } ?>" align="top" class="calendarBox form-control datepicker" id="end_at">
 					</div>
 					<div class="col-sm-2 col-xs-4" title="Search Dates"> 
                     	<button class="btn btn-primary" id="datesSearch">Search Result</button>
@@ -185,7 +185,7 @@ text-align:center !important;
   @if (isset($total_runs[$data->id][0]) && $total_runs[$data->id][0] < (isset($total_runs[$data->id][1]) ? $total_runs[$data->id][1] : 0))
   <li style="color:lightgray">
   @else
-  <li   style="opacity:50">
+  <li   style=" ">
   @endif
   
 				   
@@ -234,7 +234,7 @@ text-align:center !important;
                                    @if (isset($total_runs[$data->id][0]) && $total_runs[$data->id][0] > (isset($total_runs[$data->id][1]) ? $total_runs[$data->id][1] : 0))
   <li style="color:lightgray">
   @else
-  <li style="opacity:50">
+  <li style="">
   @endif
                                         <span>
                                             @if (isset($total_runs[$data->id][1]))

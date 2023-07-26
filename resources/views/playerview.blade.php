@@ -190,7 +190,37 @@ if (strpos($headers[0], '404') !== false) {
                                                            
                                                                  </strong></a></th>
 																<th>{{$player_average??0}}</th>
-																<th>{{$player_strike_rate??0}}</th>
+                                <th>
+    @php
+        $totalRuns = 0;
+        $totalBalls = 0;
+    @endphp
+
+    @if(count($player_runs) > 0)
+        @foreach($player_runs as $runs)
+            @php
+                $totalRuns += $runs->playerruns ?? 0;
+            @endphp
+        @endforeach
+    @endif
+
+    @if(count($player_balls) > 0)
+        @foreach($player_balls as $teamdata)
+            @php
+                $totalBalls += $teamdata->balls ?? 0;
+            @endphp
+        @endforeach
+    @endif
+
+    @php
+        $strikeRate = ($totalBalls > 0) ? ($totalRuns / $totalBalls) * 100 : 0;
+    @endphp
+
+     {{ number_format($strikeRate, 2) }}
+</th>
+
+
+
 																<th>{{$higestruns}}</th>
 																<th>{{$hundred??0}}</th>
 																<th>{{$fifty??0}}</th>

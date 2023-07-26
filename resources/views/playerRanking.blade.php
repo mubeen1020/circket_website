@@ -175,6 +175,7 @@
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Mat: activate to sort column ascending" style="width: 30px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">Mat <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Inns: activate to sort column ascending" style="width: 31px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">Batting<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Overs: activate to sort column ascending" style="width: 41px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">Bowling <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
+                        <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Runs: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">Fielding</p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Runs: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">MOM #</p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                         <th class="spa sorting" tabindex="0" aria-controls="tableBowlingRecords" rowspan="1" colspan="1" aria-label="Wkts: activate to sort column ascending" style="width: 36px;"><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">Total<p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></a></th>
                        </tr> 
@@ -209,6 +210,7 @@
             <td style="text-align: left; font-size: smaller;">{{ $data['playermatch'] ?? 0 }}</td>
             <td>{{ $data['Player_Batting_totalPoints'] ?? 0 }}</td>
             <td>{{ $data['Player_Bowling_totalPoints'] ?? 0 }}</td>
+            <td>{{ $data['Player_Fielder_totalPoints'] ?? 0}}</td>
             <td>{{ $data['Player_MOTM_Points'] ?? 0 }}</td>
             <td>{{ $data['total_point'] ?? 0 }}</td>
         </tr>

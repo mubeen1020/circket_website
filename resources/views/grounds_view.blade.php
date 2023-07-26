@@ -30,7 +30,7 @@
                 @foreach($grounds as $index => $ground)
                 <tr id="div94">
                     <th>{{ $index + 1 }}</th>
-                    <th><a href="/InternationalScores/viewGround.do?groundId=94&amp;clubId=11707">{{ $ground->name }}</a></th>
+                    <th><a href="#">{{ $ground->name }}</a></th>
                     <th><i class="fa fa-map-marker"></i> {{ $ground->address }}</th>
                 </tr>
                 @endforeach

@@ -93,8 +93,9 @@
 									<table>
 										<tbody>
 											<tr>
+												
 												<td style="padding-right: 5px;"><img src="https://eoscl.ca/admin/public/Team/{{$data->team_id}}.png" class="left-block img-circle" style="width: 25px;height: 25px;"></td>
-												<td><a href="#">{{$teamsname[$data->team_id]??''}}</a></td>
+												<td><a href="{{ url('team-view/' . $data->team_id . '_' . $data->tournament_id) }}">{{$teamsname[$data->team_id]??''}}</a></td>
 											</tr>
 										</tbody>
 									</table>

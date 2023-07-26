@@ -180,7 +180,7 @@
         @endif
 
         @if (isset($bowlerwickets[$data['bowler_id']]) && $bowlerwickets[$data['bowler_id']] != 0)
-            <td>{{ number_format(round($bowlerballs[$data['bowler_id']] / 6) / $bowlerwickets[$data['bowler_id']], 2) }}</td>
+            <td>{{ number_format(round($bowlerballs[$data['bowler_id']] ) / $bowlerwickets[$data['bowler_id']], 2) }}</td>
         @else
             <td>0</td>
         @endif

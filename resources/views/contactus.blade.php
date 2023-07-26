@@ -31,7 +31,7 @@
 		</tr>
 		<tr>
 			<td style="width:23px">1</td>
-			<td style="width:135px">Meraj mubaahir</td>
+			<td style="width:135px">Meraj mubashir</td>
 			<td style="width:288px">meraj.mubashir@gmail.com</td>
 			<td style="width:147px">President</td>
 		</tr>

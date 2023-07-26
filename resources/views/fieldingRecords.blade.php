@@ -184,25 +184,23 @@
                             </thead>
                             <tbody>
      
-                                @foreach($getresult as $key => $data)
-                                	
-	
-                                <tr role="row" class="even">
-                                    <td class="sorting_1">{{$key+1}}</td>
-                                    <td align="left" title="{{$data->player_name}}" style="text-align: left;width: 90px;">
-                                        <div>
-                                            <div class="player-img" style="background-image: url('pic.jpg');"></div>
-                                            <a href="{{ route('playerview', $data->player_id) }}"> {{$data->player_name}}</a><br>
-                                        </div>
-                                    </td>
-                                    <td style="text-align: left;font-size: smaller;">{{$team_players_list[$data->player_id]}}</td>
-                                    <td>{{$match_count[$data->team_id]}}</td>
-                                    <td>{{$catchs_data[$data->player_id] ?? 0}}</td>
-                                    <td>{{$stump_data[$data->player_id] ?? 0}}</td>
-                                    <td> {{ (int)($stump_data[$data->player_id] ?? 0) + (int)($catchs_data[$data->player_id] ?? 0) }} </td>
+                            @foreach($fieldingresults as $key => $data)
+    <tr role="row" class="even">
+        <td class="sorting_1">{{$key+1}}</td>
+        <td align="left" title="{{$data['player_name']}}" style="text-align: left;width: 90px;">
+            <div>
+                <div class="player-img" style="background-image: url('pic.jpg');"></div>
+                <a href="{{ route('playerview', $data['player_id']) }}"> {{$data['player_name']}}</a><br>
+            </div>
+        </td>
+        <td style="text-align: left;font-size: smaller;">{{$data['team_players_list']}}</td>
+        <td>{{$data['playermatch_countmatch']}}</td>
+        <td>{{$data['catchs_data'] ?? 0}}</td>
+        <td>{{$data['stump_data'] ?? 0}}</td>
+        <td>{{$data['totalfieldingdata'] ?? 0}}</td>
+    </tr>
+@endforeach
 
-                                </tr>
-                                @endforeach
                             </tbody>
                         </table>
                         <div class="dataTables_info" id="webrecordtable_info" role="status" aria-live="polite">Showing 1 to 200 of 200 entries</div>

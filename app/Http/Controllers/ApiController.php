@@ -681,24 +681,32 @@ public function get_top_ranking(int $tournament_id)
   public function calculateNetRunRate($id)
 {
     $point_table_net_rr = DB::select("
-    SELECT (total_runs_scored/over_bowled)- (total_runs_conceded/over_faced) as net_rr, team_id
+    SELECT ( total_runs_scored/over_faced)- (total_runs_conceded/over_bowled) as net_rr, team_id
     FROM (
         SELECT
             team_id,
             SUM(total_runs_scored) AS total_runs_scored,
-            SUM(over_faced) AS over_faced,
             SUM(total_runs_conceded) AS total_runs_conceded,
-            SUM(over_bowled) AS over_bowled
+
+
+            SUM(over_bowled) AS over_bowled_old,
+        SUM(over_faced) AS over_faced_old,
+           
+           
+           
+            CONCAT( FLOOR(SUM(over_faced) / 6), '.',
+                    SUM(over_faced) % 6
+                ) AS over_faced, SUM(over_faced),
+            CONCAT( FLOOR(SUM(over_bowled) / 6), '.',
+                    SUM(over_bowled) % 6
+                ) AS over_bowled, SUM(over_bowled)
+
+
         FROM (
-            SELECT
+            SELECT fixtures.id as f_id,
                 first_inning_team_id AS team_id,
                 SUM(fixture_scores.runs) AS total_runs_scored,
-                 CASE WHEN MAX(DISTINCT fixture_scores.ballnumber) % 6 = 0
-            THEN CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber)), '.',
-                MAX(DISTINCT fixture_scores.ballnumber) % 6)
-            ELSE CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber - 1)), '.',
-                MAX(DISTINCT fixture_scores.ballnumber) % 6)
-        END AS over_faced,
+                MAX(fixture_scores.ballnumber) AS over_faced,
                 0 AS total_runs_conceded,
                 0 AS over_bowled
             FROM
@@ -707,78 +715,65 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
             JOIN tournaments On tournaments.id=fixtures.tournament_id
             WHERE tournaments.id = $id
-                AND inningnumber = 1 AND running_inning = 3 AND fixtures.isActive = 1
+                AND inningnumber = 1 AND running_inning = 3
             GROUP BY
-                first_inning_team_id
+                first_inning_team_id, f_id
     
             UNION ALL
     
-            SELECT
+            SELECT fixtures.id as f_id,
                 second_inning_team_id AS team_id,
-                SUM(fixture_scores.runs) AS total_runs_scored,
-                 CASE WHEN MAX(DISTINCT fixture_scores.ballnumber) % 6 = 0
-            THEN CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber)), '.',
-                MAX(DISTINCT fixture_scores.ballnumber) % 6)
-            ELSE CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber - 1)), '.',
-                MAX(DISTINCT fixture_scores.ballnumber) % 6)
-        END AS over_faced,
-                0 AS total_runs_conceded,
-                0 AS over_bowled
+	        0 AS total_runs_scored,
+                0 AS over_faced,
+                SUM(fixture_scores.runs) AS total_runs_conceded,
+                MAX(fixture_scores.ballnumber) AS over_bowled
+
             FROM
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
             JOIN tournaments On tournaments.id=fixtures.tournament_id
             WHERE tournaments.id = $id
-                AND inningnumber = 1 AND running_inning = 3 AND fixtures.isActive = 1
+                AND inningnumber = 1 AND running_inning = 3
             GROUP BY
-                second_inning_team_id
+                second_inning_team_id, f_id
     
             UNION ALL
     
-            SELECT
+            SELECT fixtures.id as f_id,
                 first_inning_team_id AS team_id,
                 0 AS total_runs_scored,
                 0 AS over_faced,
                 SUM(fixture_scores.runs) AS total_runs_conceded,
-                 CASE WHEN MAX(DISTINCT fixture_scores.ballnumber) % 6 = 0
-            THEN CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber)), '.',
-                MAX(DISTINCT fixture_scores.ballnumber) % 6)
-            ELSE CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber - 1)), '.',
-                MAX(DISTINCT fixture_scores.ballnumber) % 6)
-        END AS over_bowled
+                MAX( fixture_scores.ballnumber)  AS over_bowled
             FROM
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
                 JOIN tournaments On tournaments.id=fixtures.tournament_id
                 WHERE tournaments.id = $id
-                AND inningnumber = 2 AND running_inning = 3 AND fixtures.isActive = 1
+                AND inningnumber = 2 AND running_inning = 3
             GROUP BY
-                first_inning_team_id
+                first_inning_team_id, f_id
     
             UNION ALL
     
-            SELECT
+            SELECT fixtures.id as f_id,
                 second_inning_team_id AS team_id,
-                0 AS total_runs_scored,
-                0 AS over_faced,
-                SUM(fixture_scores.runs) AS total_runs_conceded,
-                 CASE WHEN MAX(DISTINCT fixture_scores.ballnumber) % 6 = 0
-            THEN CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber)), '.',
-                MAX(DISTINCT fixture_scores.ballnumber) % 6)
-            ELSE CONCAT(FLOOR(MAX(DISTINCT fixture_scores.overnumber - 1)), '.',
-                MAX(DISTINCT fixture_scores.ballnumber) % 6)
-        END AS over_bowled
+
+                SUM(fixture_scores.runs) AS total_runs_scored,
+                MAX( fixture_scores.ballnumber)  AS over_faced,
+                0 AS total_runs_conceded,
+                0 AS over_bowled
             FROM
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
                 JOIN tournaments On tournaments.id=fixtures.tournament_id
                 WHERE tournaments.id = $id
-                AND inningnumber = 2 AND running_inning = 3 AND fixtures.isActive = 1
+                AND inningnumber = 2 AND running_inning = 3
             GROUP BY
-                second_inning_team_id
+                second_inning_team_id, f_id
         ) AS subquery
         GROUP BY
             team_id

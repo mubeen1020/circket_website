@@ -155,6 +155,7 @@ th { min-width:30px !important; padding: 10px 5px !important; }
 @endforeach
 @php
                    $player_balls=round(($playerballs[$playerId]?? 0)/6)??0;
+				   $player_balls1=round(($playerballs[$playerId]?? 0))??0;
 				   $player_runs=$playerruns[$playerId]??0;
 				   $player_outs=$playerouts[$playerId]??0;
                    @endphp
@@ -182,8 +183,8 @@ th { min-width:30px !important; padding: 10px 5px !important; }
 				@endif
 			
 				
-				@if (isset($player_balls) && isset($player_outs) && $player_outs != 0)
-    <th>{{ number_format($player_balls / $player_outs, 2) }}</th>
+				@if (isset($player_balls1) && isset($player_outs) && $player_outs != 0)
+    <th>{{ number_format($player_balls1 / $player_outs, 2) }}</th>
 @else
     <th>0</th>
 @endif

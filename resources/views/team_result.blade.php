@@ -208,7 +208,24 @@ $(document).ready(function() {
 	        Cancel: function() {
 	          var matchId = $("#lockId").val();
 	         // $("#lockButton"+matchId).button( "enable" );
-	          $( this ).dialog( "close" );
+	          $( this ).dialog( "cl $total_runs = [];
+    $total_wicket_fixture = [];
+    $total_run_fixture = [];
+    foreach ($team_resultData as $result) {
+      $match_summary = FixtureScore::where('fixture_id', '=', $result->id)
+        ->selectRaw("SUM(CASE WHEN balltype = 'Wicket' THEN 1 ELSE 0 END) as total_wickets")
+        ->selectRaw('inningnumber, max(overnumber) as max_over')
+        ->selectRaw('SUM(runs) as total_runs')
+        ->selectRaw("inningnumber")
+        ->groupBy('inningnumber')
+        ->get();
+
+      if (count($match_summary) == 2) {
+        $total_wicket_fixture[$result->id] = [$match_summary[0]['total_wickets'], $match_summary[1]['total_wickets']];
+        $total_run_fixture[$result->id] = [$match_summary[0]['max_over'], $match_summary[1]['max_over']];
+        $total_runs[$result->id] = [$match_summary[0]['total_runs'], $match_summary[1]['total_runs']];
+      }
+    }ose" );
 	        }
 	      }
 	    });
@@ -293,86 +310,127 @@ function unLockMatch(matchId,name){
 <div class="month-all sp">
 <div class="month-all listView">
 @if($team_resultData->count() > 0)
-@foreach($team_resultData as $data)
-@if($data['running_inning'] == 3)
-       <div class="schedule-all">
-           <div class="row team-data" id="deleteRow2414">
-               <div class="col-xs-3 col-sm-1 sp mobile-b">
-                   <div class="sch-time text-center h-90">
-                       <h5><strong>League</strong></h5>
-                       <h2>{{date('d', strtotime($data['created_at']))}}</h2>
-                       <h5>{{date('M Y', strtotime($data['created_at']))}}</h5>
-                   </div>
-               </div>
-               <div class="col-xs-9 col-sm-4 p-sm-0 mobile-b">
-                   <div class="schedule-logo text-center h-90">
-                   <ul class="list-inline">
-								   @if (isset($total_runs[$data->id][0])) 
-					<li class="win"><span>{{ $total_runs[$data->id][0] }}/{{ $total_wicket_fixture[$data->id][0] }}</span> <br> 
-					<p>{{ $total_run_fixture[$data->id][0] }}/{{$data['numberofover']}}</p>
-		                           </li>
-				@else 
-				<li class="win"><span>0/0</span> <br> 
-					<p>0/0</p>
-		                           </li>
-				@endif
-				<li><a href="">
-		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['first_inning_team_id']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
-		                           <li><a href="">
-		                           <img src="https://eoscl.ca/admin/public/Team/{{$data['second_inning_team_id']}}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>	
-				@if (isset($total_runs[$data->id][0])) 
-		                          <li class="lose">
-		                          		<span>{{ $total_runs[$data->id][1] }}/{{ $total_wicket_fixture[$data->id][1] }}</span> <br> 
-		                          			<p>{{ $total_run_fixture[$data->id][0] }}/{{$data['numberofover']}}</p>
-				                           </li>
-				@else 
-				<li class="lose">
-		                          		<span>0/0</span> <br> 
-		                          			<p>0/0</p>
-				                           </li>
-				@endif	 
-	                      	 </ul>	
-                         </div>
-               </div>
-             <div class="col-xs-12 col-sm-4">
-                   <div class="schedule-text">
-                   <h4>{{$tournament[$data['tournament_id']]}}</h4>
-                       <h3>{{ $header_teams[$data['first_inning_team_id']]}}<span class="v"> v </span>  {{ $header_teams[$data['second_inning_team_id']]}}</h3>
-                       <h4>{{$data['match_result_description']}}</h4>
+        @foreach($team_resultData as $data)
+            @if($data['running_inning'] == 3)
+                <div class="schedule-all">
+                    <div class="row team-data" id="deleteRow2414">
+                        <!-- Left column -->
+                        <div class="col-xs-3 col-sm-1 sp mobile-b">
+                            <div class="sch-time text-center h-90">
+                                <h5><strong>League</strong></h5>
+                                <h2>{{ date('d', strtotime($data['created_at'])) }}</h2>
+                                <h5>{{ date('M Y', strtotime($data['created_at'])) }}</h5>
+                            </div>
                         </div>
-               </div>
-               <div class="col-xs-12 col-sm-3 ball-score" style="padding-right: 22px;">
-               
-               
-                   <div class="live-score text-center ">
-                  
-                       <h5 class="text-right">
-                      
-                        
-                        
-								&nbsp;
-								 <img src="/utilsv2/theme2-static/images/cric-ball.png"> Ball By Ball </h5>
-                   </div>
-                  
-                   <div class="score-share text-right" style="display: inline-block;">
-                   
-                       <ul class="list-inline">
-                           <li>
-                          
-                           <a href="{{ url('fullScorecard/' . $data['id']) }}" class="btn btn-sc"><i class="fa fa-calendar-check-o"></i>Scorecard</a>
-                       			
-								
-							</li>
-                       </ul>
-                   </div>
-                   			</div>
-           </div>
-       </div>
-       @endif
-    @endforeach
-	@else
-          <p>Not record Found.</p>
-          @endif
+                        <!-- Middle column -->
+                        <div class="col-xs-9 col-sm-4 p-sm-0 mobile-b">
+                            <div class="schedule-logo text-center h-90">
+                                <ul class="list-inline">
+                                    @if (isset($total_runs[$data->id][0]))
+                                    
+									
+									@if($total_runs[$data->id][0] < $total_runs[$data->id][1])
+					                           <li class="lose" style="width:25%">
+                                     @else
+                                     <li class="win" style="width:25%">
+                                     @endif
+
+
+                                        <span>{{ $total_runs[$data->id][0] }}/{{ $total_wicket_fixture[$data->id][0] }}</span> <br>
+                                        <p>
+										@if (isset($total_over_fixture[$data->id][0]))
+    @php
+        $totalBalls = isset($total_ball_fixture[$data->id][0]) ? $total_ball_fixture[$data->id][0] : 0;
+        $overs = floor($totalBalls / 6);
+        $ballsInCurrentOver = $totalBalls % 6;
+    @endphp
+        @if ($ballsInCurrentOver == 0)
+            {{ $total_over_fixture[$data->id][0] }}.{{ $ballsInCurrentOver }}
+        @else
+            {{ $total_over_fixture[$data->id][0] - 1 }}.{{ $ballsInCurrentOver }} 
+        @endif
+    </th>
+@else
+  
+@endif
+/ {{ $data['numberofover'] }}
+                                        </p>
+                                    </li>
+                                    @else
+                                    <li class="win">
+                                        <span>0/0</span> <br>
+                                        <p>0/0</p>
+                                    </li>
+                                    @endif
+                                    <li><a href=""><img src="https://eoscl.ca/admin/public/Team/{{ $data['first_inning_team_id'] }}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+                                    <li><a href=""><img src="https://eoscl.ca/admin/public/Team/{{ $data['second_inning_team_id'] }}.png" class="img-responsive img-circle" style="width: 70px;height: 70px;"></a></li>
+                                    @if (isset($total_runs[$data->id][1]))
+                                    
+									@if($total_runs[$data->id][0] > $total_runs[$data->id][1])
+					                           <li class="lose" style="width:25%">
+                                     @else
+                                     <li class="win" style="width:25%">
+                                     @endif
+                                        <span>{{ $total_runs[$data->id][1] }}/{{ $total_wicket_fixture[$data->id][1] }}</span> <br>
+                                        <p>
+										@if (isset($total_over_fixture[$data->id][1]))
+    @php
+        $totalBalls = isset($total_ball_fixture[$data->id][1]) ? $total_ball_fixture[$data->id][1] : 0;
+        $overs = floor($totalBalls / 6);
+        $ballsInCurrentOver = $totalBalls % 6;
+    @endphp
+        @if ($ballsInCurrentOver == 0)
+            {{ $total_over_fixture[$data->id][1] }}.{{ $ballsInCurrentOver }}
+        @else
+            {{ $total_over_fixture[$data->id][1] - 1 }}.{{ $ballsInCurrentOver }} 
+        @endif
+    </th>
+@else
+    N/A
+@endif
+/{{ $data['numberofover'] }}
+                                        </p>
+                                    </li>
+                                    @else
+                                    <li class="lose">
+                                        <span>0/0</span> <br>
+                                        <p>0/0</p>
+                                    </li>
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Right column -->
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="schedule-text">
+                                <h4>{{ $tournament[$data['tournament_id']] }}</h4>
+                                <h3>{{ $header_teams[$data['first_inning_team_id']] }}<span class="v"> v </span>{{ $header_teams[$data['second_inning_team_id']] }}</h3>
+                                <h4>{{ $data['match_result_description'] }}</h4>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 ball-score" style="padding-right: 22px;">
+                            <div class="live-score text-center ">
+                                <h5 class="text-right">
+                                    &nbsp;
+                                    <img src="/utilsv2/theme2-static/images/cric-ball.png"> Ball By Ball </h5>
+                            </div>
+                            <div class="score-share text-right" style="display: inline-block;">
+                                <ul class="list-inline">
+                                    <li>
+                                        <a href="{{ url('fullScorecard/' . $data['id']) }}" class="btn btn-sc">
+                                            <i class="fa fa-calendar-check-o"></i>Scorecard
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    @else
+    <p>Not record Found.</p>
+    @endif
         
        </div>
         
