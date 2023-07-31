@@ -43,7 +43,7 @@
                     	</tr>
                     	<tr>
                     		<th>Established: </th>
-                    		<th>2018</th>
+                    		<th>2016</th>
                     	</tr>
                     	<tr>
                     		<th valign="top">EOSCL Rules and Guidlines: </th>

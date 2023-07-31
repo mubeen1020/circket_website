@@ -43,9 +43,14 @@
 												<span>Player Count</span> :
 												{{$teamPlayerCount}}
 											</p>
-											<p>
-												<span>Home Ground</span> : <b><a href="">Wet n Wild</a></b>
-											</p>
+											@if($tournamentgrounds && isset($ground[$tournamentgrounds->ground_id]))
+    <p>
+        <span>Home Ground</span> : <b><a href="">{{$ground[$tournamentgrounds->ground_id]}}</a></b>
+    </p>
+@else
+    <p><span>Home Ground</span> :Home Ground not available.</p>
+@endif
+
 											</div>
 									</div>
 								</div>

@@ -692,8 +692,7 @@ public function get_top_ranking(int $tournament_id)
             SUM(over_bowled) AS over_bowled_old,
         SUM(over_faced) AS over_faced_old,
            
-           
-           
+
             CONCAT( FLOOR(SUM(over_faced) / 6), '.',
                     SUM(over_faced) % 6
                 ) AS over_faced, SUM(over_faced),
@@ -715,7 +714,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
             JOIN tournaments On tournaments.id=fixtures.tournament_id
             WHERE tournaments.id = $id
-                AND inningnumber = 1 AND running_inning = 3
+                AND inningnumber = 1 AND running_inning = 3 AND is_tie_match = 0
             GROUP BY
                 first_inning_team_id, f_id
     
@@ -734,7 +733,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
             JOIN tournaments On tournaments.id=fixtures.tournament_id
             WHERE tournaments.id = $id
-                AND inningnumber = 1 AND running_inning = 3
+                AND inningnumber = 1 AND running_inning = 3 AND is_tie_match = 0
             GROUP BY
                 second_inning_team_id, f_id
     
@@ -752,7 +751,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
                 JOIN tournaments On tournaments.id=fixtures.tournament_id
                 WHERE tournaments.id = $id
-                AND inningnumber = 2 AND running_inning = 3
+                AND inningnumber = 2 AND running_inning = 3 AND is_tie_match = 0
             GROUP BY
                 first_inning_team_id, f_id
     
@@ -771,7 +770,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
                 JOIN tournaments On tournaments.id=fixtures.tournament_id
                 WHERE tournaments.id = $id
-                AND inningnumber = 2 AND running_inning = 3
+                AND inningnumber = 2 AND running_inning = 3 AND is_tie_match = 0
             GROUP BY
                 second_inning_team_id, f_id
         ) AS subquery

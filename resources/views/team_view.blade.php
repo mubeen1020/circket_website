@@ -44,9 +44,11 @@
 												{{$teamPlayerCount}}
 											</p>
 											<p>
-												@foreach($tournamentgrounds as $grounddata)
-												<span>Home Ground</span> : <b><a href="">{{$ground[$grounddata->ground_id]}}</a></b>
-												@endforeach
+											@if($tournamentgrounds) 
+												<span>Home Ground</span> : <b><a href="">{{$ground[$tournamentgrounds->ground_id]}}</a></b>
+												@else
+												""
+												@endif
 											</p>
 											</div>
 									</div>

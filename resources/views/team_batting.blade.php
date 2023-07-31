@@ -43,7 +43,11 @@
 												{{$teamPlayerCount}}
 											</p>
 											<p>
-												<span>Home Ground</span> : <b><a href="">Wet n Wild</a></b>
+											@if($tournamentgrounds) 
+												<span>Home Ground</span> : <b><a href="">{{$ground[$tournamentgrounds->ground_id]}}</a></b>
+												@else
+												""
+												@endif
 											</p>
 											</div>
 									</div>
@@ -123,7 +127,6 @@ th { min-width:30px !important; padding: 10px 5px !important; }
             <th class="width sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Team : activate to sort column ascending" style="width: 195px;">Team <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Mat : activate to sort column ascending" style="width: 27px;">Mat <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Ins : activate to sort column ascending" style="width: 27px;">Ins <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
-            <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="No : activate to sort column ascending" style="width: 27px;">No <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Runs : activate to sort column ascending" style="width: 33px;">Runs <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Balls : activate to sort column ascending" style="width: 32px;">Balls <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
             <th class="spa sorting" tabindex="0" aria-controls="tableBattingRecords" rowspan="1" colspan="1" aria-label="Avg : activate to sort column ascending" style="width: 41px;">Avg <p><a href="#"><i class="fa-solid fa-arrow-down-short-wide"></i></a></p></th>
@@ -149,13 +152,18 @@ th { min-width:30px !important; padding: 10px 5px !important; }
                 </tbody>
             </table>
         </th>
+	
 		@foreach($teamid as $data)
+		@if(count($playermatch)>0)
     @if(isset($playermatch[$data->id]))
         <th>{{$playermatch[$data->id]}}</th>
     @endif
+	@else
+<th>0 </th>
+ @endif
 @endforeach
+
         <th>{{ isset($matchcount[$playerId]) ? $matchcount[$playerId] : 0 }}</th>
-        <th>1</th>
         <th>
             <b><a class="linkStyle" href="">{{$playerruns[$playerId]??0}}</a></b>
         </th>

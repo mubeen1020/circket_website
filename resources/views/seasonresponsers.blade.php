@@ -25,7 +25,7 @@
                        
 							<div class="small-video ash-border">
 								<center class="center-padding">
-								<a href="{{ $image->website }}" target="blank" data-rel="prettyPhoto"><img src="data:image/png;base64,{{ $image->image }}" alt="MCL_awardTeam.jpg" style="height: 150px;width: 200px;"></a>
+								<a href="{{ $image->website }}" target="blank" data-rel="prettyPhoto"><img src="data:image/png;base64,{{ $image->image }}" alt="EOSCL_awardTeam.jpg" style="height: 150px;width: 200px;"></a>
 								</center>
 							</div>
 						</div>

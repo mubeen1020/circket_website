@@ -1069,7 +1069,15 @@ public function fullScorecard_chart(int $id)
 
     
      $teamid = Team::where('id', '=', $team_id)->select('id')->get();
-    return view('team_bowling', compact('playerouts','teamid','hatricks','playernoball','playerwide','matchcount','playerruns','playerballs','playermatch','playerteam','playername','teams', 'tournamentData', 'tournament_ids', 'player', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'teamData', 'match_results', 'tournament', 'team_id_data', 'team_bowlingdata', 'image_gallery'));
+
+     $tournamentgrounds=Fixture::where('tournament_id',$tournament_id)
+     ->select('ground_id')
+     ->distinct('ground_id')
+     ->get()->first();
+
+     $ground = Ground::orderBy('id')->get();
+     $ground = $ground->pluck('name', 'id');
+    return view('team_bowling', compact('playerouts','tournamentgrounds','ground','teamid','hatricks','playernoball','playerwide','matchcount','playerruns','playerballs','playermatch','playerteam','playername','teams', 'tournamentData', 'tournament_ids', 'player', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'teamData', 'match_results', 'tournament', 'team_id_data', 'team_bowlingdata', 'image_gallery'));
   }
 
   public function team_fielding(int $team_id, int $tournament_id)
@@ -1078,6 +1086,8 @@ public function fullScorecard_chart(int $id)
     $team_id_data = $team_id;
     $tournament_ids = $tournament_id;
     $player = Player::pluck('fullname', 'id');
+    $ground = Ground::orderBy('id')->get();
+    $ground = $ground->pluck('name', 'id');
     $tournamentData = TournamentGroup::where('tournament_id', $tournament_id)->value('tournament_id');
     $playerCount = TournamentPlayer::where('team_id', $team_id)
       ->selectRaw('player_id, COUNT(*) as count')
@@ -1189,11 +1199,13 @@ $getresult = $data->get();
           ->from('fixtures')
           ->where('team_id_a', $team_id)
           ->where('tournament_id', $tournament_id)
+          ->whereIN('running_inning',[ 3,1,2])
           ->unionAll(
               DB::table('fixtures')
                   ->select('team_id_b AS team_id')
                   ->where('team_id_b', $team_id)
                   ->where('tournament_id', $tournament_id)
+                  ->whereIN('running_inning',[ 3,1,2])
           );
   }, 'subquery')
       ->select('team_id', DB::raw('COUNT(*) AS count'))
@@ -1222,8 +1234,12 @@ $getresult = $data->get();
   
       $player_cauches[$data->id] = $total_catches ?? 0;
   }
+  $tournamentgrounds=Fixture::where('tournament_id',$tournament_id)
+     ->select('ground_id')
+     ->distinct('ground_id')
+     ->get()->first();
 
-    return view('team_fielding', compact('stump_data','teamid', 'player_cauches', 'sixes', 'catchs_data', 'player_runs', 'match_count_player', 'player', 'getresult', 'teams', 'tournamentdata', 'match_count',  'image_gallery', 'years' , 'teamData' , 'tournament' , 'tournamentData' , 'team_resultData' , 'teamPlayerCount', 'team_id_data' , 'tournament_ids'));
+    return view('team_fielding', compact('stump_data','tournamentgrounds','ground','teamid', 'player_cauches', 'sixes', 'catchs_data', 'player_runs', 'match_count_player', 'player', 'getresult', 'teams', 'tournamentdata', 'match_count',  'image_gallery', 'years' , 'teamData' , 'tournament' , 'tournamentData' , 'team_resultData' , 'teamPlayerCount', 'team_id_data' , 'tournament_ids'));
   }
 
   public function searchplayer_form_submit(Request $request)
@@ -1487,7 +1503,7 @@ $getresult = $data->get();
       $tournamentgrounds=Fixture::where('tournament_id',$tournament_id)
       ->select('ground_id')
       ->distinct('ground_id')
-      ->get();
+      ->get()->first();
     return view('team_view', compact('team_id_data', 'teamid','tournament_ids', 'team_resultData', 'teamData', 'playerCount', 'match_results', 'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount', 'teamPlayers', "image_gallery",'tournamentgrounds'));
   }
 
@@ -1570,7 +1586,15 @@ $getresult = $data->get();
       ->get();
 
       $teamid = Team::where('id', '=', $team_id)->select('id')->get();
-    return view('team_result', compact('teamid','total_ball_fixture','tournamentData', 'tournament_ids', 'player', 'teamCaptain', 'teamPlayerCount', 'teamPlayers', 'team_resultData', 'team_resultData1', 'teamData', 'match_results',  'tournament', 'total_runs', 'total_wicket_fixture', 'team_id_data', 'image_gallery','total_over_fixture'));
+
+      $tournamentgrounds=Fixture::where('tournament_id',$tournament_id)
+      ->select('ground_id')
+      ->distinct('ground_id')
+      ->get()->first();
+
+      $ground = Ground::orderBy('id')->get();
+      $ground = $ground->pluck('name', 'id');
+    return view('team_result', compact('teamid','ground','tournamentgrounds','total_ball_fixture','tournamentData', 'tournament_ids', 'player', 'teamCaptain', 'teamPlayerCount', 'teamPlayers', 'team_resultData', 'team_resultData1', 'teamData', 'match_results',  'tournament', 'total_runs', 'total_wicket_fixture', 'team_id_data', 'image_gallery','total_over_fixture'));
   }
 
 
@@ -1580,6 +1604,7 @@ $getresult = $data->get();
     $tournament_ids = $tournament_id;
     $tournament = Tournament::where('isActive', '=', 1)->pluck('name', 'id');
     $ground = Ground::orderBy('id')->get();
+      $ground = $ground->pluck('name', 'id');
     $player = Player::pluck('fullname', 'id');
     $tournamentData = TournamentGroup::where('tournament_id', $tournament_id)->value('tournament_id');
     $playerCount = TournamentPlayer::where('team_id', $team_id)
@@ -1633,7 +1658,12 @@ $getresult = $data->get();
       ->get();
 
       $teamid = Team::where('id', '=', $team_id)->select('id')->get();
-    return view('team_schedule', compact('teamData','teamid', 'tournament_ids', 'match_results', 'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'team_id_data', 'team_scheduleData', "image_gallery"));
+
+      $tournamentgrounds=Fixture::where('tournament_id',$tournament_id)
+      ->select('ground_id')
+      ->distinct('ground_id')
+      ->get()->first();
+    return view('team_schedule', compact('teamData','tournamentgrounds','teamid', 'tournament_ids', 'match_results', 'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'team_id_data', 'team_scheduleData', "image_gallery"));
   }
 
   public function team_batting(int $team_id, int $tournament_id)
@@ -1642,6 +1672,7 @@ $getresult = $data->get();
     $tournament_ids = $tournament_id;
     $tournament = Tournament::where('isActive', '=', 1)->pluck('name', 'id');
     $ground = Ground::orderBy('id')->get();
+      $ground = $ground->pluck('name', 'id');
     $player = Player::pluck('fullname', 'id');
     $tournamentData = TournamentGroup::where('tournament_id', $tournament_id)->value('tournament_id');
     $playerCount = TournamentPlayer::where('team_id', $team_id)
@@ -1664,6 +1695,7 @@ $getresult = $data->get();
       $higest_score=[];
       foreach($team_resultData as $data){
       $higest_score_query = FixtureScore::where('playerId', $data->player_id)
+      ->where('fixtures.tournament_id', $tournament_id)
       ->where('fixtures.isActive', 1)
       ->join('fixtures', 'fixtures.id', '=', 'fixture_scores.fixture_id')
       ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket' OR balltype='RunOut'  THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as total_runs, fixture_id")
@@ -1688,12 +1720,16 @@ $getresult = $data->get();
       ->join('players', 'players.id', '=', 'tournament_players.player_id')
       ->pluck('players.fullname', 'tournament_players.player_id');
 
+    
+
       $matchcount = Fixture::where('tournament_id', $tournament_id)
       ->where('fixtures.isActive', 1)
       ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
       ->groupBy('fixture_scores.playerId')
       ->selectRaw('COUNT(DISTINCT(fixture_scores.fixture_id)) as matches_played,fixture_scores.playerId  as playerId')
       ->pluck('matches_played', 'playerId');
+
+      // dd( $matchcount);
 
       $team_ids = is_array($team_id) ? $team_id : [$team_id];
 
@@ -1822,7 +1858,12 @@ $playermatch = DB::table(function ($query) use ($team_ids, $tournament_id) {
 
 
       $teamid = Team::where('id', '=', $team_id)->select('id')->get();
-    return view('team_batting', compact('teamData','higest_score','teamid','playerfifty','playerHundreds','playerhigestruns','playerfour','playersix','playerouts','playerballs','playerteam','playerruns','playername','playermatch', 'tournament_ids', 'match_results',  'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'team_id_data',  "image_gallery",'matchcount'));
+
+      $tournamentgrounds=Fixture::where('tournament_id',$tournament_id)
+      ->select('ground_id')
+      ->distinct('ground_id')
+      ->get()->first();
+    return view('team_batting', compact('teamData','tournamentgrounds','higest_score','teamid','playerfifty','playerHundreds','playerhigestruns','playerfour','playersix','playerouts','playerballs','playerteam','playerruns','playername','playermatch', 'tournament_ids', 'match_results',  'player', 'ground', 'tournamentData', 'tournament', 'teamPlayerCount', 'team_resultData', 'teamPlayers', 'team_id_data',  "image_gallery",'matchcount'));
   }
 
   public function batting_states()
@@ -5290,6 +5331,8 @@ public function team_ranking(int $team_id, int $tournament_id)
   $teamid = Team::where('id', '=', $team_id)->select('id')->get();
   $team_id_data = $team_id;
   $tournament_ids = $tournament_id;
+  $ground = Ground::orderBy('id')->get();
+  $ground = $ground->pluck('name', 'id');
   $player = Player::pluck('fullname', 'id');
   $tournamentData = TournamentGroup::where('tournament_id', $tournament_id)->value('tournament_id');
   $playerCount = TournamentPlayer::where('team_id', $team_id)
@@ -5455,7 +5498,13 @@ $Player_MOTM_Points = Fixture::whereIn('manofmatch_player_id', $player_ids)
 $total_point = array_column($results, 'total_point');
 array_multisort($total_point, SORT_DESC, $results);
 
-return view('team_ranking', compact('results','teamid','teamData','tournamentData','team_resultData','teamPlayerCount','team_id_data','tournament_ids','Player_Rank_Data','fours','balls_faced', 'sixes', 'balls_faced', 'player_runs', 'player', 'getresult', 'teams', 'tournament', 'match_results',  'image_gallery', 'years' ));
+$tournamentgrounds=Fixture::where('tournament_id',$tournament_id)
+->select('ground_id')
+->distinct('ground_id')
+->get()->first();
+
+
+return view('team_ranking', compact('results','tournamentgrounds','teamid','teamData','tournamentData','team_resultData','teamPlayerCount','team_id_data','tournament_ids','ground','Player_Rank_Data','fours','balls_faced', 'sixes', 'balls_faced', 'player_runs', 'player', 'getresult', 'teams', 'tournament', 'match_results',  'image_gallery', 'years' ));
   
 }
 

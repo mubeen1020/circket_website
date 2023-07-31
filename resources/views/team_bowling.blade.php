@@ -45,7 +45,11 @@
 												{{$teamPlayerCount}}
 											</p>
 											<p>
-												<span>Home Ground</span> : <b><a href="">Wet n Wild</a></b>
+											@if($tournamentgrounds) 
+												<span>Home Ground</span> : <b><a href="">{{$ground[$tournamentgrounds->ground_id]}}</a></b>
+												@else
+												""
+												@endif
 											</p>
 											</div>
 									</div>
@@ -149,9 +153,13 @@ th { min-width:30px !important; padding: 10px 5px !important; }
 				</tbody></table>
 				</th>
 				@foreach($teamid as $data)
+		@if(count($playermatch)>0)
     @if(isset($playermatch[$data->id]))
         <th>{{$playermatch[$data->id]}}</th>
     @endif
+	@else
+<th>0 </th>
+ @endif
 @endforeach
 @php
                    $player_balls=round(($playerballs[$playerId]?? 0)/6)??0;
