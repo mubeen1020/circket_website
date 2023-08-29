@@ -100,7 +100,14 @@
 
 					<div id="slider-container">
     <button type="button" class="slick-prev slick-arrow slick-disabled" aria-label="Previous" role="button" aria-disabled="true" style="display: block;">Previous</button>
-  <ul class="resp-tabs-list hor_1 common__slider" id="tournament_name_slide">
+    @php
+    // Custom comparison function for sorting by 'tournamentname' or 'season_name' in descending order
+    usort($tournament_season, function($a, $b) {
+        return strcmp($b['tournament_id'] ?? $b['season_id'], $a['tournament_id'] ?? $a['season_id']);
+    });
+@endphp
+
+<ul class="resp-tabs-list hor_1 common__slider" id="tournament_name_slide">
     @foreach($tournament_season as $index => $tour_name)
         @if($tour_name['type'] === 'T')
             <li id='tour_tab_id_{{$tour_name["tournament_id"]}}_{{$tour_name["type"]}}'  onclick="get_point_table({{$tour_name['tournament_id']}}, '{{$tour_name['type']}}')" class="resp-tab-item {{ $index === 0 ? 'active' : '' }} hor_1" style="background-color: rgb(255, 255, 255); border-color: rgb(193, 193, 193);">
@@ -113,6 +120,8 @@
         @endif
     @endforeach
 </ul>
+
+
 
     <button type="button" class="slick-next slick-arrow bgdanger" aria-label="Next" role="button" style="display: block;" aria-disabled="false">Next</button>
 							
@@ -1129,11 +1138,19 @@ function get_point_table(tornament_season_id, type) {
         },
     });
     get_season_group(tornament_season_id);
-    get_top_scorers(tornament_season_id);
-    get_top_bowler(tornament_season_id);
+    if(type == 'T'){
+        get_top_scorers(tornament_season_id);
+        get_top_bowler(tornament_season_id);
+        get_top_ranking(tornament_season_id);
+    }else if(type == 'S'){
+      
+        get_top_scorers_season(tornament_season_id)
+        get_top_bowler_season(tornament_season_id)
+        get_top_ranking_season(tornament_season_id)
+    }
     get_season_tournament(tornament_season_id);
     get_tournamnet_all_data(tornament_season_id);
-    get_top_ranking(tornament_season_id);
+   
 }
 
 
@@ -1270,6 +1287,45 @@ function get_group_team(group_id, tournamnet_id) {
 }
 
 
+
+function get_top_scorers_season(tournament_season_id) {
+    $.ajax({
+        url: "{{ url('/get_top_scorers_season/')}}/" + tournament_season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const scores = document.getElementById('topbatsman');
+            scores.innerHTML = ''; // Clear the previous data before appending new data
+            data.forEach(item => {
+                scores.innerHTML += `
+                    <tr>
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding-right:5px;min-width:35px">
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.id}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
+                                            </td>
+                                        <td>
+                                            <a href="{{ url('/playerview/${item.id}')}}">${item.fullname}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th> 
+                        <th class="ls">
+                            <a style="font-size: 17px;" class="linkStyle" href="">${item.total_runs}</a>
+                        </th>
+                    </tr>
+                `;
+            });
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
 function get_top_scorers(tournament_season_id) {
     $.ajax({
         url: "{{ url('/get_top_scorers/')}}/" + tournament_season_id,
@@ -1297,6 +1353,47 @@ function get_top_scorers(tournament_season_id) {
                         </th> 
                         <th class="ls">
                             <a style="font-size: 17px;" class="linkStyle" href="">${item.total_runs}</a>
+                        </th>
+                    </tr>
+                `;
+            });
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+
+
+function get_top_ranking_season(tournament_season_id) {
+    $.ajax({
+        url: "{{ url('/get_top_ranking_season/')}}"+'/' + tournament_season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const scores = document.getElementById('topranking');
+            scores.innerHTML = ''; // Clear the previous data before appending new data
+            data.forEach(item => {
+                scores.innerHTML += `
+                    <tr>
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding-right:5px;min-width:35px">
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.player_id}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
+                                        </td>
+                                        <td>
+                                        <a href="{{ url('/playerview/${item.player_id}') }}">${item.playername}</a>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th> 
+                        <th class="ls">
+                            <a style="font-size: 17px;" class="linkStyle" href="">${item.total_points}</a>
                         </th>
                     </tr>
                 `;
@@ -1337,6 +1434,46 @@ function get_top_ranking(tournament_season_id) {
                         </th> 
                         <th class="ls">
                             <a style="font-size: 17px;" class="linkStyle" href="">${item.total_points}</a>
+                        </th>
+                    </tr>
+                `;
+            });
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+
+
+function get_top_bowler_season(tournament_season_id) {
+    $.ajax({
+        url: "{{ url('/get_top_bowler_season/')}}/" + tournament_season_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const scores = document.getElementById('topbowler');
+            scores.innerHTML = ''; 
+            data.forEach(item => {
+                scores.innerHTML += `
+                    <tr>
+                        <th>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding-right:5px;min-width:35px">
+                                            <img src="https://eoscl.ca/admin/public/Player/${item.bowlerid}.jpg" onerror="this.onerror=null; this.src='https://cricclubs.com/documentsRep/profilePics/no_image.png'; this.classList.add('avatar');" class="img-responsive img-circle player-avatar" style="width: 30px; height: 30px;">
+                                            </td>
+                                        <td>
+                                            <a href="{{ url('/playerview/${item.bowlerid}')}}">${item.fullname}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th> 
+                        <th class="ls">
+                            <a style="font-size: 17px;" class="linkStyle" href="">${item.total_wickets}</a>
                         </th>
                     </tr>
                 `;

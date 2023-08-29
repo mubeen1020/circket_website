@@ -21,9 +21,17 @@ $imageSrc = "https://eoscl.ca/admin/public/Player/" . $playerData->playername . 
 $altText = "Player ID: " . $playerData->playername;
 
 // Check if the image URL returns a 404 error
-$headers = get_headers($imageSrc);
-if (strpos($headers[0], '404') !== false) {
+$curl = curl_init($imageSrc);
+curl_setopt($curl, CURLOPT_NOBODY, true);
+curl_exec($curl);
+$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+
+if ($responseCode == '404') {
     $imageSrc = "https://cricclubs.com/documentsRep/profilePics/no_image.png";
+    
+    
+    
     $altText = "No Image Available";
 }
 ?>
@@ -105,14 +113,17 @@ if (strpos($headers[0], '404') !== false) {
                                                 @endif
                                                 </span></li>
 											</ul>
-										</div>	
+										</div>
+                   
+                                
+                                	
                    @php
                    $playerballs=$player_balls[$playerData->playername]??0;
                    $higestruns=$higest_score[$playerData->playername]??0;
                    $fifty=$player_total_fifties[$playerData->playername]??0;
                    $hundred=$player_hundreds[$playerData->playername]??0;
                    @endphp
-                    @endforeach									
+                    @endforeach 								
 									</div>
 									<div class="addthis_sharing_toolbox hidden-phone" style="height: 24px; text-align: right;"></div>
 								</div>
@@ -286,6 +297,10 @@ if (strpos($headers[0], '404') !== false) {
 																<th>
                                 @if(count($bowlerballs)>0)
                                 @foreach($bowlerballs as $over1)
+                                @php
+                                $maxover=$over1->over/6??0;
+                                $maxball=$over1->over;
+                                @endphp
                                 {{(round($over1->over/6))??0}}
                                 @endforeach  
                                                 @else
@@ -315,22 +330,24 @@ if (strpos($headers[0], '404') !== false) {
                                                 @endif 
                                  
                                                   </strong></a></th>
-																<th>
-                                @if(count($bower_over)>0)
-                                @foreach($bower_over as $over)
-                                {{ number_format($over->bowler_runs/$over->max_over, 2) ?? 0 }}
-                                  @endforeach 
-                                                @else
-                                                0
-                                                @endif 
+                                                  <th>
+    @if(count($bower_over) > 0)
+        @foreach($bower_over as $over)
+            {{
+            number_format(
+                $over->bowler_runs /$maxover,2) ?? 0
+            }}
+        @endforeach
+    @else
+        0
+    @endif
+</th>
 
-                              
-                                </th>
 																<th>
                                 @if(count($bower_over)>0)
                                 @foreach($bower_over as $over)
                                 @foreach($player_wicket as $wickets)
-                                {{ number_format(($over->max_over / $wickets->playerwickets) * 100, 2) ?? 0 }}
+                                {{ number_format(($maxball / $wickets->playerwickets) , 2) ?? 0 }}
                                   @endforeach 
                                   @endforeach
                                                 @else

@@ -299,6 +299,7 @@ $Groups_team = TournamentGroup::query()
             ->pluck('tie', 'team_id_b');
 
             $match_count_tie_team_a = Fixture::where('tournament_id', $tournamnet_id)
+            ->where('fixtures.isActive', '=', 1)
             ->where('is_tie_match', 1)
             ->selectRaw('team_id_a, COUNT(is_tie_match) as tie')
             ->groupBy('team_id_a')
@@ -470,6 +471,7 @@ public function get_top_ranking(int $tournament_id)
         FROM
             players_contain_points
             JOIN players ON players.id = players_contain_points.player_id
+            JOIN fixtures ON fixtures.id = players_contain_points.fixture_id
             LEFT JOIN (
                 SELECT
                     SUM($points) AS playermompoints,
@@ -477,12 +479,12 @@ public function get_top_ranking(int $tournament_id)
                 FROM
                     fixtures
                 WHERE
-                    tournament_id = $tournament_id
+                    tournament_id = $tournament_id AND fixtures.isActive = 1
                 GROUP BY
                     manofmatch_player_id
             ) AS motm_points ON motm_points.manofmatch_player_id = players_contain_points.player_id
         WHERE
-            players_contain_points.tournament_id = $tournament_id
+            players_contain_points.tournament_id = $tournament_id AND fixtures.isActive = 1
         GROUP BY
             players_contain_points.player_id, players.fullname, motm_points.playermompoints
         ORDER BY
@@ -504,6 +506,93 @@ public function get_top_ranking(int $tournament_id)
         ->selectRaw("dismissals.id as dissmissalname")
         ->get()->pluck('dissmissalname');
         $top_scorers=Fixture::where('tournament_id', $tournament_id)
+        ->where('fixtures.isActive', '=', 1)
+        ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_runout_name)
+        ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_Retired_name)
+        ->where('fixture_scores.balltype', '=', 'Wicket')
+        ->selectRaw('players.fullname, SUM(fixture_scores.isout = 1) as total_wickets, fixture_scores.bowlerid')
+        ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+        ->join('match_dismissals', 'match_dismissals.fixturescores_id', '=', 'fixture_scores.id')
+        ->join('players', 'players.id', '=', 'fixture_scores.bowlerid')
+        ->groupBy('fixture_scores.bowlerid', 'fixture_scores.isout') 
+        ->orderbyDesc('total_wickets')
+        ->take(5)
+        ->get();
+
+        return response()->json($top_scorers);
+    }
+
+    public function get_top_scorers_season(int $season)
+    {
+        $top_scorers = Fixture::where('tournaments.season_id', $season)
+        ->join('tournaments','tournaments.id','=','fixtures.tournament_id')
+        ->join('fixture_scores', 'fixture_scores.fixture_id', '=', 'fixtures.id')
+        ->join('players', 'players.id', '=', 'fixture_scores.playerid')
+        ->where('fixtures.isActive', '=', 1)
+        ->selectRaw("SUM(CASE WHEN balltype = 'R' OR balltype = 'Wicket' OR balltype='RunOut'  THEN runs WHEN balltype = 'NBP' THEN runs - 1 ELSE 0 END) as total_runs")
+        ->selectRaw('players.fullname ,players.id')
+        ->groupBy('fixture_scores.playerid')
+        ->orderbyDesc('total_runs')
+        ->take('5')
+        ->get();
+    
+        return response()->json($top_scorers);
+    }
+    
+
+public function get_top_ranking_season(int $season)
+{
+    $points = DB::table('players_points_types')
+    ->where('code', 'MOTM')
+    ->pluck('points')
+    ->first(); 
+
+    $top_ranking = DB::select("
+        SELECT 
+            SUM(players_contain_points.points) + COALESCE(motm_points.playermompoints, 0) AS total_points,
+            players_contain_points.player_id,
+            players.fullname AS playername
+        FROM
+            players_contain_points
+            JOIN players ON players.id = players_contain_points.player_id
+            JOIN fixtures ON fixtures.id = players_contain_points.fixture_id
+            JOIN tournaments ON tournaments.id = fixtures.tournament_id
+            LEFT JOIN (
+                SELECT
+                    SUM($points) AS playermompoints,
+                    manofmatch_player_id
+                FROM
+                    fixtures
+                    JOIN tournaments ON tournaments.id = fixtures.tournament_id
+                WHERE
+                tournaments.season_id = $season AND fixtures.isActive = 1
+                GROUP BY
+                    manofmatch_player_id
+            ) AS motm_points ON motm_points.manofmatch_player_id = players_contain_points.player_id
+        WHERE
+        tournaments.season_id = $season AND fixtures.isActive = 1
+        GROUP BY
+            players_contain_points.player_id, players.fullname, motm_points.playermompoints
+        ORDER BY
+            total_points DESC
+        LIMIT 5
+    ");
+    
+    return response()->json($top_ranking);
+}
+
+
+
+    public function get_top_bowler_season(int $season)
+    {
+        $match_dissmissal_runout_name= Dismissal::where('dismissals.name', '=', 'Run out')
+        ->selectRaw("dismissals.id as dissmissalname")
+        ->get()->pluck('dissmissalname');
+        $match_dissmissal_Retired_name= Dismissal::where('dismissals.name', '=', 'Retired')
+        ->selectRaw("dismissals.id as dissmissalname")
+        ->get()->pluck('dissmissalname');
+        $top_scorers=Fixture::where('tournaments.season_id', $season)
+        ->join('tournaments','tournaments.id','=','fixtures.tournament_id')
         ->where('fixtures.isActive', '=', 1)
         ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_runout_name)
         ->where('match_dismissals.dismissal_id','!=', $match_dissmissal_Retired_name)
@@ -681,40 +770,44 @@ public function get_top_ranking(int $tournament_id)
   public function calculateNetRunRate($id)
 {
     $point_table_net_rr = DB::select("
-    SELECT ( total_runs_scored/over_faced)- (total_runs_conceded/over_bowled) as net_rr, team_id
+    SELECT *, ( total_runs_scored/over_faced)- (total_runs_conceded/over_bowled) as net_rr, team_id
     FROM (
         SELECT
             team_id,
             SUM(total_runs_scored) AS total_runs_scored,
-            SUM(total_runs_conceded) AS total_runs_conceded,
-
-
+            SUM( max_over_bowled) AS total_runs_conceded,
+    
+    
             SUM(over_bowled) AS over_bowled_old,
-        SUM(over_faced) AS over_faced_old,
+            SUM(over_faced) AS over_faced_old,
            
-
-            CONCAT( FLOOR(SUM(over_faced) / 6), '.',
-                    SUM(over_faced) % 6
-                ) AS over_faced, SUM(over_faced),
-            CONCAT( FLOOR(SUM(over_bowled) / 6), '.',
-                    SUM(over_bowled) % 6
-                ) AS over_bowled, SUM(over_bowled)
-
-
+    
+            CONCAT( FLOOR(SUM(over_faced)/6), '.',
+                        SUM(over_faced) % 6
+                    ) AS over_faced, SUM(over_faced),
+                CONCAT( FLOOR(SUM(total_runs_conceded)/6), '.',
+                        SUM( total_runs_conceded) % 6
+                    ) AS over_bowled, SUM(over_bowled)
+    
+    
         FROM (
             SELECT fixtures.id as f_id,
                 first_inning_team_id AS team_id,
                 SUM(fixture_scores.runs) AS total_runs_scored,
-                MAX(fixture_scores.ballnumber) AS over_faced,
+    
+            COUNT(CASE WHEN balltype = 'Wicket' OR balltype = 'R' OR balltype = 'RunOut' THEN ballnumber ELSE null END) AS over_faced,
+            CASE WHEN (MAX(fixture_scores.ballnumber) % 6) = 0 THEN COUNT(DISTINCT fixture_scores.overnumber) ELSE (COUNT(DISTINCT fixture_scores.overnumber) - 1) END AS max_over_faced,
+                0 AS max_over_bowled,
                 0 AS total_runs_conceded,
                 0 AS over_bowled
+    
             FROM
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
             JOIN tournaments On tournaments.id=fixtures.tournament_id
             WHERE tournaments.id = $id
-                AND inningnumber = 1 AND running_inning = 3 AND is_tie_match = 0
+                AND inningnumber = 1 AND running_inning = 3 AND is_tie_match = 0 AND fixtures.isActive = 1
             GROUP BY
                 first_inning_team_id, f_id
     
@@ -722,18 +815,21 @@ public function get_top_ranking(int $tournament_id)
     
             SELECT fixtures.id as f_id,
                 second_inning_team_id AS team_id,
-	        0 AS total_runs_scored,
+                0 AS total_runs_scored,
                 0 AS over_faced,
+                0 AS max_over_faced,
                 SUM(fixture_scores.runs) AS total_runs_conceded,
-                MAX(fixture_scores.ballnumber) AS over_bowled
-
+    
+                COUNT(CASE WHEN balltype = 'Wicket' OR balltype = 'R' OR balltype = 'RunOut' THEN ballnumber ELSE null END) AS over_bowled,
+                CASE WHEN (MAX(fixture_scores.ballnumber) % 6) = 0 THEN COUNT(DISTINCT fixture_scores.overnumber) ELSE (COUNT(DISTINCT fixture_scores.overnumber) - 1) END AS max_over_bowled
+    
             FROM
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
             JOIN tournaments On tournaments.id=fixtures.tournament_id
             WHERE tournaments.id = $id
-                AND inningnumber = 1 AND running_inning = 3 AND is_tie_match = 0
+                AND inningnumber = 1 AND running_inning = 3 AND is_tie_match = 0 AND fixtures.isActive = 1
             GROUP BY
                 second_inning_team_id, f_id
     
@@ -743,15 +839,19 @@ public function get_top_ranking(int $tournament_id)
                 first_inning_team_id AS team_id,
                 0 AS total_runs_scored,
                 0 AS over_faced,
+                0 AS max_over_faced,
                 SUM(fixture_scores.runs) AS total_runs_conceded,
-                MAX( fixture_scores.ballnumber)  AS over_bowled
+               
+                COUNT(CASE WHEN balltype = 'Wicket' OR balltype = 'R' OR balltype = 'RunOut' THEN ballnumber ELSE null END) AS over_bowled,
+                CASE WHEN (MAX(fixture_scores.ballnumber) % 6) = 0 THEN COUNT(DISTINCT fixture_scores.overnumber) ELSE (COUNT(DISTINCT fixture_scores.overnumber) - 1) END AS max_over_bowled
+    
             FROM
                 fixtures
             INNER JOIN
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
                 JOIN tournaments On tournaments.id=fixtures.tournament_id
                 WHERE tournaments.id = $id
-                AND inningnumber = 2 AND running_inning = 3 AND is_tie_match = 0
+                AND inningnumber = 2 AND running_inning = 3 AND is_tie_match = 0 AND fixtures.isActive = 1
             GROUP BY
                 first_inning_team_id, f_id
     
@@ -759,9 +859,12 @@ public function get_top_ranking(int $tournament_id)
     
             SELECT fixtures.id as f_id,
                 second_inning_team_id AS team_id,
-
+    
                 SUM(fixture_scores.runs) AS total_runs_scored,
-                MAX( fixture_scores.ballnumber)  AS over_faced,
+    
+            COUNT(CASE WHEN balltype = 'Wicket' OR balltype = 'R' OR balltype = 'RunOut' THEN ballnumber ELSE null END) AS over_faced,
+            CASE WHEN (MAX(fixture_scores.ballnumber) % 6) = 0 THEN COUNT(DISTINCT fixture_scores.overnumber) ELSE (COUNT(DISTINCT fixture_scores.overnumber) - 1) END AS max_over_faced,
+                0 AS max_over_bowled,
                 0 AS total_runs_conceded,
                 0 AS over_bowled
             FROM
@@ -770,7 +873,7 @@ public function get_top_ranking(int $tournament_id)
                 fixture_scores ON fixture_scores.fixture_id = fixtures.id
                 JOIN tournaments On tournaments.id=fixtures.tournament_id
                 WHERE tournaments.id = $id
-                AND inningnumber = 2 AND running_inning = 3 AND is_tie_match = 0
+                AND inningnumber = 2 AND running_inning = 3 AND is_tie_match = 0 AND fixtures.isActive = 1
             GROUP BY
                 second_inning_team_id, f_id
         ) AS subquery

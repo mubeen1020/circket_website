@@ -146,8 +146,8 @@ th { min-width:30px !important; padding: 10px 5px !important; }
             <table>
                 <tbody>
                     <tr>
-                        <td><img src="https://eoscl.ca/admin/public/Team/{{$playerteam[$playerId]}}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
-                        <td>&nbsp;{{$header_teams[$playerteam[$playerId]]}}</td>
+                        <td><img src="https://eoscl.ca/admin/public/Team/{{$playerteam[$playerId]??0}}.png" class="img-responsive img-circle" style="width: 20px; height: 20px;"></td>
+                        <td>&nbsp;{{$header_teams[$playerteam[$playerId]??'']}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -57,6 +57,10 @@ Route::get('get_top_scorers/{id}',[ApiController::class,'get_top_scorers'])->nam
 Route::get('get_top_bowler/{id}',[ApiController::class,'get_top_bowler'])->name('get_top_bowler');
 Route::get('get_top_ranking/{id}',[ApiController::class,'get_top_ranking'])->name('get_top_ranking');
 
+Route::get('get_top_scorers_season/{id}',[ApiController::class,'get_top_scorers_season'])->name('get_top_scorers_season');
+Route::get('get_top_bowler_season/{id}',[ApiController::class,'get_top_bowler_season'])->name('get_top_bowler_season');
+Route::get('get_top_ranking_season/{id}',[ApiController::class,'get_top_ranking_season'])->name('get_top_ranking_season');
+
 
 Route::get('downloadCSV/{id}', [HomeController::class, 'downloadCSV'])->name('downloadCSV');
 Route::get('tournament_name/{season_id}',[ApiController::class,'tournament_name'])->name('tournament_name');

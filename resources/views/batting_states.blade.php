@@ -91,7 +91,7 @@
 			<div class="col-sm-2 col-xs-6">
 					<div class="form-group">
 						<div class="custom-select">
-						<select required name="tournament"  id="tournament" class="form-control" >
+						<select  name="tournament"  id="tournament" class="form-control" >
 							<option value="">Career - All Tournament</option>
 							@foreach($tournamentdata as $tournament_id => $tournament_name)
 							<option <?php if(isset($_POST['tournament']) && $_POST['tournament']== $tournament_id){ echo 'selected'; } ?> value="{{$tournament_id}}">{{$tournament_name}}</option>
